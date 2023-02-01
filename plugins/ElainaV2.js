@@ -260,7 +260,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 	})
 //__________________________________ Background music link__________________________________//
-var source = " "
+var source = "https://raw.githubusercontent.com/Roydevil/Elaina-V2/main/assets/ElainaV2/Backgrounds/Old-Ranked_Draft-Champion_Select.mp3"
 //__________________________________________________________________________________________//
 
 
@@ -270,7 +270,7 @@ audio.autoplay = true;
 // Loop audio //
 audio.loop = true;
 // Audio volume (0.0 is mute, 1.0 is highest) //
-audio.volume = 0.0;
+audio.volume = 0.2;
 audio.load()
 audio.addEventListener("load", function() { 
    audio.play(); 
