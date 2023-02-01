@@ -372,18 +372,20 @@ div[class="stats-backdrop"] {
 
 /* Icon Tinh hoa lam */
 .currency-be-icon-static {
-	background-image: url('https://raw.githubusercontent.com/Roydevil/Skadi-Theme/main/Orundum.png') !important;
+	background-image: url('https://raw.githubusercontent.com/Roydevil/Elaina-V2/main/assets/ElainaV2/Icon/ElainaStare.png') !important;
 }
 
 /* Icon RP */
 .currency-rp {
-	background-image: url('https://raw.githubusercontent.com/Roydevil/Skadi-Theme/main/Originite_Prime.png') !important;
+	background-image: url('https://raw.githubusercontent.com/Roydevil/Elaina-V2/main/assets/ElainaV2/Icon/ApprenticeWitch.png') !important;
 }
 
 /* Player Avatar */
+/*
 .icon-image.has-icon {
-	content: url('https://raw.githubusercontent.com/Roydevil/Skadi-Theme/main/Avatar.gif') !important;
+	content: url(' ') !important;
 }
+*/
 
 /* Font */
 /*
