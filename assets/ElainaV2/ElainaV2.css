@@ -1,0 +1,405 @@
+/* By Elaina Da Catto */ /* Based on "Retrorem" by teiseire117 */
+/* Meow~~~ */
+
+
+#elaina-bg {
+	width:100%;
+	height: 100%;
+	position: absolute;
+    pointer-events: none;
+	transition: opacity 0.5s ease-in-out;
+	opacity: 1;
+	filter: blur(10px) brightness(0.4) saturate(1.5)
+}
+
+iframe html {
+	background: transparent!important;
+}
+
+iframe .bg-cover {
+	opacity:0!important
+}
+
+lol-uikit-section[section-id='lunar-revel-embed-2023'] {
+    opacity: 0!important;
+	visibility: hidden;
+}
+
+lol-uikit-navigation-item[item-id="lunar-revel-embed-2023"] {
+	display:none!important
+}
+
+.lol-social-sidebar.ember-view {
+	background: transparent!important
+}
+
+#rcp-fe-lol-home-error {
+	display: none!important
+}
+
+.rcp-fe-viewport-sidebar {
+	background: linear-gradient(rgb(6 6 6), rgb(0 0 0 / 25%))!important;
+}
+
+.store-backdrop {
+	background-image: unset!important;
+}
+
+.friend-requests {
+	background:rgb(66, 63, 53)!important
+}
+
+.navigation-root-component.ember-view {
+	background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 24%))!important
+}
+
+.alpha-version-panel {
+	background: linear-gradient(rgb(0 0 0 / 38%), rgb(38 78 52 / 34%))!important
+}
+
+lol-social-avatar[ref='iconElement'], .lol-social-identity.ember-view > .details {
+	z-index: 1;
+}
+
+.menu-item-icon {
+	background-color: #fff1f1!important;
+	color: #fff1f1!important;
+}
+
+.main-navigation-menu .section .section-text {
+	color: #fff1f1!important;
+}
+
+.summoner-level {
+	color:#ffe8a5!important
+}
+
+.alpha-tag {
+	color:#ffffffc9!important;
+}
+
+lol-social-roster-member .offline .member-name {
+	color:#9a9696!important
+}
+
+.availability-icon {
+	position: relative!important;
+}
+
+.availability-icon.chat {
+	background: #09a646;
+}
+
+.filled.xp-ring {
+	background: linear-gradient(rgb(255 236 236), rgb(87 103 105 / 48%))!important;
+}
+
+/*
+.league-logo > lol-uikit-video-state > lol-uikit-video{
+	filter: sepia(0.9) hue-rotate(306deg) grayscale(0.3) brightness(1.4);
+}
+
+.play-button-container {
+	filter: sepia(1);
+}
+*/
+
+lol-uikit-navigation-item > .section::after {
+	background-image: linear-gradient(0deg, rgb(210 195 149 / 32%) 0%, rgb(0 0 0 / 10%) 55%);
+}
+
+.lol-loading-screen-container.lol-loading-screen-default-state {
+	opacity:0.73;
+	backdrop-filter: blur(15px);
+	background: transparent!important;
+}
+
+.parties-background.ember-view .lol-uikit-background-switcher-image {
+	filter: invert(0.2) blur(30px);
+    opacity: 0.4;
+}
+
+.parties-background {
+	background: linear-gradient(to bottom, rgb(255 255 255 / 26%) 0%, rgba(0,0,0,0) 50%, rgb(90 27 62 / 20%) 100%);
+}
+
+.lobby-header-overlay {
+	background: unset!important
+}
+
+/*
+.regalia-banner-asset-static-image {
+	filter: sepia(1) brightness(3.5) opacity(0.4);
+}
+*/
+
+.parties-game-section.use-animation > .parties-game-info-panel-bg-container > video {
+	filter: saturate(0.5) brightness(1) invert(1) hue-rotate(27deg);
+}
+
+.parties-game-search-info {
+	color:#000000!important
+}
+
+.parties-game-search-elapsed {
+	color: white!important;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.parties-status-card-bg-container video {
+	filter: saturate(0.5) brightness(1) invert(1) hue-rotate(27deg);
+}
+
+.challenge-banner-title-container {
+	color: #f3d3d3;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.parties-status-member-icons > .parties-status-member-joined {
+	filter: grayscale(1) saturate(0) brightness(0.5);
+}
+
+.collections-application {
+	background: rgb(29 72 56 / 18%)!important;
+}
+
+.item-sets-table-row {
+	background: #0000007a;
+}
+
+/*
+.lol-uikit-video-content {
+	filter: opacity(0.5) hue-rotate(45deg);
+}
+*/
+
+.inventory-search {
+	background: #00000085!important;
+}
+
+.emote-item-icon.interactive {
+	background: #000000b0;
+}
+
+.uikit-background-switcher .lol-uikit-background-switcher-image.transition.fade {
+	animation: unset!important
+}
+
+/*
+.placeholder-invited-video {
+	filter: sepia(1) opacity(0.6);
+}
+
+.find-match-button-video lol-uikit-video-state {
+	filter: sepia(1) brightness(1.1);
+}
+
+.find-match-button .img-container {
+	filter: sepia(1);
+}
+*/
+
+#elaina-bg:has(+ #rcp-fe-viewport-root .parties-background) {
+	filter: brightness(0.4);
+}
+
+#rcp-fe-viewport-root{
+	filter: blur(7px);
+}
+
+#elaina-bg:has(~ .lol-loading-screen-container) {
+    filter: blur(10px)
+}
+
+.background {
+	background-image: unset!important;
+}
+
+.stats-backdrop {
+	opacity: 0.3!important;
+	mix-blend-mode: difference;
+}
+
+html {
+	overflow: hidden;
+}
+
+.loot-backdrop {
+	height: 720px;
+}
+
+.loading-tab::after {
+	background-image:none!important
+}
+
+.store-loading {
+	background-color: transparent!important;
+}
+
+.clash-aram-intro-modal {
+	background-image: none!important;
+	background-color: transparent!important
+}
+
+.champ-select-bg-darken {
+	opacity:0.2!important
+}
+
+.champion-select {
+	background: transparent!important
+}
+
+.champ-select-bg > .lol-uikit-background-switcher-image {
+	opacity:0!important;
+}
+
+.champ-select-bg.uikit-background-switcher {
+	opacity:0!important;
+}
+
+.champion-select .timer-status::before {
+	filter: contrast(0) brightness(1);
+}
+
+.champion-select .action-button-container::after {
+	filter: sepia(1)
+}
+
+.rcp-fe-lol-game-in-progress {
+	background-image: unset!important;
+	background-color: unset!important
+}
+
+.clash-tab-team-background, .clash-tab-bracket-background, .tournament-scouting, .clash-missed-lockin-modal, .clash-root-background-landing, .clash-root-background {
+	background-image: none!important
+}
+
+div[data-screen-name="rcp-fe-lol-home"] .rcp-fe-lol-home-sub-nav {
+	margin-top: 10px;
+    padding-bottom: 10px;
+    background-color: #000000ad;
+    border-radius: 10px;
+    border: 2px solid var(--default-color, #cdbe91);
+}
+
+.webm-bottom-buttons-container {
+	display: flex;
+    bottom: 9px;
+    left: 20px;
+	position:absolute
+}
+
+#pause-bg {
+    position: relative;
+    border: 2px solid #8c8263;
+    border-radius: 50%;
+    width: 21px;
+    background-color: black;
+    height: 21px;
+    cursor: pointer;
+}
+
+#pause-bg:hover {
+	filter: brightness(1.3) hue-rotate(263deg) saturate(0.4);
+}
+
+.pause-bg-icon {
+	width: 17px;
+    margin-left: 2px;
+    margin-top: 2px;
+}
+
+#next-bg {
+    position: relative;
+    width: 21px;
+    height: 21px;
+    cursor: pointer;
+}
+
+.next-bg-icon {
+    width: 25px;
+    margin-left: 0px;
+    margin-top: -0.4px;
+}
+
+.next-bg-icon:hover {
+	filter: hue-rotate(0deg) drop-shadow(2px 4px 6px pink)
+}
+
+.webm-hidden {
+	opacity: 0!important
+}
+
+.vng-age-rating.ember-view {
+	display: none;
+}
+
+div[class="clash-aram-intro-modal ember-view"] {
+	display: none;
+}
+
+div[class="style-profile-backdrop-component ember-view"] {
+	display: none;
+}
+
+div[class="store-backdrop"] {
+   background: none !important;
+}
+
+div[class="background"] {
+	background: none !important;
+}
+
+div[class="ranked-intro-background"] {
+   display: none;
+}
+
+div[class="stats-backdrop"] {
+	background: none !important;
+}
+
+.loot-backdrop.background-static {
+	background: none !important;
+}
+
+/* Thanh thông báo */
+.navigation-status-ticker-content-no-link {
+	background-color: rgba(248, 169, 201, 0.726);
+	border: 1px solid white;
+	border-radius: 0.5rem;
+	color: rgba(22, 22, 22, 0.626);
+}
+
+/* Icon Tinh hoa lam */
+.currency-be-icon-static {
+	background-image: url('https://raw.githubusercontent.com/Roydevil/Skadi-Theme/main/Orundum.png') !important;
+}
+
+/* Icon RP */
+.currency-rp {
+	background-image: url('https://raw.githubusercontent.com/Roydevil/Skadi-Theme/main/Originite_Prime.png') !important;
+}
+
+/* Player Avatar */
+.icon-image.has-icon {
+	content: url('https://raw.githubusercontent.com/Roydevil/Skadi-Theme/main/Avatar.gif') !important;
+}
+
+/* Font */
+/*
+@font-face {
+	font-family: 'aegirseaborn';
+	src: url('https://raw.githubusercontent.com/Roydevil/Skadi-Theme/main/AegirSeaborn.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+ 
+:root {
+	--font-display: 'aegirseaborn', sans-serif !important;
+	--font-body: 'aegirseaborn', sans-serif !important;
+}
+*/
+
+
+/* End */
