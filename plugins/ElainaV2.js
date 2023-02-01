@@ -259,15 +259,15 @@ window.addEventListener('DOMContentLoaded', () => {
 			elaina_play_pause()
 		}
 	})
+
+
 //__________________________________ Background music link__________________________________//
 var source = "https://raw.githubusercontent.com/Roydevil/Elaina-V2/main/assets/ElainaV2/Backgrounds/Old-Ranked_Draft-Champion_Select.mp3"
 //__________________________________________________________________________________________//
 
 
 var audio = document.createElement("audio");
-// Auto play audio //
 audio.autoplay = true;
-// Loop audio //
 audio.loop = true;
 // Audio volume (0.0 is mute, 1.0 is highest) //
 audio.volume = 0.2;
@@ -276,6 +276,11 @@ audio.addEventListener("load", function() {
    audio.play(); 
 }, true);
 audio.src = source;
+
+console.clear();
+console.log('Seggs :3');
+console.log('By Elaina Da Catto');
+console.log('Meow ~~~');
 
 
 })
