@@ -22,6 +22,18 @@ function apply_default_background() {
 apply_default_background()
 
 
+function patch_default_home_page(){
+    let loop = 0
+    let intervalId = window.setInterval(() => {
+        if (loop >= 5) {
+            window.clearInterval(intervalId)
+        }
+        go_to_default_home_page()
+        loop += 1
+    }, 200)
+}
+
+
 function removeIframe() {
 	const observer = new MutationObserver(mutations => {
 		mutations.forEach(mutation => {
