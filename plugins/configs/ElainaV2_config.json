@@ -14,5 +14,8 @@
 	"default_sound_autoplay": true,
 
 
- 	"default_home_page": "elaina-home"
+ 	"default_home_page": "elaina-home",
+
+
+	"custom_log": "Sech tan bao" 
 }
