@@ -3,14 +3,23 @@
 
 
 const utils = require('./_utilselaina')
+let default_settings = require('./configs/ElainaV2_config.json')
 let previous_page;
 let ranked_observer;
-let force_bg_pause = false;
+let patcher_go_to_default_home_page = true;
+let force_bg_pause = default_settings["default_animated"];
+let wallpapers = default_settings["wallpaper_list"];
 
 
-//_____________________________________ Backgrounds List____________________________________//
-let wallpapers = ["Elaina1.webm", "Elaina2.webm"]
-//__________________________________________________________________________________________//
+function apply_default_background() {
+	let default_wallpaper = default_settings["default_wallpaper"]
+	let index = wallpapers.indexOf(default_wallpaper);
+	if (index !== -1) {
+		wallpapers.splice(index, 1);
+		wallpapers.unshift(default_wallpaper);
+	}
+}
+apply_default_background()
 
 
 function removeIframe() {
@@ -29,6 +38,7 @@ function removeIframe() {
 	observer.observe(document.body, { childList: true, subtree: true });
 }
 
+
 var nodeRemovedEvent = function (event) {
 	if (event.target.classList && event.target.classList.contains("lol-loading-screen-container")) {
 		let elainaBg = document.getElementById("elaina-bg");
@@ -42,10 +52,8 @@ var nodeRemovedEvent = function (event) {
 };
 
 document.addEventListener("DOMNodeRemoved", nodeRemovedEvent);
-
 let updateLobbyRegaliaBanner = async message => {
 	let phase = JSON.parse(message["data"])[2]["data"];
-
 	if (phase == "Lobby") {
 		let intervalId = window.setInterval(() => {
 			try {
@@ -61,6 +69,7 @@ let updateLobbyRegaliaBanner = async message => {
 	}
 }
 
+
 function elaina_play_pause() {
 	let elaina_bg_elem = document.getElementById("elaina-bg")
 
@@ -71,6 +80,7 @@ function elaina_play_pause() {
 		elaina_bg_elem.play()
 	}
 }
+
 
 function play_pause_set_icon(elem) {
 	let pause_bg_icon = elem || document.querySelector(".pause-bg-icon")
@@ -86,9 +96,20 @@ function play_pause_set_icon(elem) {
 	}
 }
 
-function next_wallpaper() {
 
+function next_wallpaper() {
+	let elainaBg = document.getElementById("elaina-bg")
+	document.querySelector(":root").classList.remove(wallpapers[0].replace(/\.[a-zA-Z]+$/, '-vars'))
+	elainaBg.classList.add("webm-hidden");
+	wallpapers.push(wallpapers.shift())
+	document.querySelector(":root").classList.add(wallpapers[0].replace(/\.[a-zA-Z]+$/, '-vars'))
+	setTimeout(function () {
+		elainaBg.src = `//assets/ElainaV2/Backgrounds/${wallpapers[0]}`
+		elaina_play_pause()
+		elainaBg.classList.remove("webm-hidden");
+	}, 500);
 }
+
 
 function create_webm_buttons() {
 	const container = document.createElement("div")
@@ -111,15 +132,7 @@ function create_webm_buttons() {
 	})
 
 	nextBg.addEventListener("click", () => {
-		let elainaBg = document.getElementById("elaina-bg")
-
-		elainaBg.classList.add("webm-hidden");
-		wallpapers.push(wallpapers.shift())
-		setTimeout(function () {
-			elainaBg.src = `//assets/ElainaV2/Backgrounds/${wallpapers[0]}`
-			elaina_play_pause()
-			elainaBg.classList.remove("webm-hidden");
-		}, 500);
+		next_wallpaper()
 	})
 
 	nextBgIcon.setAttribute("src", "//assets/ElainaV2/Icon/next_button.png")
@@ -128,6 +141,54 @@ function create_webm_buttons() {
 	container.append(nextBg)
 	pauseBg.append(pauseBgIcon)
 	nextBg.append(nextBgIcon)
+}
+
+
+function create_element(tagName, className, content) {
+	const el = document.createElement(tagName);
+	el.className = className;
+	if (content) {
+		el.innerHTML = content;
+	}
+	return el;
+};
+
+
+function go_to_default_home_page() {
+	if (default_settings["default_home_page"]) {
+		document.querySelector(`lol-uikit-navigation-item[item-id='${default_settings["default_home_page"]}']`).click()
+	}
+}
+
+function add_elaina_home_page() {
+	let lol_home = document.querySelector(".rcp-fe-lol-home > lol-uikit-section-controller")
+
+	if (lol_home) {
+		if (!lol_home.querySelector("[section-id='elaina-home']")) {
+			let elaina_home = create_element("lol-uikit-section", "")
+			let div = create_element("div", "wrapper")
+
+			div.id = "elaina-home"
+			elaina_home.setAttribute("section-id", "elaina-home")
+			elaina_home.append(div)
+			lol_home.prepend(elaina_home)
+		}
+	}
+}
+
+function add_elaina_home_navbar() {
+	let navbar = document.querySelector(".rcp-fe-lol-home > lol-uikit-navigation-bar")
+
+	if (navbar) {
+		if (!navbar.querySelector("[item-id='elaina-home']")) {
+			let elaina_home_navbar_item = create_element("lol-uikit-navigation-item", "")
+
+			elaina_home_navbar_item.setAttribute("item-id", "elaina-home")
+			elaina_home_navbar_item.setAttribute("priority", 1)
+			elaina_home_navbar_item.textContent = "Home"
+			navbar.prepend(elaina_home_navbar_item)
+		}
+	}
 }
 
 let pageChangeMutation = (node) => {
@@ -142,10 +203,19 @@ let pageChangeMutation = (node) => {
 		if (!document.getElementsByClassName("webm-bottom-buttons-container").length) {
 			create_webm_buttons()
 		}
+		add_elaina_home_page()
+		add_elaina_home_navbar()
+		go_to_default_home_page()
 	}
 	else if (pagename != "rcp-fe-lol-navigation-screen" && pagename != "window-controls" && pagename != "rcp-fe-lol-home" && pagename != "social") {
 		if (document.getElementsByClassName("webm-bottom-buttons-container").length) {
 			document.getElementsByClassName("webm-bottom-buttons-container")[0].remove()
+		}
+	}
+	if (pagename == "social") {
+		if (patcher_go_to_default_home_page){
+			go_to_default_home_page()
+			patcher_go_to_default_home_page = false
 		}
 	}
 	if (pagename == "rcp-fe-lol-uikit-full-page-modal-controller") {
@@ -202,7 +272,7 @@ let pageChangeMutation = (node) => {
 			});
 			ranked_observer.observe(document.querySelector('[section-id="profile_subsection_leagues"]'), { attributes: true, childList: false, subtree: false });
 		}
-		elaina_bg_elem.style.filter = 'brightness(0.3)';
+		elaina_bg_elem.style.filter = bg_filters["rcp-fe-lol-profiles-main"][wallpapers[0]];
 	}
 	else if (previous_page == "rcp-fe-lol-profiles-main") {
 		if (brightness_modifiers.indexOf(pagename) == -1)
@@ -212,18 +282,20 @@ let pageChangeMutation = (node) => {
 		ranked_observer = undefined
 	}
 	if (pagename == "rcp-fe-lol-parties") {
-		elaina_bg_elem.style.filter = 'brightness(0.4) blur(6px)';
+		elaina_bg_elem.style.filter = bg_filters["rcp-fe-lol-parties"][wallpapers[0]];
 	}
 	else if (previous_page == "rcp-fe-lol-parties" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = 'brightness(0.7) saturate(0.8)';
+		elaina_bg_elem.style.filter = bg_filters["default"][wallpapers[0]];
 	}
 	if (previous_page != pagename)
 		previous_page = pagename
 }
 
+
 window.addEventListener('load', () => {
 	utils.mutationObserverAddCallback(pageChangeMutation, ["screen-root"])
 })
+
 
 window.addEventListener('DOMContentLoaded', () => {
 	const video = document.createElement('video');
@@ -231,56 +303,41 @@ window.addEventListener('DOMContentLoaded', () => {
 	video.setAttribute('autoplay', '');
 	video.setAttribute('loop', '');
 	video.setAttribute('muted', '');
+	video.src = default_settings["default_wallpaper_src"];
+	utils.subscribe_endpoint("/lol-gameflow/v1/gameflow-phase", updateLobbyRegaliaBanner)
+	utils.addCss(default_settings["css_file"])
 
 
-//__________________________________ Video Background link _________________________________//
-	video.src = '//assets/ElainaV2/Backgrounds/Elaina1.webm';
-//__________________________________________________________________________________________//
+    var source = default_settings["audio_src"];
+    var audio = document.createElement("audio");
+        audio.autoplay = default_settings["default_sound_autoplay"];
+        audio.loop = true;
+        audio.controls = true;
+        audio.volume = default_settings["default_sound_volume"];
+        audio.load()
+    audio.addEventListener("load", function() { 
+        audio.play(); 
+    }, true);
+    audio.src = source;
 
 
-	utils.subscribe_endpoint("/lol-gameflow/v1/gameflow-phase", updateLobbyRegaliaBanner);
-
-
-//_______________________________________ CSS link _________________________________________//
-	utils.addCss("//assets/ElainaV2/ElainaV2.css");
-//__________________________________________________________________________________________//
-
-
-	document.querySelector("body").prepend(video);
-	removeIframe()
+	document.querySelector("body").prepend(video)
+	// document.querySelector("body").prepend(create_audio_element())
+	elaina_play_pause()
+	//removeIframe()
 	utils.subscribe_endpoint('/lol-gameflow/v1/gameflow-phase', (message) => {
 		let phase = JSON.parse(message["data"])[2]["data"]
 
 		if (phase == "GameStart" || phase == "InProgress") {
-			document.getElementById("elaina-bg").style.filter = 'blur(10px) brightness(0.4) saturate(1.5)';
+			document.getElementById("elaina-bg").style.filter = 'blur(2px) brightness(0.4) saturate(1.5)';
 			document.getElementById("elaina-bg").pause()
 		}
 		else {
 			elaina_play_pause()
 		}
 	})
-
-
-//__________________________________ Background music link__________________________________//
-var source = "https://raw.githubusercontent.com/Roydevil/Elaina-V2/main/assets/ElainaV2/Backgrounds/Old-Ranked_Draft-Champion_Select.mp3"
-//__________________________________________________________________________________________//
-
-
-var audio = document.createElement("audio");
-audio.autoplay = true;
-audio.loop = true;
-// Audio volume (0.0 is mute, 1.0 is highest) //
-audio.volume = 0.2;
-audio.load()
-audio.addEventListener("load", function() { 
-   audio.play(); 
-}, true);
-audio.src = source;
-
-console.clear();
-console.log('Seggs :3');
-console.log('By Elaina Da Catto');
-console.log('Meow ~~~');
-
-
+	console.clear();
+    console.log('Seggs :3');
+    console.log('By Elaina Da Catto');
+    console.log('Meow ~~~');
 })

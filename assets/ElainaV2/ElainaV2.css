@@ -169,9 +169,14 @@ lol-uikit-navigation-item > .section::after {
 
 /*
 .lol-uikit-video-content {
-	filter: opacity(0.5) hue-rotate(45deg);
+	display: none;
 }
 */
+
+#background-ambient {
+	src: none;
+	display: none;
+}
 
 .inventory-search {
 	background: #00000085!important;
@@ -361,6 +366,8 @@ div[class="stats-backdrop"] {
 .loot-backdrop.background-static {
 	background: none !important;
 }
+
+
 
 /* Thanh thông báo */
 .navigation-status-ticker-content-no-link {
