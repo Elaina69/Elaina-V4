@@ -340,4 +340,5 @@ window.addEventListener('DOMContentLoaded', () => {
     console.log('Seggs :3');
     console.log('By Elaina Da Catto');
     console.log('Meow ~~~');
+	console.log(default_settings["custom_log"]);
 })
