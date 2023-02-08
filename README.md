@@ -1,6 +1,6 @@
 # Elaina-V2
 New Elaina theme for League Loader with brand new JS file
-(Based on "Retrorem" by teiseire117)
+(Special thanks teiseire117)
 
  - [Download](https://codeload.github.com/Roydevil/Elaina-V2/zip/refs/tags/v1.0.2)
  
@@ -12,9 +12,9 @@ New Elaina theme for League Loader with brand new JS file
  - Done
 
 
-# How to change backgrounds:
+# Change backgrounds:
  - Open /plugins/configs/ElainaV2_config.json
  
  
-# How to change icon (BE, RP, avatar)
+# Change icon (BE, RP, avatar,...)
  - Open /assets/ElainaV2/ElainaV2.css
