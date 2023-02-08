@@ -2,18 +2,31 @@
 	"css_file": "//assets/ElainaV2/ElainaV2.css",
 
 
-	"default_wallpaper":"Elaina1.webm",
-	"default_wallpaper_src":"//assets/ElainaV2/Backgrounds/Elaina1.webm",
-	"wallpaper_list": ["Elaina1.webm", "Elaina2.webm"],
-	"pause_wallpaper": false,
 
+"/______________________________________Wallpapers______________________________/": "",
+	
+    "default_wallpaper":"Elaina3.webm",
+	"default_wallpaper_src":"//assets/ElainaV2/Backgrounds/Elaina3.webm",
+	"/___*Notice*__/": " Remember to change both wallpaper name and source ",
+
+	"wallpaper_list": ["Elaina1.webm", "Elaina2.webm", "Elaina3.webm", "Elaina4.webm"],
+	"video_sound_volume": 0.2,
+	"is_wallpaper_muted?": false,
+	"pause_wallpaper": false,
+"/______________________________________________________________________________/": "",
+
+
+
+"/_______________________________________Audio__________________________________/": "",
 
 	"audio_src": "//assets/ElainaV2/Backgrounds/Old-Ranked_Draft-Champion_Select.mp3",
 	"/___*Audio volume*___/": "(0.0 is mute, 1.0 is highest)" ,
-	"default_sound_volume": 0.2,
+	"audio_sound_volume": 0.0,
 	"default_sound_autoplay": true,
-	"mute_audio": false,
-	"is_loop?": true,
+	"pause_audio": true,
+	"is_audio_loop?": true,
+"/______________________________________________________________________________/": "",
+
 
 
  	"default_home_page": "elaina-home",

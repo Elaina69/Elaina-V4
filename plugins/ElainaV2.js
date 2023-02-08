@@ -8,7 +8,7 @@ let previous_page;
 let ranked_observer;
 let patcher_go_to_default_home_page = true;
 let force_bg_pause = default_settings["pause_wallpaper"];
-let force_audio_pause = default_settings["mute_audio"];
+let force_audio_pause = default_settings["pause_audio"];
 let wallpapers = default_settings["wallpaper_list"];
 
 
@@ -359,23 +359,23 @@ window.addEventListener('load', () => {
 
 
 window.addEventListener('DOMContentLoaded', () => {
+
 	const video = document.createElement('video');
 	video.id = 'elaina-bg';
 	video.setAttribute('autoplay', '');
 	video.setAttribute('loop', '');
-	video.setAttribute('muted', '');
+	video.muted = default_settings["is_wallpaper_muted?"];
 	video.src = default_settings["default_wallpaper_src"];
+	video.volume = default_settings["video_sound_volume"];
 	utils.subscribe_endpoint("/lol-gameflow/v1/gameflow-phase", updateLobbyRegaliaBanner)
 	utils.addCss(default_settings["css_file"])
 
 
-    const source = default_settings["audio_src"];
     const audio = document.createElement("audio");
 	audio.autoplay = default_settings["default_sound_autoplay"];
-	audio.loop = default_settings["is_loop?"];
-	audio.volume = default_settings["default_sound_volume"];
-	audio.src = source;
-	audio.controls = false;
+	audio.loop = default_settings["is_audio_loop?"];
+	audio.volume = default_settings["audio_sound_volume"];
+	audio.src = default_settings["audio_src"];
 	audio.id = 'bg-audio';
 	audio.load()
     audio.addEventListener("load", function() { 
