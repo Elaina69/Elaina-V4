@@ -7,10 +7,12 @@ let default_settings = require('./configs/ElainaV2_config.json')
 let previous_page;
 let ranked_observer;
 let patcher_go_to_default_home_page = true;
-let force_bg_pause = default_settings["default_animated"];
+let force_bg_pause = default_settings["pause_wallpaper"];
+let force_audio_pause = default_settings["mute_audio"];
 let wallpapers = default_settings["wallpaper_list"];
 
 
+//___________________________________________________________________________//
 function apply_default_background() {
 	let default_wallpaper = default_settings["default_wallpaper"]
 	let index = wallpapers.indexOf(default_wallpaper);
@@ -20,18 +22,6 @@ function apply_default_background() {
 	}
 }
 apply_default_background()
-
-
-function patch_default_home_page(){
-    let loop = 0
-    let intervalId = window.setInterval(() => {
-        if (loop >= 5) {
-            window.clearInterval(intervalId)
-        }
-        go_to_default_home_page()
-        loop += 1
-    }, 200)
-}
 
 
 function removeIframe() {
@@ -73,6 +63,7 @@ let updateLobbyRegaliaBanner = async message => {
 
 				base.shadowRoot.querySelector(".regalia-banner-asset-static-image").style.filter = "sepia(1) brightness(3.5) opacity(0.4)"
 				base.shadowRoot.querySelector(".regalia-banner-state-machine").shadowRoot.querySelector(".regalia-banner-intro.regalia-banner-video").style.filter = "grayscale(1) saturate(0) brightness(0.5)"
+
 			} catch {
 				return;
 			}
@@ -80,8 +71,10 @@ let updateLobbyRegaliaBanner = async message => {
 		}, 100)
 	}
 }
+//___________________________________________________________________________//
 
 
+//___________________________________________________________________________//
 function elaina_play_pause() {
 	let elaina_bg_elem = document.getElementById("elaina-bg")
 
@@ -92,8 +85,6 @@ function elaina_play_pause() {
 		elaina_bg_elem.play()
 	}
 }
-
-
 function play_pause_set_icon(elem) {
 	let pause_bg_icon = elem || document.querySelector(".pause-bg-icon")
 
@@ -107,8 +98,41 @@ function play_pause_set_icon(elem) {
 		pause_bg_icon.setAttribute("src", "//assets/ElainaV2/Icon/play_button.png")
 	}
 }
+//___________________________________________________________________________//
 
 
+
+//___________________________________________________________________________//
+function audio_play_pause() {
+	let audio = document.getElementById("bg-audio")
+
+	if (!force_audio_pause) {
+		audio.pause()
+	}
+	else {
+		audio.play()
+	}
+}
+
+function play_pause_set_icon_audio(elem) {
+	let pause_audio_icon = elem || document.querySelector(".pause-audio-icon")
+
+	if (!pause_audio_icon) {
+		return;
+	}
+	if (!force_audio_pause) {
+		pause_audio_icon.setAttribute("src", "//assets/ElainaV2/Icon/mute.png")
+	}
+	else {
+		pause_audio_icon.setAttribute("src", "//assets/ElainaV2/Icon/audio.png")
+	}
+
+}
+//___________________________________________________________________________//
+
+
+
+//___________________________________________________________________________//
 function next_wallpaper() {
 	let elainaBg = document.getElementById("elaina-bg")
 	document.querySelector(":root").classList.remove(wallpapers[0].replace(/\.[a-zA-Z]+$/, '-vars'))
@@ -125,17 +149,32 @@ function next_wallpaper() {
 
 function create_webm_buttons() {
 	const container = document.createElement("div")
+
 	const pauseBg = document.createElement("div");
+	const pauseAudio = document.createElement("div");
 	const nextBg = document.createElement("div");
+
 	const pauseBgIcon = document.createElement("img")
 	const nextBgIcon = document.createElement("img")
+	const pauseAudioIcon = document.createElement("img")
 
 	container.classList.add("webm-bottom-buttons-container")
+
 	pauseBg.id = "pause-bg"
 	nextBg.id = "next-bg"
+	pauseAudio.id = "pause-audio"
+
 	nextBgIcon.classList.add("next-bg-icon")
 	pauseBgIcon.classList.add("pause-bg-icon")
+	pauseAudioIcon.classList.add("pause-audio-icon")
 	
+	play_pause_set_icon_audio(pauseAudioIcon)
+	pauseAudio.addEventListener("click", () => {
+		force_audio_pause = !force_audio_pause
+		audio_play_pause()
+		play_pause_set_icon_audio()
+	})
+
 	play_pause_set_icon(pauseBgIcon)
 	pauseBg.addEventListener("click", () => {
 		force_bg_pause = !force_bg_pause
@@ -149,13 +188,18 @@ function create_webm_buttons() {
 
 	nextBgIcon.setAttribute("src", "//assets/ElainaV2/Icon/next_button.png")
 	document.getElementsByClassName("rcp-fe-lol-home")[0].appendChild(container)
+	container.append(pauseAudio)
 	container.append(pauseBg)
 	container.append(nextBg)
+
+	pauseAudio.append(pauseAudioIcon)
 	pauseBg.append(pauseBgIcon)
 	nextBg.append(nextBgIcon)
 }
+//___________________________________________________________________________//
 
 
+//___________________________________________________________________________//
 function create_element(tagName, className, content) {
 	const el = document.createElement(tagName);
 	el.className = className;
@@ -202,7 +246,10 @@ function add_elaina_home_navbar() {
 		}
 	}
 }
+//___________________________________________________________________________//
 
+
+//___________________________________________________________________________//
 let pageChangeMutation = (node) => {
 	let pagename;
 	let elaina_bg_elem = document.getElementById("elaina-bg")
@@ -302,8 +349,10 @@ let pageChangeMutation = (node) => {
 	if (previous_page != pagename)
 		previous_page = pagename
 }
+//___________________________________________________________________________//
 
 
+//___________________________________________________________________________//
 window.addEventListener('load', () => {
 	utils.mutationObserverAddCallback(pageChangeMutation, ["screen-root"])
 })
@@ -320,20 +369,22 @@ window.addEventListener('DOMContentLoaded', () => {
 	utils.addCss(default_settings["css_file"])
 
 
-    var source = default_settings["audio_src"];
-    var audio = document.createElement("audio");
-        audio.autoplay = default_settings["default_sound_autoplay"];
-        audio.loop = true;
-        audio.controls = true;
-        audio.volume = default_settings["default_sound_volume"];
-        audio.load()
+    const source = default_settings["audio_src"];
+    const audio = document.createElement("audio");
+	audio.autoplay = default_settings["default_sound_autoplay"];
+	audio.loop = default_settings["is_loop?"];
+	audio.volume = default_settings["default_sound_volume"];
+	audio.src = source;
+	audio.controls = false;
+	audio.id = 'bg-audio';
+	audio.load()
     audio.addEventListener("load", function() { 
         audio.play(); 
     }, true);
-    audio.src = source;
 
 
 	document.querySelector("body").prepend(video)
+	document.querySelector("body").prepend(audio)
 	// document.querySelector("body").prepend(create_audio_element())
 	elaina_play_pause()
 	//removeIframe()
@@ -343,14 +394,24 @@ window.addEventListener('DOMContentLoaded', () => {
 		if (phase == "GameStart" || phase == "InProgress") {
 			document.getElementById("elaina-bg").style.filter = 'blur(2px) brightness(0.4) saturate(1.5)';
 			document.getElementById("elaina-bg").pause()
+			document.getElementById("bg-audio").pause()
 		}
 		else {
 			elaina_play_pause()
+			audio_play_pause()
 		}
 	})
+//___________________________________________________________________________//
+
+
+//___________________________________________________________________________//
 	console.clear();
-    console.log('Seggs :3');
+	console.log('Seggs :3');
     console.log('By Elaina Da Catto');
     console.log('Meow ~~~');
 	console.log(default_settings["custom_log"]);
 })
+//___________________________________________________________________________//
+
+
+// .End  //
