@@ -106,7 +106,7 @@ function play_pause_set_icon(elem) {
 function audio_play_pause() {
 	let audio = document.getElementById("bg-audio")
 
-	if (!force_audio_pause) {
+	if (force_audio_pause) {
 		audio.pause()
 	}
 	else {
@@ -121,10 +121,10 @@ function play_pause_set_icon_audio(elem) {
 		return;
 	}
 	if (!force_audio_pause) {
-		pause_audio_icon.setAttribute("src", "//assets/ElainaV2/Icon/mute.png")
+		pause_audio_icon.setAttribute("src", "//assets/ElainaV2/Icon/audio.png")
 	}
 	else {
-		pause_audio_icon.setAttribute("src", "//assets/ElainaV2/Icon/audio.png")
+		pause_audio_icon.setAttribute("src", "//assets/ElainaV2/Icon/mute.png")
 	}
 
 }
