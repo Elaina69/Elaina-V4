@@ -5,13 +5,15 @@
 	"default_wallpaper":"Elaina1.webm",
 	"default_wallpaper_src":"//assets/ElainaV2/Backgrounds/Elaina1.webm",
 	"wallpaper_list": ["Elaina1.webm", "Elaina2.webm"],
-	"default_animated":false,
+	"pause_wallpaper": false,
 
 
-    "audio_src": "//assets/ElainaV2/Backgrounds/Old-Ranked_Draft-Champion_Select.mp3",
+	"audio_src": "//assets/ElainaV2/Backgrounds/Old-Ranked_Draft-Champion_Select.mp3",
 	"/___*Audio volume*___/": "(0.0 is mute, 1.0 is highest)" ,
 	"default_sound_volume": 0.2,
 	"default_sound_autoplay": true,
+	"mute_audio": true,
+	"is_loop?": true,
 
 
  	"default_home_page": "elaina-home",
