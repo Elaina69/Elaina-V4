@@ -381,11 +381,12 @@ div[class="stats-backdrop"] {
 	background-image: url("//assets/ElainaV2/Icon/ApprenticeWitch.png") !important;
 }
 
+/*
 .ticker-button {
 	background-image: url("//assets/ElainaV2/Icon/ticker.png") !important;
 	transition: all 0.2s ease-in-out;
 }
- 
+*/
 /* Player Avatar */
 /*
 .icon-image.has-icon {
