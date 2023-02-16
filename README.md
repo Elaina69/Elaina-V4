@@ -3,7 +3,7 @@ New Elaina theme for League Loader with brand new JS file
 (Special thanks teiseire117)
 
  - Github version: [Download](https://codeload.github.com/Elaina69/Elaina-V2/zip/refs/tags/v1.1.0)
- - High-end Device: Update soon (not recommend since Client will ressolution ur video to 1280x720)
+ - Lite version (just Minify the code): Update soon
 # Required: 
  - [League Loader v0.6.0 or above](https://github.com/nomi-san/league-loader/releases)
  
