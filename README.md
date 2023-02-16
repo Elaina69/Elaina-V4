@@ -5,7 +5,7 @@ New Elaina theme for League Loader with brand new JS file
  - Github version: [Download](https://codeload.github.com/Elaina69/Elaina-V2/zip/refs/tags/v1.1.0)
  - Lite version (just Minify the code): Update soon
 # Required: 
- - [League Loader v0.6.0 or above](https://github.com/nomi-san/league-loader/releases)
+ - [League Loader v0.6.0](https://github.com/nomi-san/league-loader/releases) (Update for v0.7.0 later)
  
 # How to install:
  - Copy "plugins" and "assets" folder to League-loader root folder
