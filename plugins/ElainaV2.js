@@ -10,6 +10,7 @@ let patcher_go_to_default_home_page = true;
 let force_bg_pause = default_settings["pause_wallpaper"];
 let force_audio_pause = default_settings["pause_audio"];
 let wallpapers = default_settings["wallpaper_list"];
+let isFriendsListHidden = default_settings["is_friendslist_hidden"];
 
 
 //___________________________________________________________________________//
@@ -199,6 +200,7 @@ function create_webm_buttons() {
 //___________________________________________________________________________//
 
 
+
 //___________________________________________________________________________//
 function create_element(tagName, className, content) {
 	const el = document.createElement(tagName);
@@ -279,6 +281,9 @@ let pageChangeMutation = (node) => {
 	}
 	if (pagename == "rcp-fe-lol-uikit-full-page-modal-controller") {
 		return;
+	}
+	else if (pagename == "rcp-fe-lol-yourshop") {
+		elaina_bg_elem.style.filter = 'blur(3px) brightness(0.4) saturate(1.5)';
 	}
 	if (pagename == "rcp-fe-lol-champ-select") {
 		elaina_bg_elem.style.filter = 'blur(3px) brightness(0.4) saturate(1.5)';
@@ -405,13 +410,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 //___________________________________________________________________________//
-	console.clear();
-	console.log('Seggs :3');
-    console.log('By Elaina Da Catto');
-    console.log('Meow ~~~');
-	console.log(default_settings["custom_log"]);
+console.clear();
+console.log('By Elaina Da Catto');
+console.log('Meow ~~~');
+console.log(default_settings["custom_log"]);
 })
 //___________________________________________________________________________//
 
 
+    
 // .End  //

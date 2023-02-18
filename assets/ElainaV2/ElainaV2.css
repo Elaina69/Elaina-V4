@@ -2,6 +2,39 @@
 /* Meow~~~ */
 
 
+
+:root {
+	/*
+	--font-display: 'name of font', sans-serif !important;
+	--font-body: 'name of font', sans-serif !important; */
+
+
+	--Font-link: url("");
+
+	--BE-Icon: url("//assets/ElainaV2/Icon/ElainaStare.png");
+	--RP-Icon: url("//assets/ElainaV2/Icon/ApprenticeWitch.png");
+
+	--Avatar: url("//assets/ElainaV2/Icon/Avatar.gif");
+	--Ticker: url("//assets/ElainaV2/Icon/ticker.png");
+
+
+}
+
+
+
+
+
+/*____________________________________________________________________________________________*/
+/*
+@font-face {
+	font-family: 'name of font';
+	src: var(--Font-link) format('truetype');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+*/ 
+
 #elaina-bg {
 	width:100%;
 	height: 100%;
@@ -18,15 +51,6 @@ iframe html {
 
 iframe .bg-cover {
 	opacity:0!important
-}
-
-lol-uikit-section[section-id='lunar-revel-embed-2023'] {
-    opacity: 0!important;
-	visibility: hidden;
-}
-
-lol-uikit-navigation-item[item-id="lunar-revel-embed-2023"] {
-	display:none!important
 }
 
 .lol-social-sidebar.ember-view {
@@ -50,7 +74,9 @@ lol-uikit-navigation-item[item-id="lunar-revel-embed-2023"] {
 }
 
 .navigation-root-component.ember-view {
-	background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 24%))!important
+	background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 24%))!important;
+	height: 77px !important;
+	
 }
 
 .alpha-version-panel {
@@ -238,8 +264,19 @@ html {
 	background-image: none!important
 }
 
+.rcp-fe-lol-navigation.main-nav-bar {
+	height: 76px !important;
+}
 div[data-screen-name="rcp-fe-lol-home"] .rcp-fe-lol-home-sub-nav {
 	margin-top: 10px;
+    padding-bottom: 10px;
+    background-color: #000000ad;
+    border-radius: 10px;
+    border: 2px solid var(--default-color, #cdbe91);
+}
+
+div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
+	padding-top: 10px;
     padding-bottom: 10px;
     background-color: #000000ad;
     border-radius: 10px;
@@ -320,7 +357,7 @@ div[data-screen-name="rcp-fe-lol-home"] .rcp-fe-lol-home-sub-nav {
 	display: none;
 }
 
-div[class="clash-aram-intro-modal ember-view"] {
+.clash-aram-intro-modal {
 	display: none;
 }
 
@@ -332,20 +369,9 @@ div[class="clash-aram-intro-modal ember-view"] {
 	display: none;
 }
 
-div[class="store-backdrop"] {
-   background: none !important;
-}
 
-div[class="background"] {
-	background: none !important;
-}
-
-div[class="ranked-intro-background"] {
+.ranked-intro-background {
    display: none;
-}
-
-div[class="stats-backdrop"] {
-	background: none !important;
 }
 
 .loot-backdrop.background-static {
@@ -356,6 +382,22 @@ div[class="stats-backdrop"] {
     display: none;
 }
 
+.yourshop-root {
+    background-image: none !important;
+}
+
+.npe-root-component {
+    background-image: none !important;
+}
+
+div > div > .rcp-fe-lol-tft-application-background {
+	background-image: none !important; 
+}
+
+.item-page-items-container-wrapper.purchase-history-page-content-wrapper {
+	background: unset !important;
+}
+
 /* Thanh thông báo */
 .navigation-status-ticker-content-no-link {
 	background-color: rgba(248, 169, 201, 0.726);
@@ -364,51 +406,29 @@ div[class="stats-backdrop"] {
 	color: rgba(22, 22, 22, 0.626);
 }
 
-/* Icon Tinh hoa lam */
 .currency-be-icon-static {
-	background-image: url("//assets/ElainaV2/Icon/ElainaStare.png") !important;
+	background-image: var(--BE-Icon) !important;
+	background-position: 0px center;
 }
 
-.animation-add-blue-essence {
-	display: none;
-}
-
-.animation-remove-blue-essence {
-	display: none;
-}
-/* Icon RP */
 .currency-rp {
-	background-image: url("//assets/ElainaV2/Icon/ApprenticeWitch.png") !important;
+	background-image: var(--RP-Icon) !important;
 }
 
-/*
+
 .ticker-button {
-	background-image: url("//assets/ElainaV2/Icon/ticker.png") !important;
+	background-image: var(--Ticker) !important;
 	transition: all 0.2s ease-in-out;
+    border: 2px solid var(--default-color, #e0a9d9);
+    padding: 2px;
+    border-radius: 50px;
 }
-*/
-/* Player Avatar */
-/*
-.icon-image.has-icon {
-	content: url(' ') !important;
-}
-*/
 
-/* Font */
-/*
-@font-face {
-	font-family: 'aegirseaborn';
-	src: url('https://raw.githubusercontent.com/Roydevil/Skadi-Theme/main/AegirSeaborn.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
-	font-display: swap;
+
+.top > .icon-image.has-icon {
+	content: var(--Avatar) !important;
 }
- 
-:root {
-	--font-display: 'aegirseaborn', sans-serif !important;
-	--font-body: 'aegirseaborn', sans-serif !important;
-}
-*/
+
 
 
 /* End */
