@@ -1,4 +1,4 @@
-/* By Elaina Da Catto */ /* Based on "Retrorem" by teiseire117 */
+/* By Elaina Da Catto */ /* "Retrorem" by teiseire117 but better (i think) */
 /* Meow~~~ */
 
 
@@ -10,7 +10,6 @@ let patcher_go_to_default_home_page = true;
 let force_bg_pause = default_settings["pause_wallpaper"];
 let force_audio_pause = default_settings["pause_audio"];
 let wallpapers = default_settings["wallpaper_list"];
-let isFriendsListHidden = default_settings["is_friendslist_hidden"];
 
 
 //___________________________________________________________________________//
@@ -106,12 +105,15 @@ function play_pause_set_icon(elem) {
 //___________________________________________________________________________//
 function audio_play_pause() {
 	let audio = document.getElementById("bg-audio")
+	let wallpaperaudio = document.getElementById("elaina-bg")
 
 	if (force_audio_pause) {
 		audio.pause()
+		wallpaperaudio.muted = true;
 	}
 	else {
 		audio.play()
+		wallpaperaudio.muted = false;
 	}
 }
 
@@ -136,36 +138,43 @@ function play_pause_set_icon_audio(elem) {
 //___________________________________________________________________________//
 function next_wallpaper() {
 	let elainaBg = document.getElementById("elaina-bg")
-	document.querySelector(":root").classList.remove(wallpapers[0].replace(/\.[a-zA-Z]+$/, '-vars'))
+	document.querySelector(":root").classList.remove(wallpapers[0].replace(/\.[a-zA-Z0-9]+$/, '-vars'))
 	elainaBg.classList.add("webm-hidden");
 	wallpapers.push(wallpapers.shift())
-	document.querySelector(":root").classList.add(wallpapers[0].replace(/\.[a-zA-Z]+$/, '-vars'))
+	document.querySelector(":root").classList.add(wallpapers[0].replace(/\.[a-zA-Z0-9]+$/, '-vars'))
 	setTimeout(function () {
 		elainaBg.src = `//assets/ElainaV2/Backgrounds/${wallpapers[0]}`
 		elaina_play_pause()
 		elainaBg.classList.remove("webm-hidden");
 	}, 500);
 }
+//___________________________________________________________________________//
 
 
+
+//___________________________________________________________________________//
 function create_webm_buttons() {
 	const container = document.createElement("div")
 
 	const pauseBg = document.createElement("div");
 	const pauseAudio = document.createElement("div");
 	const nextBg = document.createElement("div");
+	const prevBg = document.createElement("div");
 
 	const pauseBgIcon = document.createElement("img")
 	const nextBgIcon = document.createElement("img")
 	const pauseAudioIcon = document.createElement("img")
+	const prevBgIcon = document.createElement("img")
 
 	container.classList.add("webm-bottom-buttons-container")
 
 	pauseBg.id = "pause-bg"
 	nextBg.id = "next-bg"
 	pauseAudio.id = "pause-audio"
+	prevBg.id = "prev-bg"
 
 	nextBgIcon.classList.add("next-bg-icon")
+	prevBgIcon.classList.add("prev-bg-icon")
 	pauseBgIcon.classList.add("pause-bg-icon")
 	pauseAudioIcon.classList.add("pause-audio-icon")
 	
@@ -187,14 +196,22 @@ function create_webm_buttons() {
 		next_wallpaper()
 	})
 
+	prevBg.addEventListener("click", () => {
+	    prev_wallpaper()
+	})
+
 	nextBgIcon.setAttribute("src", "//assets/ElainaV2/Icon/next_button.png")
+	prevBgIcon.setAttribute("src", "//assets/ElainaV2/Icon/prev_button.png")
+
 	document.getElementsByClassName("rcp-fe-lol-home")[0].appendChild(container)
 	container.append(pauseAudio)
 	container.append(pauseBg)
+	//container.append(prevBg)
 	container.append(nextBg)
 
 	pauseAudio.append(pauseAudioIcon)
 	pauseBg.append(pauseBgIcon)
+	//prevBg.append(prevBgIcon)
 	nextBg.append(nextBgIcon)
 }
 //___________________________________________________________________________//
@@ -318,6 +335,9 @@ let pageChangeMutation = (node) => {
 	if (pagename == "rcp-fe-lol-profiles-main") {
 		let rankedNode = document.querySelector('[section-id="profile_subsection_leagues"]')
 
+		document.querySelector(".style-profile-ranked-component.ember-view > .style-profile-emblem-wrapper  > .style-profile-emblem-header > .style-profile-emblem-header-title").innerHTML = "Apprentice";
+		document.querySelector(".style-profile-emblem-subheader-ranked > div").innerHTML = "[Witch]";
+
 		if (!ranked_observer && rankedNode) {
 			ranked_observer = new MutationObserver(mutations => {
 				mutations.forEach(mutation => {
@@ -337,6 +357,7 @@ let pageChangeMutation = (node) => {
 			ranked_observer.observe(document.querySelector('[section-id="profile_subsection_leagues"]'), { attributes: true, childList: false, subtree: false });
 		}
 		elaina_bg_elem.style.filter = bg_filters["rcp-fe-lol-profiles-main"][wallpapers[0]];
+		
 	}
 	else if (previous_page == "rcp-fe-lol-profiles-main") {
 		if (brightness_modifiers.indexOf(pagename) == -1)
@@ -390,9 +411,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	document.querySelector("body").prepend(video)
 	document.querySelector("body").prepend(audio)
-	// document.querySelector("body").prepend(create_audio_element())
 	elaina_play_pause()
-	//removeIframe()
 	utils.subscribe_endpoint('/lol-gameflow/v1/gameflow-phase', (message) => {
 		let phase = JSON.parse(message["data"])[2]["data"]
 
