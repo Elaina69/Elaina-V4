@@ -2,19 +2,19 @@
 New Elaina theme for League Loader with brand new JS file
 (Special thanks teiseire117)
 
- - Github version: [Download](https://codeload.github.com/Elaina69/Elaina-V2/zip/refs/tags/v1.2.8)
+ - Github version: [Download](https://codeload.github.com/Elaina69/Elaina-V2/zip/refs/tags/v1.3.0)
 
 # Required: 
- - [League Loader v0.6.0](https://github.com/nomi-san/league-loader/releases/download/v0.6.0/league-loader-v0.6.0.zip)
+ - [League Loader v1.0.0]() (Update soon)
  
 # How to install:
- - Copy "plugins" and "assets" folder to League-loader root folder
+ - Copy "ElainaV2" folder to League-loader "plugins" folder
  - Done
 
 
 # Change backgrounds:
- - Open /plugins/configs/ElainaV2_config.json
+ - Open /plugins/ElainaV2/configs/ElainaV2_config.json
  
  
 # Change icon (BE, RP, avatar,...)
- - Open /assets/ElainaV2/ElainaV2.css
+ - Open /plugins/ElainaV2/assets/ElainaV2.css
