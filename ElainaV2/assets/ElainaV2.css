@@ -19,11 +19,15 @@
 	--Avatar: url("https://raw.githubusercontent.com/Elaina69/Elaina-V2/main/ElainaV2/assets/Icon/Avatar.gif");
 
 	--Ticker: url("https://raw.githubusercontent.com/Elaina69/Elaina-V2/main/ElainaV2/assets/Icon/ticker.png");
+	--Ticker-Hover: url(" ");
 
 	--Clash-banner: url("https://raw.githubusercontent.com/Elaina69/Elaina-V2/main/ElainaV2/assets/Icon/Clash.png");
 
     --Rank-Icon: url("https://raw.githubusercontent.com/Elaina69/Elaina-V2/main/ElainaV2/assets/Icon/Rank.png");
 
+	--Emblem: url("https://raw.githubusercontent.com/Elaina69/Elaina-V2/main/ElainaV2/assets/Icon/emblem_5.png");
+
+	--Ticker-Hover: url("https://raw.githubusercontent.com/Elaina69/Elaina-V2/main/ElainaV2/assets/Icon/ticker-hover.png");
 	/*  Somehow Local Image doesn't work on LL V1.0.1 (code is suck)
 
 	--BE-Icon: url("./Icon/ElainaStare.png");
@@ -36,6 +40,8 @@
 	--Clash-banner: url("./Icon/Clash.png");
 
     --Rank-Icon: url('./Icon/Rank.png');
+
+	--Ticker-Hover: url("./Icon/ticker-hover.png");
 	*/
 }
 
@@ -406,6 +412,12 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
 	align-items: flex-end
 }
 
+.watermark {
+	padding-left:800px !important ;
+	margin: 4px !important;
+	color: #cdbe91 !important;
+}
+
 /*_________________________________________________________________________________________________________________________________*/
 
 
@@ -485,24 +497,29 @@ div > div > .rcp-fe-lol-tft-application-background {
 	display: none !important;
 }
 
-.style-profile-emblem-subheader-ranked > div {
-	color: #cdbe91 !important;
-}
-
-.style-profile-emblem-subheader-ranked > div::after {
-	visibility: visible !important;
-	content: "";
-}
-
-.style-profile-ranked-component.ember-view > .style-profile-emblem-wrapper  > .style-profile-emblem-header > .style-profile-emblem-header-title::after {
-    visibility: visible !important;
-	content: "";
-}
-
 .style-profile-honor-component.ember-view > .style-profile-emblem-wrapper  > .style-profile-emblem-header > .style-profile-emblem-header-subtitle {
 	display: none !important;
 }
 
+.style-profile-emblem-subheader-ranked > div {
+	color: #cdbe91 !important;
+	font-size: 0px !important;
+}
+
+.style-profile-ranked-component.ember-view > .style-profile-emblem-wrapper  > .style-profile-emblem-header > .style-profile-emblem-header-title {
+	font-size: 0px !important;
+}
+
+.style-profile-ranked-component.ember-view > .style-profile-emblem-wrapper  > .style-profile-emblem-header > .style-profile-emblem-header-title::after {
+	content: "Apprentice";
+	font-size: 12px !important;
+}
+
+.style-profile-emblem-subheader-ranked > div::after {
+	content: "[Witch]";
+	color: #cdbe91 !important;
+	font-size: 10px !important;
+}
 /*_________________________________________________________________________________________________________________________________*/
 
 
@@ -530,12 +547,18 @@ div > div > .rcp-fe-lol-tft-application-background {
 
 .navigation-status-ticker.status-degraded .ticker-button {
 	background-image: var(--Ticker) !important;
-	transition: all 0.2s ease-in-out !important;
     border: 2px solid var(--default-color, #e0a9d9) !important;
     padding: 2px !important;
     border-radius: 50px !important;
 }
-
+/* will update later
+.navigation-status-ticker.status-degraded .ticker-button:hover {
+	background-image: var(--Ticker-Hover) !important;
+    border: 2px solid var(--default-color, #e0a9d9) !important;
+    padding: 2px !important;
+    border-radius: 50px !important;
+}
+*/
 .top > .icon-image.has-icon, .style-profile-champion-icon-masked > img {
 	content: var(--Avatar) !important;
 }
@@ -555,6 +578,10 @@ div > div > .rcp-fe-lol-tft-application-background {
 --regalia-emblem-master: var(--Rank-Icon) !important;
 --regalia-emblem-grandmaster: var(--Rank-Icon) !important;
 --regalia-emblem-challenger: var(--Rank-Icon) !important;
+}
+
+.style-profile-honor-icon {
+	content: var(--Emblem) !important;
 }
 /*_________________________________________________________________________________________________________________________________*/
 

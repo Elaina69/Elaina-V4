@@ -79,7 +79,7 @@ let updateLobbyRegaliaBanner = async message => {
 				return;
 			}
 			window.clearInterval(intervalId)
-		}, 100)
+		}, 200)
 	}
 }
 
@@ -173,11 +173,14 @@ function create_webm_buttons() {
 	const pauseAudio = document.createElement("div");
 	const nextBg = document.createElement("div");
 	const prevBg = document.createElement("div");
+	const watermark =  document.createElement("div");
 
 	const pauseBgIcon = document.createElement("img")
 	const nextBgIcon = document.createElement("img")
 	const pauseAudioIcon = document.createElement("img")
 	const prevBgIcon = document.createElement("img")
+
+	const wtmark = document.createElement("p")
 
 	container.classList.add("webm-bottom-buttons-container")
 
@@ -185,11 +188,13 @@ function create_webm_buttons() {
 	nextBg.id = "next-bg"
 	pauseAudio.id = "pause-audio"
 	prevBg.id = "prev-bg"
+	watermark.id = "watermark"
 
 	nextBgIcon.classList.add("next-bg-icon")
 	prevBgIcon.classList.add("prev-bg-icon")
 	pauseBgIcon.classList.add("pause-bg-icon")
 	pauseAudioIcon.classList.add("pause-audio-icon")
+	wtmark.classList.add("watermark")
 	
 	play_pause_set_icon_audio(pauseAudioIcon)
 	pauseAudio.addEventListener("click", () => {
@@ -216,16 +221,22 @@ function create_webm_buttons() {
 	nextBgIcon.setAttribute("src", "//plugins/ElainaV2/assets/Icon/next_button.png")
 	prevBgIcon.setAttribute("src", "//plugins/ElainaV2/assets/Icon/prev_button.png")
 
+	wtmark.innerHTML = "By Elaina Da Catto";
+
 	document.getElementsByClassName("rcp-fe-lol-home")[0].appendChild(container)
 	container.append(pauseAudio)
 	container.append(pauseBg)
 	//container.append(prevBg)
 	container.append(nextBg)
+	container.append(watermark)
 
 	pauseAudio.append(pauseAudioIcon)
 	pauseBg.append(pauseBgIcon)
 	//prevBg.append(prevBgIcon)
 	nextBg.append(nextBgIcon)
+	watermark.append(wtmark)
+
+
 }
 //___________________________________________________________________________//
 
@@ -361,9 +372,6 @@ let pageChangeMutation = (node) => {
 	if (pagename == "rcp-fe-lol-profiles-main") {
 		let rankedNode = document.querySelector('[section-id="profile_subsection_leagues"]')
 
-		document.querySelector(".style-profile-ranked-component.ember-view > .style-profile-emblem-wrapper  > .style-profile-emblem-header > .style-profile-emblem-header-title").innerHTML = "Apprentice";
-		document.querySelector(".style-profile-emblem-subheader-ranked > div").innerHTML = "[Witch]";
-
 		if (!ranked_observer && rankedNode) {
 			ranked_observer = new MutationObserver(mutations => {
 				mutations.forEach(mutation => {
@@ -376,7 +384,7 @@ let pageChangeMutation = (node) => {
 							catch {
 								;
 							}
-						}, 50)
+						}, 500)
 					}
 				});
 			});
