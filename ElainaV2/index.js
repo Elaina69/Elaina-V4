@@ -182,6 +182,8 @@ function create_webm_buttons() {
 
 	const wtmark = document.createElement("p")
 
+	let count = 0;
+
 	container.classList.add("webm-bottom-buttons-container")
 
 	pauseBg.id = "pause-bg"
@@ -189,6 +191,7 @@ function create_webm_buttons() {
 	pauseAudio.id = "pause-audio"
 	prevBg.id = "prev-bg"
 	watermark.id = "watermark"
+	wtmark.id = "wtmark"
 
 	nextBgIcon.classList.add("next-bg-icon")
 	prevBgIcon.classList.add("prev-bg-icon")
@@ -223,6 +226,12 @@ function create_webm_buttons() {
 
 	wtmark.innerHTML = "By Elaina Da Catto";
 
+	wtmark.addEventListener("click", () => {
+		count += 1;
+		if (count >= 10) {
+			window.open("https://cdn.discordapp.com/attachments/887677396315172894/1081094605510017094/EasterEgg.jpg")}
+	}, false);
+	
 	document.getElementsByClassName("rcp-fe-lol-home")[0].appendChild(container)
 	container.append(pauseAudio)
 	container.append(pauseBg)
@@ -300,7 +309,7 @@ function patch_default_home_page(){
 		}
 		go_to_default_home_page()
 		loop += 1
-	}, 200)
+	}, 300)
 }
 
 let pageChangeMutation = (node) => {

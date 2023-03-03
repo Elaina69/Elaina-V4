@@ -486,6 +486,13 @@ div > div > .rcp-fe-lol-tft-application-background {
 	background: unset !important;
 }
 
+.loading-content div > div > .loading-text {
+	display: none !important;
+}
+
+.hextech-loading-animation > svg {
+	display: none !important;
+}
 /*__________________________________________________________________________________________________________________________________*/
 
 
