@@ -168,36 +168,34 @@ function next_wallpaper() {
 //___________________________________________________________________________//
 function create_webm_buttons() {
 	const container = document.createElement("div")
+	
 
 	const pauseBg = document.createElement("div");
 	const pauseAudio = document.createElement("div");
 	const nextBg = document.createElement("div");
 	const prevBg = document.createElement("div");
-	const watermark =  document.createElement("div");
+	
 
 	const pauseBgIcon = document.createElement("img")
 	const nextBgIcon = document.createElement("img")
 	const pauseAudioIcon = document.createElement("img")
 	const prevBgIcon = document.createElement("img")
-
-	const wtmark = document.createElement("p")
-
-	let count = 0;
+	
 
 	container.classList.add("webm-bottom-buttons-container")
+	
 
 	pauseBg.id = "pause-bg"
 	nextBg.id = "next-bg"
 	pauseAudio.id = "pause-audio"
 	prevBg.id = "prev-bg"
-	watermark.id = "watermark"
-	wtmark.id = "wtmark"
+	
 
 	nextBgIcon.classList.add("next-bg-icon")
 	prevBgIcon.classList.add("prev-bg-icon")
 	pauseBgIcon.classList.add("pause-bg-icon")
 	pauseAudioIcon.classList.add("pause-audio-icon")
-	wtmark.classList.add("watermark")
+	
 	
 	play_pause_set_icon_audio(pauseAudioIcon)
 	pauseAudio.addEventListener("click", () => {
@@ -223,28 +221,225 @@ function create_webm_buttons() {
 
 	nextBgIcon.setAttribute("src", "//plugins/ElainaV2/assets/Icon/next_button.png")
 	prevBgIcon.setAttribute("src", "//plugins/ElainaV2/assets/Icon/prev_button.png")
-
-	wtmark.innerHTML = "By Elaina Da Catto";
-
-	wtmark.addEventListener("click", () => {
-		count += 1;
-		if (count >= 10) {
-			window.open("https://cdn.discordapp.com/attachments/887677396315172894/1081094605510017094/EasterEgg.jpg")}
-	}, false);
 	
-	document.getElementsByClassName("rcp-fe-lol-home")[0].appendChild(container)
+	
+	let showcontainer = document.getElementsByClassName("rcp-fe-lol-home")[0]
+	    showcontainer.appendChild(container)
+		
+
 	container.append(pauseAudio)
 	container.append(pauseBg)
 	//container.append(prevBg)
 	container.append(nextBg)
-	container.append(watermark)
+	
 
 	pauseAudio.append(pauseAudioIcon)
 	pauseBg.append(pauseBgIcon)
 	//prevBg.append(prevBgIcon)
 	nextBg.append(nextBgIcon)
-	watermark.append(wtmark)
+	
 
+
+//Easter Egg
+    const container2 = document.createElement("div")
+	const container3 = document.createElement("div")
+	const container4 = document.createElement("div")
+
+
+	const watermark = document.createElement("div");
+	const afteregg = document.createElement("div");
+	const aftereggt = document.createElement("div");
+	const headpatdiv = document.createElement("div");
+	const boobsdiv = document.createElement("div");
+
+
+	const aftereggIcon = document.createElement("img")
+
+
+	const wtmark = document.createElement("p")
+	const aftereggtext = document.createElement("p")
+
+
+	container2.classList.add("EasterEgg")
+	container3.classList.add("watermark-text")
+	container4.classList.add("EasterEgg-text-div")
+
+
+	watermark.id = "watermark"
+	afteregg.id - "afteregg-image"
+	aftereggtext.id = "afteregg-text"
+	aftereggt.id = "aftereggt"
+
+
+	wtmark.classList.add("watermark")
+	aftereggIcon.classList.add("aftereggIcon")
+
+
+	aftereggIcon.setAttribute("src", "//plugins/ElainaV2/assets/Icon/ElainaCB.png")	
+	aftereggIcon.style.visibility = "hidden"
+
+
+	const container5 = document.createElement("div")
+	        const container6 = document.createElement("div")
+			
+			const headpat = document.createElement("button")
+			const boobs = document.createElement("button")
+			
+			container5.classList.add("Headpat-con")
+			container6.classList.add("Boobs-con")
+			
+			headpat.classList.add("Headpat")
+			boobs.classList.add("Boobs")
+
+			const container7 = document.createElement("div")
+			const container8 = document.createElement("div")
+			const container9 = document.createElement("div")
+
+			const answer1 = document.createElement("p")
+			const answer2 = document.createElement("p")
+			const answer3 = document.createElement("a")
+
+			container7.classList.add("answer1-con")
+			container8.classList.add("answer2-con")
+			container9.classList.add("answer3-con")
+
+			answer1.id = "answer1"
+			answer2.id = "answer2"
+			answer3.id = "answer3"
+
+
+
+	let count = 0;
+	let Headpatcount = 0;
+	let answer2clicked = 0;
+
+	wtmark.innerHTML = "By Elaina Da Catto";
+	wtmark.addEventListener("click", () => {
+		count += 1;
+		if (count >= 10) {
+			wtmark.style.visibility = "hidden"
+			aftereggIcon.style.visibility = "visible"
+			aftereggtext.innerHTML = "You should go outside<br>and touch grass"
+
+			headpat.addEventListener("click", () => {
+				boobs.style.visibility = "visible"
+				Headpatcount += 1;
+				if (Headpatcount < 15) {
+					aftereggtext.innerHTML = "Meow ~~ !!"
+					container4.style.bottom = "260px"
+					container4.style.right = "280px"
+
+					container7.remove()
+					container8.remove()
+					container9.remove()
+				}
+				if (Headpatcount >= 15) {
+					aftereggtext.innerHTML = "Mo... My hair is burning !!"
+					container4.style.bottom = "260px"
+					container4.style.right = "225px"
+
+					container7.remove()
+					container8.remove()
+					container9.remove()
+				}
+			}, false);
+
+			boobs.addEventListener("click", () => {
+				aftereggtext.innerHTML = "Ehh...where did you<br>just touch !?"
+				container4.style.bottom = "250px"
+				container4.style.right = "250px"
+				answer1.innerHTML = "\"N...Nothing !!\""
+				answer2.innerHTML = "\"I...I wanna see your boobs\""
+				boobs.style.visibility = "hidden"
+
+
+				answer1.addEventListener("click", () => {
+					aftereggtext.innerHTML = "... You should be careful<br>next time"
+					container4.style.bottom = "248px"
+					container4.style.right = "239px"
+
+					container7.remove()
+					container8.remove()
+					container9.remove()
+
+					boobs.style.visibility = "visible"	
+				}, false);
+
+				answer2.addEventListener("click", () => {
+					answer2clicked += 1;
+					aftereggtext.innerHTML = "As you wish, my darling ~~"
+					container4.style.bottom = "260px"
+					container4.style.right = "219px"
+
+					container7.remove()
+					container8.remove()
+
+					boobs.style.visibility = "visible"	
+
+					if (answer2clicked > 0) {
+						showcontainer.appendChild(container9)
+						container9.append(answer3)
+						answer3.innerHTML = "Take off her clothes"
+						answer3.setAttribute("href", "https://media.discordapp.net/attachments/887677396315172894/1081501404729974804/6f5ba14e64dea4feb1349c3b658338349e0c1244.png")
+						answer3.setAttribute("target", "_blank")
+
+						answer3.addEventListener("click", () => {
+							aftereggtext.innerHTML = "..."
+							container4.style.bottom = "260px"
+							container4.style.right = "325px"
+
+							container9.remove()
+						}, false);
+					}
+				}, false);
+
+				showcontainer.appendChild(container7)
+				showcontainer.appendChild(container8)
+
+				container7.append(answer1)
+				container8.append(answer2)
+				container9.append(answer3)
+
+				
+			}, false);
+
+			showcontainer.appendChild(container5)
+			showcontainer.appendChild(container6)
+
+			container5.append(headpatdiv)
+			container6.append(boobsdiv)
+
+			headpatdiv.append(headpat)
+			boobsdiv.append(boobs)
+
+			try {
+				document.querySelector('.answer1-con').remove()
+				document.querySelector('.answer2-con').remove()
+			}
+			catch(error) {}
+
+			try {
+				document.querySelector('.answer3-con').remove()
+			}
+			catch(error) {}
+		}
+	}, false);
+
+
+	showcontainer.appendChild(container2)
+	showcontainer.appendChild(container3)
+	showcontainer.appendChild(container4)
+
+
+	container3.append(watermark)
+	container2.append(afteregg)
+	container4.append(aftereggt)
+
+
+
+	watermark.append(wtmark)
+	afteregg.append(aftereggIcon)
+	aftereggt.append(aftereggtext)
 
 }
 //___________________________________________________________________________//
