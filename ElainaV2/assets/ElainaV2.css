@@ -319,27 +319,6 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
 	position:absolute
 }
 
-.watermark-text {
-	display: flex;
-    bottom: 9px;
-    right: 20px;
-	position:absolute
-}
-
-.EasterEgg {
-	display: flex;
-    bottom: -4px;
-    right: 130px;
-	position:absolute
-}
-
-.EasterEgg-text-div {
-	display: flex;
-    bottom: 250px;
-    right: 241px;
-	position:absolute
-}
-
 #pause-bg {
     position: relative !important;
     border: 2px solid #8c8263 !important;
@@ -433,16 +412,39 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
 	align-items: flex-end
 }
 
+
+/* Easter Egg */
 .watermark {
 	margin: 4px !important;
 	color: #cdbe91 !important;
 }
 
-.aftereggIcon {
+.watermark-text {
+	display: flex;
+    bottom: 9px;
+    right: 20px;
+	position:absolute
+}
+
+.Elaina1ImageCon {
+	display: flex;
+    bottom: -4px;
+    right: 130px;
+	position:absolute
+}
+
+.Elaina1TextCon {
+	display: flex;
+    bottom: 260px;
+    right: 303px;
+	position:absolute
+}
+
+.Elaina1Image {
 	width: 650px !important;
 }
 
-#afteregg-text {
+.Elaina1Text {
 	margin: 4px !important;
 	color: rgb(129 185 224) !important;
 	text-align: center !important;
@@ -451,55 +453,50 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
 
 .Headpat-con {
 	display: flex;
-    bottom: 240px;
-    right: 510px;
-	position:absolute
-}
-
-.Boobs-con {
-	display: flex;
-    bottom: 20px;
-    right: 520px;
+    bottom: 230px;
+    right: 500px;
 	position:absolute
 }
 
 .Headpat {
 	font-size: 100px !important;
-    width: 100px;
-    height: 50px;
+    width: 110px;
+    height: 60px;
 	background: transparent;
 	border: none;
 }
 
+.Boobs-con {
+	display: flex;
+    bottom: 20px;
+    right: 495px;
+	position:absolute
+}
+
 .Boobs {
 	font-size: 100px !important;
-    width: 100px;
-    height: 50px;
+    width: 136px;
+    height: 65px;
+	background: transparent;
+	border: none;
+}
+
+.goOutSide-con {
+	display: flex;
+    bottom: -3px;
+    right: 434px;
+	position:absolute
+}
+
+.GoOutSide {
+	font-size: 100px !important;
+    width: 225px;
+    height: 290px;
 	background: transparent;
 	border: none;
 }
 
 .answer1-con {
-	display: flex;
-    bottom: 150px;
-    right: 220px;
-    position: absolute;
-	background-color: rgb(19, 15, 15) !important;
-    border: 2px solid #8c8263 !important;
-	border-radius: 10px;
-}
-
-.answer2-con {
-	display: flex;
-    bottom: 80px;
-    right: 220px;
-    position: absolute;
-	background-color: rgb(19, 15, 15) !important;
-    border: 2px solid #8c8263 !important;
-	border-radius: 10px;
-}
-
-.answer3-con {
 	display: flex;
     bottom: 150px;
     right: 220px;
@@ -521,6 +518,16 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
 	color: #cdbe91;
 }
 
+.answer2-con {
+	display: flex;
+    bottom: 80px;
+    right: 220px;
+    position: absolute;
+	background-color: rgb(19, 15, 15) !important;
+    border: 2px solid #8c8263 !important;
+	border-radius: 10px;
+}
+
 #answer2 {
 	margin-top: 10px;
     margin-left: 10px;
@@ -533,6 +540,16 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
 	color: #cdbe91;
 }
 
+.answer3-con {
+	display: flex;
+    bottom: 150px;
+    right: 220px;
+    position: absolute;
+	background-color: rgb(19, 15, 15) !important;
+    border: 2px solid #8c8263 !important;
+	border-radius: 10px;
+}
+
 #answer3 {
 	margin-top: 10px;
     margin-left: 10px;
@@ -543,6 +560,59 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
     width: 200px;
     font-size: 17px;
 	color: #cdbe91;
+}
+
+.answer4-con {
+	display: flex;
+    bottom: 150px;
+    right: 200px;
+    position: absolute;
+	background-color: rgb(19, 15, 15) !important;
+    border: 2px solid #8c8263 !important;
+	border-radius: 10px;
+}
+
+#answer4 {
+	margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-align: center;
+    display: flex;
+    width: 220px;
+    font-size: 17px;
+	color: #cdbe91;
+}
+
+.answer5-con {
+	display: flex;
+    bottom: 80px;
+    right: 200px;
+    position: absolute;
+	background-color: rgb(19, 15, 15) !important;
+    border: 2px solid #8c8263 !important;
+	border-radius: 10px;
+}
+
+#answer5 {
+	margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-align: center;
+    display: flex;
+    width: 220px;
+    font-size: 17px;
+	color: #cdbe91;
+}
+
+.Greeting {
+	margin: 4px !important;
+	color: rgb(129 185 224) !important;
+	text-align: center !important;
+	font-size: 20px !important;
+	width: 212px;
+	height: 50px;
 }
 /*_________________________________________________________________________________________________________________________________*/
 
