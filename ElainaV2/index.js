@@ -76,16 +76,20 @@ let updateLobbyRegaliaBanner = async message => {
 	let phase = JSON.parse(message["data"])[2]["data"];
 
 	if (phase == "Lobby") {
-		let intervalId = window.setInterval(() => {
+		window.setInterval(() => {
 			try {
 				let base = document.querySelector("lol-regalia-parties-v2-element.regalia-loaded").shadowRoot.querySelector(".regalia-parties-v2-banner-backdrop.regalia-banner-loaded")
 
 				base.shadowRoot.querySelector(".regalia-banner-asset-static-image").style.filter = "sepia(1) brightness(3.5) opacity(0.4)"
 				base.shadowRoot.querySelector(".regalia-banner-state-machine").shadowRoot.querySelector(".regalia-banner-intro.regalia-banner-video").style.filter = "grayscale(1) saturate(0) brightness(0.5)"
-			} catch {
-				return;
 			}
-			window.clearInterval(intervalId)
+			catch {}
+
+			try {
+				document.querySelector("div.lobby-banner.local > lol-regalia-parties-v2-element").shadowRoot.querySelector("div > div > div.regalia-parties-v2-crest-wrapper > lol-regalia-crest-v2-element").
+					shadowRoot.querySelector("div > uikit-state-machine > div.lol-regalia-summoner-icon-mask-container > div").style.backgroundImage = "var(--Avatar)"
+			}
+			catch {}
 		}, 200)
 	}
 }
