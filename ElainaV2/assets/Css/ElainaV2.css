@@ -1,0 +1,829 @@
+/* By Elaina Da Catto */
+/* Meow~~~ */
+
+
+
+/*_________________________________________________________________________________________________________________________________*/
+:root {
+	/* Delete " /* and * / " mark to apply font change */
+	/*
+	--font-display: 'Elaina', sans-serif !important;
+	--font-body: 'Elaina', sans-serif !important; 
+	*/
+
+	--social-sidebar-bg-color: linear-gradient(rgba(6, 6, 6, 0), rgba(0, 0, 0, 0));
+
+	--Logo: url("../Icon/Logo.png");
+
+	--BE-Icon: url("../Icon/ElainaStare.png");
+	--RP-Icon: url("https://raw.githubusercontent.com/Elaina69/Elaina-V2/main/ElainaV2/assets/Icon/ApprenticeWitch.png");                   /* Must use Web link */
+
+	--Avatar: url("https://raw.githubusercontent.com/Elaina69/Elaina-V2/main/ElainaV2/assets/Icon/Avatar.gif");                             /* Must use Web link */
+	--Hover-card-backdrop: url("https://raw.githubusercontent.com/Elaina69/Elaina-V2/main/ElainaV2/assets/Icon/Hover-card-backdrop.jpg");   /* Must use Web link */
+
+    --Rank-Icon: url("https://raw.githubusercontent.com/Elaina69/Elaina-V2/main/ElainaV2/assets/Icon/Rank.png");                            /* Must use Web link */
+
+	--Emblem: url("../Icon/emblem_5.png");
+
+	--Clash-banner: url("../Icon/Clash.png");
+
+	--Ticker: url("../Icon/ticker.png");
+
+	--ElainaFly: url("../Backgrounds/ElainaFly.gif")
+}
+
+@font-face {
+	src: url("") format('truetype'); /* .ttf */
+	font-family: 'Elaina';
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+/*_________________________________________________________________________________________________________________________________*/
+
+
+
+
+
+
+
+
+
+/*_________________________________________________________________________________________________________________________________*/
+@keyframes answerdiv {
+	0% {
+		right: 100px; 
+		background-color: transparent; 
+		border: 2px solid transparent;}
+		
+	100% {
+		right: 221px; 
+		background-color: rgb(19, 15, 15); 
+		border: 2px solid #8c8263;}
+}
+
+@keyframes answer {
+	0% {color: transparent;}
+	100% {color: #cdbe91;}
+}
+/*_________________________________________________________________________________________________________________________________*/
+
+
+
+/*_________________________________________________________________________________________________________________________________*/
+
+iframe html {
+	background: transparent!important;
+}
+
+iframe .bg-cover {
+	opacity:0!important
+}
+
+.lol-social-sidebar.ember-view {
+	background: transparent!important
+}
+
+#rcp-fe-lol-home-error {
+	display: none!important
+}
+
+.rcp-fe-viewport-sidebar {
+	background: var(--social-sidebar-bg-color) !important;
+}
+
+.store-backdrop {
+	background-image: unset !important;
+}
+
+.friend-requests {
+	background:rgb(66, 63, 53)!important
+}
+
+.navigation-root-component.ember-view {
+	background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 24%))!important;
+	height: 77px !important;
+	
+}
+
+.alpha-version-panel {
+	background: linear-gradient(rgba(0, 0, 0, 0), rgba(38, 78, 52, 0))!important;
+	border-top: thin solid #1e282d00 !important;
+}
+
+lol-social-avatar[ref='iconElement'], .lol-social-identity.ember-view > .details {
+	z-index: 1 !important;
+}
+
+.menu-item-icon {
+	background-color: #fff1f1!important;
+	color: #fff1f1!important;
+}
+
+.main-navigation-menu .section .section-text {
+	color: #fff1f1!important;
+}
+
+.summoner-level {
+	color:#ffe8a5!important
+}
+
+.alpha-tag {
+	color:#ffffffc9!important;
+}
+
+lol-social-roster-member .offline .member-name {
+	color:#9a9696!important
+}
+
+.availability-icon {
+	position: relative!important;
+}
+
+.availability-icon.chat {
+	background: #09a646 !important;
+}
+
+.filled.xp-ring {
+	background: linear-gradient(rgb(255 236 236), rgb(87 103 105 / 48%)) !important;
+}
+
+lol-uikit-navigation-item > .section::after {
+	background-image: linear-gradient(0deg, rgb(210 195 149 / 32%) 0%, rgb(0 0 0 / 10%) 55%);
+}
+
+.parties-background.ember-view .lol-uikit-background-switcher-image {
+    opacity: 0.4 !important;
+}
+
+.parties-background {
+	background: linear-gradient(to bottom, rgb(255 255 255 / 26%) 0%, rgba(0,0,0,0) 50%, rgb(90 27 62 / 20%) 100%) !important;
+}
+
+.lobby-header-overlay {
+	background: unset!important
+}
+
+.parties-game-section.use-animation > .parties-game-info-panel-bg-container > video {
+	filter: saturate(0.5) brightness(1) invert(1) hue-rotate(27deg) !important;
+}
+
+.parties-game-search-info {
+	color:#000000!important
+}
+
+.parties-game-search-elapsed {
+	color: white!important;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black !important;
+}
+
+.parties-status-card-bg-container video {
+	filter: saturate(0.5) brightness(1) invert(1) hue-rotate(27deg) !important;
+}
+
+.challenge-banner-title-container {
+	color: #f3d3d3 !important;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black !important;
+}
+
+.parties-status-member-icons > .parties-status-member-joined {
+	filter: grayscale(1) saturate(0) brightness(0.5) !important;
+}
+
+.collections-application {
+	background: rgb(29 72 56 / 18%)!important;
+}
+
+.item-sets-table-row {
+	background: #0000007a !important;
+}
+
+#background-ambient {
+	src: none !important;
+	display: none !important;
+}
+
+.inventory-search {
+	background: #00000085!important;
+}
+
+.emote-item-icon.interactive {
+	background: #000000b0 !important;
+}
+
+.uikit-background-switcher .lol-uikit-background-switcher-image.transition.fade {
+	animation: unset!important
+}
+
+#elaina-bg:has(+ #rcp-fe-viewport-root .parties-background) {
+	filter: brightness(0.4) !important;
+}
+
+.background {
+	background-image: unset!important;
+}
+
+.stats-backdrop {
+	opacity: 0.3!important;
+	mix-blend-mode: difference !important;
+}
+
+html {
+	overflow: hidden !important;
+}
+
+.loot-backdrop {
+	height: 720px !important;
+}
+
+.loading-tab::after {
+	background-image:none!important
+}
+
+.store-loading {
+	background-color: transparent!important;
+}
+
+.clash-aram-intro-modal {
+	background-image: none!important;
+	background-color: transparent!important
+}
+
+.champ-select-bg-darken {
+	opacity:0.2!important
+}
+
+.champion-select {
+	background: transparent!important
+}
+
+.champion-select .champion-splash-background .background-vignette-container.defocussed > .champ-select-bg {
+	opacity:0 !important;
+}
+
+.champion-select .timer-status::before {
+	filter: contrast(0) brightness(1) !important;
+}
+
+.champion-select .action-button-container::after {
+	filter: sepia(1) !important;
+}
+
+.rcp-fe-lol-game-in-progress {
+	background-image: unset!important;
+	background-color: unset!important;
+}
+
+.clash-tab-team-background, .clash-tab-bracket-background, .tournament-scouting, .clash-missed-lockin-modal, .clash-root-background-landing, .clash-root-background {
+	background-image: none !important;
+}
+
+.rcp-fe-lol-navigation.main-nav-bar {
+	height: 76px !important;
+}
+
+div[data-screen-name="rcp-fe-lol-home"] .rcp-fe-lol-home-sub-nav {
+	margin-top: 10px;
+    padding-bottom: 10px;
+    background-color: #000000ad;
+    border-radius: 10px;
+    border: 2px solid var(--default-color, #cdbe91) !important;
+}
+
+div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
+	padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    background-color: #000000ad !important;
+    border-radius: 10px !important;
+    border: 2px solid var(--default-color, #cdbe91) !important;
+}
+
+/*_________________________________________________________________________________________________________________________________*/
+
+
+
+
+/*_________________________________________________________________________________________________________________________________*/
+
+#elaina-bg {
+	width:100%;
+	height: 100%;
+	position: absolute;
+    pointer-events: none;
+	transition: opacity 0.5s ease-in-out;
+	opacity: 1;
+	filter: blur(10px) brightness(0.4) saturate(1.5) ;
+}
+
+.webm-bottom-buttons-container {
+	display: flex;
+    bottom: 9px;
+    left: 20px;
+	position:absolute
+}
+
+#pause-bg {
+    position: relative !important;
+    border: 2px solid #8c8263 !important;
+    border-radius: 50% !important;
+    width: 21px !important;
+    background-color: black !important;
+    height: 21px !important;
+    cursor: pointer !important;
+}
+
+#pause-bg:hover {
+	filter: brightness(1.3) hue-rotate(263deg) saturate(0.4) !important;
+}
+
+.pause-bg-icon {
+	width: 17px !important;
+    margin-left: 2px !important;
+    margin-top: 2px !important;
+}
+
+#next-bg {
+    position: relative !important;
+    width: 21px !important;
+    height: 21px !important;
+    cursor: pointer !important;
+}
+
+.next-bg-icon {
+    width: 25px !important;
+    margin-left: 0px !important;
+    margin-top: -0.4px!important;
+}
+
+.next-bg-icon:hover {
+	filter: hue-rotate(0deg) drop-shadow(2px 4px 6px pink) !important;
+}
+
+#prev-bg {
+    position: relative !important;
+    width: 21px !important;
+    height: 21px !important;
+    cursor: pointer !important;
+}
+
+.prev-bg-icon {
+    width: 25px !important;
+    margin-left: 0px !important;
+    margin-top: -0.4px !important;
+}
+
+.prev-bg-icon:hover {
+	filter: hue-rotate(0deg) drop-shadow(2px 4px 6px pink) !important;
+}
+
+
+#pause-audio {
+    border: 2px solid #8c8263 !important;
+    border-radius: 50% !important;
+    width: 21px !important;
+    background-color: black !important;
+    height: 21px !important;
+    cursor: pointer !important;
+	display: block !important;
+	margin-right: 6px !important;
+}
+
+.pause-audio-icon {
+	width: 13px !important;
+    margin-left: 4px !important;
+    margin-top: 4px !important;
+}
+
+#pause-audio:hover {
+	filter: brightness(1.3) hue-rotate(263deg) saturate(0.4) !important;
+}
+
+.webm-hidden {
+	opacity: 0!important
+}
+
+.cs-buttons-container {
+    display: flex;
+    gap: 3em;
+}
+
+.dodge-button-container {
+	position: absolute;
+	right: 20px;
+	bottom: 19px;
+	display: flex;
+	align-items: flex-end
+}
+
+.audio-volume-panel {
+	display: flex;
+    bottom: 40px;
+    left: 15px;
+	position:absolute;
+	border: 3px solid #8c8263;
+    border-radius: 10px;
+    background: rgb(19, 15, 15);
+}
+
+.audio-volume {
+	appearance: slider-vertical;
+    margin-top: 7px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 7px;
+    width: 30px;
+    height: 85px;
+}
+
+/* ElainaTrigger */
+.watermark {
+	margin: 4px !important;
+	color: #cdbe91 !important;
+}
+
+.watermark-text {
+	display: flex;
+    bottom: 9px;
+    right: 20px;
+	position:absolute
+}
+
+.Elaina1ImageCon {
+	display: flex;
+    bottom: -4px;
+    right: 130px;
+	position:absolute
+}
+
+.Elaina1TextCon {
+	display: flex;
+    bottom: 260px;
+    right: 303px;
+	position:absolute
+}
+
+.Elaina1Image {
+	width: 650px !important;
+}
+
+.Elaina1Text {
+	margin: 4px !important;
+	color: rgb(129 185 224) !important;
+	text-align: center !important;
+	font-size: 20px !important;
+}
+
+.Headpat-con {
+	display: flex;
+    bottom: 230px;
+    right: 500px;
+	position:absolute
+}
+
+.Headpat {
+	font-size: 100px !important;
+    width: 110px;
+    height: 60px;
+	background: transparent;
+	border: none;
+}
+
+.Boobs-con {
+	display: flex;
+    bottom: 20px;
+    right: 495px;
+	position:absolute
+}
+
+.Boobs {
+	font-size: 100px !important;
+    width: 136px;
+    height: 65px;
+	background: transparent;
+	border: none;
+}
+
+.goOutSide-con {
+	display: flex;
+    bottom: -3px;
+    right: 434px;
+	position:absolute
+}
+
+.GoOutSide {
+	font-size: 100px !important;
+    width: 225px;
+    height: 290px;
+	background: transparent;
+	border: none;
+}
+
+.answer1-con {
+	display: flex;
+    bottom: 150px;
+    right: 220px;
+    position: absolute;
+	border-radius: 10px;
+	animation-name: answerdiv;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+}
+
+#answer1 {
+	margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-align: center;
+    display: flex;
+    width: 200px;
+    font-size: 17px;
+	animation-name: answer;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+}
+
+.answer2-con {
+	display: flex;
+    bottom: 80px;
+    right: 220px;
+    position: absolute;
+	animation-name: answerdiv;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+	animation-delay: 1.2s;
+	border-radius: 10px;
+}
+
+#answer2 {
+	margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-align: center;
+    display: flex;
+    width: 200px;
+    font-size: 17px;
+	color: transparent;
+	animation-name: answer;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+	animation-delay: 1.2s;
+}
+
+.answer3-con {
+	display: flex;
+    bottom: 150px;
+    right: 220px;
+    position: absolute;
+	animation-name: answerdiv;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+	border-radius: 10px;
+}
+
+#answer3 {
+	margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-align: center;
+    display: flex;
+    width: 200px;
+    font-size: 17px;
+	animation-name: answer;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+}
+
+.answer4-con {
+	display: flex;
+    bottom: 150px;
+    right: 200px;
+    position: absolute;
+	animation-name: answerdiv;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+	border-radius: 10px;
+}
+
+#answer4 {
+	margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-align: center;
+    display: flex;
+    width: 220px;
+    font-size: 17px;
+	animation-name: answer;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+}
+
+.answer5-con {
+	display: flex;
+    bottom: 80px;
+    right: 200px;
+    position: absolute;
+	animation-name: answerdiv;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+	animation-delay: 1.2s;
+	border-radius: 10px;
+}
+
+#answer5 {
+	margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-align: center;
+    display: flex;
+    width: 220px;
+    font-size: 17px;
+	color: transparent;
+	animation-name: answer;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+	animation-delay: 1.2s;
+}
+
+.Greeting {
+	margin: 4px !important;
+	color: rgb(129 185 224) !important;
+	text-align: center !important;
+	font-size: 20px !important;
+	width: 212px;
+	height: 50px;
+}
+/*_________________________________________________________________________________________________________________________________*/
+
+
+
+
+/*_________________________________________________________________________________________________________________________________*/
+
+.vng-age-rating.ember-view {
+	display: none !important;
+}
+
+.clash-aram-intro-modal {
+	display: none !important;
+}
+
+:host .parties-status-card.open {
+	filter: hue-rotate(240deg) !important;
+}
+
+.rcp-fe-lol-profiles-main > .component-factory-application > .ember-view > .style-profile-backdrop-component.ember-view > .style-profile-backdrop-container > .style-profile-masked-image {
+	display: none !important;
+}
+
+
+.ranked-intro-background {
+   display: none !important;
+}
+
+.loot-backdrop.background-static {
+	background: none !important;
+}
+
+.background-vignette-container.focussed.static.visible {
+    display: none !important;
+}
+
+.yourshop-root {
+    background-image: none !important;
+}
+
+.npe-root-component {
+    background-image: none !important;
+}
+
+div > div > .rcp-fe-lol-tft-application-background {
+	background-image: none !important; 
+}
+
+.item-page-items-container-wrapper.purchase-history-page-content-wrapper {
+	background: unset !important;
+}
+
+.postgame-background-image {
+	display: none !important;
+}
+
+.postgame-champion-background-mask {
+	display: none !important;
+}
+
+.friend-header {
+	display: none !important;
+}
+
+.postgame-champion-background-wrapper {
+	background: unset !important;
+}
+
+.loading-content div > div > .loading-text {
+	display: none !important;
+}
+
+.hextech-loading-animation > svg {
+	display: none !important;
+}
+/*__________________________________________________________________________________________________________________________________*/
+
+
+
+
+/*____________________________________________________________Profiles______________________________________________________________*/
+
+.style-profile-ranked-reference-modal-button {
+	display: none !important;
+}
+
+.style-profile-honor-component.ember-view > .style-profile-emblem-wrapper  > .style-profile-emblem-header > .style-profile-emblem-header-subtitle {
+	display: none !important;
+}
+
+.style-profile-emblem-subheader-ranked > div {
+	color: #cdbe91 !important;
+	font-size: 0px !important;
+}
+
+.style-profile-ranked-component.ember-view > .style-profile-emblem-wrapper  > .style-profile-emblem-header > .style-profile-emblem-header-title {
+	font-size: 0px !important;
+}
+
+.style-profile-ranked-component.ember-view > .style-profile-emblem-wrapper  > .style-profile-emblem-header > .style-profile-emblem-header-title::after {
+	content: "Apprentice";
+	font-size: 12px !important;
+}
+
+.style-profile-emblem-subheader-ranked > div::after {
+	content: "[Witch]";
+	color: #cdbe91 !important;
+	font-size: 10px !important;
+}
+/*_________________________________________________________________________________________________________________________________*/
+
+
+
+
+/*_________________________________________________________________________________________________________________________________*/
+
+.navigation-status-ticker-content-no-link {
+	background-color: rgba(248, 169, 201, 0.726) !important;
+	border: 1px solid white !important;
+	border-radius: 0.5rem !important;
+	color: rgba(22, 22, 22, 0.626) !important;
+}
+
+
+.currency-be-icon-static {
+	background-image: var(--BE-Icon) !important;
+	background-position: 0px center !important;
+}
+
+.currency-rp {
+	background-image: var(--RP-Icon) !important;
+}
+
+.ticker-button {
+	background-image: var(--Ticker) !important;
+    border: 2px solid var(--default-color, #e0a9d9) !important;
+    padding: 2px !important;
+    border-radius: 50px !important;
+}
+
+.top > .icon-image.has-icon, .style-profile-champion-icon-masked > img {
+	content: var(--Avatar) !important;
+}
+
+.style-profile-clash-banner-empty {
+    background-image: var(--Clash-banner) !important;
+}
+
+.style-profile-ranked-crest-ranked > lol-regalia-emblem-element {
+--regalia-emblem-unranked: var(--Rank-Icon) !important;
+--regalia-emblem-iron: var(--Rank-Icon) !important;
+--regalia-emblem-bronze: var(--Rank-Icon) !important;
+--regalia-emblem-silver: var(--Rank-Icon) !important;
+--regalia-emblem-gold: var(--Rank-Icon) !important;
+--regalia-emblem-platinum: var(--Rank-Icon) !important;
+--regalia-emblem-diamond: var(--Rank-Icon) !important;
+--regalia-emblem-master: var(--Rank-Icon) !important;
+--regalia-emblem-grandmaster: var(--Rank-Icon) !important;
+--regalia-emblem-challenger: var(--Rank-Icon) !important;
+}
+
+.style-profile-honor-icon {
+	content: var(--Emblem) !important;
+}
+/*_________________________________________________________________________________________________________________________________*/
+
+
+
+/* End */
+
