@@ -2,7 +2,7 @@
 New Elaina theme for League Loader with brand new JS file
 (Special thanks teiseire117)
 
- - Github version: [Download](https://codeload.github.com/Elaina69/Elaina-V2/zip/refs/tags/v1.4.0)
+ - Github version: [Download](https://codeload.github.com/Elaina69/Elaina-V2/zip/refs/tags/v1.4.1)
 
 # Required: 
  - [League Loader v1.0.1](https://github.com/nomi-san/league-loader/actions/runs/4324448968)
