@@ -1,14 +1,14 @@
 # Elaina-V2
-New Elaina theme for League Loader with brand new JS file
+New Elaina theme for Pengu Loader with brand new JS file
 (Special thanks teiseire117)
 
  - Github version: [Download](https://codeload.github.com/Elaina69/Elaina-V2/zip/refs/tags/v1.4.1)
 
 # Required: 
- - [League Loader v1.0.1](https://github.com/nomi-san/league-loader/actions/runs/4324448968)
+ - [Pengu Loader v1.0.1](https://github.com/PenguLoader/PenguLoader/actions/runs/4434022268)
  
 # How to install:
- - Copy "ElainaV2" folder to League-loader "plugins" folder
+ - Copy "ElainaV2" folder to Pengu-loader "plugins" folder
  - Done
 
 # Change backgrounds:
