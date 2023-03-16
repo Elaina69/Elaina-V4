@@ -1,0 +1,15 @@
+.champion-select {
+	background: transparent!important
+}
+
+.champion-select .champion-splash-background .background-vignette-container.defocussed > .champ-select-bg {
+	opacity:0 !important;
+}
+
+.champ-select-bg-darken {
+	opacity:0.2!important
+}
+
+.background-vignette-container.focussed.static.visible {
+    display: none !important;
+}
