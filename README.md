@@ -2,7 +2,7 @@
 New Elaina theme for Pengu Loader with brand new JS file
 (Special thanks teiseire117)
 
- - Github version: [Download](https://codeload.github.com/Elaina69/Elaina-V2/zip/refs/tags/v1.4.1)
+ - Github version: [Download](https://codeload.github.com/Elaina69/Elaina-V2/zip/refs/tags/v1.4.2a)
 
 # Required: 
  - [Pengu Loader v1.0.1](https://github.com/PenguLoader/PenguLoader/actions/runs/4434022268)
