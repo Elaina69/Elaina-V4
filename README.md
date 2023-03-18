@@ -8,7 +8,7 @@ New Elaina theme for Pengu Loader with brand new JS file
  - [Pengu Loader v1.0.1](https://github.com/PenguLoader/PenguLoader/actions/runs/4453507733)
 
 # NOTE (MUST READ)
- - This theme already include "Auto-Accept","Dodge-button","Offline-mode" and "Hide-friendlist" plugin. DON'T add them more to plugins folder
+ - This theme already include "Auto-Accept", "Dodge-button", "Offline-mode" and "Hide-friendlist" plugin. DON'T add them more to plugins folder
  
 # How to install:
  - Copy "ElainaV2" folder to Pengu-loader "plugins" folder
