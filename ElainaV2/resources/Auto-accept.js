@@ -90,3 +90,9 @@ let acceptMatchmaking = async () => {
 	await fetch('/lol-matchmaking/v1/ready-check/accept', { method: 'POST' })
 
 }
+
+window.addEventListener('load', () => {	
+	console.log('By Elaina Da Catto');
+	console.log('Meow ~~~');
+	console.log(data["custom_log"]);
+})

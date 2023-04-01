@@ -98,7 +98,7 @@ function ElainaTrigger() {
 	
 	wtmark.addEventListener("click", () => {
 		count += 1;
-		if (count > 0) {
+		if (count > 5) {
 			wtmark.style.visibility = "hidden"
 			Elaina1Image.style.visibility = "visible"
 			Elaina1Text.innerHTML =  "Huh ?";

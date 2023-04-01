@@ -17,17 +17,10 @@ import './resources/Aram-only'
 import './resources/Auto-accept'
 import './resources/Dodge-button'
 import './resources/Offline-mode'
-import './resources/Hide_friendlist'
+import './resources/Hide_friendlist'          // Still in Beta test
 
 //Configs
 import data from './configs/ElainaV2_config.json'
 
 //Load CSS file
 import './resources/LoadMainCss'
-
-//Console	
-window.addEventListener('load', () => {	
-	console.log('By Elaina Da Catto');
-	console.log('Meow ~~~');
-	console.log(data["custom_log"]);
-})
