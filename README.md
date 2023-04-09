@@ -13,6 +13,25 @@ New Elaina theme for Pengu Loader with brand new JS file
 # How to install:
  - Copy "ElainaV2" folder to Pengu-loader "plugins" folder
  - Done
+ 
+    .
+    ├── assets                                 # ưerwerwer
+    ├── plugins                                # Pengu plugins folder
+    │   └── ElainaV2                           # Ur theme here
+    │       ├── assets                         # ửeweerwer
+    │       ├── configs                        # ưerwerwerw
+    │       ├── resouces                       # ửewrwerw
+    │       └── index.js                       # ưerwerwerw
+    ├── ...
+    ├── Pengu Loader.exe                       # werwerwerw
+    └──
+.
+    ├── ...
+    ├── test                    # Test files (alternatively `spec` or `tests`)
+    │   ├── benchmarks          # Load and stress tests
+    │   ├── integration         # End-to-end, integration tests (alternatively `e2e`)
+    │   └── unit                # Unit tests
+    └── ...
 
 # Change backgrounds:
  - Open /plugins/ElainaV2/configs/ElainaV2_config.json
