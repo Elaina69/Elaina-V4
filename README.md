@@ -25,13 +25,7 @@ New Elaina theme for Pengu Loader with brand new JS file
     ├── ...
     ├── Pengu Loader.exe                       # werwerwerw
     └──
-.
-    ├── ...
-    ├── test                    # Test files (alternatively `spec` or `tests`)
-    │   ├── benchmarks          # Load and stress tests
-    │   ├── integration         # End-to-end, integration tests (alternatively `e2e`)
-    │   └── unit                # Unit tests
-    └── ...
+
 
 # Change backgrounds:
  - Open /plugins/ElainaV2/configs/ElainaV2_config.json
