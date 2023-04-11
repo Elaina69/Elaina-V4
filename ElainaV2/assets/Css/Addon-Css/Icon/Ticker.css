@@ -1,0 +1,13 @@
+.navigation-status-ticker-content-no-link {
+	background-color: rgba(248, 169, 201, 0.726) !important;
+	border: 1px solid white !important;
+	border-radius: 0.5rem !important;
+	color: rgba(22, 22, 22, 0.626) !important;
+}
+
+.ticker-button {
+	background-image: var(--Ticker) !important;
+    border: 2px solid var(--default-color, #e0a9d9) !important;
+    padding: 2px !important;
+    border-radius: 50px !important;
+}
