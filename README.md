@@ -1,11 +1,16 @@
 # Elaina-V2
 New Elaina theme for Pengu Loader with brand new JS file
-(Special thanks teiseire117)
+> (Special thanks teiseire117)
 
- - Github version: [Download](https://codeload.github.com/Elaina69/Elaina-V2/zip/refs/tags/v1.5.0)
+ - Github version: [Download](https://github.com/Elaina69/Elaina-V2/releases)
 
 # Required: 
- - [Pengu Loader v1.0.1](https://github.com/PenguLoader/PenguLoader/actions/runs/4453507733)
+ - [Pengu Loader v1.0.1](https://chat.pengu.lol/)
+ - A good-enough PC/Laptop
+
+> Minimum: Intel Core2duo E8300 // 8gb ram // NVIDIA GT630
+
+> Recommended: Intel Core I5 2400 // 8gb ram // NVIDIA GT630
 
 # NOTE (MUST READ)
  - This theme already include "Auto-Accept", "Dodge-button", "Offline-mode" and "Hide-friendlist" plugin. DON'T add them more to plugins folder
