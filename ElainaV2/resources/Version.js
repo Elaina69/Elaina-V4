@@ -1,5 +1,2 @@
-function newVersion() {
-    var version = 152
-}
-let Version = {newVersion: newVersion}
-export default Version
+let newVersion = 152
+export default newVersion
