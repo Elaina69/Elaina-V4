@@ -1,2 +1,2 @@
-let newVersion = 152
-export default newVersion
+let Version = 152
+export default Version
