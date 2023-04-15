@@ -1,0 +1,26 @@
+.lol-loading-screen-container.lol-loading-screen-default-state {
+	backdrop-filter: blur(15px) ;
+	background: transparent!important;
+}
+
+.lol-loading-screen-progress-bar-container {
+	width: 500px !important;
+	top: 8px !important;
+}
+
+.lol-loading-screen-container .lol-loading-screen-lol-icon {
+	background: var(--ElainaFly) !important;
+	background-repeat: no-repeat;
+	background-size: contain;
+	width: 475px !important;
+	height: 475px !important;
+	margin-top: 114px !important;
+	margin-bottom: 0px !important; 
+	border: 2px solid transparent !important;
+    border-radius: 250px !important;
+}
+
+.lol-loading-screen-status-container {
+	height: 86px !important;
+	margin-top: 28px !important;
+}

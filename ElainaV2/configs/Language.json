@@ -1,0 +1,37 @@
+{
+    "EN": [
+        "Home",
+        "Dodge",
+        "Exit",
+        "Auto Accept",
+        "Update",
+        "New theme update available"
+    ],
+
+    "VN": [
+        "Trang chủ",
+        "Hủy",
+        "Thoát",
+        "Tự động chấp thuận",
+        "Cập nhật",
+        "Có bản cập nhật theme mới"
+    ],
+
+    "JP": [
+        "ホームページ",
+        "やめる",
+        "出口",
+        "自動承認",
+        "Update",
+        "New theme update available"
+    ],
+
+    "PL": [
+        "Strona główna",
+        "Uniknij",
+        "Wyjdź",
+        "Automatycznie akceptuj",
+        "Aktualizacja",
+        "Nowa aktualizacja motywu dostępna"
+    ]
+}
