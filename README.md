@@ -8,9 +8,9 @@ New Elaina theme for Pengu Loader with brand new JS file
  - [Pengu Loader v1.0.1](https://chat.pengu.lol/)
  - A good-enough PC/Laptop
 
-> Minimum: Intel Core2duo E8300 // 8gb ram // NVIDIA GT630
+> Minimum: Windows 10, Intel Core2duo E8300 // 8gb ram // NVIDIA GT630
 
-> Recommended: Intel Core I5 2400 // 8gb ram // NVIDIA GT630
+> Recommended: Windows 10, Intel Core I5 2400 // 8gb ram // NVIDIA GT630
 
 # NOTE (MUST READ)
  - This theme already include "Auto-Accept", "Dodge-button", "Offline-mode" and "Hide-friendlist" plugin. DON'T add them more to plugins folder
