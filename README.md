@@ -16,7 +16,26 @@ New Elaina theme for Pengu Loader with brand new JS file
  - This theme already include "Auto-Accept", "Dodge-button", "Offline-mode" and "Hide-friendlist" plugin. DON'T add them more to plugins folder
  
 # How to install:
+ - Active Pengu Loader
+ 
+ ![image](https://user-images.githubusercontent.com/94338907/232275600-d2917ec3-62a8-4f16-8411-6750ccf2c43b.png)
+
+ - Download theme
+ 
+ ![image](https://user-images.githubusercontent.com/94338907/232275789-b12cf894-f4c5-4dd7-aeab-5a24ffc6f60a.png)
+
+ - Extract theme
+ 
+ ![image](https://user-images.githubusercontent.com/94338907/232275874-139dddc4-b01f-4566-8dbe-8890a6b6ea22.png)
+
+ - Open Plugin folder
+ 
+ ![image](https://user-images.githubusercontent.com/94338907/232275976-27399264-dc6d-49a2-a98a-f07fd991d0fd.png)
+
  - Copy "ElainaV2" folder to Pengu-loader "plugins" folder
+ 
+ ![image](https://user-images.githubusercontent.com/94338907/232276082-a397e90f-d7bc-4c35-b0ce-3822a66f0667.png)
+
  - Done
  > So...It must be like this
  
