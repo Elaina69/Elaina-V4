@@ -16,6 +16,8 @@ New Elaina theme for Pengu Loader with brand new JS file
    + Polish
    + Other language will show English instead
 
+> You can help me add more languages by joining [Pengu discord server](https://chat.pengu.lol/)
+
 # Required: 
  - [Pengu Loader v1.0.2 and later](https://chat.pengu.lol/)
  - A good-enough PC/Laptop
