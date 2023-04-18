@@ -22,10 +22,15 @@ New Elaina theme for Pengu Loader with brand new JS file
 
 > Minimum: Windows 10, Intel Core2duo E8300 // 8gb ram // NVIDIA GT630
 
-> Recommended: Windows 10, Intel Core I5 2400 // 8gb ram // NVIDIA GT630
+> Recommended: Windows 10/11, Intel Core I5 2400 // 8gb ram // NVIDIA GT630
 
 # NOTE (MUST READ)
- - This theme already include "Auto-Accept", "Dodge-button", "Offline-mode" and "Hide-friendlist" plugin. DON'T add them more to plugins folder
+ - This theme already include:
+   + "Auto-Accept"
+   + "Dodge-button"
+   + "Offline-mode"
+   + "Hide-friendlist"
+ - DON'T add them more to plugins folder
  
 # How to install:
  - Active Pengu Loader
