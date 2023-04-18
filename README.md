@@ -25,7 +25,7 @@ New Elaina theme for Pengu Loader with brand new JS file
 > Recommended: Windows 10/11, Intel Core I5 2400 // 8gb ram // NVIDIA GT630
 
 # NOTE (MUST READ)
- - This theme already include:
+ - This theme already have:
    + "Auto-Accept"
    + "Dodge-button"
    + "Offline-mode"
