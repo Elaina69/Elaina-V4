@@ -4,6 +4,18 @@ New Elaina theme for Pengu Loader with brand new JS file
 
  - Github version: [Download](https://github.com/Elaina69/Elaina-V2/releases)
 
+# Features
+ - Customizable icon and background
+ - Support homepage audio (not client audio ofc)
+ - Addon plugins
+ - Support language:
+   + English
+   + Vietnamese
+   + Japanesse
+   + Russian
+   + Polish
+   + Other language will show English instead
+
 # Required: 
  - [Pengu Loader v1.0.2 and later](https://chat.pengu.lol/)
  - A good-enough PC/Laptop
