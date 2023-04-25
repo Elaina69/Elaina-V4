@@ -19,7 +19,7 @@ New Elaina theme for Pengu Loader with brand new JS file
 > You can help me add more languages by joining [Pengu discord server](https://chat.pengu.lol/)
 
 # Required: 
- - [Pengu Loader v1.0.2 and later](https://github.com/PenguLoader/PenguLoader/releases)
+ - [Pengu Loader v1.0.4 and later](https://github.com/PenguLoader/PenguLoader/releases)
  - A good-enough PC/Laptop
 
 > Minimum: Windows 10, Intel Core2duo E8300 // 8gb ram // NVIDIA GT630
