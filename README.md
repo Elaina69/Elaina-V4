@@ -1,6 +1,6 @@
 # Elaina-V2
 New Elaina theme for Pengu Loader with brand new JS file
-> (Special thanks [teiseire117](https://github.com/Elaina69/Elaina-V2/releases) )
+> (Special thanks [teiseire117](https://github.com/teisseire117))
 
  - Github version: [Download](https://github.com/Elaina69/Elaina-V2/releases)
  - Highest Wallpaper resolution (For strong device only): [Download](https://drive.google.com/drive/folders/1wvNF18fM9QkzE-a0aBDvJQjB36lWcFbU?usp=sharing)
