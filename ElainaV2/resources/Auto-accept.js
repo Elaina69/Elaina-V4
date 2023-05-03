@@ -1,13 +1,13 @@
 import utils from './_utilselaina';
-import data from"../configs/ElainaV2_config.json";
+import data from "../configs/ElainaV2_config.json";
 import lang from '../configs/Language.json'
 
 let auto_accept = data["auto_accept"]
 
-let queue_accepted = false 
-let player_declined = false 
+let queue_accepted = false
+let player_declined = false
 
-function autoAcceptQueueButton(){
+function autoAcceptQueueButton() {
 	let element = document.getElementById("autoAcceptQueueButton")
 	if (element.attributes.selected != undefined) {
 		auto_accept = false
@@ -26,7 +26,7 @@ let autoAcceptCallback = async message => {
 	utils.phase = JSON.parse(message["data"])[2]["data"]
 	if (utils.phase == "ReadyCheck" && auto_accept && !queue_accepted) {
 		await acceptMatchmaking(),
-		queue_accepted = true
+			queue_accepted = true
 	}
 	else if (utils.phase != "ReadyCheck") {
 		queue_accepted = false
@@ -50,42 +50,32 @@ let autoAcceptMutationObserver = (mutations) => {
 	if (document.querySelector(".v2-footer-notifications.ember-view") != null && document.getElementById("autoAcceptQueueButton") == null) {
 		let newOption = document.createElement("lol-uikit-radio-input-option");
 		let container = fetch_or_create_champselect_buttons_container()
-	
+
 		newOption.setAttribute("id", "autoAcceptQueueButton");
 		newOption.setAttribute("onclick", "window.autoAcceptQueueButton()");
 
 		let Option2 = document.createElement("div");
-			Option2.classList.add("auto-accept-button-text");
+		Option2.classList.add("auto-accept-button-text");
 
 		newOption.append(Option2)
 
-		if (auto_accept){
+		if (auto_accept) {
 			newOption.setAttribute("selected", "");
 		}
 
-		
-//___________________________________________________________________________//
-		let VN = document.querySelector("html").lang == "vi-VN"
-		let JP = document.querySelector("html").lang == "ja-JP"
-		let PL = document.querySelector("html").lang == "pl-PL"
-		let RU = document.querySelector("html").lang == "ru-RU"
 
-		if (VN) {
-			Option2.innerHTML = lang.VN["auto_accept"]
-		}
-		else if (JP) {
-			Option2.innerHTML = lang.JP["auto_accept"]
-		}
-		else if (PL) {
-			Option2.innerHTML = lang.PL["auto_accept"]
-		}
-		else if (RU) {
-			Option2.innerHTML = lang.RU["auto_accept"]
-		}
-		else {
-			Option2.innerHTML = lang.EN["auto_accept"]
-		}
-//___________________________________________________________________________//
+		//___________________________________________________________________________//
+		//More readable and easier to maintain
+		const langCode = document.querySelector("html").lang;
+		const langMap = {
+			"vi-VN": "VN",
+			"ja-JP": "JP",
+			"pl-PL": "PL",
+			"ru-RU": "RU",
+			"es-MX": "MX",
+		};
+		Option2.innerHTML = lang[langMap[langCode] || "EN"]["auto_accept"];
+		//___________________________________________________________________________//
 
 
 		container.append(newOption);
@@ -103,7 +93,7 @@ let acceptMatchmaking = async () => {
 
 }
 
-window.addEventListener('load', () => {	
+window.addEventListener('load', () => {
 	console.log('By Elaina Da Catto');
 	console.log('Meow ~~~');
 	console.log(data["custom_log"]);

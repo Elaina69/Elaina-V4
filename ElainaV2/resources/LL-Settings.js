@@ -8,38 +8,21 @@ import Version from "../configs/Version"
 let LLset = data["Old-League-Loader-Settings"]
 if (LLset) {
     const TRANSLATIONS = lang
-    
-    
+
+
     // Create loader UI.
     async function createLoaderMenu(root) {
         // Import nano-jsx from CDN.
         const { Component, jsx, render } = await import('//esm.run/nano-jsx')
-        
-        //___________________________________________________________________________//
-        let VN = document.querySelector("html").lang == "vi-VN"
-		let JP = document.querySelector("html").lang == "ja-JP"
-		let PL = document.querySelector("html").lang == "pl-PL"
-        let RU = document.querySelector("html").lang == "ru-RU"
 
-        if (VN) {
-            var _t = TRANSLATIONS['VN']
-        }
-        else if (JP) {
-            var _t = TRANSLATIONS['JP']
-        }
-        else if (PL) {
-            var _t = TRANSLATIONS['PL']
-        }
-        else if (RU) {
-            var _t = TRANSLATIONS['RU']
-        }
-        else {
-        var _t = TRANSLATIONS['EN']
-        }
+        //___________________________________________________________________________//
+        const lang = document.querySelector("html").lang;
+        const langCode = lang.split("-")[0].toUpperCase();a
+        const _t = TRANSLATIONS[langCode] || TRANSLATIONS['EN'];
         //___________________________________________________________________________//
 
         const version = Version
-    
+
         // Main component.
         class LoaderMenu extends Component {
             visible = false
@@ -116,11 +99,11 @@ if (LLset) {
                 `
             }
         }
-    
+
         // Render component to root.
         render(jsx`<${LoaderMenu} />`, root)
     }
-    
+
     // Setup on window loaded.
     window.addEventListener('load', async () => {
         // Wait for manager layer.

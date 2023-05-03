@@ -14,6 +14,22 @@
         "l.close"         : "Close"
     },
 
+    "MX": {
+        "/___Translated by @Legnatbird___/": "",
+        "home"            : "Inicio",
+        "dodge"           : "Dodge",
+        "exit"            : "Salir",
+        "auto_accept"     : "Aceptar Automaticamente",
+        "update"          : "Actualizar",
+        "update_mess"     : "Nueva actualización de tema disponible",
+        "l.open_settings" : "Configuración",
+        "l.open_devtools" : "Abrir DevTools",
+        "l.reload_client" : "Recargar Cliente",
+        "l.open_plugins"  : "Abrir carpeta de plugins",
+        "l.theme_releases": "Versiones del tema",
+        "l.close"         : "Cerrar"
+    },
+
     "JP": {
 
         "/___Translated by @Google-Translate___/": "",

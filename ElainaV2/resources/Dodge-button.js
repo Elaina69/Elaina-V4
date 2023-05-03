@@ -1,87 +1,75 @@
 import lang from '../configs/Language.json'
 
-async function exitClient(){
+async function exitClient() {
     await fetch("/process-control/v1/process/quit",
-        {method:"POST"}
+        { method: "POST" }
     )
 }
 
-async function dodgeQueue(){
+async function dodgeQueue() {
     await fetch('/lol-login/v1/session/invoke?destination=lcdsServiceProxy&method=call&args=["","teambuilder-draft","quitV2",""]',
-        {body:'["","teambuilder-draft","quitV2",""]',method:"POST"}
+        { body: '["","teambuilder-draft","quitV2",""]', method: "POST" }
     )
 }
 
-function generateDodgeAndExitButton(t){
-    const e=document.createElement("div"),
-          o=document.createElement("div"),
-          i=document.createElement("div");
-    
-        o.setAttribute("class","dodge-button-container"),
-        o.setAttribute("style","position: absolute;right: 0px;bottom: 57px;display: flex;align-items: flex-end;"),
+function generateDodgeAndExitButton(t) {
+    const e = document.createElement("div"),
+        o = document.createElement("div"),
+        i = document.createElement("div");
 
-        e.setAttribute("class","quit-button ember-view"),
-        e.setAttribute("onclick","window.dodgeQueue()"),
-        e.setAttribute("id","dodgeButton"),
+    o.setAttribute("class", "dodge-button-container"),
+        o.setAttribute("style", "position: absolute;right: 0px;bottom: 57px;display: flex;align-items: flex-end;"),
 
-        i.setAttribute("class","quit-button ember-view"),
-        i.setAttribute("onclick","window.exitClient()"),
-        i.setAttribute("id","exitButton");
+        e.setAttribute("class", "quit-button ember-view"),
+        e.setAttribute("onclick", "window.dodgeQueue()"),
+        e.setAttribute("id", "dodgeButton"),
 
-    const n=document.createElement("lol-uikit-flat-button"),
-        d=document.createElement("lol-uikit-flat-button");
+        i.setAttribute("class", "quit-button ember-view"),
+        i.setAttribute("onclick", "window.exitClient()"),
+        i.setAttribute("id", "exitButton");
+
+    const n = document.createElement("lol-uikit-flat-button"),
+        d = document.createElement("lol-uikit-flat-button");
 
 
-//___________________________________________________________________________//
-        let VN = document.querySelector("html").lang == "vi-VN"
-        let JP = document.querySelector("html").lang == "ja-JP"
-        let PL = document.querySelector("html").lang == "pl-PL"
-        let RU = document.querySelector("html").lang == "ru-RU"
+    //___________________________________________________________________________//
+    //More readable and easier to maintain
+    const langCode = document.querySelector("html").lang;
+    const langMap = {
+        "vi-VN": "VN",
+        "ja-JP": "JP",
+        "pl-PL": "PL",
+        "ru-RU": "RU",
+        "es-MX": "MX",
+    };
+    const selectedLang = lang[langMap[langCode] || "EN"];
 
-        if (VN) {
-            d.innerHTML= lang.VN["dodge"]
-            n.innerHTML= lang.VN["exit"]
-        }
-        else if (JP) {
-            d.innerHTML= lang.JP["dodge"] 
-            n.innerHTML= lang.JP["exit"]
-        }
-        else if (PL) {
-            d.innerHTML= lang.PL["dodge"] 
-            n.innerHTML= lang.PL["exit"]
-        }
-        else if (RU) {
-            d.innerHTML= lang.RU["dodge"] 
-            n.innerHTML= lang.RU["exit"]
-        }
-        else {
-            d.innerHTML= lang.EN["dodge"]
-            n.innerHTML= lang.EN["exit"]
-        }  
-//___________________________________________________________________________//
-        
-        
-        e.appendChild(d),
+    d.innerHTML = selectedLang["dodge"];
+    n.innerHTML = selectedLang["exit"];
+    //___________________________________________________________________________//
+
+
+    e.appendChild(d),
         i.appendChild(n),
         o.appendChild(e),
         o.appendChild(i),
-    
-    console.log(o),
 
-    t.parentNode.insertBefore(o,t)
+        console.log(o),
+
+        t.parentNode.insertBefore(o, t)
 }
 
 import utils from './_utilselaina';
 
-window.exitClient=exitClient,
-window.dodgeQueue=dodgeQueue;
+window.exitClient = exitClient,
+    window.dodgeQueue = dodgeQueue;
 
-let addDodgeAndExitButtonObserver=t=>{
-    "ChampSelect"==utils.phase&&document.querySelector(".bottom-right-buttons")&&!document.querySelector(".dodge-button-container")&&generateDodgeAndExitButton(
+let addDodgeAndExitButtonObserver = t => {
+    "ChampSelect" == utils.phase && document.querySelector(".bottom-right-buttons") && !document.querySelector(".dodge-button-container") && generateDodgeAndExitButton(
         document.querySelector(".bottom-right-buttons")
     )
 };
 
-window.addEventListener("load",()=>{
-    utils.routineAddCallback(addDodgeAndExitButtonObserver,["bottom-right-buttons"])
+window.addEventListener("load", () => {
+    utils.routineAddCallback(addDodgeAndExitButtonObserver, ["bottom-right-buttons"])
 });
