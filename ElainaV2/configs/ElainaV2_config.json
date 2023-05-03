@@ -1,0 +1,107 @@
+{
+"/______________________________________Wallpapers______________________________/": "",
+
+	"/__Support_video_formats__/" : " .webm, .mkv, .mp4, ... idk,maybe more ",
+
+	"wallpaper_folder"	    : "//plugins/ElainaV2/assets/Backgrounds/",
+
+	"wallpaper_list"        :["Elaina1.webm",
+							  "Elaina2.webm", 
+							  "Elaina3.webm", 
+							  "Elaina4.webm",
+							  "Elaina5.webm",
+							  "Elaina6.webm"
+							],
+
+	"/___*Notice*__/"       : " 1 is the first wallpaper of the list",
+	"default_wallpaper"     : 1,
+
+	"/___*Video volume*___/": "(0.00 is mute, 1.0 is highest)" ,
+	"video_sound_volume"    : 0.2,
+
+
+
+"/_______________________________________Audio__________________________________/": "",
+
+	"/__Support_audio_formats__/" : " .mp3, .flac, .ogg , ... idk,maybe more ",
+
+	"audio_folder"          : "//plugins/ElainaV2/assets/Backgrounds/Audio/",
+
+	"audio_list"            :["If there was an Endpoint.mp3", 
+							  "ツユ-アンダーキッズ.mp3", 
+							  "Even tears withered.mp3",
+							  "I'm getting on the bus to the other world,see ya!.mp3"
+							],
+
+	"/___*Notice*___/"      : " 1 is the first song of the list",
+	"default_audio"         : 1,
+
+	"/___*Audio volume*___/": "(0.00 is mute, 1.0 is highest)" ,
+	"audio_sound_volume"    : 0.0,
+
+	"Continues_Audio"       : true,
+
+
+
+"/___________________________________Custom Things______________________________/": "",
+
+	"Receive-Update"           : true,
+
+	"Animate-Loading"          : false,
+
+	"Custom-Avatar"            : true,
+
+	"Custom-Icon"              : true,
+
+	"Sidebar-Transparent"      : false,
+
+	"Hide-Champions-Splash-Art": true,
+
+	"Custom_RP"                : true,
+		"RP"    : "-69",
+
+	"Custom-Rank-Name"         : true,
+		"Rank1" : "Apprentice",
+		"Rank2" : "Witch",
+
+
+"/________________________________Plugins Settings______________________________/": "",
+
+	"auto_accept"               : true,
+
+	"Auto_Match"                : true,
+
+	"Aram-only-mode"            : false,
+
+	"Old-League-Loader-Settings": true,
+
+	"Merry-Christmas"           : false,
+
+"/____________________________________Filters___________________________________/": "",
+
+	"Homepage"    : "brightness(0.7)",
+
+	"Clash"       : "brightness(0.2) blur(10px)",
+
+	"Profiles"	  : "brightness(0.3)",
+
+	"Loot"		  : "brightness(0.3)",
+
+	"Store"       : "brightness(0.2)",
+
+	"Yourshop"    : "brightness(0.4) blur(3px) saturate(1.5)",
+
+	"Collections" : "brightness(0.2)",
+
+	"Parties"     : "brightness(0.4) blur(6px)",
+
+	"Champ-select": "brightness(0.4) blur(3px) saturate(1.5)",
+
+	"Gamestart"   : "brightness(0.4) blur(10px) saturate(1.5)",
+
+	"Postgame"    : "brightness(0.3)",
+
+"/______________________________________________________________________________/": "",
+	
+	"custom_log": "Sech tan bao" 
+}
