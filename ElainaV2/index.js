@@ -528,7 +528,7 @@ let pageChangeMutation = (node) => {
 		if (!document.getElementsByClassName("webm-bottom-buttons-container").length) {
 			create_webm_buttons()
 			watermark.ElainaTrigger()
-			Settings.ThemeSettings()
+			//Settings.ThemeSettings()
 
 			if (thisVersion < newVersion && data["Receive-Update"]) {
 				Update.UpdatePopup()
