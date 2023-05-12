@@ -6,34 +6,17 @@
 /*_________________________________________________________________________________________________________________________________*/
 :root {
 
-	--font-display: 'LoL Display', 'Elaina', 'Times New Roman', Times, Baskerville, Georgia, serif !important;
-	--font-body: 'LoL Body', 'Elaina', Arial, 'Helvetica Neue', Helvetica, sans-serif !important; 
+	--font-display: 'Custom', 'LoL Display', 'Elaina', 'Times New Roman', Times, Baskerville, Georgia, serif !important;
+	--font-body: 'Custom', 'LoL Body', 'Elaina', Arial, 'Helvetica Neue', Helvetica, sans-serif !important; 
 
 
 	--social-sidebar-bg-color: linear-gradient(rgb(6 6 6), rgb(0 0 0 / 25%));
 
 	--Settings-and-Dialog-frame-color: transparent;
-
-	--BE-Icon: url("//plugins/ElainaV2/assets/Icon/ElainaStare.png");
-	--RP-Icon: url("//plugins/ElainaV2/assets/Icon/ApprenticeWitch.png");
-
-	--Avatar: url("//plugins/ElainaV2/assets/Icon/Avatar.gif");
-	--Hover-card-backdrop: url("//plugins/ElainaV2/assets/Icon/Hover-card-backdrop.jpg");
-
-    --Rank-Icon: url("//plugins/ElainaV2/assets/Icon/Rank.png");
-
-	--Emblem: url("//plugins/ElainaV2/assets/Icon/emblem_5.png");
-
-	--Clash-banner: url("//plugins/ElainaV2/assets/Icon/Clash.png");
-
-	--Ticker: url("//plugins/ElainaV2/assets/Icon/ticker.png");
-
-	--ElainaFly: url("//plugins/ElainaV2/assets/Icon/ElainaFly.gif");
-	--ElainaStatic: url("//plugins/ElainaV2/assets/Icon/Logo.png");
 }
 
 @font-face {
-	src: url("//plugins/ElainaV2/assets/Fonts/BeaufortforLOL-Bold.ttf") format('truetype'); /* .ttf */
+	src: url("//plugins/ElainaV2/assets/Fonts/BeaufortforLOL-Bold.ttf") format('truetype');
 	font-family: 'Elaina';
 	font-weight: normal;
 	font-style: normal;

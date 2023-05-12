@@ -43,29 +43,6 @@
 
 
 
-"/___________________________________Custom Things______________________________/": "",
-
-	"Receive-Update"           : true,
-
-	"Animate-Loading"          : false,
-
-	"Custom-Avatar"            : true,
-
-	"Custom-Icon"              : true,
-
-	"Sidebar-Transparent"      : false,
-
-	"Hide-Champions-Splash-Art": true,
-
-	"Custom_RP"                : true,
-		"RP"    : "-69",
-
-	"Custom-Rank-Name"         : true,
-		"Rank1" : "Apprentice",
-		"Rank2" : "Witch",
-
-
-
 "/________________________________Plugins Settings______________________________/": "",
 
 	"auto_accept"                   : true,
@@ -78,7 +55,7 @@
 
 	"April fool' joke"              : true,
 
-	"Auto-Find-Queue" 				: false,	"Note-1": "if true, DO NOT go back to homepage after you cancel queue",
+	"Auto-Find-Queue" 				: false,	"Note": "if true, DO NOT go back to homepage after you cancel queue",
 		"Queue-ID" : "450",
 
 	"/___Example___/"   : {	"SR (Blind pick)": 430,
@@ -90,6 +67,54 @@
 		"Note-2"         : "1 is 1 second",
 		"Create-Delay" : 20,
 		"Find-Delay"   : 3,
+
+
+
+"/___________________________________Custom Things______________________________/": "",
+
+	"Receive-Update"           : true,
+
+	"Sidebar-Transparent"      : false,
+
+	"Hide-Champions-Splash-Art": true,
+
+	"Animate-Loading"          : false,
+	"Custom-Avatar"            : true,
+	"Custom-Icon"              : true,
+		"Icon-Folder": "//plugins/ElainaV2/assets/Icon",
+
+		"Animation-logo": "ElainaFly.gif",
+
+		"Static-logo"   : "Logo.png",
+
+		"Avatar"        : "Avatar.gif",
+	
+		"RP-icon"       : "ApprenticeWitch.png",
+
+		"BE-icon"       : "ElainaStare.png",
+
+		"Rank-icon"     : "Rank.png",
+
+		"Emblem"        : "emblem_5.png",
+
+		"Class-banner"  : "Clash.png",
+
+		"Ticker"        : "ticker.png",
+
+		"Hover-card"    : "Hover-card-backdrop.jpg",
+	
+	"Custom-Font"              : false,
+		"Font-Folder"   : "//plugins/ElainaV2/assets/Fonts",
+		"Font-Name"     : "AegirSeaborn.ttf",
+	
+	"Custom_RP"                : false,
+		"RP"            : "-69",
+
+	"Custom-Rank-Name"         : true,
+		"Rank1"         : "Apprentice",
+		"Rank2"         : "Witch",
+
+
 
 "/____________________________________Filters___________________________________/": "",
 
@@ -107,7 +132,7 @@
 
 	"Collections" : "brightness(0.2)",
 
-	"Parties"     : "brightness(0.4) blur(6px)",
+	"Parties"     : "brightness(0.4)",
 
 	"Champ-select": "brightness(0.4) blur(3px) saturate(1.5)",
 

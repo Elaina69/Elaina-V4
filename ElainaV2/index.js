@@ -558,6 +558,15 @@ let pageChangeMutation = async (node) => {
 			}
 			else {}
 		},data["Create-Delay"]*1000)
+		window.setInterval(() => {
+			try {
+				let homecontent = document.querySelector('.rcp-fe-lol-home > lol-uikit-section-controller > lol-uikit-section > #overview > iframe[referrerpolicy = "no-referrer-when-downgrade"]')
+					homecontent.contentWindow.document.querySelector("body").style.background = "#00000073"
+					homecontent.contentWindow.document.querySelector("#gatsby-focus-wrapper > div > div > div > div > div > div > div > img").src = "none"
+
+			}
+			catch {}
+		},100)
 	}
 	else if (pagename != "rcp-fe-lol-navigation-screen" && pagename != "window-controls" && pagename != "rcp-fe-lol-home" && pagename != "social") {
 		if (document.getElementsByClassName("webm-bottom-buttons-container").length) {
@@ -685,37 +694,10 @@ let pageChangeMutation = async (node) => {
         ranked_observer = undefined
 	}
 	if (pagename == "rcp-fe-lol-parties") {
-		elaina_bg_elem.style.filter = data["Parties"] [wallpapers[0]];
-
-        window.setInterval(() => {
-            try {
-                let gameinfo = document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-status-card").shadowRoot
-                    gameinfo.querySelector("div").style.background = "#143c1400"
-                    gameinfo.querySelector("div > div.parties-status-card-bg-container").style.color = "#36d98700"
-                    gameinfo.querySelector("div > div.parties-status-card-bg-container > video").setAttribute('src', '')
-                    gameinfo.querySelector("div > div.parties-status-card-header").style.visibility = "hidden"
-
-                let cardbody = gameinfo.querySelector("div > div.parties-status-card-body").style
-                    cardbody.marginTop = "-23px"
-                    cardbody.padding = "10px 5px 10px 10px"
-                    cardbody.border = "1px solid #8c8263"
-                    cardbody.borderRadius = "10px"
-
-                let gamesearch = document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-game-search").shadowRoot
-                    gamesearch.querySelector("div").style.border = "1px solid #8c8263"
-                    gamesearch.querySelector("div").style.borderRadius = "10px"
-                    gamesearch.querySelector("div").style.marginTop = "9px"
-                    gamesearch.querySelector("div > div.parties-game-search-divider").remove()
-
-                document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-bg-container").style.backgroundImage = "none"
-                document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-status-card").shadowRoot.
-                    querySelector("div > div.parties-status-card-body > div.parties-status-card-map.game_map_howling_abyss").style.margin = "-3px 10px 0 0"
-            }
-            catch {}
-        },10)
+		elaina_bg_elem.style.filter = data["Parties"];
 	}
 	else if (previous_page == "rcp-fe-lol-parties" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = data["Homepage"][wallpapers[0]];
+		elaina_bg_elem.style.filter = data["Homepage"];
 	}
 	if (previous_page != pagename) {
 		previous_page = pagename
@@ -749,6 +731,32 @@ window.setInterval(() => {
 		}
 		catch {}
 	}
+
+	try {
+		let gameinfo = document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-status-card").shadowRoot
+			gameinfo.querySelector("div").style.background = "#143c1400"
+			gameinfo.querySelector("div > div.parties-status-card-bg-container").style.color = "#36d98700"
+			gameinfo.querySelector("div > div.parties-status-card-bg-container > video").setAttribute('src', '')
+			gameinfo.querySelector("div > div.parties-status-card-header").style.visibility = "hidden"
+
+		let cardbody = gameinfo.querySelector("div > div.parties-status-card-body").style
+			cardbody.marginTop = "-23px"
+			cardbody.padding = "10px 5px 10px 10px"
+			cardbody.border = "1px solid #8c8263"
+			cardbody.borderRadius = "10px"
+
+		let gamesearch = document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-game-search").shadowRoot
+			gamesearch.querySelector("div").style.border = "1px solid #8c8263"
+			gamesearch.querySelector("div").style.borderRadius = "10px"
+			gamesearch.querySelector("div").style.marginTop = "9px"
+			gamesearch.querySelector("div > div.parties-game-search-divider").remove()
+
+		document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-bg-container").style.backgroundImage = "none"
+		document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-status-card").shadowRoot.
+			querySelector("div > div.parties-status-card-body > div.parties-status-card-map.game_map_howling_abyss").style.margin = "-3px 10px 0 0"
+	}
+	catch {}
+
 	try {
 		let RP = document.querySelector("div.currency-rp").innerHTML
 		if (CustomRP) {
@@ -770,24 +778,40 @@ import wt from './resources/Watermark'
 
 //___________________________________________________________________________//
 window.addEventListener('load', () => {
+	function newStyle (cssvar,folder,name,css) {
+		let NStyle = document.createElement('style');
+			NStyle.appendChild(document.createTextNode(
+				'@import url("'+css+'");:root {'+cssvar+':url('+folder+'/'+name+');}'
+			));
+		document.body.appendChild(NStyle)
+	}
 	utils.addCss("//plugins/ElainaV2/assets/Css/ElainaV2.css");	
+	newStyle("--Hover-card-backdrop",data["Icon-Folder"],data['Hover-card'])
 	if (data["Sidebar-Transparent"]) {utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Sidebar-Transparent.css");}
 	else {utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Sidebar-Color.css");}
 
-	if (data["Animate-Loading"]) {utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Animate-Loading-Screen.css")}
-    else {utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Static-Loading-Screen.css")}
+	if (data["Animate-Loading"]) {newStyle("--ElainaFly",data["Icon-Folder"],data["Animation-logo"],"//plugins/ElainaV2/assets/Css/Addon-Css/Animate-Loading-Screen.css")}
+    else {newStyle("--ElainaStatic",data["Icon-Folder"],data["Static-logo"],"//plugins/ElainaV2/assets/Css/Addon-Css/Static-Loading-Screen.css")}
 
 	if (data["Hide-Champions-Splash-Art"]) {utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Hide-Champs-Splash-Art.css")}
 
-    if (Avatar) {utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Icon/Avatar.css")}
+    if (Avatar) {newStyle("--Avatar",data["Icon-Folder"],data["Avatar"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/Avatar.css")}
 	
 	if (data["Custom-Icon"]) {
-		utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Icon/RiotPoint.css")
-		utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Icon/BlueEssence.css")
-		utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Icon/ClashBanner.css")
-		utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Icon/Emblem.css")
-		utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Icon/Rank.css")
-		utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Icon/Ticker.css")
+		newStyle("--RP-Icon",data["Icon-Folder"],data["RP-icon"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/RiotPoint.css")
+		newStyle("--BE-Icon",data["Icon-Folder"],data["BE-icon"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/BlueEssence.css")
+		newStyle("--Rank-Icon",data["Icon-Folder"],data["Rank-icon"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/Rank.css")
+		newStyle("--Emblem",data["Icon-Folder"],data["Emblem"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/Emblem.css")
+		newStyle("--Clash-banner",data["Icon-Folder"],data["Class-banner"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/ClashBanner.css")
+		newStyle("--Ticker",data["Icon-Folder"],data["Ticker"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/Ticker.css")
+	}
+
+	if (data["Custom-Font"]) {
+		let CusFont = document.createElement('style');
+		CusFont.appendChild(document.createTextNode(
+			'@font-face {font-family: "Custom" ; src: url('+data["Font-Folder"]+"/"+data["Font-Name"]+');}'
+		));
+		document.body.appendChild(CusFont)
 	}
 
 	const video = document.createElement('video');
@@ -841,11 +865,7 @@ window.addEventListener('load', () => {
 	else {
 		console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')]+" and "+Audios[songIndex])
 	}
-	console.log("Theme on Github is v" + newVersion)
-	console.log("This theme version is v" + thisVersion)
-	if (thisVersion >= newVersion) {
-		console.log("Your theme is up-to-date")
-	}
+	if (thisVersion >= newVersion) {}
 	else {
 		console.log("You should update your theme")
 	}
