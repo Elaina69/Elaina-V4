@@ -74,3 +74,8 @@ New Elaina theme for Pengu Loader with brand new JS file
 
 # Change backgrounds and icons:
  - Open /plugins/ElainaV2/configs/ElainaV2_config.json
+
+# Note (again):
+ - If you cant load theme and see "Can't import dynamic...bla bla..." in console tab, just disable "Receive update" option
+
+ ![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/1f2c0856-73a1-4e29-969d-fde5408bd2f3)
