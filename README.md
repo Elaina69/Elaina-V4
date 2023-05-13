@@ -72,8 +72,5 @@ New Elaina theme for Pengu Loader with brand new JS file
     ├── Pengu Loader.exe
     └──
 
-# Change backgrounds:
+# Change backgrounds and icons:
  - Open /plugins/ElainaV2/configs/ElainaV2_config.json
- 
-# Change icon (BE, RP, avatar,...)
- - Open /plugins/ElainaV2/assets/ElainaV2.css
