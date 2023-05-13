@@ -8,7 +8,6 @@ import watermark   from './resources/Watermark'
 import Update      from './resources/CheckUpdate'
 import Settings    from './resources/Theme-Settings'
 import thisVersion from './configs/Version'
-import newVersion  from 'https://raw.githack.com/Elaina69/Elaina-V2/main/ElainaV2/configs/Version.js'
 
 //Addon plugins
 import './resources/LL-Settings'
@@ -513,11 +512,14 @@ let pageChangeMutation = async (node) => {
 			create_webm_buttons()
 			watermark.ElainaTrigger()
 			//Settings.ThemeSettings()
-
-			if (thisVersion < newVersion && data["Receive-Update"]) {
-				Update.UpdatePopup()
+			if (data["Receive-Update"]) {
+				let newVersion = (await (() => import('https://raw.githack.com/Elaina69/Elaina-V2/main/ElainaV2/configs/Version.js'))()).default
+				if (thisVersion < newVersion) {
+					Update.UpdatePopup()
+				}
+				else {}
 			}
-			else {}
+			else{}
 		}
 		add_elaina_home_page()
 		add_elaina_home_navbar()
@@ -785,8 +787,10 @@ window.addEventListener('load', () => {
 			));
 		document.body.appendChild(NStyle)
 	}
+	
 	utils.addCss("//plugins/ElainaV2/assets/Css/ElainaV2.css");	
 	newStyle("--Hover-card-backdrop",data["Icon-Folder"],data['Hover-card'])
+
 	if (data["Sidebar-Transparent"]) {utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Sidebar-Transparent.css");}
 	else {utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Sidebar-Color.css");}
 
@@ -845,6 +849,7 @@ window.addEventListener('load', () => {
 	document.querySelector("body").prepend(video)
     document.querySelector("body").prepend(audio)
 	elaina_play_pause()
+
 	utils.mutationObserverAddCallback(pageChangeMutation, ["screen-root"])
 	utils.subscribe_endpoint("/lol-gameflow/v1/gameflow-phase", updateLobbyRegaliaBanner)
 	utils.subscribe_endpoint('/lol-gameflow/v1/gameflow-phase', (message) => {
@@ -859,15 +864,8 @@ window.addEventListener('load', () => {
 			audio_play_pause()
 		} 
 	})
-	if (data['Continues_Audio']) {
-		console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')]+" and "+Audios[DataStore.get('audio-index')])
-	}
-	else {
-		console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')]+" and "+Audios[songIndex])
-	}
-	if (thisVersion >= newVersion) {}
-	else {
-		console.log("You should update your theme")
-	}
+
+	if (data['Continues_Audio']) {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')]+" and "+Audios[DataStore.get('audio-index')])}
+	else {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')]+" and "+Audios[songIndex])}
 })
 //___________________________________________________________________________//
