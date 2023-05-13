@@ -28,6 +28,9 @@ New Elaina theme for Pengu Loader with brand new JS file
 
 > Recommended: Windows 10/11, Intel Core I5 2400 // 8gb ram // NVIDIA GT630
 
+# Change backgrounds and icons:
+ - Open /plugins/ElainaV2/configs/ElainaV2_config.json
+
 # NOTE (MUST READ)
  - This theme already have:
    + "Auto-Accept"
@@ -35,6 +38,11 @@ New Elaina theme for Pengu Loader with brand new JS file
    + "Offline-mode"
    + "Hide-friendlist"
  - DON'T add them more to plugins folder
+
+# NOTE (again):
+ - If you cant load theme and see "Can't import dynamic...bla bla..." in console tab, just disable "Receive update" option
+
+ ![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/1f2c0856-73a1-4e29-969d-fde5408bd2f3)
  
 # How to install:
  - Active Pengu Loader
@@ -71,11 +79,3 @@ New Elaina theme for Pengu Loader with brand new JS file
     ├── ...
     ├── Pengu Loader.exe
     └──
-
-# Change backgrounds and icons:
- - Open /plugins/ElainaV2/configs/ElainaV2_config.json
-
-# Note (again):
- - If you cant load theme and see "Can't import dynamic...bla bla..." in console tab, just disable "Receive update" option
-
- ![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/1f2c0856-73a1-4e29-969d-fde5408bd2f3)
