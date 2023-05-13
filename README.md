@@ -1,3 +1,11 @@
+## Table of Contents
+ - [About](#elaina-v2)
+ - [Features](#features)
+ - [Required](#required)
+ - [Note](#note-must-read)
+ - [Installation](#installation)
+ - [Change backgrounds and icons](#change-backgrounds-and-icons)
+
 # Elaina-V2
 New Elaina theme for Pengu Loader with brand new JS file
 > (Special thanks [teiseire117](https://github.com/teisseire117))
@@ -28,9 +36,6 @@ New Elaina theme for Pengu Loader with brand new JS file
 
 > Recommended: Windows 10/11, Intel Core I5 2400 // 8gb ram // NVIDIA GT630
 
-# Change backgrounds and icons:
- - Open /plugins/ElainaV2/configs/ElainaV2_config.json
-
 # NOTE (MUST READ)
  - This theme already have:
    + "Auto-Accept"
@@ -44,28 +49,28 @@ New Elaina theme for Pengu Loader with brand new JS file
 
  ![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/1f2c0856-73a1-4e29-969d-fde5408bd2f3)
  
-# How to install:
- - Active Pengu Loader
+# installation:
+ 1. Active Pengu Loader
  
  ![image](https://user-images.githubusercontent.com/94338907/232275600-d2917ec3-62a8-4f16-8411-6750ccf2c43b.png)
 
- - Download theme
+ 2. Download theme
  
  ![image](https://user-images.githubusercontent.com/94338907/232275789-b12cf894-f4c5-4dd7-aeab-5a24ffc6f60a.png)
 
- - Extract theme
+ 3. Extract theme
  
  ![image](https://user-images.githubusercontent.com/94338907/232275874-139dddc4-b01f-4566-8dbe-8890a6b6ea22.png)
 
- - Open Plugin folder
+ 4. Open Plugin folder
  
  ![image](https://user-images.githubusercontent.com/94338907/232275976-27399264-dc6d-49a2-a98a-f07fd991d0fd.png)
 
- - Copy "ElainaV2" folder to Pengu-loader "plugins" folder
+ 5. Copy "ElainaV2" folder to Pengu-loader "plugins" folder
  
  ![image](https://user-images.githubusercontent.com/94338907/232276082-a397e90f-d7bc-4c35-b0ce-3822a66f0667.png)
 
- - Done
+ 6. Done
  > So...It must be like this
  
     .
@@ -79,3 +84,8 @@ New Elaina theme for Pengu Loader with brand new JS file
     ├── ...
     ├── Pengu Loader.exe
     └──
+
+# Change backgrounds and icons:
+ - Open /plugins/ElainaV2/configs/ElainaV2_config.json
+
+![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/09eb87cd-0872-4a4b-995f-1933cb18da49)
