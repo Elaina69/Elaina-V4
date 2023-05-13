@@ -118,7 +118,7 @@
 
 "/____________________________________Filters___________________________________/": "",
 
-	"Homepage"    : "brightness(0.7)",
+	"Homepage"    : "brightness(0.8)",
 
 	"Clash"       : "brightness(0.2) blur(10px)",
 
