@@ -68,5 +68,4 @@ if (newdate == "25/12" && MerryChristmas){
 else if (MerryChristmas) {
     console.log("Not Xmas yet")
 }
-else {}
 import wt from './Watermark'
