@@ -61,12 +61,12 @@ else {
 if (!DataStore.has('pause-audio')) {
 	DataStore.set('pause-audio', 1)
 }
-else {}
+
 
 if (!DataStore.has('pause-wallpaper')) {
 	DataStore.set('pause-wallpaper', 1)
 }
-else {}
+
 
 if (!DataStore.has('wallpaper-index')) {
 	DataStore.set('wallpaper-index', data["default_wallpaper"]-1)
@@ -82,7 +82,7 @@ if (!DataStore.has('audio-index')) {
 else if (DataStore.get('audio-index')+1>Audios.length) {
 	DataStore.set('audio-index', songIndex-1)
 }
-else {}
+
 //___________________________________________________________________________//
 
 
@@ -404,7 +404,7 @@ function create_webm_buttons() {
 		if (Click >= 69) {
 			window.open("https://media.discordapp.net/attachments/887677396315172894/1100385074299539556/100259683_p0_master1200.png", "_blank")
 		}
-		else {}
+		
 		next_wallpaper()
 	})
 	prevBg.addEventListener("click", () => {
@@ -517,9 +517,7 @@ let pageChangeMutation = async (node) => {
 				if (thisVersion < newVersion) {
 					Update.UpdatePopup()
 				}
-				else {}
 			}
-			else{}
 		}
 		add_elaina_home_page()
 		add_elaina_home_navbar()
@@ -527,7 +525,7 @@ let pageChangeMutation = async (node) => {
 		if (previous_page == "rcp-fe-lol-parties" ){
 			patch_default_home_page()
 		}
-		else{}
+		
 		window.setTimeout(async () => {
 			if (data["Auto-Find-Queue"] && !data["Aram-only-mode"]) {
 				await fetch('/lol-lobby/v2/lobby', {
@@ -542,7 +540,6 @@ let pageChangeMutation = async (node) => {
 						method: 'POST'
 					});
 				},data["Find-Delay"]*1000)
-				
 			}
 			else if (data["Auto-Find-Queue"] && data["Aram-only-mode"]) {
 				await fetch('/lol-lobby/v2/lobby', {
@@ -558,7 +555,6 @@ let pageChangeMutation = async (node) => {
 					});
 				},data["Find-Delay"]*1000)
 			}
-			else {}
 		},data["Create-Delay"]*1000)
 		window.setInterval(() => {
 			try {
@@ -584,11 +580,11 @@ let pageChangeMutation = async (node) => {
 			patcher_go_to_default_home_page = false
 		}
 	}
-	else {}
+	
 	if (pagename == "rcp-fe-lol-uikit-full-page-modal-controller") {
 		return;
 	}
-	else {}
+	
 	if (pagename == "rcp-fe-lol-yourshop") {
 		elaina_bg_elem.style.filter = data["Yourshop"];
 	}
@@ -660,7 +656,7 @@ let pageChangeMutation = async (node) => {
 				}
 				catch{}
 			}
-			else{}
+			
 
             if (Avatar) {
                 try {
@@ -690,7 +686,7 @@ let pageChangeMutation = async (node) => {
 	else if (previous_page == "rcp-fe-lol-profiles-main") {
 		if (brightness_modifiers.indexOf(pagename) == -1)
 			elaina_bg_elem.style.filter = data["Homepage"];
-        else{}
+        
         if (ranked_observer)
         ranked_observer.disconnect()
         ranked_observer = undefined
@@ -767,7 +763,7 @@ window.setInterval(() => {
 				document.querySelector("div.currency-rp").innerHTML = DataStore.get('Custom_RP')
 			}
 		}
-		else {}
+		
 	}
 	catch {}
 }, 100)
@@ -816,6 +812,21 @@ window.addEventListener('load', () => {
 			'@font-face {font-family: "Custom" ; src: url('+data["Font-Folder"]+"/"+data["Font-Name"]+');}'
 		));
 		document.body.appendChild(CusFont)
+	}
+
+	if (data["Custom-Cursor"]) {
+		let cursor = document.createElement("div")
+			cursor.classList.add("cursor")
+			cursor.style.background = 'url('+data["Icon-Folder"]+'/'+data["Mouse-cursor"]+')'
+
+		document.addEventListener('mousemove', function(e){
+			var x = e.clientX;
+			var y = e.clientY;
+			cursor.style.transform = `translate3d(calc(${e.clientX}px - 40%), calc(${e.clientY}px - 40%), 0)`
+		});
+		let body = document.querySelector("html")
+			body.appendChild(cursor)
+		utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Cursor.css")
 	}
 
 	const video = document.createElement('video');

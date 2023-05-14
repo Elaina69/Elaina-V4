@@ -55,7 +55,7 @@
 
 	"April fool' joke"              : true,
 
-	"Auto-Find-Queue" 				: false,	"Note": "if true, DO NOT go back to homepage after you cancel queue",
+	"Auto-Find-Queue" 				: false,	"Note-1": "if true, DO NOT go back to homepage after you cancel queue",
 		"Queue-ID" : "450",
 
 	"/___Example___/"   : {	"SR (Blind pick)": 430,
@@ -78,10 +78,12 @@
 
 	"Hide-Champions-Splash-Art": true,
 
-	"Animate-Loading"          : false,
-	"Custom-Avatar"            : true,
-	"Custom-Icon"              : true,
-		"Icon-Folder": "//plugins/ElainaV2/assets/Icon",
+	"Animate-Loading" : false, 
+	"Custom-Avatar"   : true, 
+	"Custom-Icon"     : true,
+	"Custom-Cursor"   : false,   "Note-3": "For high-perform pc only (very lag)",
+	
+		"Icon-Folder"   : "//plugins/ElainaV2/assets/Icon",
 
 		"Animation-logo": "ElainaFly.gif",
 
@@ -102,6 +104,8 @@
 		"Ticker"        : "ticker.png",
 
 		"Hover-card"    : "Hover-card-backdrop.jpg",
+
+		"Mouse-cursor"  : "ElainaDed.png",
 	
 	"Custom-Font"              : false,
 		"Font-Folder"   : "//plugins/ElainaV2/assets/Fonts",

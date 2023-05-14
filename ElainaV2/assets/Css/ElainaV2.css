@@ -295,7 +295,7 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
     width: 21px !important;
     background-color: black !important;
     height: 21px !important;
-    cursor: pointer !important;
+    cursor: pointer;
 }
 
 #pause-bg:hover {
@@ -312,7 +312,7 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
     position: relative !important;
     width: 21px !important;
     height: 21px !important;
-    cursor: pointer !important;
+    cursor: pointer;
 	left: 7px;
 }
 
@@ -331,7 +331,7 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
     position: relative !important;
     width: 21px !important;
     height: 21px !important;
-    cursor: pointer !important;
+    cursor: pointer;
 	left: 7px;
 }
 
@@ -352,7 +352,7 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
     width: 21px !important;
     background-color: black !important;
     height: 21px !important;
-    cursor: pointer !important;
+    cursor: pointer;
 	left: 4px;
 }
 
@@ -373,7 +373,7 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
     width: 21px !important;
     background-color: black !important;
     height: 21px !important;
-    cursor: pointer !important;
+    cursor: pointer;
 	left: -4px;
 }
 
@@ -393,7 +393,7 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
     width: 21px !important;
     background-color: black !important;
     height: 21px !important;
-    cursor: pointer !important;
+    cursor: pointer;
 	display: block !important;
 	margin-right: 4px !important;
 }
@@ -484,7 +484,7 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
     width: 30px !important;
 	height: 30px !important;
     background-color: black !important;   
-    cursor: pointer !important;
+    cursor: pointer;
 	left: 20px;	
 	top: 145px
 }
