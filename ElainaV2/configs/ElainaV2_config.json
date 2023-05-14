@@ -81,7 +81,7 @@
 	"Animate-Loading" : false, 
 	"Custom-Avatar"   : true, 
 	"Custom-Icon"     : true,
-	"Custom-Cursor"   : false,   "Note-3": "For high-perform pc only (very lag)",
+	"Custom-Cursor"   : false,   "Note-3": "Still in beta, For high-perform pc only (very lag)",
 	
 		"Icon-Folder"   : "//plugins/ElainaV2/assets/Icon",
 
