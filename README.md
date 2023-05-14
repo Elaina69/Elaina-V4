@@ -32,9 +32,9 @@ New Elaina theme for Pengu Loader with brand new JS file
  - [Pengu Loader v1.0.4 and later](https://github.com/PenguLoader/PenguLoader/releases)
  - A good-enough PC/Laptop
 
-> Minimum: Windows 10, Intel Core2duo E8300 // 8gb ram // NVIDIA GT630
+> Minimum: Windows 10/11, Intel Core I5 2400 // 8gb ram // NVIDIA GT630
 
-> Recommended: Windows 10/11, Intel Core I5 2400 // 8gb ram // NVIDIA GT630
+> Recommended: Windows 10/11, Intel Core I5 9400 // 16gb ram // NVIDIA GTX1050 Ti and Higher
 
 # NOTE (MUST READ)
  - This theme already have:
