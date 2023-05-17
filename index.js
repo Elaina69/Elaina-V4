@@ -34,17 +34,6 @@ let songIndex          = data["default_audio"]-1;
 //___________________________________________________________________________//
 
 //Temp solution, fuck you DataStore
-DataStore.set('TurnOn_DataStore',true)
-DataStore.set('TurnOn_DataStore2',true)
-DataStore.set('TurnOn_DataStore3',true)
-DataStore.set('TurnOn_DataStore4',true)
-DataStore.set('TurnOn_DataStore5',true)
-DataStore.set('TurnOn_DataStore6',true)
-DataStore.set('TurnOn_DataStore7',true)
-
-DataStore.remove('ll-welcome')
-DataStore.set('ll-welcome', false)
-
 if (!DataStore.has('Custom_RP') && CustomRP){
 	DataStore.set('Custom_RP', CusRP)
 }
