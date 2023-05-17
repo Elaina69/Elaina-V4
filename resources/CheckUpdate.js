@@ -1,5 +1,5 @@
 import lang from '../configs/Language.json'
-let newVersion = (await (() => import('https://raw.githack.com/Elaina69/Elaina-V2/main/ElainaV2/configs/Version.js'))()).default
+let newVersion = (await (() => import('https://raw.githack.com/Elaina69/Elaina-V2/main/configs/Version.js'))()).default
 
 function UpdatePopup() {
     const noticediv   = document.createElement("div")

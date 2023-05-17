@@ -32,8 +32,6 @@ let songIndex          = data["default_audio"]-1;
 
 
 //___________________________________________________________________________//
-
-//Temp solution, fuck you DataStore
 if (!DataStore.has('Custom_RP') && CustomRP){
 	DataStore.set('Custom_RP', CusRP)
 }
@@ -502,7 +500,7 @@ let pageChangeMutation = async (node) => {
 			watermark.ElainaTrigger()
 			//Settings.ThemeSettings()
 			if (data["Receive-Update"]) {
-				let newVersion = (await (() => import('https://raw.githack.com/Elaina69/Elaina-V2/main/ElainaV2/configs/Version.js'))()).default
+				let newVersion = (await (() => import('https://raw.githack.com/Elaina69/Elaina-V2/main/configs/Version.js'))()).default
 				if (thisVersion < newVersion) {
 					Update.UpdatePopup()
 				}
