@@ -17,6 +17,7 @@ import './resources/Dodge-button'
 import './resources/Offline-mode'
 import './resources/Hide_friendlist'
 import './resources/FakeIP'
+import './resources/Custom-Status'
 
 //___________________________________________________________________________//
 let wallpapers         = data["wallpaper_list"]
