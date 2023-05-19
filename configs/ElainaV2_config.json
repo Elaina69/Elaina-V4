@@ -63,7 +63,7 @@
 		"Queue-ID" : "450",
 	"/___Example___/"   : {	"SR (Blind pick)": 430,
 							"Aram"           : 450,
-							"TFT-1"          : 1090 }, "/___More info___/" : "https://static.developer.riotgames.com/docs/lol/queues.json",
+							"TFT-1"          : 1090 }, "/___More info___/" : "https://raw.githack.com/Elaina69/Elaina-V2/main/resources/Misc/QueueID.json",
 
 	"/___Delay for create queue___/": "Based on my loading client speed, you should change it for yours",
 		"Note"         : "1 is 1 second",
@@ -75,7 +75,7 @@
 	"Custom-Rank(Hover-card)"       : true,
 		"rankedQueue"  : 0,
 		"rankTier"     : 8,
-		"rankDivision" : 0,			"/___More info___/" : "",
+		"rankDivision" : 0,			"/___More info___/" : "https://raw.githack.com/Elaina69/Elaina-V2/main/resources/Misc/Custom%20Rank.json",
 
 
 
