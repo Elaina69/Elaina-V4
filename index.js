@@ -18,6 +18,8 @@ import './resources/Offline-mode'
 import './resources/Hide_friendlist'
 import './resources/FakeIP'
 import './resources/Custom-Status'
+import './resources/Custom-rank(hover)'
+import './resources/Auto-Ban-Pick'
 
 //___________________________________________________________________________//
 let wallpapers         = data["wallpaper_list"]
@@ -639,8 +641,8 @@ let pageChangeMutation = async (node) => {
             catch {}
 			if (data["Custom-Rank-Name"]) {
 				try {
-					document.querySelector(".style-profile-ranked-component.ember-view > .style-profile-emblem-wrapper  > .style-profile-emblem-header > .style-profile-emblem-header-title").innerHTML = data["Rank1"]
-					document.querySelector(".style-profile-emblem-subheader-ranked > div").innerHTML = data["Rank2"]
+					document.querySelector(".style-profile-ranked-component.ember-view > .style-profile-emblem-wrapper  > .style-profile-emblem-header > .style-profile-emblem-header-title").innerHTML = data["Rank-line1"]
+					document.querySelector(".style-profile-emblem-subheader-ranked > div").innerHTML = data["Rank-line2"]
 				}
 				catch{}
 			}
