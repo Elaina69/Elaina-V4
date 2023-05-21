@@ -4,7 +4,8 @@
 		"ja-JP": "JP",
 		"pl-PL": "PL",
 		"ru-RU": "RU",
-		"es-MX": "MX"
+		"es-MX": "MX",
+        "ko_KR": "KR"
     },
 
     "EN": {
@@ -126,5 +127,23 @@
         
         "auto_pick"       : "Auto pick",
         "auto_ban"        : "Auto ban"
+    },
+    "KR": {
+        "home"            : "홈",
+        "dodge"           : "닷지",
+        "exit"            : "나가기",
+        "auto_accept"     : "자동 수락",
+        "update"          : "업데이트",
+        "update_mess"     : "업데이트 알림",
+
+        "l.open_settings" : "세팅",
+        "l.open_devtools" : "개발자 툴",
+        "l.reload_client" : "재접속",
+        "l.open_plugins"  : "플러그인",
+        "l.theme_releases": "테마 배포",
+        "l.close"         : "닫기",
+
+        "auto_pick"       : "자동 선택",
+        "auto_ban"        : "자동 벤"
     }
 }

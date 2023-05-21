@@ -5,10 +5,8 @@ import data from "../configs/ElainaV2_config.json"
 import lang from "../configs/Language.json"
 import Version from "../configs/Version"
 
-let LLset = data["Old-League-Loader-Settings"]
-if (LLset) {
+if (data["Old-League-Loader-Settings"]) {
     const TRANSLATIONS = lang
-    
     
     // Create loader UI.
     async function createLoaderMenu(root) {
