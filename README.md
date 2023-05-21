@@ -6,7 +6,7 @@
  - [Installation](#installation)
  - [Change backgrounds and icons](#change-backgrounds-and-icons)
 
-# Elaina-V2
+## Elaina-V2
 New Elaina theme for Pengu Loader with brand new JS file
 
 > Special thanks:
@@ -25,7 +25,7 @@ New Elaina theme for Pengu Loader with brand new JS file
  - Github version: [Download](https://github.com/Elaina69/Elaina-V2/releases)
  - Highest Wallpaper resolution (For strong device only): [Download](https://drive.google.com/drive/folders/1wvNF18fM9QkzE-a0aBDvJQjB36lWcFbU?usp=sharing)
 
-# Features
+## Features
  - Customizable icon and background
  - Support homepage audio (not client audio ofc)
  - Addon plugins
@@ -40,7 +40,7 @@ New Elaina theme for Pengu Loader with brand new JS file
 
 > You can help me add more languages by joining [Pengu discord server](https://chat.pengu.lol/)
 
-# Required: 
+## Required: 
  - [Pengu Loader v1.0.4 and later](https://github.com/PenguLoader/PenguLoader/releases)
  - A good-enough PC/Laptop
 
@@ -48,7 +48,7 @@ New Elaina theme for Pengu Loader with brand new JS file
 
 > Recommended: Windows 10/11, Intel Core I5 9400 // 16gb ram // NVIDIA GTX1050 Ti and Higher
 
-# NOTE (MUST READ)
+## NOTE (MUST READ)
  - This theme already have:
    + "Auto-Accept"
    + "Dodge-button"
@@ -60,7 +60,7 @@ New Elaina theme for Pengu Loader with brand new JS file
    + "Auto-ban/pick"
  - DON'T add them more to plugins folder
 
-# installation:
+## Installation:
  1. Active Pengu Loader
  
  ![image](https://user-images.githubusercontent.com/94338907/232275600-d2917ec3-62a8-4f16-8411-6750ccf2c43b.png)
@@ -103,7 +103,7 @@ New Elaina theme for Pengu Loader with brand new JS file
     ├── Pengu Loader.exe
     └──
 
-# Change backgrounds and icons:
+## Change backgrounds and icons:
  - Open /plugins/ElainaV2/configs/ElainaV2_config.json
 
 ![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/09eb87cd-0872-4a4b-995f-1933cb18da49)
