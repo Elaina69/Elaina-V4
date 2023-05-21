@@ -545,13 +545,14 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
 .watermark {
 	margin: 4px !important;
 	color: #cdbe91 !important;
+	font-family: var(--font-family, var(--font-display));
 }
 
 .watermark-text {
 	display: flex;
     bottom: 9px;
     right: 20px;
-	position:absolute
+	position:absolute;
 }
 
 .Elaina1ImageCon {

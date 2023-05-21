@@ -70,8 +70,8 @@ if (data["Auto-ban-pick"]) {
   function getCheckBox(text, enabled) {
     const pickCheckbox = document.createElement("lol-uikit-radio-input-option")
     if (enabled) { pickCheckbox.setAttribute("selected", enabled) }
-    pickCheckbox.style.setProperty("margin-left", "16px")
-    pickCheckbox.style.fontFamily = "Arial"
+    pickCheckbox.style.setProperty("margin-left", "12px")
+    pickCheckbox.style.fontFamily = "var(--font-family, var(--font-display))"
     pickCheckbox.innerHTML = text
     return pickCheckbox
   }
