@@ -1,8 +1,8 @@
-import utils from './_utilselaina';
-import data from"../configs/ElainaV2_config.json";
+import utils from './_utilselaina'
+import data from"../configs/ElainaV2_config.json"
 import wt from './Watermark'
 
-let ARAM = data["Aram-only-mode"];
+let ARAM = data["Aram-only-mode"]
 
 if(ARAM) {
     window.addEventListener('load', () => {
@@ -10,11 +10,9 @@ if(ARAM) {
     })
 
     let pageChangeMutation = (node) => {
-        let pagename;
-        let gamemode;
-
-        pagename=node.getAttribute("data-screen-name");
-
+        let pagename,gamemode
+        
+        pagename=node.getAttribute("data-screen-name")
         if (pagename == "rcp-fe-lol-parties") {
             window.setInterval(()=>{
                 try{
@@ -25,7 +23,7 @@ if(ARAM) {
                 }
                 catch{}
                 try {
-                    gamemode = document.getElementsByClassName("parties-game-navs-list")[0].getAttribute("selectedindex");
+                    gamemode = document.getElementsByClassName("parties-game-navs-list")[0].getAttribute("selectedindex")
                     if (gamemode == "0") {
                         document.querySelector('div[data-game-mode=ARAM] div[class=parties-game-type-upper-half]').click()
                     }

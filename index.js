@@ -6,7 +6,6 @@ import lang        from './configs/Language.json'
 import utils       from './resources/_utilselaina'
 import watermark   from './resources/Watermark'
 import Update      from './resources/CheckUpdate'
-import Settings    from './resources/Theme-Settings'
 import thisVersion from './configs/Version'
 
 //Addon plugins
@@ -474,9 +473,7 @@ let updateLobbyRegaliaBanner = async message => {
 
 //___________________________________________________________________________//
 let pageChangeMutation = async (node) => {
-	let pagename
-	let previous_page
-	let ranked_observer
+	let pagename, previous_page, ranked_observer
 	let elaina_bg_elem = document.getElementById("elaina-bg")
 	let patcher_go_to_default_home_page = true
 	let brightness_modifiers = [
@@ -501,7 +498,6 @@ let pageChangeMutation = async (node) => {
 		if (!document.getElementsByClassName("webm-bottom-buttons-container").length) {
 			create_webm_buttons()
 			watermark.ElainaTrigger()
-			//Settings.ThemeSettings()
 			if (data["Receive-Update"]) {
 				let newVersion = (await (() => import('https://raw.githack.com/Elaina69/Elaina-V2/main/configs/Version.js'))()).default
 				if (thisVersion < newVersion) {
@@ -561,7 +557,6 @@ let pageChangeMutation = async (node) => {
 			Delbuttons()
 			watermark.DelElainaTrigger()
 			Update.DelPopup()
-			Settings.DeleteSettings()
 		}
 	}
 	if (pagename == "social") {

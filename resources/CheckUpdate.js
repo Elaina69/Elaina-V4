@@ -78,4 +78,4 @@ let Update = {
     UpdatePopup: UpdatePopup,
     DelPopup: DelPopup
 }
-    export default Update
+export default Update

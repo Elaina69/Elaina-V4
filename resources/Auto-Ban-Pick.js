@@ -238,9 +238,7 @@ if (data["Auto-ban-pick"]) {
   }
   
   window.addEventListener("load", () => {
-    getAllChampions()
-      .then(champions => allChampions = champions)
-      .finally()
+    getAllChampions().then(champions => allChampions = champions).finally()
   
     const pickChampionExists = DataStore.has("pickChampion")
     const banChampionExists = DataStore.has("banChampion")
