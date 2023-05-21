@@ -20,7 +20,10 @@
         "l.reload_client" : "Reload Client",
         "l.open_plugins"  : "Open Plugins folder",
         "l.theme_releases": "Theme Releases",
-        "l.close"         : "Close"
+        "l.close"         : "Close",
+
+        "auto_pick"       : "Auto pick",
+        "auto_ban"        : "Auto ban"
     },
 
     "VN": {
@@ -38,7 +41,10 @@
         "l.reload_client" : "Khởi động lại Client",
         "l.open_plugins"  : "Mở thư mục Plugins",
         "l.theme_releases": "Các bản phát hành",
-        "l.close"         : "Đóng"
+        "l.close"         : "Đóng",
+        
+        "auto_pick"       : "T.động pick",
+        "auto_ban"        : "T.động ban"
     },
 
     "JP": {
@@ -56,7 +62,10 @@
         "l.reload_client" : "Client リロード",
         "l.open_plugins"  : "プラグインフォルダを開く",
         "l.theme_releases": "テーマリリース",
-        "l.close"         : "近い"
+        "l.close"         : "近い",
+        
+        "auto_pick"       : "Auto pick",
+        "auto_ban"        : "Auto ban"
     },
 
     "PL": {
@@ -74,7 +83,10 @@
         "l.reload_client" : "Przeładuj klienta",
         "l.open_plugins"  : "Otwórz folder wtyczek",
         "l.theme_releases": "Wydania Motywu",
-        "l.close"         : "Zamknij"
+        "l.close"         : "Zamknij",
+        
+        "auto_pick"       : "Auto pick",
+        "auto_ban"        : "Auto ban"
     },
     "RU": {
 
@@ -91,7 +103,10 @@
         "l.reload_client" : "Перезагрузить Клиент",
         "l.open_plugin" : "Открыть папку плагинов",
         "l.theme_releases": "Версии тем",
-        "l.close" : "Закрыть"
+        "l.close" : "Закрыть",
+        
+        "auto_pick"       : "Auto pick",
+        "auto_ban"        : "Auto ban"
     },
     "MX": {
         "/___Translated by @Legnatbird___/": "",
@@ -107,6 +122,9 @@
         "l.reload_client" : "Recargar Cliente",
         "l.open_plugins"  : "Abrir carpeta de plugins",
         "l.theme_releases": "Versiones del tema",
-        "l.close"         : "Cerrar"
+        "l.close"         : "Cerrar",
+        
+        "auto_pick"       : "Auto pick",
+        "auto_ban"        : "Auto ban"
     }
 }

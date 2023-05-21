@@ -1,6 +1,7 @@
 import axios from "https://cdn.skypack.dev/axios"
 import utils from "./_utilselaina"
 import data from '../configs/ElainaV2_config.json'
+import lang from '../configs/Language.json'
 
 /**
  * @author
@@ -208,14 +209,17 @@ if (data["Auto-ban-pick"]) {
     ) {
       return
     }
+
+    const langCode = document.querySelector("html").lang;
+		const langMap = lang.langlist
   
     const checkBoxContainer = new CheckboxContainer("checkbox-container")
   
     const pickDropdownContainer = new DropdownChampionsContainer("pick-dropdown-container")
     const banDropdownContainer = new DropdownChampionsContainer("ban-dropdown-container")
   
-    const pickCheckbox = new AutoCheckbox("Auto pick", "pickChampion")
-    const banCheckbox = new AutoCheckbox("Auto ban", "banChampion")
+    const pickCheckbox = new AutoCheckbox(lang[langMap[langCode] || "EN"]["auto_pick"], "pickChampion")
+    const banCheckbox = new AutoCheckbox(lang[langMap[langCode] || "EN"]["auto_ban"], "banChampion")
   
     const firstPickDropdown = new DropdownChampions(0, "pickChampion", allChampions)
     const secondPickDropdown = new DropdownChampions(1, "pickChampion", allChampions)
