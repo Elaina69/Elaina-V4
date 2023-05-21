@@ -13,7 +13,7 @@
 							  "Elaina6.webm"
 							],
 
-	"/___*Notice*__/"       : " 1 is the first wallpaper of the list",
+	"/___*Note*___/"        : " 1 is the first wallpaper of the list",
 	"default_wallpaper"     : 1,
 
 	"/___*Wallpapers volume*___/": "(0.00 is mute, 1.0 is highest)" ,
@@ -33,7 +33,7 @@
 							  "I'm getting on the bus to the other world,see ya!.mp3"
 							],
 
-	"/___*Notice*___/"      : " 1 is the first song of the list",
+	"/___*Note*___/"        : " 1 is the first song of the list",
 	"default_audio"         : 1,
 
 	"/___*Audio volume*___/": "(0.00 is mute, 1.0 is highest)" ,
@@ -143,7 +143,7 @@
 		"Font-Folder"   : "//plugins/ElainaV2/assets/Fonts",
 		"Font-Name"     : "AegirSeaborn.ttf",
 	
-	"Custom_RP"                : false,
+	"Custom_RP"                : true,
 		"RP"            : "-69",
 
 	"Custom-Rank-Name"         : true,
