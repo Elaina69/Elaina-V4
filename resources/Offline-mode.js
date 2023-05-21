@@ -1,68 +1,81 @@
-function get_status(){
-    let t=document.querySelector(".availability-icon"),
-        a=["dnd","chat","away","offline","mobile"];
+import utils from './_utilselaina'
+let covert_status = "chat";
 
-    if(t)for(let e of a)
-    if(t.classList.contains(e))
-    return e;
-    return"chat"
+function get_status() {
+	let element = document.querySelector(".availability-icon")
+	let possible_status = ["dnd", "chat", "away", "offline", "mobile"]
+
+	if (element) {
+		for (let elem of possible_status){
+			if (element.classList.contains(elem)){
+				return elem
+			}
+		}
+	}
+	return "chat"
 }
+
+let switch_between_status = async () => {
+	let status = get_status()
+	let availability = (status == "chat") ? "mobile" : (status == "mobile") ? "dnd" : (status == "dnd") ? "away" : (status == "away") ? "offline" : (status == "offline") ? "chat" : "chat"
+
+	console.log("pass 1")
+	await fetch("/lol-chat/v1/me", {
+		"headers": {
+			"content-type": "application/json",
+		},
+		"body": `{\"availability\":\"${availability}\"${(availability == "offline" || availability == "away") ? `,\"lol\":{\"gameStatus\":\"outOfGame\"}` : (availability == "dnd") ? `,\"lol\":{\"gameStatus\":\"inGame\"}` : `` }}`,
+		"method": "PUT",
+	});
+
+	document.querySelector(".availability-icon").classList.remove(status)
+	document.querySelector(".availability-icon").classList.add(availability)
+	covert_status = availability
+}
+
+window.switch_between_status = switch_between_status
 
 async function patchStatus(){
-    await fetch(
-        "/lol-chat/v1/me",
-        {headers:{
-            "content-type":"application/json"
-        },
-        body:`{"availability":"${covert_status}","lol":{"gameStatus":"outOfGame"}}`,method:"PUT"}
-    )
+	await fetch("/lol-chat/v1/me", {
+		"headers": {
+			"content-type": "application/json",
+		},
+		"body": `{\"availability\":\"${covert_status}\",\"lol\":{\"gameStatus\":\"outOfGame\"}}`,
+		"method": "PUT",
+	});
 }
 
-import utils from './_utilselaina';
+let champSelectPatchStatus = async message => {
+	let phase = JSON.parse(message["data"])[2]["data"];
+	if (phase == "ChampSelect" && (covert_status == "offline" || covert_status == "away")) {
+		await patchStatus()
+	}
+}
 
-let covert_status="chat",
+let availabilityButtonMutationObserver = async (mutations) => {
+	let circle_status = document.querySelector(".availability-hitbox:not(.offline-mode-available), .availability-hitbox:not([onclick])")
+	let circle_status_custom = document.querySelectorAll(".availability-hitbox.offline-mode-available")
+	let custom_message_status = document.querySelector(".details .status-message.game-status")
 
-switch_between_status=async()=>{
-    let t=get_status(),
-        a="chat"==t?"mobile":"mobile"==t?"dnd":"dnd"==t?"away":"away"==t?"offline":"chat";
-        
-    console.log("pass 1"),
-    await fetch(
-        "/lol-chat/v1/me",
-        {headers:{
-            "content-type":"application/json"
-        },
-        body:`{"availability":"${a}"${"offline"==a||"away"==a?',"lol":{"gameStatus":"outOfGame"}':"dnd"==a?',"lol":{"gameStatus":"inGame"}':""}}`,method:"PUT"}
-    ),
+	if (circle_status) {
+		console.log(mutations)
+		circle_status.classList.add("offline-mode-available");
+		circle_status.outerHTML = circle_status.outerHTML
+		document.querySelector(".availability-hitbox").setAttribute("onclick", "window.switch_between_status()")
+	}
+	if (custom_message_status && covert_status == "offline") {		
+		await patchStatus();
+	}
+	if (circle_status_custom.length > 1){
+		circle_status_custom.forEach((elem, index) => {
+			if (index){
+				elem.remove()
+			}
+		})
+	}
+}
 
-    document.querySelector(".availability-icon").classList.remove(t),
-    document.querySelector(".availability-icon").classList.add(a),
-    covert_status=a
-};
-
-window.switch_between_status=switch_between_status;
-
-let champSelectPatchStatus=async t=>{
-    let a=JSON.parse(t.data)[2].data;
-    "ChampSelect"!=a||"offline"!=covert_status&&"away"!=covert_status||await patchStatus()
-},
-
-availabilityButtonMutationObserver=async t=>{
-    let a=document.querySelector(".availability-hitbox:not(.offline-mode-available), .availability-hitbox:not([onclick])"),
-        e=document.querySelectorAll(".availability-hitbox.offline-mode-available"),
-        i=document.querySelector(".details .status-message.game-status");
-
-    a&&(console.log(t),a.classList.add("offline-mode-available"),
-    a.outerHTML=a.outerHTML,
-
-    document.querySelector(".availability-hitbox").setAttribute("onclick","window.switch_between_status()")),
-    i&&"offline"==covert_status&&await patchStatus(),
-    e.length>1&&e.forEach((t,a)=>{
-        a&&t.remove()
-    })
-};
-
-window.addEventListener("load",()=>{
-    utils.subscribe_endpoint("/lol-gameflow/v1/gameflow-phase",champSelectPatchStatus),
-    utils.routineAddCallback(availabilityButtonMutationObserver,["availability-hitbox","status-message"])
-});
+window.addEventListener('load', () => {
+	utils.subscribe_endpoint("/lol-gameflow/v1/gameflow-phase", champSelectPatchStatus)
+	utils.routineAddCallback(availabilityButtonMutationObserver, ["availability-hitbox", "status-message"])
+})
