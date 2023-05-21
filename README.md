@@ -10,12 +10,12 @@
 New Elaina theme for Pengu Loader with brand new JS file
 
 > Special thanks:
->  - Developers       : [Me(ofc)](https://github.com/Elaina69), [teiseire117](https://github.com/teisseire117)
->  - Plugins providers: [teiseire117](https://github.com/teisseire117), [Nomi-san](https://github.com/nomi-san), [controlado](https://github.com/controlado), and me (again)
+>  - Developers       : Me (ofc), [teiseire117](https://github.com/teisseire117)
+>  - Plugins providers: Me (again), [teiseire117](https://github.com/teisseire117), [Nomi-san](https://github.com/nomi-san), [controlado](https://github.com/controlado)
 >  - Theme Optimizers : [Yurichtofen](https://github.com/Yurichtofen)
 >  - Translators      : 
 >    + English : (A lot)
->    + Vietnamese : Me 
+>    + Vietnamese : Me ._.
 >    + Japanese   : [Google translate](https://translate.google.com/)
 >    + Polish     : [Yurichtofen](https://github.com/Yurichtofen)
 >    + Russian    : [Flirip](https://github.com/Flirip)
@@ -61,47 +61,7 @@ New Elaina theme for Pengu Loader with brand new JS file
  - DON'T add them more to plugins folder
 
 ## Installation:
- 1. Active Pengu Loader
- 
- ![image](https://user-images.githubusercontent.com/94338907/232275600-d2917ec3-62a8-4f16-8411-6750ccf2c43b.png)
-
- 2. Download theme
- 
- ![image](https://user-images.githubusercontent.com/94338907/232275789-b12cf894-f4c5-4dd7-aeab-5a24ffc6f60a.png)
-
- 3. Extract theme (Choose Extract here)
- 
- ![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/ec99ed9b-52b6-418b-b9fd-98301deb90cc)
- 
- 4. Rename "Elaina-V2-x.x.x" to "ElainaV2"
-
-![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/bd1aec2f-cdf2-4ef3-8423-a025525d479b)
-
-![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/6d64bdcd-0c47-48b3-8d1b-de2c2a738ab8)
-
-
- 5. Open Plugin folder
- 
- ![image](https://user-images.githubusercontent.com/94338907/232275976-27399264-dc6d-49a2-a98a-f07fd991d0fd.png)
-
- 6. Copy "ElainaV2" folder to Pengu-loader "plugins" folder
- 
-![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/08caceba-e092-4808-a2af-3a05b3b36e71)
-
- 7. Done
- > So...It must be like this
- 
-    .
-    ├── assets                                 # Pengu assets folder
-    ├── plugins                                # Pengu plugins folder
-    │   └── ElainaV2                           # Ur theme here
-    │       ├── assets
-    │       ├── configs
-    │       ├── resouces
-    │       └── index.js
-    ├── ...
-    ├── Pengu Loader.exe
-    └──
+ - Read [Tutorial](https://github.com/Elaina69/Elaina-V2/blob/main/Tutorial.md)
 
 ## Change backgrounds and icons:
  - Open /plugins/ElainaV2/configs/ElainaV2_config.json
