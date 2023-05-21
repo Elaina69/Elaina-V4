@@ -387,11 +387,15 @@ function create_webm_buttons() {
 		play_pause_set_icon()
 	})
 
-	let Click = 0
+	if (!DataStore.has("NextBg_Count")) {
+		DataStore.set("NextBg_Count",0)
+	}
+	
 	nextBg.addEventListener("click", () => {
-		Click++
-		if (Click >= 69) {
+		DataStore.set("NextBg_Count", DataStore.get("NextBg_Count")+1)
+		if (DataStore.get("NextBg_Count") == 69) {
 			window.open("https://media.discordapp.net/attachments/887677396315172894/1100385074299539556/100259683_p0_master1200.png", "_blank")
+			DataStore.set("NextBg_Count",0)
 		}
 		
 		next_wallpaper()
