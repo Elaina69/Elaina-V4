@@ -50,15 +50,16 @@ New Elaina theme for Pengu Loader with brand new JS file
 
 ## NOTE (MUST READ)
  1, This theme already have:
-   + "Auto-Accept"
-   + "Dodge-button"
-   + "Offline-mode"
-   + "Hide-friendlist"
-   + "Aram-only"
-   + "Custom-status"
-   + "Custom-rank(hover)
-   + "Auto-ban/pick"
- > DON'T add them more to plugins folder
+   > + "Auto-Accept"
+   > + "Dodge-button"
+   > + "Offline-mode"
+   > + "Hide-friendlist"
+   > + "Aram-only"
+   > + "Custom-status"
+   > + "Custom-rank(hover)
+   > + "Auto-ban/pick"
+   
+  DON'T add them more to plugins folder
  
  2, Remember to read step 4:
  
