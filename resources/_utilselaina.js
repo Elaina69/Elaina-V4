@@ -76,20 +76,6 @@ function mutationObserverAddCallback(callback, target) {
 	mutationCallbacks.push({ "callback": callback, "targets": target })
 }
 
-let utils = {
-	riotclient_auth: riotclient_auth,
-	riotclient_port: riotclient_port,
-	phase: phase,
-	summoner_id: summoner_id,
-	pvp_net_id: pvp_net_id,
-	subscribe_endpoint: subscribe_endpoint,
-	routineAddCallback: routineAddCallback,
-	mutationObserverAddCallback: mutationObserverAddCallback,
-	addCss: addCss
-}
-
-export default utils
-
 window.addEventListener('load', () => {
 	fetch_riotclient_credentials()
 	subscribe_endpoint("/lol-gameflow/v1/gameflow-phase", updatePhaseCallback)
@@ -118,3 +104,17 @@ window.addEventListener('load', () => {
 	});
 	observer.observe(document, { attributes: false, childList: true, subtree: true });
 })
+
+let utils = {
+	riotclient_auth: riotclient_auth,
+	riotclient_port: riotclient_port,
+	phase: phase,
+	summoner_id: summoner_id,
+	pvp_net_id: pvp_net_id,
+	subscribe_endpoint: subscribe_endpoint,
+	routineAddCallback: routineAddCallback,
+	mutationObserverAddCallback: mutationObserverAddCallback,
+	addCss: addCss
+}
+
+export default utils

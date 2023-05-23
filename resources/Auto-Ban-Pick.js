@@ -1,6 +1,5 @@
 import axios from "https://cdn.skypack.dev/axios"
 import utils from "./_utilselaina"
-import data from '../configs/ElainaV2_config.json'
 import lang from '../configs/Language.json'
 
 /**
@@ -10,7 +9,7 @@ import lang from '../configs/Language.json'
  * GitHub: https://github.com/controlado
  */
 
-if (data["Auto-ban-pick"]) {
+if (DataStore.get("Auto-ban-pick")) {
   const request = async (method, url, userBody = null) => {
     const requestParams = {
         "method": method,

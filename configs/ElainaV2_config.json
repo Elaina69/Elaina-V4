@@ -39,27 +39,11 @@
 	"/___*Audio volume*___/": "(0.00 is mute, 1.0 is highest)" ,
 	"audio_sound_volume"    : 0.0,
 
-	"Continues_Audio"       : true,
-
 
 
 "/________________________________Plugins Settings______________________________/": "",
 
-	"auto_accept"                   : true,
-
-	"Aram-only-mode"                : false,
-
-	"Auto-ban-pick"                 : true,
-
-	"Old-League-Loader-Settings"    : true,
-
-	"Merry-Christmas"               : true,
-
-	"April fool' joke"              : true,
-
-
-
-	"Auto-Find-Queue" 				: false,	"Note": "if true, DO NOT go back to homepage after you cancel queue",
+	"Auto-Find-Queue":"",
 		"Queue-ID" : "450",
 	"/___Example___/"   : {	"SR (Blind pick)": 430,
 							"Aram"           : 450,
@@ -72,16 +56,14 @@
 	
 
 
-	"Custom-Rank(Hover-card)"       : true,
+	"Custom-Rank(Hover-card)":"",
 		"rankedQueue"    : 0,
 		"rankTier"       : 8,
 		"rankDivision"   : 0,			"/___More info___/" : "https://raw.githack.com/Elaina69/Elaina-V2/main/resources/Misc/Custom%20Rank.json",
 
 
 
-	"Custom-Status"                 : true,
-		"Want easier ?": "https://github.com/KebsCS/KBotExt/tree/main/KBotExt",
-
+	"Custom-Status":"",
 		"lines": [
 			"⡿⠉⠄⠄⠄⠄⠈⠙⠿⠟⠛⠉⠉⠉⠄⠄⠄⠈⠉⠉⠉⠛⠛⠻⢿⣿⣿⣿⣿⣿",
 			"⠁⠄⠄⠄⢀⡴⣋⣵⣮⠇⡀⠄⠄⠄⠄⠄⠄⢀⠄⠄⠄⡀⠄⠄⠄⠈⠛⠿⠋⠉",
@@ -102,51 +84,30 @@
 
 
 
-"/___________________________________Custom Things______________________________/": "",
+"/___________________________________Theme Icons______________________________/": "",
 
-	"Receive-Update"           : true,
+	"Icon-Folder"   : "//plugins/ElainaV2/assets/Icon",
 
-	"Sidebar-Transparent"      : false,
-
-	"Hide-Champions-Splash-Art": true,
-
-	"Animate-Loading"          : false, 
-	"Custom-Avatar"   		   : true, 
-	"Custom-Icon" 			   : true,
-	"Custom-Cursor"   		   : false,   "Note": "Still in beta, For high-perform pc only (very lag)",
+	"Animation-logo": "ElainaFly.gif",
+	"Static-logo"   : "Logo.png",
+	"Avatar"        : "Avatar.gif",
+	"RP-icon"       : "ApprenticeWitch.png",
+	"BE-icon"       : "ElainaStare.png",
+	"Rank-icon"     : "Rank.png",
+	"Emblem"        : "emblem_5.png",
+	"Class-banner"  : "Clash.png",
+	"Ticker"        : "ticker.png",
+	"Hover-card"    : "Hover-card-backdrop.jpg",
+	"Mouse-cursor"  : "ElainaDed.png",
 	
-		"Icon-Folder"   : "//plugins/ElainaV2/assets/Icon",
-
-		"Animation-logo": "ElainaFly.gif",
-
-		"Static-logo"   : "Logo.png",
-
-		"Avatar"        : "Avatar.gif",
-	
-		"RP-icon"       : "ApprenticeWitch.png",
-
-		"BE-icon"       : "ElainaStare.png",
-
-		"Rank-icon"     : "Rank.png",
-
-		"Emblem"        : "emblem_5.png",
-
-		"Class-banner"  : "Clash.png",
-
-		"Ticker"        : "ticker.png",
-
-		"Hover-card"    : "Hover-card-backdrop.jpg",
-
-		"Mouse-cursor"  : "ElainaDed.png",
-	
-	"Custom-Font"              : false,
+	"Custom-Font":"",
 		"Font-Folder"   : "//plugins/ElainaV2/assets/Fonts",
 		"Font-Name"     : "AegirSeaborn.ttf",
 	
-	"Custom_RP"                : true,
+	"Custom_RP":"",
 		"RP"            : "-69",
 
-	"Custom-Rank-Name"         : true,
+	"Custom-Rank-Name":"",
 		"Rank-line1"    : "Apprentice",
 		"Rank-line2"    : "Witch",
 

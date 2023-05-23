@@ -1,13 +1,9 @@
-import data from '../configs/ElainaV2_config.json'
-
 let dateObj = new Date();
 let month = dateObj.getUTCMonth() + 1;
 let day = dateObj.getUTCDate();
 let newdate = day + "/" + month
 
-let MerryChristmas = data["Merry-Christmas"]
-
-if (newdate == "25/12" && MerryChristmas){
+if (newdate == "25/12" && DataStore.get("Merry-Christmas")){
     console.log('                                                                               .:!!!!77!!:                              ')
     console.log('                                                                           .^!?5PPPPPPPPPPY~.                           ')
     console.log('                                                                    .::^!?Y5PPPPPPPPPPPPPPPGPJ~.                        ')
@@ -65,7 +61,7 @@ if (newdate == "25/12" && MerryChristmas){
     console.log('           .~7!:                                         .^~!~.               .:.                                       ')
     console.log('              :~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!~^.                                                            ')
 }
-else if (MerryChristmas) {
+else if (DataStore.get("Merry-Christmas")) {
     console.log("Not Xmas yet")
 }
 import wt from './Watermark'

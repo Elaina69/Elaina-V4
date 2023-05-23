@@ -5,7 +5,7 @@
 		"pl-PL": "PL",
 		"ru-RU": "RU",
 		"es-MX": "MX",
-        "ko_KR": "KR"
+        "ko-KR": "KR"
     },
 
     "EN": {
@@ -24,7 +24,38 @@
         "l.close"         : "Close",
 
         "auto_pick"       : "Auto pick",
-        "auto_ban"        : "Auto ban"
+        "auto_ban"        : "Auto ban",
+
+        "note"            : "Note",
+        "note-1"          : "Remember to reload client to take effect after change",
+        "reload-client"   : "Reload Client",
+
+        "theme-settings"  : "Theme settings",
+        "wallpaper-volume": "Wallpaper volume",
+        "music-volume"    : "Music volume",
+        "receive-update"  : "Receive theme update",
+        "continues-song"  : "Continue the previous song",
+        "sidebar-transparent"       : "Sidebar transparent",
+        "hide-champions-splash-art" : "Hide champions splash art",
+        "custom-font"     : "Custom font",
+        "custom-rp"       : "Custom RP",
+        "custom-rank-name": "Custom rank name",
+        "animate-loading" : "Animate loading",
+        "custom-avatar"   : "Custom avatar",
+        "custom-icon"     : "Custom icon",
+        "custom-cursor"   : "Custom cursor",
+        "note-2"          : "For high-perform pc only (very lag)",
+
+        "plugins-settings": "Plugins Settings",
+        "old-ll-settings" : "Old League Loader settings",
+        "aram-only"       : "Aram only mode",
+        "auto-ban-pick"   : "Auto Ban/Pick",
+        "auto-find-queue" : "Auto find queue",
+        "custom-rank-hover": "Custom rank(Hover-card)",
+        "custom-status"   : "Custom status",
+        "note-3"          : "Want easier",
+        "1/4-joke"        : "April fool` joke",
+        "Santa"           : "Merry Christmas"
     },
 
     "VN": {
@@ -44,8 +75,39 @@
         "l.theme_releases": "Các bản phát hành",
         "l.close"         : "Đóng",
         
-        "auto_pick"       : "T.động pick",
-        "auto_ban"        : "T.động ban"
+        "auto_pick"       : "T.động chọn",
+        "auto_ban"        : "T.động cấm",
+
+        "note"            : "Chú ý",
+        "note-1"          : "Khởi động lại Client để có hiệu lực sau khi thay đổi",
+        "reload-client"   : "Khởi động lại Client",
+
+        "theme-settings"  : "Cài đặt chủ đề",
+        "wallpaper-volume": "Âm lượng hình nền",
+        "music-volume"    : "Âm lượng nhạc",
+        "receive-update"  : "Nhận các đợt cập nhật chủ đề",
+        "continues-song"  : "Tiếp tục bài nhạc trước đó",
+        "sidebar-transparent"       : "Thanh bên trong suốt",
+        "hide-champions-splash-art" : "Ẩn ảnh nền tướng",
+        "custom-font"     : "Phông chữ tùy chỉnh",
+        "custom-rp"       : "RP tùy chỉnh",
+        "custom-rank-name": "Tên Rank tùy chỉnh",
+        "animate-loading" : "\"Hình nền khởi động\" động (thề ko biết dịch cái này kiểu j)",
+        "custom-avatar"   : "Hình đại diện tùy chỉnh",
+        "custom-icon"     : "Icon tùy chỉnh",
+        "custom-cursor"   : "Con trỏ tùy chỉnh",
+        "note-2"          : "Chỉ dành cho thiết bị mạnh (cực lag ._.)",
+
+        "plugins-settings": "Cài đặt plugins",
+        "old-ll-settings" : "Bảng cài đặt League loader cũ",
+        "aram-only"       : "Main Aram (\")>",
+        "auto-ban-pick"   : "Tự động cấm chọn",
+        "auto-find-queue" : "Tự động tìm trận",
+        "custom-rank-hover": "Rank tùy chỉnh (Hover-card)",
+        "custom-status"   : "Trạng thái tùy chỉnh",
+        "note-3"          : "Muốn dễ dàng hơn ?",
+        "1/4-joke"        : "Trò đùa ngày Cá tháng tư",
+        "Santa"           : "Merry Christmas"
     },
 
     "JP": {
@@ -66,7 +128,38 @@
         "l.close"         : "近い",
         
         "auto_pick"       : "Auto pick",
-        "auto_ban"        : "Auto ban"
+        "auto_ban"        : "Auto ban",
+
+        "note"            : "Note",
+        "note-1"          : "Remember to reload client to take effect after change",
+        "reload-client"   : "Reload Client",
+
+        "theme-settings"  : "Theme settings",
+        "wallpaper-volume": "Wallpaper volume",
+        "music-volume"    : "Music volume",
+        "receive-update"  : "Receive theme update",
+        "continues-song"  : "Continue the previous song",
+        "sidebar-transparent"       : "Sidebar transparent",
+        "hide-champions-splash-art" : "Hide champions splash art",
+        "custom-font"     : "Custom font",
+        "custom-rp"       : "Custom RP",
+        "custom-rank-name": "Custom rank name",
+        "animate-loading" : "Animate loading",
+        "custom-avatar"   : "Custom avatar",
+        "custom-icon"     : "Custom icon",
+        "custom-cursor"   : "Custom cursor",
+        "note-2"          : "For high-perform pc only (very lag)",
+
+        "plugins-settings": "Plugins Settings",
+        "old-ll-settings" : "Old League Loader settings",
+        "aram-only"       : "Aram only mode",
+        "auto-ban-pick"   : "Auto Ban/Pick",
+        "auto-find-queue" : "Auto find queue",
+        "custom-rank-hover": "Custom rank(Hover-card)",
+        "custom-status"   : "Custom status",
+        "note-3"          : "Want easier",
+        "1/4-joke"        : "April fool` joke",
+        "Santa"           : "Merry Christmas"
     },
 
     "PL": {
@@ -87,27 +180,89 @@
         "l.close"         : "Zamknij",
         
         "auto_pick"       : "Auto pick",
-        "auto_ban"        : "Auto ban"
+        "auto_ban"        : "Auto ban",
+
+        "note"            : "Note",
+        "note-1"          : "Remember to reload client to take effect after change",
+        "reload-client"   : "Reload Client",
+
+        "theme-settings"  : "Theme settings",
+        "wallpaper-volume": "Wallpaper volume",
+        "music-volume"    : "Music volume",
+        "receive-update"  : "Receive theme update",
+        "continues-song"  : "Continue the previous song",
+        "sidebar-transparent"       : "Sidebar transparent",
+        "hide-champions-splash-art" : "Hide champions splash art",
+        "custom-font"     : "Custom font",
+        "custom-rp"       : "Custom RP",
+        "custom-rank-name": "Custom rank name",
+        "animate-loading" : "Animate loading",
+        "custom-avatar"   : "Custom avatar",
+        "custom-icon"     : "Custom icon",
+        "custom-cursor"   : "Custom cursor",
+        "note-2"          : "For high-perform pc only (very lag)",
+
+        "plugins-settings": "Plugins Settings",
+        "old-ll-settings" : "Old League Loader settings",
+        "aram-only"       : "Aram only mode",
+        "auto-ban-pick"   : "Auto Ban/Pick",
+        "auto-find-queue" : "Auto find queue",
+        "custom-rank-hover": "Custom rank(Hover-card)",
+        "custom-status"   : "Custom status",
+        "note-3"          : "Want easier",
+        "1/4-joke"        : "April fool` joke",
+        "Santa"           : "Merry Christmas"
     },
     "RU": {
 
         "/___Translated by @Flirip___/": "",
-        "home" : "Главная",
-        "dodge" : "Пропуск",
-        "exit" : "Выход",
-        "auto_accept" : "Автоматическое принятие",
-        "update" : "Обновление",
-        "update_mess" : "Доступно обновление новой темы",
+        "home"            : "Главная",
+        "dodge"           : "Пропуск",
+        "exit"            : "Выход",
+        "auto_accept"     : "Автоматическое принятие",
+        "update"          : "Обновление",
+        "update_mess"     : "Доступно обновление новой темы",
 
         "l.open_settings" : "Настройки",
         "l.open_devtools" : "Открыть DevTools",
         "l.reload_client" : "Перезагрузить Клиент",
         "l.open_plugin" : "Открыть папку плагинов",
         "l.theme_releases": "Версии тем",
-        "l.close" : "Закрыть",
+        "l.close"         : "Закрыть",
         
         "auto_pick"       : "Auto pick",
-        "auto_ban"        : "Auto ban"
+        "auto_ban"        : "Auto ban",
+
+        "note"            : "Note",
+        "note-1"          : "Remember to reload client to take effect after change",
+        "reload-client"   : "Reload Client",
+
+        "theme-settings"  : "Theme settings",
+        "wallpaper-volume": "Wallpaper volume",
+        "music-volume"    : "Music volume",
+        "receive-update"  : "Receive theme update",
+        "continues-song"  : "Continue the previous song",
+        "sidebar-transparent"       : "Sidebar transparent",
+        "hide-champions-splash-art" : "Hide champions splash art",
+        "custom-font"     : "Custom font",
+        "custom-rp"       : "Custom RP",
+        "custom-rank-name": "Custom rank name",
+        "animate-loading" : "Animate loading",
+        "custom-avatar"   : "Custom avatar",
+        "custom-icon"     : "Custom icon",
+        "custom-cursor"   : "Custom cursor",
+        "note-2"          : "For high-perform pc only (very lag)",
+
+        "plugins-settings": "Plugins Settings",
+        "old-ll-settings" : "Old League Loader settings",
+        "aram-only"       : "Aram only mode",
+        "auto-ban-pick"   : "Auto Ban/Pick",
+        "auto-find-queue" : "Auto find queue",
+        "custom-rank-hover": "Custom rank(Hover-card)",
+        "custom-status"   : "Custom status",
+        "note-3"          : "Want easier",
+        "1/4-joke"        : "April fool` joke",
+        "Santa"           : "Merry Christmas"
     },
     "MX": {
         "/___Translated by @Legnatbird___/": "",
@@ -126,7 +281,38 @@
         "l.close"         : "Cerrar",
         
         "auto_pick"       : "Auto pick",
-        "auto_ban"        : "Auto ban"
+        "auto_ban"        : "Auto ban",
+
+        "note"            : "Note",
+        "note-1"          : "Remember to reload client to take effect after change",
+        "reload-client"   : "Reload Client",
+
+        "theme-settings"  : "Theme settings",
+        "wallpaper-volume": "Wallpaper volume",
+        "music-volume"    : "Music volume",
+        "receive-update"  : "Receive theme update",
+        "continues-song"  : "Continue the previous song",
+        "sidebar-transparent"       : "Sidebar transparent",
+        "hide-champions-splash-art" : "Hide champions splash art",
+        "custom-font"     : "Custom font",
+        "custom-rp"       : "Custom RP",
+        "custom-rank-name": "Custom rank name",
+        "animate-loading" : "Animate loading",
+        "custom-avatar"   : "Custom avatar",
+        "custom-icon"     : "Custom icon",
+        "custom-cursor"   : "Custom cursor",
+        "note-2"          : "For high-perform pc only (very lag)",
+
+        "plugins-settings": "Plugins Settings",
+        "old-ll-settings" : "Old League Loader settings",
+        "aram-only"       : "Aram only mode",
+        "auto-ban-pick"   : "Auto Ban/Pick",
+        "auto-find-queue" : "Auto find queue",
+        "custom-rank-hover": "Custom rank(Hover-card)",
+        "custom-status"   : "Custom status",
+        "note-3"          : "Want easier",
+        "1/4-joke"        : "April fool` joke",
+        "Santa"           : "Merry Christmas"
     },
     "KR": {
         "home"            : "홈",
@@ -144,6 +330,37 @@
         "l.close"         : "닫기",
 
         "auto_pick"       : "자동 선택",
-        "auto_ban"        : "자동 벤"
+        "auto_ban"        : "자동 벤",
+
+        "note"            : "Note",
+        "note-1"          : "Remember to reload client to take effect after change",
+        "reload-client"   : "Reload Client",
+
+        "theme-settings"  : "Theme settings",
+        "wallpaper-volume": "Wallpaper volume",
+        "music-volume"    : "Music volume",
+        "receive-update"  : "Receive theme update",
+        "continues-song"  : "Continue the previous song",
+        "sidebar-transparent"       : "Sidebar transparent",
+        "hide-champions-splash-art" : "Hide champions splash art",
+        "custom-font"     : "Custom font",
+        "custom-rp"       : "Custom RP",
+        "custom-rank-name": "Custom rank name",
+        "animate-loading" : "Animate loading",
+        "custom-avatar"   : "Custom avatar",
+        "custom-icon"     : "Custom icon",
+        "custom-cursor"   : "Custom cursor",
+        "note-2"          : "For high-perform pc only (very lag)",
+
+        "plugins-settings": "Plugins Settings",
+        "old-ll-settings" : "Old League Loader settings",
+        "aram-only"       : "Aram only mode",
+        "auto-ban-pick"   : "Auto Ban/Pick",
+        "auto-find-queue" : "Auto find queue",
+        "custom-rank-hover": "Custom rank(Hover-card)",
+        "custom-status"   : "Custom status",
+        "note-3"          : "Want easier",
+        "1/4-joke"        : "April fool` joke",
+        "Santa"           : "Merry Christmas"
     }
 }

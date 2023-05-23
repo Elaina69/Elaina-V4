@@ -9,6 +9,7 @@ import Update      from './resources/CheckUpdate'
 import thisVersion from './configs/Version'
 
 //Addon plugins
+import './resources/ThemeSettings'
 import './resources/LL-Settings'
 import './resources/Aram-only'
 import './resources/Auto-accept'
@@ -24,8 +25,7 @@ import './resources/Auto-Ban-Pick'
 let wallpapers         = data["wallpaper_list"]
 let Audios             = data["audio_list"]
 
-let Avatar             = data["Custom-Avatar"]
-let CustomRP           = data["Custom_RP"]
+let Avatar             = DataStore.get("Custom-Avatar")
 let CusRP              = data["RP"]
 
 let songIndex          = data["default_audio"]-1;
@@ -34,29 +34,82 @@ let songIndex          = data["default_audio"]-1;
 
 
 //___________________________________________________________________________//
-if (!DataStore.has('Custom_RP') && CustomRP){
-	DataStore.set('Custom_RP', CusRP)
+//Theme DataStore
+if (!DataStore.has("Receive-Update")) {
+	DataStore.set("Receive-Update", true)
 }
-else if (!CustomRP){
-	DataStore.remove('Custom_RP')
+if (!DataStore.has("Continues_Audio")) {
+	DataStore.set("Continues_Audio", true)
 }
-else {
-	if (DataStore.get('Custom_RP') == CusRP) {}
-	else {
-		DataStore.set('Custom_RP', CusRP)
-	}
-} 
+if (!DataStore.has("Sidebar-Transparent")) {
+	DataStore.set("Sidebar-Transparent", false)
+}
+if (!DataStore.has("Hide-Champions-Splash-Art")) {
+	DataStore.set("Hide-Champions-Splash-Art", true)
+}
+if (!DataStore.has("Custom-Font")) {
+	DataStore.set("Custom-Font", false)
+}
+if (!DataStore.has("Custom_RP")) {
+	DataStore.set("Custom_RP", true)
+}
+if (!DataStore.has("Custom-Rank-Name")) {
+	DataStore.set("Custom-Rank-Name", true)
+}
+if (!DataStore.has("Animate-Loading")) {
+	DataStore.set("Animate-Loading", false)
+}
+if (!DataStore.has("Custom-Avatar")) {
+	DataStore.set("Custom-Avatar", true)
+}
+if (!DataStore.has("Custom-Icon")) {
+	DataStore.set("Custom-Icon", true)
+}
+if (!DataStore.has("Custom-Cursor")) {
+	DataStore.set("Custom-Cursor", false)
+}
 
+
+//Plugins DataStore
+if (!DataStore.has("auto_accept")) {
+	DataStore.set("auto_accept", false)
+}
+if (!DataStore.has("aram-only")) {
+    DataStore.set("aram-only", false)
+}
+if (!DataStore.has("Old-League-Loader-Settings")) {
+	DataStore.set("Old-League-Loader-Settings", true)
+}
+if (!DataStore.has("Auto-ban-pick")) {
+	DataStore.set("Auto-ban-pick", true)
+}
+if (!DataStore.has("Auto-Find-Queue")) {
+	DataStore.set("Auto-Find-Queue", false)
+}
+if (!DataStore.has("Custom-Rank(Hover-card)")) {
+	DataStore.set("Custom-Rank(Hover-card)", true)
+}
+if (!DataStore.has("Custom-Status")) {
+	DataStore.set("Custom-Status", true)
+}
+if (!DataStore.has("Merry-Christmas")) {
+	DataStore.set("Merry-Christmas", true)
+}
+if (!DataStore.has("April fool` joke")) {
+	DataStore.set("April fool` joke", true)
+}
+if (!DataStore.has("")) {
+	DataStore.set("", true)
+}
+
+
+//Wallpapers DataStore
 if (!DataStore.has('pause-audio')) {
 	DataStore.set('pause-audio', 1)
 }
-
-
 if (!DataStore.has('pause-wallpaper')) {
 	DataStore.set('pause-wallpaper', 1)
 }
-
-
 if (!DataStore.has('wallpaper-index')) {
 	DataStore.set('wallpaper-index', data["default_wallpaper"]-1)
 }
@@ -64,7 +117,6 @@ else if (DataStore.get('wallpaper-index')+1>wallpapers.length) {
 	DataStore.set('wallpaper-index', data["default_wallpaper"]-1)
 }
 else []
-
 if (!DataStore.has('audio-index')) {
 	DataStore.set('audio-index', songIndex-1)
 }
@@ -93,6 +145,18 @@ var nodeRemovedEvent = function (event) {
 };
 
 document.addEventListener("DOMNodeRemoved", nodeRemovedEvent);
+//___________________________________________________________________________//
+
+
+
+//___________________________________________________________________________//
+function newStyle (cssvar,folder,name,css) {
+	let NStyle = document.createElement('style');
+		NStyle.appendChild(document.createTextNode(
+			'@import url("'+css+'");:root {'+cssvar+':url('+folder+'/'+name+');}'
+		));
+	document.body.appendChild(NStyle)
+}
 //___________________________________________________________________________//
 
 
@@ -150,11 +214,9 @@ function add_elaina_home_navbar() {
 function patch_default_home_page(){
 	let loop = 0
 	let intervalId = window.setInterval(() => {
-		if (loop >= 20) {
-			window.clearInterval(intervalId)
-		}
+		loop++
+		if (loop >= 21) {window.clearInterval(intervalId)}
 		go_to_default_home_page()
-		loop += 1
 	}, 100)
 }
 //___________________________________________________________________________//
@@ -204,14 +266,6 @@ function audio_play_pause() {
 		wallpaperaudio.volume = data["wallpaper_sound_volume"];
 		audio.volume          = data["audio_sound_volume"];
 	}
-}
-
-function audio_volume() {
-	let audio          = document.getElementById("bg-audio")
-	let wallpaperaudio = document.getElementById("elaina-bg")
-
-	audio.volume          = 0.02
-	wallpaperaudio.volume = 0.02
 }
 
 function play_pause_set_icon_audio(elem) {
@@ -279,7 +333,7 @@ function prev_wallpaper() {
 }
 
 function nextSong() {
-	if (data["Continues_Audio"]) {
+	if (DataStore.get("Continues_Audio")) {
 		DataStore.set('audio-index', DataStore.get('audio-index')+1)
 
 		if (DataStore.get('audio-index') > Audios.length-1) {
@@ -301,7 +355,7 @@ function nextSong() {
 	}
 }
 function prevSong() {
-	if  (data["Continues_Audio"]) {
+	if  (DataStore.get("Continues_Audio")) {
     	DataStore.set('audio-index', DataStore.get('audio-index')-1)
 
 		if (DataStore.get('audio-index') < 0) {
@@ -346,9 +400,6 @@ function create_webm_buttons() {
 	const pauseAudioIcon = document.createElement("img")
 	const nextAudioIcon  = document.createElement("img")
 	const prevAudioIcon  = document.createElement("img")
-
-	const audioVolume    = document.createElement("input")
-	
 	
 	
 	container.classList.add("webm-bottom-buttons-container")
@@ -369,9 +420,6 @@ function create_webm_buttons() {
 	pauseAudioIcon.classList.add("pause-audio-icon")
 	nextAudioIcon.classList.add("next-audio-icon")
 	prevAudioIcon.classList.add("prev-audio-icon")
-
-	audioVolume.classList.add("audio-volume")
-	audioVolume.setAttribute("type", "range")
 	
 	play_pause_set_icon_audio(pauseAudioIcon)
 	play_pause_set_icon(pauseBgIcon)
@@ -382,7 +430,7 @@ function create_webm_buttons() {
 		play_pause_set_icon_audio()
 	})	
 	pauseBg.addEventListener("click", () => {
-		DataStore.set('pause-wallpaper' , DataStore.get('pause-wallpaper') + 1)
+		DataStore.set('pause-wallpaper', DataStore.get('pause-wallpaper') + 1)
 		elaina_play_pause()
 		play_pause_set_icon()
 	})
@@ -392,12 +440,11 @@ function create_webm_buttons() {
 	}
 	
 	nextBg.addEventListener("click", () => {
-		DataStore.set("NextBg_Count", DataStore.get("NextBg_Count")+1)
+		DataStore.set("NextBg_Count", DataStore.get("NextBg_Count") + 1)
 		if (DataStore.get("NextBg_Count") == 69) {
 			window.open("https://media.discordapp.net/attachments/887677396315172894/1100385074299539556/100259683_p0_master1200.png", "_blank")
 			DataStore.set("NextBg_Count",0)
 		}
-		
 		next_wallpaper()
 	})
 	prevBg.addEventListener("click", () => {
@@ -417,8 +464,6 @@ function create_webm_buttons() {
 		
 	let showcontainer = document.getElementsByClassName("rcp-fe-lol-home")[0]
 	    showcontainer.appendChild(container)
-		//showcontainer.appendChild(containeraudio)
-	
 	
 	container.append(prevAudio)
 	container.append(pauseAudio)
@@ -434,8 +479,6 @@ function create_webm_buttons() {
 	pauseBg.append(pauseBgIcon)
 	nextBg.append(nextBgIcon)
 	prevBg.append(prevBgIcon)
-
-	//containeraudio.append(audioVolume)
 }
 
 function Delbuttons() {
@@ -458,7 +501,6 @@ let updateLobbyRegaliaBanner = async message => {
 				base.shadowRoot.querySelector(".regalia-banner-state-machine").shadowRoot.querySelector(".regalia-banner-intro.regalia-banner-video").style.filter = "grayscale(1) saturate(0) brightness(0.5)"
 			}
 			catch {}
-
             if (Avatar) {
                 try {
 					document.querySelector("div.lobby-banner.local > lol-regalia-parties-v2-element").shadowRoot.querySelector("div > div > div.regalia-parties-v2-crest-wrapper > lol-regalia-crest-v2-element").
@@ -502,7 +544,7 @@ let pageChangeMutation = async (node) => {
 		if (!document.getElementsByClassName("webm-bottom-buttons-container").length) {
 			create_webm_buttons()
 			watermark.ElainaTrigger()
-			if (data["Receive-Update"]) {
+			if (DataStore.get("Receive-Update")) {
 				let newVersion = (await (() => import('https://raw.githack.com/Elaina69/Elaina-V2/main/configs/Version.js'))()).default
 				if (thisVersion < newVersion) {
 					Update.UpdatePopup()
@@ -517,7 +559,7 @@ let pageChangeMutation = async (node) => {
 		}
 		
 		window.setTimeout(async () => {
-			if (data["Auto-Find-Queue"] && !data["Aram-only-mode"]) {
+			if (DataStore.get("Auto-Find-Queue") && !data["Aram-only-mode"]) {
 				await fetch('/lol-lobby/v2/lobby', {
 					method: 'POST',
 					body: JSON.stringify({ queueId: data["Queue-ID"] }),
@@ -531,7 +573,7 @@ let pageChangeMutation = async (node) => {
 					});
 				},data["Find-Delay"]*1000)
 			}
-			else if (data["Auto-Find-Queue"] && data["Aram-only-mode"]) {
+			else if (DataStore.get("Auto-Find-Queue") && data["Aram-only-mode"]) {
 				await fetch('/lol-lobby/v2/lobby', {
 					method: 'POST',
 					body: JSON.stringify({ queueId: 450 }),
@@ -569,11 +611,9 @@ let pageChangeMutation = async (node) => {
 			patcher_go_to_default_home_page = false
 		}
 	}
-	
 	if (pagename == "rcp-fe-lol-uikit-full-page-modal-controller") {
 		return;
 	}
-	
 	if (pagename == "rcp-fe-lol-yourshop") {
 		elaina_bg_elem.style.filter = data["Yourshop"];
 	}
@@ -638,15 +678,13 @@ let pageChangeMutation = async (node) => {
                 document.querySelector("div > div.summoner-xp-radial").remove()
             }
             catch {}
-			if (data["Custom-Rank-Name"]) {
+			if (DataStore.get("Custom-Rank-Name")) {
 				try {
 					document.querySelector(".style-profile-ranked-component.ember-view > .style-profile-emblem-wrapper  > .style-profile-emblem-header > .style-profile-emblem-header-title").innerHTML = data["Rank-line1"]
 					document.querySelector(".style-profile-emblem-subheader-ranked > div").innerHTML = data["Rank-line2"]
 				}
 				catch{}
 			}
-			
-
             if (Avatar) {
                 try {
 					document.querySelector("div > lol-regalia-profile-v2-element").shadowRoot.querySelector("div > div > div.regalia-profile-crest-hover-area.picker-enabled > lol-regalia-crest-v2-element").shadowRoot.querySelector("div > uikit-state-machine > div.lol-regalia-summoner-icon-mask-container > div").style.backgroundImage = "var(--Avatar)"
@@ -675,7 +713,6 @@ let pageChangeMutation = async (node) => {
 	else if (previous_page == "rcp-fe-lol-profiles-main") {
 		if (brightness_modifiers.indexOf(pagename) == -1)
 			elaina_bg_elem.style.filter = data["Homepage"];
-        
         if (ranked_observer)
         ranked_observer.disconnect()
         ranked_observer = undefined
@@ -743,19 +780,13 @@ window.setInterval(() => {
 			querySelector("div > div.parties-status-card-body > div.parties-status-card-map.game_map_howling_abyss").style.margin = "-3px 10px 0 0"
 	}
 	catch {}
-
-	try {
-		let RP = document.querySelector("div.currency-rp").innerHTML
-		if (CustomRP) {
-			if (RP == CusRP) {}
-			else {
-				document.querySelector("div.currency-rp").innerHTML = DataStore.get('Custom_RP')
-			}
+	try{
+		if (DataStore.get("Custom_RP")) {
+			document.querySelector("div.currency-rp").innerHTML = CusRP
 		}
-		
 	}
-	catch {}
-}, 100)
+	catch{}
+}, 500)
 
 import './resources/Pandoru'
 import wt from './resources/Watermark'
@@ -765,28 +796,21 @@ import wt from './resources/Watermark'
 
 //___________________________________________________________________________//
 window.addEventListener('load', () => {
-	function newStyle (cssvar,folder,name,css) {
-		let NStyle = document.createElement('style');
-			NStyle.appendChild(document.createTextNode(
-				'@import url("'+css+'");:root {'+cssvar+':url('+folder+'/'+name+');}'
-			));
-		document.body.appendChild(NStyle)
-	}
-	
 	utils.addCss("//plugins/ElainaV2/assets/Css/ElainaV2.css");	
+
 	newStyle("--Hover-card-backdrop",data["Icon-Folder"],data['Hover-card'])
 
-	if (data["Sidebar-Transparent"]) {utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Sidebar-Transparent.css");}
+	if (DataStore.get("Sidebar-Transparent")) {utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Sidebar-Transparent.css");}
 	else {utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Sidebar-Color.css");}
 
-	if (data["Animate-Loading"]) {newStyle("--ElainaFly",data["Icon-Folder"],data["Animation-logo"],"//plugins/ElainaV2/assets/Css/Addon-Css/Animate-Loading-Screen.css")}
-    else {newStyle("--ElainaStatic",data["Icon-Folder"],data["Static-logo"],"//plugins/ElainaV2/assets/Css/Addon-Css/Static-Loading-Screen.css")}
+	if (DataStore.get("Animate-Loading")) {newStyle("--ElainaFly",data["Icon-Folder"],data["Animation-logo"],"//plugins/ElainaV2/assets/Css/Addon-Css/Animate-Loading-Screen.css")}
+	else {newStyle("--ElainaStatic",data["Icon-Folder"],data["Static-logo"],"//plugins/ElainaV2/assets/Css/Addon-Css/Static-Loading-Screen.css")}
 
-	if (data["Hide-Champions-Splash-Art"]) {utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Hide-Champs-Splash-Art.css")}
+	if (DataStore.get("Hide-Champions-Splash-Art")) {utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Hide-Champs-Splash-Art.css")}
 
-    if (Avatar) {newStyle("--Avatar",data["Icon-Folder"],data["Avatar"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/Avatar.css")}
-	
-	if (data["Custom-Icon"]) {
+	if (Avatar) {newStyle("--Avatar",data["Icon-Folder"],data["Avatar"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/Avatar.css")}
+
+	if (DataStore.get("Custom-Icon")) {
 		newStyle("--RP-Icon",data["Icon-Folder"],data["RP-icon"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/RiotPoint.css")
 		newStyle("--BE-Icon",data["Icon-Folder"],data["BE-icon"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/BlueEssence.css")
 		newStyle("--Rank-Icon",data["Icon-Folder"],data["Rank-icon"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/Rank.css")
@@ -794,8 +818,8 @@ window.addEventListener('load', () => {
 		newStyle("--Clash-banner",data["Icon-Folder"],data["Class-banner"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/ClashBanner.css")
 		newStyle("--Ticker",data["Icon-Folder"],data["Ticker"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/Ticker.css")
 	}
-
-	if (data["Custom-Font"]) {
+	
+	if (DataStore.get("Custom-Font")) {
 		let CusFont = document.createElement('style');
 		CusFont.appendChild(document.createTextNode(
 			'@font-face {font-family: "Custom" ; src: url('+data["Font-Folder"]+"/"+data["Font-Name"]+');}'
@@ -803,7 +827,7 @@ window.addEventListener('load', () => {
 		document.body.appendChild(CusFont)
 	}
 
-	if (data["Custom-Cursor"]) {
+	if (DataStore.get("Custom-Cursor")) {
 		let cursor = document.createElement("div")
 			cursor.classList.add("cursor")
 			cursor.style.background = 'url('+data["Icon-Folder"]+'/'+data["Mouse-cursor"]+')'
@@ -817,7 +841,7 @@ window.addEventListener('load', () => {
 			body.appendChild(cursor)
 		utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Cursor.css")
 	}
-
+	
 	const video = document.createElement('video');
 	const audio = document.createElement("audio");
 
@@ -830,7 +854,7 @@ window.addEventListener('load', () => {
 		audio.id       = 'bg-audio';
     	audio.autoplay = true;
     	audio.loop     = false;
-		if (data["Continues_Audio"]) {
+		if (DataStore.get("Continues_Audio")) {
 			audio.src  = `${data["audio_folder"]}${Audios[DataStore.get('audio-index')]}`
 		}
 		else {
@@ -839,10 +863,10 @@ window.addEventListener('load', () => {
 		audio.volume   = data["audio_sound_volume"];
 	
 	audio.addEventListener("ended", nextSong)
-	video.addEventListener("load", function() { 
+	video.addEventListener("load", ()=>{ 
 		video.play()
 	}, true);
-    audio.addEventListener("load", function() { 
+    audio.addEventListener("load", ()=>{ 
 		audio.play()
 	}, true);
 
@@ -862,10 +886,10 @@ window.addEventListener('load', () => {
 		else {
 			elaina_play_pause()
 			audio_play_pause()
-		} 
+		}
 	})
 
-	if (data['Continues_Audio']) {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')]+" and "+Audios[DataStore.get('audio-index')])}
+	if (DataStore.get("Continues_Audio")) {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')]+" and "+Audios[DataStore.get('audio-index')])}
 	else {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')]+" and "+Audios[songIndex])}
 })
 //___________________________________________________________________________//

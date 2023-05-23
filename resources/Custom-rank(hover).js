@@ -1,6 +1,6 @@
 import data from '../configs/ElainaV2_config.json'
 
-if (data["Custom-Rank(Hover-card)"]) {
+if (DataStore.get("Custom-Rank(Hover-card)")) {
     window.setTimeout(async()=>{
         let queueOptions = ["RANKED_SOLO_5x5","RANKED_FLEX_SR","RANKED_FLEX_TT",
                             "RANKED_TFT","RANKED_TFT_TURBO","RANKED_TFT_DOUBLE_UP",

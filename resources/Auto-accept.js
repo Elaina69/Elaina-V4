@@ -2,20 +2,18 @@ import utils from './_utilselaina';
 import data from"../configs/ElainaV2_config.json";
 import lang from '../configs/Language.json'
 
-let auto_accept = data["auto_accept"]
-
 let queue_accepted = false 
 let player_declined = false 
 
 function autoAcceptQueueButton(){
 	let element = document.getElementById("autoAcceptQueueButton")
 	if (element.attributes.selected != undefined) {
-		auto_accept = false
+		DataStore.set("auto_accept", false)
 		element.removeAttribute("selected")
 	}
 	else {
 		element.setAttribute("selected", "true")
-		auto_accept = true
+		DataStore.set("auto_accept", true)
 	}
 }
 
@@ -24,7 +22,7 @@ window.autoAcceptQueueButton = autoAcceptQueueButton
 
 let autoAcceptCallback = async message => {
 	utils.phase = JSON.parse(message["data"])[2]["data"]
-	if (utils.phase == "ReadyCheck" && auto_accept && !queue_accepted) {
+	if (utils.phase == "ReadyCheck" && DataStore.get("auto_accept") && !queue_accepted) {
 		await acceptMatchmaking(),
 		queue_accepted = true
 	}
@@ -59,7 +57,7 @@ let autoAcceptMutationObserver = (mutations) => {
 
 		newOption.append(Option2)
 
-		if (auto_accept){
+		if (DataStore.get("auto_accept")){
 			newOption.setAttribute("selected", "");
 		}
 

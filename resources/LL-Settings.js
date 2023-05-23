@@ -1,11 +1,10 @@
 //Special thanks @nomi-san for this settings panel ¯\_(ツ)_/¯ Lmeow
 //Edited by Elaina Da Catto
 
-import data from "../configs/ElainaV2_config.json"
 import lang from "../configs/Language.json"
 import Version from "../configs/Version"
 
-if (data["Old-League-Loader-Settings"]) {
+if (DataStore.get("Old-League-Loader-Settings")) {
     const TRANSLATIONS = lang
     
     // Create loader UI.
