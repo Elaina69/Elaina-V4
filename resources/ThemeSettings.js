@@ -189,6 +189,25 @@ const injectSettings = (panel) => {
          ),
          document.createElement('br'),
          UI.CheckBox(
+            `${selectedLang["settings-dialogs-transparent"]}`,'stdiat','stdiatbox',
+            ()=>{
+               let stdiatel = document.getElementById("stdiat")
+               let stdiatbox = document.getElementById("stdiatbox")
+
+               if (DataStore.get("settings-dialogs-transparent")) {
+                  stdiatbox.checked = false
+                  DataStore.set("settings-dialogs-transparent", false)
+                  stdiatel.removeAttribute("class")
+               }
+               else {
+                  stdiatbox.checked = true
+                  DataStore.set("settings-dialogs-transparent", true)
+                  stdiatel.setAttribute("class", "checked")
+               }
+            }
+         ),
+         document.createElement('br'),
+         UI.CheckBox(
             `${selectedLang["hide-champions-splash-art"]}`,'hidechampart','hidechampartbox',
             ()=>{
                let hidechampartel = document.getElementById("hidechampart")
@@ -424,6 +443,25 @@ const injectSettings = (panel) => {
          ),
          document.createElement('br'),
          UI.CheckBox(
+            `${selectedLang["loot-helper"]}`,'lh','lhbox',
+            ()=>{
+               let lhel = document.getElementById("lh")
+               let lhbox = document.getElementById("lhbox")
+
+               if (DataStore.get("loot-helper")) {
+                  lhbox.checked = false
+                  DataStore.set("loot-helper", false)
+                  lhel.removeAttribute("class")
+               }
+               else {
+                  lhbox.checked = true
+                  DataStore.set("loot-helper", true)
+                  lhel.setAttribute("class", "checked")
+               }
+            }
+         ),
+         document.createElement('br'),
+         UI.CheckBox(
             `${selectedLang["custom-rank-hover"]}`,'cusrankhover','cusrankhoverbox',
             ()=>{
                let cusrankhoverel = document.getElementById("cusrankhover")
@@ -542,6 +580,8 @@ const interval = setInterval(() => {
                      let cusstael       = document.getElementById("cussta")
                      let _1_4el         = document.getElementById("_1_4")
                      let MCel           = document.getElementById("MC")
+                     let lhel           = document.getElementById("lh")
+                     let stdiatel       = document.getElementById("stdiat")
                
                      if (DataStore.get("aram-only") && Aramel.getAttribute("class") == "") {
                         let Arambox = document.getElementById("Aram only checkbox")
@@ -618,6 +658,14 @@ const interval = setInterval(() => {
                      if (DataStore.get("Merry-Christmas") && MCel.getAttribute("class") == "") {
                         let MCbox = document.getElementById("MCbox")
                         MCbox.checked = true
+                     }
+                     if (DataStore.get("loot-helper") && lhel.getAttribute("class") == "") {
+                        let lhbox = document.getElementById("lhbox")
+                        lhbox.checked = true
+                     }
+                     if (DataStore.get("settings-dialogs-transparent") && stdiatel.getAttribute("class") == "") {
+                        let stdiatbox = document.getElementById("stdiatbox")
+                        stdiatbox.checked = true
                      }
                      /*if (DataStore.get("") && el.getAttribute("class") == "") {
                         

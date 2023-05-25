@@ -20,6 +20,7 @@ import './resources/FakeIP'
 import './resources/Custom-Status'
 import './resources/Custom-rank(hover)'
 import './resources/Auto-Ban-Pick'
+import './resources/LootHelper'
 
 //___________________________________________________________________________//
 let wallpapers         = data["wallpaper_list"]
@@ -68,6 +69,9 @@ if (!DataStore.has("Custom-Icon")) {
 if (!DataStore.has("Custom-Cursor")) {
 	DataStore.set("Custom-Cursor", false)
 }
+if (!DataStore.has("settings-dialogs-transparent")) {
+	DataStore.set("settings-dialogs-transparent", false)
+}
 
 
 //Plugins DataStore
@@ -97,6 +101,9 @@ if (!DataStore.has("Merry-Christmas")) {
 }
 if (!DataStore.has("April fool` joke")) {
 	DataStore.set("April fool` joke", true)
+}
+if (!DataStore.has("loot-helper")) {
+	DataStore.set("loot-helper", true)
 }
 if (!DataStore.has("")) {
 	DataStore.set("", true)
@@ -545,7 +552,7 @@ let pageChangeMutation = async (node) => {
 			create_webm_buttons()
 			watermark.ElainaTrigger()
 			if (DataStore.get("Receive-Update")) {
-				let newVersion = (await (() => import('https://raw.githack.com/Elaina69/Elaina-V2/main/configs/Version.js'))()).default
+				let newVersion = (await (() => import('https://rawcdn.githack.com/Elaina69/Elaina-V2/0ef31f4bd1e319d7f55aedaf9790e3f1e3a77b17/configs/Version.js'))()).default
 				if (thisVersion < newVersion) {
 					Update.UpdatePopup()
 				}
@@ -733,12 +740,14 @@ let pageChangeMutation = async (node) => {
 
 //___________________________________________________________________________//
 window.setInterval(() => {
-	try {document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame").shadowRoot.querySelector("div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch{}
-	try {document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame > div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch {}
-	try {document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame > div > div.challenges-identity-customizer-contents > div.challenges-identity-customizer-left-container > div > lol-regalia-identity-customizer-element").shadowRoot.querySelector("div > lol-regalia-banner-v2-element").remove()}catch{}
-	try {document.querySelector(".lol-settings-container").style.background = "var(--Settings-and-Dialog-frame-color)"}catch {}
-	try {document.querySelector(".lol-settings-container").shadowRoot.querySelector("div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch{}
-	try {document.querySelector("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame").shadowRoot.querySelector("div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch{}
+	if (DataStore.get("settings-dialogs-transparent")) {
+		try {document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame").shadowRoot.querySelector("div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch{}
+		try {document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame > div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch {}
+		try {document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame > div > div.challenges-identity-customizer-contents > div.challenges-identity-customizer-left-container > div > lol-regalia-identity-customizer-element").shadowRoot.querySelector("div > lol-regalia-banner-v2-element").remove()}catch{}
+		try {document.querySelector(".lol-settings-container").style.background = "var(--Settings-and-Dialog-frame-color)"}catch {}
+		try {document.querySelector(".lol-settings-container").shadowRoot.querySelector("div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch{}
+		try {document.querySelector("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame").shadowRoot.querySelector("div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch{}
+	}
 
 	if (Avatar) {
 		try {
