@@ -265,6 +265,25 @@ const injectSettings = (panel) => {
          ),
          document.createElement('br'),
          UI.CheckBox(
+            `${selectedLang["custom-be"]}`,'cusbe','cusbebox',
+            ()=>{
+               let cusbeel = document.getElementById("cusbe")
+               let cusbebox = document.getElementById("cusbebox")
+
+               if (DataStore.get("Custom_BE")) {
+                  cusbebox.checked = false
+                  DataStore.set("Custom_BE", false)
+                  cusbeel.removeAttribute("class")
+               }
+               else {
+                  cusbebox.checked = true
+                  DataStore.set("Custom_BE", true)
+                  cusbeel.setAttribute("class", "checked")
+               }
+            }
+         ),
+         document.createElement('br'),
+         UI.CheckBox(
             `${selectedLang["custom-rank-name"]}`,'cusrankname','cusranknamebox',
             ()=>{
                let cusranknameel = document.getElementById("cusrankname")
@@ -567,6 +586,7 @@ const interval = setInterval(() => {
                      let hidechampartel = document.getElementById("hidechampart")
                      let cusfontel      = document.getElementById("cusfont")
                      let cusrpel        = document.getElementById("cusrp")
+                     let cusbeel        = document.getElementById("cusbe")
                      let cusranknameel  = document.getElementById("cusrankname")
                      let aniloadel      = document.getElementById("aniload")
                      let cusavel        = document.getElementById("cusav")
@@ -610,6 +630,10 @@ const interval = setInterval(() => {
                      if (DataStore.get("Custom_RP") && cusrpel.getAttribute("class") == "") {
                         let cusrpbox = document.getElementById("cusrpbox")
                         cusrpbox.checked = true
+                     }
+                     if (DataStore.get("Custom_BE") && cusbeel.getAttribute("class") == "") {
+                        let cusbebox = document.getElementById("cusbebox")
+                        cusbebox.checked = true
                      }
                      if (DataStore.get("Custom-Rank-Name") && cusranknameel.getAttribute("class") == "") {
                         let cusranknamebox = document.getElementById("cusranknamebox")

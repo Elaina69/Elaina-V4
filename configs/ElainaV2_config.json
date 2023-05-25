@@ -104,8 +104,9 @@
 		"Font-Folder"   : "//plugins/ElainaV2/assets/Fonts",
 		"Font-Name"     : "AegirSeaborn.ttf",
 	
-	"Custom_RP":"",
+	"Custom_BE/RP":"",
 		"RP"            : "-69",
+		"BE"            : "-69",
 
 	"Custom-Rank-Name":"",
 		"Rank-line1"    : "Apprentice",

@@ -54,6 +54,9 @@ if (!DataStore.has("Custom-Font")) {
 if (!DataStore.has("Custom_RP")) {
 	DataStore.set("Custom_RP", true)
 }
+if (!DataStore.has("Custom_BE")) {
+	DataStore.set("Custom_BE", true)
+}
 if (!DataStore.has("Custom-Rank-Name")) {
 	DataStore.set("Custom-Rank-Name", true)
 }
@@ -792,6 +795,12 @@ window.setInterval(() => {
 	try{
 		if (DataStore.get("Custom_RP")) {
 			document.querySelector("div.currency-rp").innerHTML = CusRP
+		}
+	}
+	catch{}
+	try{
+		if (DataStore.get("Custom_BE")) {
+			document.querySelector(".currency-be-component.ember-view").innerHTML = `<div class=\"currency-be-icon-container\">\n  <div class=\"currency-be-icon-static\"></div>\n  <lol-uikit-video type=\"intro\" src=\"/fe/lol-navigation/add-blue-essence.webm\" class=\"animation-add-blue-essence\"></lol-uikit-video>\n  <lol-uikit-video type=\"intro\" src=\"/fe/lol-navigation/remove-blue-essence.webm\" class=\"animation-remove-blue-essence\"></lol-uikit-video>\n</div>\n\n${data["BE"]}\n`
 		}
 	}
 	catch{}
