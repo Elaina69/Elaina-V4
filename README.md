@@ -20,6 +20,7 @@ New Elaina theme for Pengu Loader with brand new JS file
 >    + Polish     : [Yurichtofen](https://github.com/Yurichtofen)
 >    + Russian    : [Flirip](https://github.com/Flirip)
 >    + Spanish    : [Legnatbird](https://github.com/Legnatbird)
+>    + Korean     : []()
 
 
  - Github version: [Download](https://github.com/Elaina69/Elaina-V2/releases)
@@ -36,6 +37,7 @@ New Elaina theme for Pengu Loader with brand new JS file
    + Russian
    + Polish
    + Spanish 
+   + Korean
    + Other language will show English instead
 
 > You can help me add more languages by joining [Pengu discord server](https://chat.pengu.lol/)
