@@ -71,7 +71,11 @@ New Elaina theme for Pengu Loader with brand new JS file
 ## Installation:
  - Read [Tutorial](https://github.com/Elaina69/Elaina-V2/blob/main/Tutorial.md)
 
-## Change backgrounds and icons:
- - Open /plugins/ElainaV2/configs/ElainaV2_config.json
+## Theme Settings and change stuff
+ - Open Client settings to turn on/off functions
 
-![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/09eb87cd-0872-4a4b-995f-1933cb18da49)
+![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/ea10d739-ab3f-4ba2-8d81-e207046d2d2d)
+
+ - Open /plugins/ElainaV2/configs/ElainaV2_config.json to change wallpapers and icons
+
+![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/f5f43eeb-9f95-4c5f-950f-b2450b288585)
