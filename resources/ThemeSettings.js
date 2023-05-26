@@ -572,9 +572,7 @@ const interval = setInterval(() => {
       if (manager) {
          clearInterval(interval)
          new MutationObserver((mutations) => {
-            const panel = document.querySelector(
-               'div.lol-settings-options > lol-uikit-scrollable'
-            )
+            const panel = document.querySelector('div.lol-settings-options > lol-uikit-scrollable')
             if (panel && mutations.some((record) => Array.from(record.addedNodes).includes(panel))) {
                injectSettings(panel)
                const check = setInterval (()=>{
