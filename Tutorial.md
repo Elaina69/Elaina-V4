@@ -10,22 +10,15 @@
  
  ![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/ec99ed9b-52b6-418b-b9fd-98301deb90cc)
  
- 4. Rename "Elaina-V2-x.x.x" to "ElainaV2"
-
-![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/bd1aec2f-cdf2-4ef3-8423-a025525d479b)
-
-![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/6d64bdcd-0c47-48b3-8d1b-de2c2a738ab8)
-
-
- 5. Open Plugin folder
+ 4. Open Plugin folder
  
  ![image](https://user-images.githubusercontent.com/94338907/232275976-27399264-dc6d-49a2-a98a-f07fd991d0fd.png)
 
- 6. Copy "ElainaV2" folder to Pengu-loader "plugins" folder
+ 5. Copy folder to Pengu-loader "plugins" folder
  
 ![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/08caceba-e092-4808-a2af-3a05b3b36e71)
 
- 7. Done
+ 6. Done
  > So...It must be like this
  
     .
