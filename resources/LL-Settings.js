@@ -3,6 +3,7 @@
 
 import lang from "../configs/Language.json"
 import Version from "../configs/Version"
+let path = new URL("..", import.meta.url).href + "assets"
 
 if (DataStore.get("Old-League-Loader-Settings")) {
     const TRANSLATIONS = lang
@@ -58,7 +59,7 @@ if (DataStore.get("Old-League-Loader-Settings")) {
                                     <lol-uikit-content-block class="app-controls-exit-dialog" type="dialog-medium" style="position: relative; overflow: hidden">
                                         <div style="position: absolute; top: 60px">
                                             <video
-                                                src="//plugins/ElainaV2/assets/Icon/LL-Settings.webm"
+                                                src="${path}/Icon/LL-Settings.webm"
                                                 style="object-fit: cover; object-position: center center; height: 100%; width: 100%; transform-origin: center center; transform: scale(2.5)">
                                             </video>
                                         </div>

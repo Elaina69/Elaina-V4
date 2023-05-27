@@ -1,4 +1,5 @@
 import lang from '../configs/Language.json'
+let path = new URL("..", import.meta.url).href + "assets"
 let newVersion = (await (() => import('https://rawcdn.githack.com/Elaina69/Elaina-V2/0ef31f4bd1e319d7f55aedaf9790e3f1e3a77b17/configs/Version.js'))()).default
 
 function UpdatePopup() {
@@ -20,8 +21,8 @@ function UpdatePopup() {
     noticediv.classList.add("noticediv")
     notice.classList.add("notice")
 
-    notice.setAttribute('src', "//plugins/ElainaV2/assets/Icon/download.png")
-    close.setAttribute('src', '//plugins/ElainaV2/assets/Icon/close.png')
+    notice.setAttribute('src', `${path}/Icon/download.png`)
+    close.setAttribute('src', `${path}/Icon/close.png`)
 
     let showcontainer = document.getElementsByClassName("rcp-fe-lol-home")[0]
 

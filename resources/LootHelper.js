@@ -1,14 +1,7 @@
 import lang from '../configs/Language.json'
+let path = new URL("..", import.meta.url).href + "assets"
 
 if (DataStore.get("loot-helper")) {
-    function AddStylesheet(url) {
-        let style = document.createElement('link');
-        style.href = url;
-        style.type = 'text/css';
-        style.rel = 'stylesheet';
-        document.body.append(style);
-    }
-    
     function AddElement(parent, tag, params = [], classes = [], content = null) {
         let element = document.createElement(tag);
     
@@ -442,7 +435,11 @@ if (DataStore.get("loot-helper")) {
     
     
     window.addEventListener('load', () => {
-        AddStylesheet('//plugins/ElainaV2/assets/Css/Addon-Css/LootHelper.css');
+        let NStyle = document.createElement('style');
+		NStyle.appendChild(document.createTextNode(
+			'@import url("'+path+'/Css/Addon-Css/LootHelper.css");:root {--OC_button:url("'+path+'/Icon/button-open-chests.png");--BE_button:url("'+path+'/Icon/button-blue-essence.png");--BE_hover:url("'+path+'/Icon/button-blue-essence-hover.png");--BE_active:url("'+path+'/Icon/button-blue-essence-click.png");--rbutton:url("'+path+'/Icon/button-refresh.png");--rhover:url("'+path+'/Icon/button-refresh-hover.png");--ractive:url("'+path+'/Icon/button-refresh-click.png");--OC_hover:url("'+path+'/Icon/button-open-chests-hover.png");--OC_active:url("'+path+'/Icon/button-open-chests-click.png");}'
+		));
+	    document.body.appendChild(NStyle)
     
         window.setInterval(async () => {
             CreateRefreshButton();

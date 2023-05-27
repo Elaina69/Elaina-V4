@@ -6,7 +6,7 @@
 }
 
 .blue-essence-button {
-    background: url('//plugins/ElainaV2/assets/Icon/button-blue-essence.png');
+    background: var(--BE_button);
     background-size: contain;
     cursor: pointer;
     height: 23px;
@@ -16,12 +16,12 @@
 }
 
 .blue-essence-button:hover {
-    background: url('//plugins/ElainaV2/assets/Icon/button-blue-essence-hover.png');
+    background: var(--BE_hover);
     background-size: contain;
 }
 
 .blue-essence-button:active {
-    background: url('//plugins/ElainaV2/assets/Icon/button-blue-essence-click.png');
+    background: var(--BE_active);
     background-size: contain;
 }
 
@@ -33,7 +33,7 @@
 }
 
 .refresh-button {
-    background: url('//plugins/ElainaV2/assets/Icon/button-refresh.png');
+    background: var(--rbutton);
     background-size: contain;
     cursor: pointer;
     height: 23px;
@@ -43,12 +43,12 @@
 }
 
 .refresh-button:hover {
-    background: url('//plugins/ElainaV2/assets/Icon/button-refresh-hover.png');
+    background: var(--rhover);
     background-size: contain;
 }
 
 .refresh-button:active {
-    background: url('//plugins/ElainaV2/assets/Icon/button-refresh-click.png');
+    background: var(--ractive);
     background-size: contain;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .open-chests-button {
-    background: url('//plugins/ElainaV2/assets/Icon/button-open-chests.png');
+    background: var(--OC_button);
     background-size: contain;
     cursor: pointer;
     height: 23px;
@@ -70,12 +70,12 @@
 }
 
 .open-chests-button:hover {
-    background: url('//plugins/ElainaV2/assets/Icon/button-open-chests-hover.png');
+    background: var(--OC_hover);
     background-size: contain;
 }
 
 .open-chests-button:active {
-    background: url('//plugins/ElainaV2/assets/Icon/button-open-chests-click.png');
+    background: var(--OC_active);
     background-size: contain;
 }
 

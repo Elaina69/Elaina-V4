@@ -1,10 +1,10 @@
 import utils from './_utilselaina'
-import data from"../configs/ElainaV2_config.json"
 import wt from './Watermark'
+let path = new URL("..", import.meta.url).href + "assets"
 
 if(DataStore.get("aram-only")) {
     window.addEventListener('load', () => {
-        utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Aram-only.css")
+        utils.addCss(`${path}/Css/Addon-Css/Aram-only.css`)
     })
 
     let pageChangeMutation = (node) => { 

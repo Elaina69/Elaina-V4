@@ -1,5 +1,11 @@
-/* By Elaina Da Catto */
-/* Meow~~~ */
+/**
+ * @name ElainaV2
+ * @author Elaina Da Catto
+ * @description Elaina theme 2nd Generation for Pengu Loader
+ * @link https://github.com/Elaina69
+ * @Nyan Meow~~~
+ */
+import './assets/Css/ElainaV2.css'
 
 import data        from './configs/ElainaV2_config.json'
 import lang        from './configs/Language.json'
@@ -23,6 +29,7 @@ import './resources/Auto-Ban-Pick'
 import './resources/LootHelper'
 
 //___________________________________________________________________________//
+let path = new URL(".", import.meta.url).href + "assets"
 let wallpapers         = data["wallpaper_list"]
 let Audios             = data["audio_list"]
 
@@ -251,10 +258,10 @@ function play_pause_set_icon(elem) {
 		return;
 	}
 	if (DataStore.get('pause-wallpaper')%2==0) {
-		pause_bg_icon.setAttribute("src", "//plugins/ElainaV2/assets/Icon/play_button.png")
+		pause_bg_icon.setAttribute("src", `${path}/Icon/play_button.png`)
 	}
 	else {
-		pause_bg_icon.setAttribute("src", "//plugins/ElainaV2/assets/Icon/pause_button.png")
+		pause_bg_icon.setAttribute("src", `${path}/Icon/pause_button.png`)
 	}
 }
 //___________________________________________________________________________//
@@ -285,10 +292,10 @@ function play_pause_set_icon_audio(elem) {
 		return;
 	}
 	if (DataStore.get('pause-audio')%2==0) {
-		pause_audio_icon.setAttribute("src", "//plugins/ElainaV2/assets/Icon/mute.png")
+		pause_audio_icon.setAttribute("src", `${path}/Icon/mute.png`)
 	}
 	else {
-		pause_audio_icon.setAttribute("src", "//plugins/ElainaV2/assets/Icon/audio.png")
+		pause_audio_icon.setAttribute("src", `${path}/Icon/audio.png`)
 	}
 
 }
@@ -301,12 +308,12 @@ function play_pause_set_icon_audio(elem) {
 //___________________________________________________________________________//
 function loadBG(BG) {
 	let elainaBg = document.getElementById("elaina-bg")
-	elainaBg.src = `${data["wallpaper_folder"]}${BG}`;
+	elainaBg.src = `${path}/Backgrounds/${BG}`;
 }
 
 function loadSong(song) {
 	let audio     = document.getElementById("bg-audio")
-    	audio.src = `${data["audio_folder"]}${song}`;
+    	audio.src = `${path}/Backgrounds/Audio/${song}`;
 }
 
 function next_wallpaper() {
@@ -467,10 +474,10 @@ function create_webm_buttons() {
 		prevSong()
 	})
 
-	nextBgIcon.setAttribute("src", "//plugins/ElainaV2/assets/Icon/next_button.png")
-	prevBgIcon.setAttribute("src", "//plugins/ElainaV2/assets/Icon/prev_button.png")
-	nextAudioIcon.setAttribute("src", "//plugins/ElainaV2/assets/Icon/next-audio.png")
-	prevAudioIcon.setAttribute("src", "//plugins/ElainaV2/assets/Icon/prev-audio.png")
+	nextBgIcon.setAttribute("src", `${path}/Icon/next_button.png`)
+	prevBgIcon.setAttribute("src", `${path}/Icon/prev_button.png`)
+	nextAudioIcon.setAttribute("src", `${path}/Icon/next-audio.png`)
+	prevAudioIcon.setAttribute("src", `${path}/Icon/prev-audio.png`)
 		
 	let showcontainer = document.getElementsByClassName("rcp-fe-lol-home")[0]
 	    showcontainer.appendChild(container)
@@ -814,33 +821,31 @@ import wt from './resources/Watermark'
 
 //___________________________________________________________________________//
 window.addEventListener('load', () => {
-	utils.addCss("//plugins/ElainaV2/assets/Css/ElainaV2.css");	
+	newStyle("--Hover-card-backdrop",path+"/Icon",data['Hover-card'])
 
-	newStyle("--Hover-card-backdrop",data["Icon-Folder"],data['Hover-card'])
+	if (DataStore.get("Sidebar-Transparent")) {utils.addCss(`${path}/Css/Addon-Css/Sidebar-Transparent.css`);}
+	else {utils.addCss(`${path}/Css/Addon-Css/Sidebar-Color.css`);}
 
-	if (DataStore.get("Sidebar-Transparent")) {utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Sidebar-Transparent.css");}
-	else {utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Sidebar-Color.css");}
+	if (DataStore.get("Animate-Loading")) {newStyle("--ElainaFly",path+"/Icon",data["Animation-logo"],`${path}/Css/Addon-Css/Animate-Loading-Screen.css`)}
+	else {newStyle("--ElainaStatic",path+"/Icon",data["Static-logo"],`${path}/Css/Addon-Css/Static-Loading-Screen.css`)}
 
-	if (DataStore.get("Animate-Loading")) {newStyle("--ElainaFly",data["Icon-Folder"],data["Animation-logo"],"//plugins/ElainaV2/assets/Css/Addon-Css/Animate-Loading-Screen.css")}
-	else {newStyle("--ElainaStatic",data["Icon-Folder"],data["Static-logo"],"//plugins/ElainaV2/assets/Css/Addon-Css/Static-Loading-Screen.css")}
+	if (DataStore.get("Hide-Champions-Splash-Art")) {utils.addCss(`${path}/Css/Addon-Css/Hide-Champs-Splash-Art.css`)}
 
-	if (DataStore.get("Hide-Champions-Splash-Art")) {utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Hide-Champs-Splash-Art.css")}
-
-	if (Avatar) {newStyle("--Avatar",data["Icon-Folder"],data["Avatar"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/Avatar.css")}
+	if (Avatar) {newStyle("--Avatar",path+"/Icon",data["Avatar"],`${path}/Css/Addon-Css/Icon/Avatar.css`)}
 
 	if (DataStore.get("Custom-Icon")) {
-		newStyle("--RP-Icon",data["Icon-Folder"],data["RP-icon"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/RiotPoint.css")
-		newStyle("--BE-Icon",data["Icon-Folder"],data["BE-icon"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/BlueEssence.css")
-		newStyle("--Rank-Icon",data["Icon-Folder"],data["Rank-icon"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/Rank.css")
-		newStyle("--Emblem",data["Icon-Folder"],data["Emblem"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/Emblem.css")
-		newStyle("--Clash-banner",data["Icon-Folder"],data["Class-banner"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/ClashBanner.css")
-		newStyle("--Ticker",data["Icon-Folder"],data["Ticker"],"//plugins/ElainaV2/assets/Css/Addon-Css/Icon/Ticker.css")
+		newStyle("--RP-Icon",path+"/Icon",data["RP-icon"],`${path}/Css/Addon-Css/Icon/RiotPoint.css`)
+		newStyle("--BE-Icon",path+"/Icon",data["BE-icon"],`${path}/Css/Addon-Css/Icon/BlueEssence.css`)
+		newStyle("--Rank-Icon",path+"/Icon",data["Rank-icon"],`${path}/Css/Addon-Css/Icon/Rank.css`)
+		newStyle("--Emblem",path+"/Icon",data["Emblem"],`${path}/Css/Addon-Css/Icon/Emblem.css`)
+		newStyle("--Clash-banner",path+"/Icon",data["Class-banner"],`${path}/Css/Addon-Css/Icon/ClashBanner.css`)
+		newStyle("--Ticker",path+"/Icon",data["Ticker"],`${path}/Css/Addon-Css/Icon/Ticker.css`)
 	}
 	
 	if (DataStore.get("Custom-Font")) {
 		let CusFont = document.createElement('style');
 		CusFont.appendChild(document.createTextNode(
-			'@font-face {font-family: "Custom" ; src: url('+data["Font-Folder"]+"/"+data["Font-Name"]+');}'
+			'@font-face {font-family: "Custom" ; src: url('+path+"/Fonts/"+data["Font-Name"]+');}'
 		));
 		document.body.appendChild(CusFont)
 	}
@@ -848,7 +853,7 @@ window.addEventListener('load', () => {
 	if (DataStore.get("Custom-Cursor")) {
 		let cursor = document.createElement("div")
 			cursor.classList.add("cursor")
-			cursor.style.background = 'url('+data["Icon-Folder"]+'/'+data["Mouse-cursor"]+')'
+			cursor.style.background = 'url('+path+"/Icon/"+data["Mouse-cursor"]+')'
 
 		document.addEventListener('mousemove', function(e){
 			var x = e.clientX;
@@ -857,8 +862,14 @@ window.addEventListener('load', () => {
 		});
 		let body = document.querySelector("html")
 			body.appendChild(cursor)
-		utils.addCss("//plugins/ElainaV2/assets/Css/Addon-Css/Cursor.css")
+		utils.addCss(`${path}/Css/Addon-Css/Cursor.css`)
 	}
+
+	let addFont = document.createElement('style');
+		addFont.appendChild(document.createTextNode(
+			'@font-face {font-family: "Elaina" ; src: url('+path + "/Fonts/BeaufortforLOL-Bold.ttf" +');}'
+		))
+	document.body.appendChild(addFont)
 	
 	const video = document.createElement('video');
 	const audio = document.createElement("audio");
@@ -866,17 +877,17 @@ window.addEventListener('load', () => {
 		video.id       = 'elaina-bg';
 		video.autoplay = true;
 		video.loop     = true;
-		video.src      = `${data["wallpaper_folder"]}${wallpapers[DataStore.get('wallpaper-index')]}`
+		video.src      = `${path}/Backgrounds/${wallpapers[DataStore.get('wallpaper-index')]}`
 		video.volume   = data["wallpaper_sound_volume"];
 
 		audio.id       = 'bg-audio';
     	audio.autoplay = true;
     	audio.loop     = false;
 		if (DataStore.get("Continues_Audio")) {
-			audio.src  = `${data["audio_folder"]}${Audios[DataStore.get('audio-index')]}`
+			audio.src  = `${path}/Backgrounds/Audio/${Audios[DataStore.get('audio-index')]}`
 		}
 		else {
-			audio.src  = `${data["audio_folder"]}${Audios[songIndex]}`
+			audio.src  = `${path}/Backgrounds/Audio/${Audios[songIndex]}`
 		}
 		audio.volume   = data["audio_sound_volume"];
 	
