@@ -2,7 +2,6 @@
  - [About](#elaina-v2)
  - [Features](#features)
  - [Required](#required)
- - [Note](#note-must-read)
  - [Installation](#installation)
  - [Change backgrounds and icons](#change-backgrounds-and-icons)
 
@@ -43,31 +42,13 @@ New Elaina theme for Pengu Loader with brand new JS file
 > You can help me add more languages by joining [Pengu discord server](https://chat.pengu.lol/)
 
 ## Required: 
- - [Pengu Loader v1.0.4 and later](https://github.com/PenguLoader/PenguLoader/releases)
+ - [Pengu Loader v1.0.5 and later](https://github.com/PenguLoader/PenguLoader/releases)
  - A good-enough PC/Laptop
 
 > Minimum: Windows 10/11, Intel Core I5 2400 // 8gb ram // NVIDIA GT630
 
 > Recommended: Windows 10/11, Intel Core I5 9400 // 16gb ram // NVIDIA GTX1050 Ti and Higher
-
-## NOTE (MUST READ)
- 1, This theme already have:
-   > + "Auto-Accept"
-   > + "Dodge-button"
-   > + "Offline-mode"
-   > + "Hide-friendlist"
-   > + "Aram-only"
-   > + "Custom-status"
-   > + "Custom-rank(hover)
-   > + "Auto-ban/pick"
-   
-  DON'T add them more to plugins folder
  
- 2, Remember to read step 4:
- 
- ![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/fdaf3fad-aba5-4bb4-ac8e-36df55d98030)
-
-
 ## Installation:
  - Read [Tutorial](https://github.com/Elaina69/Elaina-V2/blob/main/Tutorial.md)
 
