@@ -5,6 +5,7 @@
  * @link https://github.com/Elaina69
  * @Nyan Meow~~~
  */
+
 import './assets/Css/ElainaV2.css'
 
 import data        from './configs/ElainaV2_config.json'
@@ -29,14 +30,13 @@ import './resources/Auto-Ban-Pick'
 import './resources/LootHelper'
 
 //___________________________________________________________________________//
-let path = new URL(".", import.meta.url).href + "assets"
-let wallpapers         = data["wallpaper_list"]
-let Audios             = data["audio_list"]
+let path       = new URL(".", import.meta.url).href + "assets"
 
-let Avatar             = DataStore.get("Custom-Avatar")
-let CusRP              = data["RP"]
+let wallpapers = data["wallpaper_list"]
+let Audios     = data["audio_list"]
+let songIndex  = data["default_audio"]-1;
 
-let songIndex          = data["default_audio"]-1;
+let Avatar     = DataStore.get("Custom-Avatar")
 //___________________________________________________________________________//
 
 
@@ -801,7 +801,7 @@ window.setInterval(() => {
 	catch {}
 	try{
 		if (DataStore.get("Custom_RP")) {
-			document.querySelector("div.currency-rp").innerHTML = CusRP
+			document.querySelector("div.currency-rp").innerHTML = data["RP"]
 		}
 	}
 	catch{}

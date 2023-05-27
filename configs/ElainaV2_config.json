@@ -3,8 +3,6 @@
 
 	"/__Support video formats__/" : " .webm, .mkv, .mp4, ... idk,maybe more ",
 
-	"wallpaper_folder"	    : "//plugins/ElainaV2/assets/Backgrounds/ (You can't change folder location here)",
-
 	"wallpaper_list"        :["Elaina1.webm",
 							  "Elaina2.webm"
 							],
@@ -20,8 +18,6 @@
 "/_______________________________________Audio__________________________________/": "",
 
 	"/__Support audio formats__/" : " .mp3, .flac, .ogg , ... idk,maybe more ",
-
-	"audio_folder"          : "//plugins/ElainaV2/assets/Backgrounds/Audio/ (You can't change folder location here)",
 
 	"audio_list"            :["If there was an Endpoint.mp3", 
 							  "ツユ-アンダーキッズ.mp3", 
@@ -82,8 +78,6 @@
 
 "/___________________________________Theme Icons______________________________/": "",
 
-	"Icon-Folder"   : "//plugins/ElainaV2/assets/Icon (You can't change folder location here)",
-
 	"Animation-logo": "ElainaFly.gif",
 	"Static-logo"   : "Logo.png",
 	"Avatar"        : "Avatar.gif",
@@ -97,7 +91,6 @@
 	"Mouse-cursor"  : "ElainaDed.png",
 	
 	"Custom-Font":"",
-		"Font-Folder"   : "//plugins/ElainaV2/assets/Fonts (You can't change folder location here)",
 		"Font-Name"     : "AegirSeaborn.ttf",
 	
 	"Custom_BE/RP":"",
