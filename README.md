@@ -11,7 +11,7 @@ New Elaina theme for Pengu Loader with brand new JS file
 
 > Special thanks:
 >  - Developers       : Me (ofc), [teiseire117](https://github.com/teisseire117)
->  - Plugins providers: Me (again), [teiseire117](https://github.com/teisseire117), [Nomi-san](https://github.com/nomi-san), [controlado](https://github.com/controlado)
+>  - Plugins providers: Me (again), [teiseire117](https://github.com/teisseire117), [Nomi-san](https://github.com/nomi-san), [controlado](https://github.com/controlado), [Marcel Weber](https://github.com/SoNiice), [Sarah Engel](https://github.com/PrincessAkira)
 >  - Theme Optimizers : [Yurichtofen](https://github.com/Yurichtofen)
 >  - Translators      : 
 >    + English : (A lot)
