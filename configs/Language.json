@@ -25,6 +25,10 @@
 
         "auto_pick"       : "Auto pick",
         "auto_ban"        : "Auto ban",
+        "first_pick"      : "First pick option",
+        "second_pick"     : "Second pick option",
+        "first_ban"       : "First ban option",
+        "second_ban"      : "Second ban option",
 
         "shards"          : "shards",
         "worth"           : "worth",
@@ -99,6 +103,11 @@
         
         "auto_pick"       : "T.động chọn",
         "auto_ban"        : "T.động cấm",
+        "first_pick"      : "Tướng chọn đầu tiên",
+        "second_pick"     : "Tướng chọn thứ hai",
+        "first_ban"       : "Tướng cấm đầu tiên",
+        "second_ban"      : "Tướng cấm thứ hai",
+
 
         "shards"          : "mảnh",
         "worth"           : "phân tách đc",
@@ -173,6 +182,11 @@
         
         "auto_pick"       : "Auto pick",
         "auto_ban"        : "Auto ban",
+        "first_pick"      : "First pick option",
+        "second_pick"     : "Second pick option",
+        "first_ban"       : "First ban option",
+        "second_ban"      : "Second ban option",
+
 
         "shards"          : "shards",
         "worth"           : "worth",
@@ -247,6 +261,10 @@
         
         "auto_pick"       : "Auto wybór",
         "auto_ban"        : "Auto ban",
+        "first_pick"      : "First pick option",
+        "second_pick"     : "Second pick option",
+        "first_ban"       : "First ban option",
+        "second_ban"      : "Second ban option",
 
         "shards"          : "odłamki",
         "worth"           : "warte",
@@ -320,6 +338,10 @@
         
         "auto_pick"       : "Авто выбор",
         "auto_ban"        : "Авто бан",
+        "first_pick"      : "First pick option",
+        "second_pick"     : "Second pick option",
+        "first_ban"       : "First ban option",
+        "second_ban"      : "Second ban option",
 
         "shards"          : "осколки",
         "worth"           : "стоимость",
@@ -392,6 +414,10 @@
         
         "auto_pick"       : "Auto pick",
         "auto_ban"        : "Auto ban",
+        "first_pick"      : "First pick option",
+        "second_pick"     : "Second pick option",
+        "first_ban"       : "First ban option",
+        "second_ban"      : "Second ban option",
 
         "shards"          : "shards",
         "worth"           : "worth",
@@ -464,6 +490,10 @@
 
         "auto_pick"       : "자동 선택",
         "auto_ban"        : "자동 벤",
+        "first_pick"      : "First pick option",
+        "second_pick"     : "Second pick option",
+        "first_ban"       : "First ban option",
+        "second_ban"      : "Second ban option",
 
         "shards"          : "shards",
         "worth"           : "worth",

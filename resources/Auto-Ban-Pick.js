@@ -75,181 +75,167 @@ if (DataStore.get("Auto-ban-pick")) {
     return pickCheckbox
   }
   
-  let allChampions = null
-  const defaultPickSettings = { "enabled": false, "champions": [429, 136] }
-  const defaultBanSettings = { "enabled": false, "force": false, "champions": [350, 221] }
-  
-  const gamePhaseHandler = async message => {
-    const jsonObject = JSON.parse(message.data)
-    const messageData = jsonObject[2]["data"]
-    if (messageData !== "ChampSelect") { return }
-  
-    while (await getGamePhase() === "ChampSelect") {
-      const championSelectData = await getChampionSelectData()
-      await onChampionSelect(championSelectData)
-  
-      if (championSelectData.timer.phase === "FINALIZATION") { return }
-  
-      await new Promise(resolve => setTimeout(resolve, 200))
-    }
+let allChampions = null
+const defaultPickSettings = { "enabled": false, "champions": [429, 136] }
+const defaultBanSettings = { "enabled": false, "force": false, "champions": [350, 221] }
+
+const gamePhaseHandler = async message => {
+  const jsonObject = JSON.parse(message.data)
+  const messageData = jsonObject[2]["data"]
+  if (messageData !== "ChampSelect") { return }
+
+  while (await getGamePhase() === "ChampSelect") {
+    const championSelectData = await getChampionSelectData()
+    await onChampionSelect(championSelectData)
+
+    if (championSelectData.timer.phase === "FINALIZATION") { return }
+
+    await new Promise(resolve => setTimeout(resolve, 200))
   }
-  
-  const onChampionSelect = async championSelectData => {
-    const { localPlayerCellId, actions, bans, myTeam, theirTeam } = championSelectData
-    const allBans = [...bans.myTeamBans, ...bans.theirTeamBans]
-    const allPicks = [...myTeam, ...theirTeam]
-  
-    const pickChampion = DataStore.get("pickChampion")
-    const banChampion = DataStore.get("banChampion")
-  
-    for (const subAction of actions) {
-      for (const action of subAction) {
-        if (action.completed || action.actorCellId != localPlayerCellId) { continue }
-  
-        if (action.type === "pick" && pickChampion.enabled) {
-          for (const championId of pickChampion.champions) {
-            if (allBans.some(bannedChampionId => bannedChampionId == championId)) { continue }
-            if (allPicks.some(unit => unit.championId == championId)) { continue }
-            if (await selectChampion(action.id, championId)) { return } else { break }
-          }
-        }
-  
-        if (action.type === "ban" && banChampion.enabled) {
-          for (const championId of banChampion.champions) {
-            if (allBans.some(bannedChampionId => bannedChampionId == championId)) { continue }
-            if (!banChampion.force && myTeam.some(ally => ally.championPickIntent == championId)) { continue }
-            if (await selectChampion(action.id, championId)) { return } else { break }
-          }
+}
+
+const onChampionSelect = async championSelectData => {
+  const { localPlayerCellId, actions, bans, myTeam, theirTeam } = championSelectData
+  const allBans = [...bans.myTeamBans, ...bans.theirTeamBans]
+  const allPicks = [...myTeam, ...theirTeam]
+
+  const pickChampion = DataStore.get("pickChampion")
+  const banChampion = DataStore.get("banChampion")
+
+  for (const subAction of actions) {
+    for (const action of subAction) {
+      if (action.completed || action.actorCellId != localPlayerCellId) { continue }
+
+      if (action.type === "pick" && pickChampion.enabled) {
+        for (const championId of pickChampion.champions) {
+          if (allBans.some(bannedChampionId => bannedChampionId == championId)) { continue }
+          if (allPicks.some(player => player.championId == championId)) { continue }
+          if (await selectChampion(action.id, championId)) { return }
         }
       }
-    }
-  }
-  
-  class DropdownChampions {
-    constructor(index, id, champions, brightness = false) {
-      this.index = index
-      this.id = id
-      this.champions = champions
-      this.config = DataStore.get(this.id)
-      this.element = getDropdown(this.id)
-  
-      if (brightness) {
-        this.element.style.filter = "brightness(0.7)"
-      }
-  
-      for (const champion of this.champions) {
-        const option = this.getOption(champion)
-        this.element.append(option)
-      }
-    }
-  
-    getOption(champion) {
-      const option = getOption(champion.name)
-  
-      option.addEventListener("click", () => {
-        this.config.champions[this.index] = champion.id
-        DataStore.set(this.id, this.config)
-      })
-  
-      if (this.config.champions[this.index] == champion.id) {
-        option.setAttribute("selected", "true")
-      }
-  
-      return option
-    }
-  }
-  
-  class DropdownChampionsContainer {
-    constructor(id) {
-      this.element = document.createElement("div")
-      this.element.setAttribute("id", id)
-    }
-  }
-  
-  class CheckboxContainer {
-    constructor(id) {
-      this.element = document.createElement("div")
-      this.element.setAttribute("id", id)
-      this.element.className = "alpha-version-panel"
-    }
-  }
-  
-  class AutoCheckbox {
-    constructor(text, configKey) {
-      this.configKey = configKey
-      this.config = DataStore.get(this.configKey)
-      this.element = getCheckBox(text, this.config.enabled)
-  
-      this.element.addEventListener("click", () => {
-        this.config.enabled = !this.config.enabled
-        DataStore.set(this.configKey, this.config)
-  
-        const elementDropdown = document.getElementById(this.configKey)
-  
-        if (this.config.enabled) {
-          this.element.setAttribute("selected", "true")
-          elementDropdown.parentNode.style.display = "block"
-        } else {
-          this.element.removeAttribute("selected")
-          elementDropdown.parentNode.style.display = "none"
+
+      if (action.type === "ban" && banChampion.enabled) {
+        for (const championId of banChampion.champions) {
+          if (allBans.some(bannedChampionId => bannedChampionId == championId)) { continue }
+          if (!banChampion.force && myTeam.some(ally => ally.championPickIntent == championId)) { continue }
+          if (await selectChampion(action.id, championId)) { return } else { break }
         }
-      })
+      }
     }
   }
-  
-  const onMutation = () => {
-    const socialContainer = document.querySelector(".lol-social-lower-pane-container")
-  
-    if (
-      !socialContainer ||
-      document.getElementById("checkbox-container") ||
-      document.getElementById("pick-dropdown-container") ||
-      document.getElementById("ban-dropdown-container")
-    ) {
-      return
+}
+
+class DropdownChampions {
+  constructor(index, id, champions, tooltip, brightness = false) {
+    this.index = index
+    this.id = id
+    this.champions = champions
+
+    this.selectedChampion = null
+    this.config = DataStore.get(this.id)
+    this.element = getDropdown(this.id)
+
+    for (const champion of this.champions) {
+      const option = this.getOption(champion)
+      this.element.append(option)
     }
 
-    const langCode = document.querySelector("html").lang;
-		const langMap = lang.langlist
-  
-    const checkBoxContainer = new CheckboxContainer("checkbox-container")
-  
-    const pickDropdownContainer = new DropdownChampionsContainer("pick-dropdown-container")
-    const banDropdownContainer = new DropdownChampionsContainer("ban-dropdown-container")
-  
-    const pickCheckbox = new AutoCheckbox(lang[langMap[langCode] || "EN"]["auto_pick"], "pickChampion")
-    const banCheckbox = new AutoCheckbox(lang[langMap[langCode] || "EN"]["auto_ban"], "banChampion")
-  
-    const firstPickDropdown = new DropdownChampions(0, "pickChampion", allChampions)
-    const secondPickDropdown = new DropdownChampions(1, "pickChampion", allChampions)
-  
-    const firstBanDropdown = new DropdownChampions(0, "banChampion", allChampions, true)
-    const secondBanDropdown = new DropdownChampions(1, "banChampion", allChampions, true)
-  
-    checkBoxContainer.element.append(pickCheckbox.element)
-    checkBoxContainer.element.append(banCheckbox.element)
-  
-    pickDropdownContainer.element.append(firstPickDropdown.element)
-    pickDropdownContainer.element.append(secondPickDropdown.element)
-  
-    banDropdownContainer.element.append(firstBanDropdown.element)
-    banDropdownContainer.element.append(secondBanDropdown.element)
-  
-    socialContainer.append(checkBoxContainer.element)
-    socialContainer.append(pickDropdownContainer.element)
-    socialContainer.append(banDropdownContainer.element)
+    if (brightness) { this.element.style.filter = "brightness(0.7)" }
+    this.hoverText = this.element.shadowRoot.querySelector("div > dt > div")
+    this.element.onmouseenter = () => { this.hoverText.textContent = tooltip }
+    this.element.onmouseleave = () => { this.hoverText.textContent = this.selectedChampion }
   }
-  
-  window.addEventListener("load", () => {
-    getAllChampions().then(champions => allChampions = champions).finally()
-  
-    const pickChampionExists = DataStore.has("pickChampion")
-    const banChampionExists = DataStore.has("banChampion")
-  
-    if (!pickChampionExists) { DataStore.set("pickChampion", defaultPickSettings) }
-    if (!banChampionExists) { DataStore.set("banChampion", defaultBanSettings) }
-  
-    utils.subscribe_endpoint("/lol-gameflow/v1/gameflow-phase", gamePhaseHandler)
-    utils.routineAddCallback(onMutation, ["lol-social-lower-pane-container"])
-  })  
+
+  getOption(champion) {
+    const option = getOption(champion.name)
+
+    option.onclick = () => {
+      this.config.champions[this.index] = champion.id
+      this.selectedChampion = champion.name
+      DataStore.set(this.id, this.config)
+    }
+    if (this.config.champions[this.index] == champion.id) {
+      this.selectedChampion = champion.name; option.setAttribute("selected", "true")
+    }
+
+    return option
+  }
+}
+
+class DropdownChampionsContainer {
+  constructor(id) {
+    this.element = document.createElement("div")
+    this.element.id = id
+  }
+}
+
+class CheckboxContainer {
+  constructor(id) {
+    this.element = document.createElement("div")
+    this.element.className = "alpha-version-panel"
+    this.element.id = id
+  }
+}
+
+class AutoCheckbox {
+  constructor(text, configKey) {
+    this.configKey = configKey
+    this.config = DataStore.get(this.configKey)
+    this.element = getCheckBox(text, this.config.enabled)
+
+    this.element.onclick = () => {
+      this.config.enabled = !this.config.enabled
+      DataStore.set(this.configKey, this.config)
+
+      if (this.config.enabled) { this.element.setAttribute("selected", "true") }
+      else { this.element.removeAttribute("selected") }
+    }
+  }
+}
+
+const onMutation = () => {
+  const socialContainer = document.querySelector(".lol-social-lower-pane-container")
+
+  if (
+    !socialContainer ||
+    document.getElementById("checkbox-container") ||
+    document.getElementById("pick-dropdown-container") ||
+    document.getElementById("ban-dropdown-container")
+  ) {
+    return
+  }
+
+  const langCode = document.querySelector("html").lang;
+	const langMap = lang.langlist
+
+  const checkBoxContainer = new CheckboxContainer("checkbox-container")
+
+  const pickDropdownContainer = new DropdownChampionsContainer("pick-dropdown-container")
+  const banDropdownContainer = new DropdownChampionsContainer("ban-dropdown-container")
+
+  const pickCheckbox = new AutoCheckbox(lang[langMap[langCode] || "EN"]["auto_pick"], "pickChampion")
+  const banCheckbox = new AutoCheckbox(lang[langMap[langCode] || "EN"]["auto_ban"], "banChampion")
+
+  const firstPickDropdown = new DropdownChampions(0, "pickChampion", allChampions, lang[langMap[langCode] || "EN"]["first_pick"])
+  const secondPickDropdown = new DropdownChampions(1, "pickChampion", allChampions, lang[langMap[langCode] || "EN"]["second_pick"])
+
+  const firstBanDropdown = new DropdownChampions(0, "banChampion", allChampions, lang[langMap[langCode] || "EN"]["first_ban"], true)
+  const secondBanDropdown = new DropdownChampions(1, "banChampion", allChampions, lang[langMap[langCode] || "EN"]["second_ban"], true)
+
+  checkBoxContainer.element.append(pickCheckbox.element, banCheckbox.element)
+  pickDropdownContainer.element.append(firstPickDropdown.element, secondPickDropdown.element)
+  banDropdownContainer.element.append(firstBanDropdown.element, secondBanDropdown.element)
+
+  socialContainer.append(checkBoxContainer.element, pickDropdownContainer.element, banDropdownContainer.element)
+}
+
+window.addEventListener("load", async () => {
+  allChampions = await getAllChampions()
+
+  if (!DataStore.has("pickChampion")) { DataStore.set("pickChampion", defaultPickSettings) }
+  if (!DataStore.has("banChampion")) { DataStore.set("banChampion", defaultBanSettings) }
+
+  utils.subscribe_endpoint("/lol-gameflow/v1/gameflow-phase", gamePhaseHandler)
+  utils.routineAddCallback(onMutation, ["lol-social-lower-pane-container"])
+})
 }
