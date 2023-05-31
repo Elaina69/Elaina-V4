@@ -93,7 +93,7 @@ const UI = {
       row.setAttribute("class", "lol-settings-sound-row-slider")
 
       origin.setAttribute("class", "lol-settings-slider")
-      origin.setAttribute("value", '"'+value+'"')
+      origin.setAttribute("value", `${value}`* 100)
       origin.setAttribute("percentage", "")
 
       slider.setAttribute("class", "lol-uikit-slider-wrapper horizontal")
@@ -129,7 +129,7 @@ const injectSettings = (panel) => {
          UI.SoundText(`${selectedLang["wallpaper-volume"]} (In development)`),
          UI.Slider(),
          UI.SoundText(`${selectedLang["music-volume"]} (In development)`),
-         UI.Slider(),
+         UI.Slider(DataStore.get("audio-volume")),
          document.createElement('br'),
          UI.CheckBox(
             `${selectedLang["receive-update"]}`,"update","update checkbox",
@@ -146,6 +146,25 @@ const injectSettings = (panel) => {
                   updatebox.checked = true
                   DataStore.set("Receive-Update", true)
                   updateel.setAttribute("class", "checked")
+               }
+            }
+         ),
+         document.createElement('br'),
+         UI.CheckBox(
+            `${selectedLang["old-prev/next-button"]}`,"oldpnb","oldpnbbox",
+            ()=>{
+               let oldpnbel = document.getElementById("oldpnb")
+               let oldpnbbox = document.getElementById("oldpnbbox")
+
+               if (DataStore.get("old-prev/next-button")) {
+                  oldpnbbox.checked = false
+                  DataStore.set("old-prev/next-button", false)
+                  oldpnbel.removeAttribute("class")
+               }
+               else {
+                  oldpnbbox.checked = true
+                  DataStore.set("old-prev/next-button", true)
+                  oldpnbel.setAttribute("class", "checked")
                }
             }
          ),
@@ -600,6 +619,7 @@ const interval = setInterval(() => {
                      let MCel           = document.getElementById("MC")
                      let lhel           = document.getElementById("lh")
                      let stdiatel       = document.getElementById("stdiat")
+                     let oldpnbel = document.getElementById("oldpnb")
                
                      if (DataStore.get("aram-only") && Aramel.getAttribute("class") == "") {
                         let Arambox = document.getElementById("Aram only checkbox")
@@ -688,6 +708,10 @@ const interval = setInterval(() => {
                      if (DataStore.get("settings-dialogs-transparent") && stdiatel.getAttribute("class") == "") {
                         let stdiatbox = document.getElementById("stdiatbox")
                         stdiatbox.checked = true
+                     }
+                     if (DataStore.get("old-prev/next-button") && oldpnbel.getAttribute("class") == "") {
+                        let oldpnbbox = document.getElementById("oldpnbbox")
+                        oldpnbbox.checked = true
                      }
                      /*if (DataStore.get("") && el.getAttribute("class") == "") {
                         

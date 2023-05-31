@@ -121,24 +121,39 @@ if (!DataStore.has("")) {
 
 
 //Wallpapers DataStore
+if (!DataStore.has("old-prev/next-button")) {
+	DataStore.set("old-prev/next-button", false)
+}
 if (!DataStore.has('pause-audio')) {
 	DataStore.set('pause-audio', 1)
+}
+if (!DataStore.has("mute-audio")) {
+	DataStore.set("mute-audio", false)
 }
 if (!DataStore.has('pause-wallpaper')) {
 	DataStore.set('pause-wallpaper', 1)
 }
 if (!DataStore.has('wallpaper-index')) {
-	DataStore.set('wallpaper-index', data["default_wallpaper"]-1)
+	DataStore.set('wallpaper-index', 0)
 }
 else if (DataStore.get('wallpaper-index')+1>wallpapers.length) {
-	DataStore.set('wallpaper-index', data["default_wallpaper"]-1)
+	DataStore.set('wallpaper-index', 0)
 }
 else []
+if (!DataStore.has("NextBg_Count")) {
+	DataStore.set("NextBg_Count",0)
+}
 if (!DataStore.has('audio-index')) {
 	DataStore.set('audio-index', songIndex-1)
 }
 else if (DataStore.get('audio-index')+1>Audios.length) {
 	DataStore.set('audio-index', songIndex-1)
+}
+if (!DataStore.has("wallpaper-volume")) {
+	DataStore.set("wallpaper-volume", 0.2)
+}
+if (!DataStore.has("audio-volume")) {
+	DataStore.set("audio-volume", 0.2)
 }
 
 //___________________________________________________________________________//
@@ -270,18 +285,13 @@ function play_pause_set_icon(elem) {
 
 //___________________________________________________________________________//
 function audio_play_pause() {
-	let audio          = document.getElementById("bg-audio")
-	let wallpaperaudio = document.getElementById("elaina-bg")
+	let audio = document.getElementById("bg-audio")
 
 	if (DataStore.get('pause-audio')%2==0) {
 		audio.pause()
-		wallpaperaudio.volume = 0.0;
-		audio.volume          = 0.0
 	}
 	else {
 		audio.play()
-		wallpaperaudio.volume = data["wallpaper_sound_volume"];
-		audio.volume          = data["audio_sound_volume"];
 	}
 }
 
@@ -292,10 +302,43 @@ function play_pause_set_icon_audio(elem) {
 		return;
 	}
 	if (DataStore.get('pause-audio')%2==0) {
-		pause_audio_icon.setAttribute("src", `${path}/Icon/mute.png`)
+		pause_audio_icon.setAttribute("src", `${path}/Icon/play_button.png`)
 	}
 	else {
-		pause_audio_icon.setAttribute("src", `${path}/Icon/audio.png`)
+		pause_audio_icon.setAttribute("src", `${path}/Icon/pause_button.png`)
+	}
+
+}
+//___________________________________________________________________________//
+
+
+
+//___________________________________________________________________________//
+function audio_mute() {
+	let audio          = document.getElementById("bg-audio")
+	let wallpaperaudio = document.getElementById("elaina-bg")
+
+	if (DataStore.get("mute-audio")) {
+		wallpaperaudio.volume = 0.0
+		audio.volume          = 0.0
+	}
+	else {
+		wallpaperaudio.volume = data["wallpaper_sound_volume"];
+		audio.volume          = data["audio_sound_volume"];
+	}
+}
+
+function mute_set_icon_audio(elem) {
+	let mute_audio_icon = elem || document.querySelector(".mute-audio-icon")
+
+	if (!mute_audio_icon) {
+		return;
+	}
+	if (DataStore.get("mute-audio")) {
+		mute_audio_icon.setAttribute("src", `${path}/Icon/mute.png`)
+	}
+	else {
+		mute_audio_icon.setAttribute("src", `${path}/Icon/audio.png`)
 	}
 
 }
@@ -324,10 +367,10 @@ function next_wallpaper() {
     if (DataStore.get('wallpaper-index') > wallpapers.length-1) {
         DataStore.set('wallpaper-index', 0)
     }
-	console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')])
+	console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file)
 
 	setTimeout(function () {
-		loadBG(wallpapers[DataStore.get('wallpaper-index')])
+		loadBG(wallpapers[DataStore.get('wallpaper-index')].file)
 		elaina_play_pause()
 		elainaBg.classList.remove("webm-hidden");
 	}, 500);
@@ -340,10 +383,10 @@ function prev_wallpaper() {
     if (DataStore.get('wallpaper-index') < 0) {
         DataStore.set('wallpaper-index', wallpapers.length-1)
     }
-	console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')])
+	console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file)
 
 	setTimeout(function () {
-		loadBG(wallpapers[DataStore.get('wallpaper-index')])
+		loadBG(wallpapers[DataStore.get('wallpaper-index')].file)
 		elaina_play_pause()
 		elainaBg.classList.remove("webm-hidden");
 	}, 500);
@@ -402,7 +445,8 @@ function prevSong() {
 //___________________________________________________________________________//
 function create_webm_buttons() {
 	const container      = document.createElement("div")
-	const containeraudio = document.createElement("div")
+	const container2     = document.createElement("div")
+	const newbgchange    = document.createElement("div")
 
 	const pauseBg        = document.createElement("div")
 	const nextBg         = document.createElement("div")
@@ -417,18 +461,29 @@ function create_webm_buttons() {
 	const pauseAudioIcon = document.createElement("img")
 	const nextAudioIcon  = document.createElement("img")
 	const prevAudioIcon  = document.createElement("img")
-	
+
+	const muteAudio      = document.createElement("div")
+	const muteaudioIcon  = document.createElement("img")
+
+	const bgdropdown     = document.createElement("lol-uikit-framed-dropdown")
 	
 	container.classList.add("webm-bottom-buttons-container")
-	containeraudio.classList.add("audio-volume-panel")
+	container2.classList.add("newbgchange-container")
 	
+	
+
 	pauseBg.id    = "pause-bg"
 	nextBg.id     = "next-bg"
 	prevBg.id     = "prev-bg"
 
 	pauseAudio.id = "pause-audio"
-	nextAudio.id     = "next-audio"
-	prevAudio.id     = "prev-audio"
+	nextAudio.id  = "next-audio"
+	prevAudio.id  = "prev-audio"
+
+	muteAudio.id  = "mute-audio"
+
+	newbgchange.id= "newbgchange"
+	bgdropdown.id = "bgdropdown"
 
 	pauseBgIcon.classList.add("pause-bg-icon")
 	nextBgIcon.classList.add("next-bg-icon")
@@ -437,9 +492,12 @@ function create_webm_buttons() {
 	pauseAudioIcon.classList.add("pause-audio-icon")
 	nextAudioIcon.classList.add("next-audio-icon")
 	prevAudioIcon.classList.add("prev-audio-icon")
+
+	muteaudioIcon.classList.add("mute-audio-icon")
 	
 	play_pause_set_icon_audio(pauseAudioIcon)
 	play_pause_set_icon(pauseBgIcon)
+	mute_set_icon_audio(muteaudioIcon)
 
 	pauseAudio.addEventListener("click", () => {
 		DataStore.set('pause-audio', DataStore.get('pause-audio') + 1)
@@ -451,11 +509,12 @@ function create_webm_buttons() {
 		elaina_play_pause()
 		play_pause_set_icon()
 	})
+	muteAudio.addEventListener("click", () => {
+		DataStore.set("mute-audio", !DataStore.get("mute-audio"))
+		audio_mute()
+		mute_set_icon_audio()
+	})
 
-	if (!DataStore.has("NextBg_Count")) {
-		DataStore.set("NextBg_Count",0)
-	}
-	
 	nextBg.addEventListener("click", () => {
 		DataStore.set("NextBg_Count", DataStore.get("NextBg_Count") + 1)
 		if (DataStore.get("NextBg_Count") == 69) {
@@ -481,25 +540,55 @@ function create_webm_buttons() {
 		
 	let showcontainer = document.getElementsByClassName("rcp-fe-lol-home")[0]
 	    showcontainer.appendChild(container)
+		showcontainer.appendChild(container2)
 	
-	container.append(prevAudio)
-	container.append(pauseAudio)
-	container.append(pauseBg)
-	container.append(nextAudio)
-	container.append(prevBg)
-	container.append(nextBg)
+	container.append(muteAudio, prevAudio, pauseAudio, nextAudio)
 
+	muteAudio.append(muteaudioIcon)
 	pauseAudio.append(pauseAudioIcon)
 	prevAudio.append(prevAudioIcon)
 	nextAudio.append(nextAudioIcon)
-
 	pauseBg.append(pauseBgIcon)
-	nextBg.append(nextBgIcon)
-	prevBg.append(prevBgIcon)
+	
+	if (DataStore.get("old-prev/next-button")) {
+		container2.append(pauseBg)
+		container.append(prevBg, nextBg)
+		nextBg.append(nextBgIcon)
+		prevBg.append(prevBgIcon)
+	}
+	else {
+		container2.append(newbgchange, pauseBg)
+		newbgchange.append(bgdropdown)
+
+		for (let i = 0; i < wallpapers.length; i++) {
+			const opt = wallpapers[i]
+			const el = document.createElement("lol-uikit-dropdown-option")
+			el.setAttribute("slot", "lol-uikit-dropdown-option")
+			el.innerText = opt.file
+			el.id = opt.id
+			el.onclick = () => {
+				let elainaBg = document.getElementById("elaina-bg")
+					elainaBg.classList.add("webm-hidden")
+					DataStore.set('wallpaper-index', opt.id)
+				console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file)
+
+				setTimeout(function () {
+					loadBG(wallpapers[DataStore.get('wallpaper-index')].file)
+					elaina_play_pause()
+					elainaBg.classList.remove("webm-hidden");
+				}, 500);
+			}
+			if (DataStore.get('wallpaper-index') == opt.id) {
+				el.setAttribute("selected", "true")
+			}
+			bgdropdown.appendChild(el)
+		}
+	}
 }
 
 function Delbuttons() {
 	document.getElementsByClassName("webm-bottom-buttons-container")[0].remove()
+	document.getElementsByClassName("newbgchange-container")[0].remove()
 }
 //___________________________________________________________________________//
 
@@ -877,7 +966,7 @@ window.addEventListener('load', () => {
 		video.id       = 'elaina-bg';
 		video.autoplay = true;
 		video.loop     = true;
-		video.src      = `${path}/Backgrounds/${wallpapers[DataStore.get('wallpaper-index')]}`
+		video.src      = `${path}/Backgrounds/${wallpapers[DataStore.get('wallpaper-index')].file}`
 		video.volume   = data["wallpaper_sound_volume"];
 
 		audio.id       = 'bg-audio';
@@ -915,10 +1004,11 @@ window.addEventListener('load', () => {
 		else {
 			elaina_play_pause()
 			audio_play_pause()
+			audio_mute()
 		}
 	})
 
-	if (DataStore.get("Continues_Audio")) {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')]+" and "+Audios[DataStore.get('audio-index')])}
-	else {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')]+" and "+Audios[songIndex])}
+	if (DataStore.get("Continues_Audio")) {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[DataStore.get('audio-index')])}
+	else {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[songIndex])}
 })
 //___________________________________________________________________________//

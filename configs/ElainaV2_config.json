@@ -3,12 +3,11 @@
 
 	"/__Support video formats__/" : " .webm, .mkv, .mp4, ... idk,maybe more ",
 
-	"wallpaper_list"        :["Elaina1.webm",
-							  "Elaina2.webm"
-							],
-
-	"/___*Note*___/"        : " 1 is the first wallpaper of the list",
-	"default_wallpaper"     : 1,
+	"wallpaper_list":
+		[
+			{"id": 0, "file": "Elaina1.webm"},
+			{"id": 1, "file": "Elaina2.webm"}
+		],
 
 	"/___*Wallpapers volume*___/": "(0.00 is mute, 1.0 is highest)" ,
 	"wallpaper_sound_volume": 0.2,
@@ -19,14 +18,13 @@
 
 	"/__Support audio formats__/" : " .mp3, .flac, .ogg , ... idk,maybe more ",
 
-	"audio_list"            :["If there was an Endpoint.mp3", 
-							  "ツユ-アンダーキッズ.mp3", 
-							  "Even tears withered.mp3",
-							  "I'm getting on the bus to the other world,see ya!.mp3"
-							],
-
-	"/___*Note*___/"        : " 1 is the first song of the list",
-	"default_audio"         : 1,
+	"audio_list":
+		[
+			"If there was an Endpoint.mp3", 
+			"ツユ-アンダーキッズ.mp3", 
+			"Even tears withered.mp3",
+			"I'm getting on the bus to the other world,see ya!.mp3"
+		],
 
 	"/___*Audio volume*___/": "(0.00 is mute, 1.0 is highest)" ,
 	"audio_sound_volume"    : 0.0,

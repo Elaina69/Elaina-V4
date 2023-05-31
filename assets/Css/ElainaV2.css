@@ -411,6 +411,8 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
     background-color: black !important;
     height: 21px !important;
     cursor: pointer;
+	margin-left: 7px;
+    margin-top: 4px;
 }
 
 #pause-bg:hover {
@@ -468,7 +470,7 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
     background-color: black !important;
     height: 21px !important;
     cursor: pointer;
-	left: 4px;
+	left: 8px;
 }
 
 .next-audio-icon {
@@ -489,7 +491,6 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
     background-color: black !important;
     height: 21px !important;
     cursor: pointer;
-	left: -4px;
 }
 
 .prev-audio-icon {
@@ -503,6 +504,27 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
 }
 
 #pause-audio {
+    position: relative !important;
+    border: 2px solid #8c8263 !important;
+    border-radius: 50% !important;
+    width: 21px !important;
+    background-color: black !important;
+    height: 21px !important;
+    cursor: pointer;
+	left: 4px;
+}
+
+.pause-audio-icon {
+	width: 17px !important;
+    margin-left: 2px !important;
+    margin-top: 2px !important;
+}
+
+#pause-audio:hover {
+	filter: brightness(1.3) hue-rotate(263deg) saturate(0.4) !important;
+}
+
+#mute-audio {
     border: 2px solid #8c8263 !important;
     border-radius: 50% !important;
     width: 21px !important;
@@ -513,13 +535,13 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
 	margin-right: 4px !important;
 }
 
-.pause-audio-icon {
-	width: 13px !important;
-    margin-left: 4px !important;
-    margin-top: 4px !important;
+.mute-audio-icon {
+	width: 17px !important;
+    margin-left: 2px !important;
+    margin-top: 2px !important;
 }
 
-#pause-audio:hover {
+#mute-audio:hover {
 	filter: brightness(1.3) hue-rotate(263deg) saturate(0.4) !important;
 }
 
@@ -558,6 +580,17 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
     margin-bottom: 7px;
     width: 30px;
     height: 85px;
+}
+
+.newbgchange-container {
+	display: flex;
+    top: 140px;
+    left: 37px;
+    position: absolute;
+}
+#newbgchange {
+	display: block;
+	width: 166px;
 }
 
 /* ElainaTrigger */
