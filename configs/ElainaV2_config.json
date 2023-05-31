@@ -2,22 +2,17 @@
 "/______________________________________Wallpapers______________________________/": "",
 
 	"/__Support video formats__/" : " .webm, .mkv, .mp4, ... idk,maybe more ",
-
 	"wallpaper_list":
 		[
 			{"id": 0, "file": "Elaina1.webm"},
 			{"id": 1, "file": "Elaina2.webm"}
 		],
 
-	"/___*Wallpapers volume*___/": "(0.00 is mute, 1.0 is highest)" ,
-	"wallpaper_sound_volume": 0.2,
-
 
 
 "/_______________________________________Audio__________________________________/": "",
 
 	"/__Support audio formats__/" : " .mp3, .flac, .ogg , ... idk,maybe more ",
-
 	"audio_list":
 		[
 			"If there was an Endpoint.mp3", 
@@ -25,9 +20,6 @@
 			"Even tears withered.mp3",
 			"I'm getting on the bus to the other world,see ya!.mp3"
 		],
-
-	"/___*Audio volume*___/": "(0.00 is mute, 1.0 is highest)" ,
-	"audio_sound_volume"    : 0.0,
 
 
 

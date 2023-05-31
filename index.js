@@ -153,7 +153,7 @@ if (!DataStore.has("wallpaper-volume")) {
 	DataStore.set("wallpaper-volume", 0.2)
 }
 if (!DataStore.has("audio-volume")) {
-	DataStore.set("audio-volume", 0.2)
+	DataStore.set("audio-volume", 0.0)
 }
 
 //___________________________________________________________________________//
@@ -323,8 +323,8 @@ function audio_mute() {
 		audio.volume          = 0.0
 	}
 	else {
-		wallpaperaudio.volume = data["wallpaper_sound_volume"];
-		audio.volume          = data["audio_sound_volume"];
+		wallpaperaudio.volume = DataStore.get("wallpaper-volume")
+		audio.volume          = DataStore.get("audio-volume")
 	}
 }
 
@@ -967,7 +967,7 @@ window.addEventListener('load', () => {
 		video.autoplay = true;
 		video.loop     = true;
 		video.src      = `${path}/Backgrounds/${wallpapers[DataStore.get('wallpaper-index')].file}`
-		video.volume   = data["wallpaper_sound_volume"];
+		video.volume   = DataStore.get("wallpaper-volume")
 
 		audio.id       = 'bg-audio';
     	audio.autoplay = true;
@@ -978,7 +978,7 @@ window.addEventListener('load', () => {
 		else {
 			audio.src  = `${path}/Backgrounds/Audio/${Audios[songIndex]}`
 		}
-		audio.volume   = data["audio_sound_volume"];
+		audio.volume   = DataStore.get("audio-volume")
 	
 	audio.addEventListener("ended", nextSong)
 	video.addEventListener("load", ()=>{ 

@@ -14,12 +14,6 @@ const UI = {
       label.innerText = text
       return label
    },
-   SoundText: (text) => {
-      const Text = document.createElement('div')
-      Text.setAttribute('class', "lol-settings-sound-title")
-      Text.innerText = text
-      return Text
-   },
    Link: (text, href, onClick) => {
       const link = document.createElement('p')
       link.classList.add('lol-settings-code-of-conduct-link')
@@ -84,26 +78,40 @@ const UI = {
 
       return origin
    },
-   Slider: (value) => {
+   Slider: (text, value, target, setValue) => {
+      const div        = document.createElement("div")
+      const title      = document.createElement("div")
       const row        = document.createElement('div')
       const origin     = document.createElement("lol-uikit-slider")
       const slider     = document.createElement("div")
       const sliderbase = document.createElement("div")
 
+      let audio = document.getElementById(`${target}`)
+
       row.setAttribute("class", "lol-settings-sound-row-slider")
+      title.setAttribute("class", "lol-settings-sound-title")
 
       origin.setAttribute("class", "lol-settings-slider")
       origin.setAttribute("value", `${value}`* 100)
       origin.setAttribute("percentage", "")
+      origin.addEventListener("change", ()=>{
+         audio.volume = origin.value / 100;
+         DataStore.set(`${setValue}`, origin.value / 100)
+         title.innerHTML = `${text}: ${origin.value}`
+      })
+
+      title.innerHTML = `${text}: ${value * 100}`
 
       slider.setAttribute("class", "lol-uikit-slider-wrapper horizontal")
       sliderbase.setAttribute("class", "lol-uikit-slider-base")
 
+      div.appendChild(title)
+      div.appendChild(row)
       row.appendChild(origin)
       origin.appendChild(slider)
       slider.appendChild(sliderbase)
 
-      return row
+      return div
    }
 }
 
@@ -126,10 +134,12 @@ const injectSettings = (panel) => {
             `${selectedLang["theme-settings"]}:`
          ),
          document.createElement('br'),
-         UI.SoundText(`${selectedLang["wallpaper-volume"]} (In development)`),
-         UI.Slider(),
-         UI.SoundText(`${selectedLang["music-volume"]} (In development)`),
-         UI.Slider(DataStore.get("audio-volume")),
+         UI.Slider(
+            selectedLang["wallpaper-volume"],DataStore.get("wallpaper-volume"),"elaina-bg","wallpaper-volume"
+         ),
+         UI.Slider(
+            selectedLang["music-volume"],DataStore.get("audio-volume"),"bg-audio","audio-volume"
+         ),
          document.createElement('br'),
          UI.CheckBox(
             `${selectedLang["receive-update"]}`,"update","update checkbox",
