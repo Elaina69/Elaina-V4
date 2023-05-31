@@ -405,14 +405,14 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
 
 #pause-bg {
     position: relative !important;
-    border: 2px solid #8c8263 !important;
-    border-radius: 50% !important;
     width: 21px !important;
-    background-color: black !important;
-    height: 21px !important;
-    cursor: pointer;
+	height: 21px !important;
 	margin-left: 7px;
     margin-top: 4px;
+	border: 2px solid #8c8263 !important;
+    border-radius: 50% !important;
+    background-color: black !important;
+    cursor: pointer;
 }
 
 #pause-bg:hover {
@@ -591,6 +591,9 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
 #newbgchange {
 	display: block;
 	width: 166px;
+}
+#bgdropdown {
+	background: #0000007a
 }
 
 /* ElainaTrigger */
