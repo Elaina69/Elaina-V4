@@ -3,10 +3,10 @@
 
 	"/__Support video formats__/" : " .webm, .mkv, .mp4, ... idk,maybe more ",
 	"wallpaper_list":
-		[
-			{"id": 0, "file": "Elaina1.webm"},
-			{"id": 1, "file": "Elaina2.webm"}
-		],
+	[
+		{"id": 0, "file": "Elaina1.webm"},
+		{"id": 1, "file": "Elaina2.webm"}
+	],
 
 
 
@@ -14,35 +14,22 @@
 
 	"/__Support audio formats__/" : " .mp3, .flac, .ogg , ... idk,maybe more ",
 	"audio_list":
-		[
-			"If there was an Endpoint.mp3", 
-			"ツユ-アンダーキッズ.mp3", 
-			"Even tears withered.mp3",
-			"I'm getting on the bus to the other world,see ya!.mp3"
-		],
+	[
+		"If there was an Endpoint.mp3", 
+		"ツユ-アンダーキッズ.mp3", 
+		"Even tears withered.mp3",
+		"I'm getting on the bus to the other world,see ya!.mp3"
+	],
 
 
 
 "/________________________________Plugins Settings______________________________/": "",
-
-	"Auto-Find-Queue":"",
-		"Queue-ID" : "450",
-	"/___Example___/"   : {	"SR (Blind pick)": 430,
-							"Aram"           : 450,
-							"TFT-1"          : 1090 }, "/___More info___/" : "https://raw.githack.com/Elaina69/Elaina-V2/main/resources/Misc/QueueID.json",
 
 	"/___Delay for create queue___/": "Based on my loading client speed, you should change it for yours",
 		"Note"         : "1 is 1 second",
 		"Create-Delay" : 20,
 		"Find-Delay"   : 3,
 	
-
-
-	"Custom-Rank(Hover-card)":"",
-		"rankedQueue"    : 0,
-		"rankTier"       : 8,
-		"rankDivision"   : 0,			"/___More info___/" : "https://raw.githack.com/Elaina69/Elaina-V2/main/resources/Misc/Custom%20Rank.json",
-
 
 
 	"Custom-Status":"",
@@ -82,14 +69,6 @@
 	
 	"Custom-Font":"",
 		"Font-Name"     : "AegirSeaborn.ttf",
-	
-	"Custom_BE/RP":"",
-		"RP"            : "-69",
-		"BE"            : "-69",
-
-	"Custom-Rank-Name":"",
-		"Rank-line1"    : "Apprentice",
-		"Rank-line2"    : "Witch",
 
 
 

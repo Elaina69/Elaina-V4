@@ -34,7 +34,7 @@ let path       = new URL(".", import.meta.url).href + "assets"
 
 let wallpapers = data["wallpaper_list"]
 let Audios     = data["audio_list"]
-let songIndex  = data["default_audio"]-1;
+let songIndex  = 0;
 
 let Avatar     = DataStore.get("Custom-Avatar")
 //___________________________________________________________________________//
@@ -61,11 +61,23 @@ if (!DataStore.has("Custom-Font")) {
 if (!DataStore.has("Custom_RP")) {
 	DataStore.set("Custom_RP", true)
 }
+if (!DataStore.has("RP-data")) {
+	DataStore.set("RP-data", "-69")
+}
 if (!DataStore.has("Custom_BE")) {
 	DataStore.set("Custom_BE", true)
 }
+if (!DataStore.has("BE")) {
+	DataStore.set("BE", "-69")
+}
 if (!DataStore.has("Custom-Rank-Name")) {
 	DataStore.set("Custom-Rank-Name", true)
+}
+if (!DataStore.has("Rank-line1")) {
+	DataStore.set("Rank-line1", "Apprentice")
+}
+if (!DataStore.has("Rank-line2")) {
+	DataStore.set("Rank-line2", "Witch")
 }
 if (!DataStore.has("Animate-Loading")) {
 	DataStore.set("Animate-Loading", false)
@@ -100,8 +112,20 @@ if (!DataStore.has("Auto-ban-pick")) {
 if (!DataStore.has("Auto-Find-Queue")) {
 	DataStore.set("Auto-Find-Queue", false)
 }
+if (!DataStore.has("Queue-ID")) {
+	DataStore.set("Queue-ID", 450)
+}
 if (!DataStore.has("Custom-Rank(Hover-card)")) {
 	DataStore.set("Custom-Rank(Hover-card)", true)
+}
+if (!DataStore.has("Ranked Queue ID")) {
+	DataStore.set("Ranked Queue ID", 0)
+}
+if (!DataStore.has("Ranked Tier ID")) {
+	DataStore.set("Ranked Tier ID", 8)
+}
+if (!DataStore.has("Ranked Division ID")) {
+	DataStore.set("Ranked Division ID", 0)
 }
 if (!DataStore.has("Custom-Status")) {
 	DataStore.set("Custom-Status", true)
@@ -144,10 +168,10 @@ if (!DataStore.has("NextBg_Count")) {
 	DataStore.set("NextBg_Count",0)
 }
 if (!DataStore.has('audio-index')) {
-	DataStore.set('audio-index', songIndex-1)
+	DataStore.set('audio-index', 0)
 }
 else if (DataStore.get('audio-index')+1>Audios.length) {
-	DataStore.set('audio-index', songIndex-1)
+	DataStore.set('audio-index', 0)
 }
 if (!DataStore.has("wallpaper-volume")) {
 	DataStore.set("wallpaper-volume", 0.2)
@@ -668,7 +692,7 @@ let pageChangeMutation = async (node) => {
 			if (DataStore.get("Auto-Find-Queue") && !data["Aram-only-mode"]) {
 				await fetch('/lol-lobby/v2/lobby', {
 					method: 'POST',
-					body: JSON.stringify({ queueId: data["Queue-ID"] }),
+					body: JSON.stringify({ queueId: DataStore.get("Queue-ID") }),
 					headers: {
 					'Content-Type': 'application/json'
 					}
@@ -786,8 +810,8 @@ let pageChangeMutation = async (node) => {
             catch {}
 			if (DataStore.get("Custom-Rank-Name")) {
 				try {
-					document.querySelector(".style-profile-ranked-component.ember-view > .style-profile-emblem-wrapper  > .style-profile-emblem-header > .style-profile-emblem-header-title").innerHTML = data["Rank-line1"]
-					document.querySelector(".style-profile-emblem-subheader-ranked > div").innerHTML = data["Rank-line2"]
+					document.querySelector(".style-profile-ranked-component.ember-view > .style-profile-emblem-wrapper  > .style-profile-emblem-header > .style-profile-emblem-header-title").innerHTML = DataStore.get("Rank-line1")
+					document.querySelector(".style-profile-emblem-subheader-ranked > div").innerHTML = DataStore.get("Rank-line2")
 				}
 				catch{}
 			}
@@ -890,13 +914,13 @@ window.setInterval(() => {
 	catch {}
 	try{
 		if (DataStore.get("Custom_RP")) {
-			document.querySelector("div.currency-rp").innerHTML = data["RP"]
+			document.querySelector("div.currency-rp").innerHTML = `${DataStore.get("RP-data")}`
 		}
 	}
 	catch{}
 	try{
 		if (DataStore.get("Custom_BE")) {
-			document.querySelector(".currency-be-component.ember-view").innerHTML = `<div class=\"currency-be-icon-container\">\n  <div class=\"currency-be-icon-static\"></div>\n  <lol-uikit-video type=\"intro\" src=\"/fe/lol-navigation/add-blue-essence.webm\" class=\"animation-add-blue-essence\"></lol-uikit-video>\n  <lol-uikit-video type=\"intro\" src=\"/fe/lol-navigation/remove-blue-essence.webm\" class=\"animation-remove-blue-essence\"></lol-uikit-video>\n</div>\n\n${data["BE"]}\n`
+			document.querySelector(".currency-be-component.ember-view").innerHTML = `<div class=\"currency-be-icon-container\">\n  <div class=\"currency-be-icon-static\"></div>\n  <lol-uikit-video type=\"intro\" src=\"/fe/lol-navigation/add-blue-essence.webm\" class=\"animation-add-blue-essence\"></lol-uikit-video>\n  <lol-uikit-video type=\"intro\" src=\"/fe/lol-navigation/remove-blue-essence.webm\" class=\"animation-remove-blue-essence\"></lol-uikit-video>\n</div>\n\n${DataStore.get("BE")}\n`
 		}
 	}
 	catch{}
@@ -986,6 +1010,9 @@ window.addEventListener('load', () => {
 	}, true);
     audio.addEventListener("load", ()=>{ 
 		audio.play()
+		if (DataStore.get("Continues_Audio")) {
+			audio.currentTime = DataStore.get("currentAudioPlay")
+		}
 	}, true);
 
 	document.querySelector("body").prepend(video)
@@ -1007,6 +1034,10 @@ window.addEventListener('load', () => {
 			audio_mute()
 		}
 	})
+
+	window.setInterval(()=> {
+		DataStore.set("currentAudioPlay", audio.currentTime)
+	},100)
 
 	if (DataStore.get("Continues_Audio")) {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[DataStore.get('audio-index')])}
 	else {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[songIndex])}

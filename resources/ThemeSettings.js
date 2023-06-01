@@ -36,7 +36,7 @@ const UI = {
       btn.setAttribute('class', cls)
       return btn
    },
-   Input: (placeholder, onChange) => {
+   Input: (placeholder, target) => {
       const origIn = document.createElement('lol-uikit-flat-input')
       const searchbox = document.createElement('input')
 
@@ -46,14 +46,14 @@ const UI = {
       searchbox.placeholder = placeholder
       searchbox.style.width = '200px'
       searchbox.name = 'name'
-      searchbox.oninput = onChange
-
-      let input = {
-         get value() {
-            return searchbox.value
-         },
+      searchbox.oninput = ()=>{
+         let input = {
+            get value() {
+               return searchbox.value
+            },
+         }
+         DataStore.set(target, input.value)
       }
-      module.exports.search = () => input
       origIn.appendChild(searchbox)
       return origIn
    },
@@ -112,6 +112,32 @@ const UI = {
       slider.appendChild(sliderbase)
 
       return div
+   },
+   Dropdown: (list,target,text) => {
+      const origin = document.createElement("div")
+      const title  = document.createElement("div")
+      const dropdown = document.createElement("lol-uikit-framed-dropdown")
+
+      origin.classList.add("Dropdown-div")
+      title.classList.add("lol-settings-window-size-text")
+      title.innerHTML = text
+      dropdown.classList.add("lol-settings-general-dropdown")
+      origin.append(title,dropdown)
+      for (let i = 0; i < list[target].length; i++) {
+			const opt = list[target][i]
+			const el = document.createElement("lol-uikit-dropdown-option")
+			el.setAttribute("slot", "lol-uikit-dropdown-option")
+			el.innerText = opt.name
+			el.id = opt.id
+			el.onclick = () => {
+				DataStore.set(target, opt.id)
+			}
+			if (DataStore.get(target) == opt.id) {
+				el.setAttribute("selected", "true")
+			}
+			dropdown.appendChild(el)
+		}
+      return origin
    }
 }
 
@@ -119,6 +145,35 @@ const injectSettings = (panel) => {
    const langCode = document.querySelector("html").lang;
    const langMap = lang.langlist
    const selectedLang = lang[langMap[langCode] || "EN"];
+   const rank = {
+      "Ranked Queue ID": [
+          {"id" : 0, "name": `${selectedLang["Ranked Solo 5vs5"]}`},
+          {"id" : 1, "name": `${selectedLang["Ranked Flex Summoner's Rift"]}`},
+          {"id" : 2, "name": `${selectedLang["Ranked Flex TT"]}`},
+          {"id" : 3, "name": `${selectedLang["Ranked TFT"]}`},
+          {"id" : 4, "name": `${selectedLang["Ranked TFT TURBO"]}`},
+          {"id" : 5, "name": `${selectedLang["Ranked TFT DOUBLE UP"]}`}
+      ],
+  
+      "Ranked Tier ID": [
+          {"id" : 0, "name": `${selectedLang["Iron"]}`},
+          {"id" : 1, "name": `${selectedLang["Bronze"]}`},
+          {"id" : 2, "name": `${selectedLang["Silver"]}`},
+          {"id" : 3, "name": `${selectedLang["Gold"]}`},
+          {"id" : 4, "name": `${selectedLang["Platinum"]}`},
+          {"id" : 5, "name": `${selectedLang["Diamond"]}`},
+          {"id" : 6, "name": `${selectedLang["Master"]}`},
+          {"id" : 7, "name": `${selectedLang["Grand-Master"]}`},
+          {"id" : 8, "name": `${selectedLang["Challenger"]}`}
+      ],
+  
+      "Ranked Division ID": [
+          {"id" : 0, "name": "I"},
+          {"id" : 1, "name": "II"},
+          {"id" : 2, "name": "III"},
+          {"id" : 3, "name": "IV"}
+      ]
+  }
    panel.prepend(
       UI.Row([
          UI.Link(
@@ -293,6 +348,7 @@ const injectSettings = (panel) => {
             }
          ),
          document.createElement('br'),
+         UI.Input(`${DataStore.get("RP-data")}`,"RP-data"),
          UI.CheckBox(
             `${selectedLang["custom-be"]}`,'cusbe','cusbebox',
             ()=>{
@@ -312,6 +368,7 @@ const injectSettings = (panel) => {
             }
          ),
          document.createElement('br'),
+         UI.Input(`${DataStore.get("BE")}`,"BE"),
          UI.CheckBox(
             `${selectedLang["custom-rank-name"]}`,'cusrankname','cusranknamebox',
             ()=>{
@@ -331,6 +388,8 @@ const injectSettings = (panel) => {
             }
          ),
          document.createElement('br'),
+         UI.Input(`${DataStore.get("Rank-line1")}`,"Rank-line1"),
+         UI.Input(`${DataStore.get("Rank-line2")}`,"Rank-line2"),
          UI.CheckBox(
             `${selectedLang["animate-loading"]}`,'aniload','aniloadbox',
             ()=>{
@@ -434,6 +493,25 @@ const injectSettings = (panel) => {
          ),
          document.createElement('br'),
          UI.CheckBox(
+            `${selectedLang["loot-helper"]}`,'lh','lhbox',
+            ()=>{
+               let lhel = document.getElementById("lh")
+               let lhbox = document.getElementById("lhbox")
+
+               if (DataStore.get("loot-helper")) {
+                  lhbox.checked = false
+                  DataStore.set("loot-helper", false)
+                  lhel.removeAttribute("class")
+               }
+               else {
+                  lhbox.checked = true
+                  DataStore.set("loot-helper", true)
+                  lhel.setAttribute("class", "checked")
+               }
+            }
+         ),
+         document.createElement('br'),
+         UI.CheckBox(
             `${selectedLang["aram-only"]}`, "Aram only", "Aram only checkbox",
             () => {
                let Aramel = document.getElementById("Aram only")
@@ -490,23 +568,10 @@ const injectSettings = (panel) => {
             }
          ),
          document.createElement('br'),
-         UI.CheckBox(
-            `${selectedLang["loot-helper"]}`,'lh','lhbox',
-            ()=>{
-               let lhel = document.getElementById("lh")
-               let lhbox = document.getElementById("lhbox")
-
-               if (DataStore.get("loot-helper")) {
-                  lhbox.checked = false
-                  DataStore.set("loot-helper", false)
-                  lhel.removeAttribute("class")
-               }
-               else {
-                  lhbox.checked = true
-                  DataStore.set("loot-helper", true)
-                  lhel.setAttribute("class", "checked")
-               }
-            }
+         UI.Input(`${DataStore.get("Queue-ID")}`,"Queue-ID"),
+         UI.Link(
+            `${selectedLang["more-info"]}`,
+            "https://raw.githack.com/Elaina69/Elaina-V2/main/resources/Misc/QueueID.json"
          ),
          document.createElement('br'),
          UI.CheckBox(
@@ -527,6 +592,13 @@ const injectSettings = (panel) => {
                }
             }
          ),
+         document.createElement('br'),
+         UI.Dropdown(rank, "Ranked Queue ID", `${selectedLang["Ranked Queue"]}`),
+         document.createElement('br'),
+         UI.Dropdown(rank, "Ranked Tier ID", `${selectedLang["Ranked Tier"]}`),
+         document.createElement('br'),
+         UI.Dropdown(rank, "Ranked Division ID", `${selectedLang["Ranked Division"]}`),
+         document.createElement('br'),
          document.createElement('br'),
          UI.CheckBox(
             `${selectedLang["custom-status"]}`,'cussta','cusstabox',

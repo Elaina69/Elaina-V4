@@ -1,5 +1,3 @@
-import data from '../configs/ElainaV2_config.json'
-
 if (DataStore.get("Custom-Rank(Hover-card)")) {
     window.setTimeout(async()=>{
         let queueOptions = ["RANKED_SOLO_5x5","RANKED_FLEX_SR","RANKED_FLEX_TT",
@@ -11,9 +9,9 @@ if (DataStore.get("Custom-Rank(Hover-card)")) {
         let divisionOptions = ["I", "II", "III", "IV"];
         let requestBody = {
             "lol": {
-                "rankedLeagueQueue"    : queueOptions[data["rankedQueue"]],
-                "rankedLeagueTier"     : tierOptions[data["rankTier"]],
-                "rankedLeagueDivision" : divisionOptions[data["rankDivision"]]
+                "rankedLeagueQueue"    : queueOptions[DataStore.get("Ranked Queue ID")],
+                "rankedLeagueTier"     : tierOptions[DataStore.get("Ranked Tier ID")],
+                "rankedLeagueDivision" : divisionOptions[DataStore.get("Ranked Division ID")]
             }
         }
         
