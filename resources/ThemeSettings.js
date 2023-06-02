@@ -1,4 +1,5 @@
-import lang from '../configs/Language.json'
+import lang    from '../configs/Language.json'
+import QueueID from './Misc/QueueID.json'
 
 var module = { exports: {} }
 const UI = {
@@ -113,7 +114,7 @@ const UI = {
 
       return div
    },
-   Dropdown: (list,target,text) => {
+   Dropdown: (list,target,text,name,id) => {
       const origin = document.createElement("div")
       const title  = document.createElement("div")
       const dropdown = document.createElement("lol-uikit-framed-dropdown")
@@ -127,18 +128,18 @@ const UI = {
 			const opt = list[target][i]
 			const el = document.createElement("lol-uikit-dropdown-option")
 			el.setAttribute("slot", "lol-uikit-dropdown-option")
-			el.innerText = opt.name
-			el.id = opt.id
+			el.innerText = opt[name]
+			el.id = opt[id]
 			el.onclick = () => {
-				DataStore.set(target, opt.id)
+				DataStore.set(target, opt[id])
 			}
-			if (DataStore.get(target) == opt.id) {
+			if (DataStore.get(target) == opt[id]) {
 				el.setAttribute("selected", "true")
 			}
 			dropdown.appendChild(el)
 		}
       return origin
-   }
+   },
 }
 
 const injectSettings = (panel) => {
@@ -173,7 +174,7 @@ const injectSettings = (panel) => {
           {"id" : 2, "name": "III"},
           {"id" : 3, "name": "IV"}
       ]
-  }
+   }
    panel.prepend(
       UI.Row([
          UI.Link(
@@ -349,6 +350,7 @@ const injectSettings = (panel) => {
          ),
          document.createElement('br'),
          UI.Input(`${DataStore.get("RP-data")}`,"RP-data"),
+         document.createElement('br'),
          UI.CheckBox(
             `${selectedLang["custom-be"]}`,'cusbe','cusbebox',
             ()=>{
@@ -369,6 +371,7 @@ const injectSettings = (panel) => {
          ),
          document.createElement('br'),
          UI.Input(`${DataStore.get("BE")}`,"BE"),
+         document.createElement('br'),
          UI.CheckBox(
             `${selectedLang["custom-rank-name"]}`,'cusrankname','cusranknamebox',
             ()=>{
@@ -390,6 +393,7 @@ const injectSettings = (panel) => {
          document.createElement('br'),
          UI.Input(`${DataStore.get("Rank-line1")}`,"Rank-line1"),
          UI.Input(`${DataStore.get("Rank-line2")}`,"Rank-line2"),
+         document.createElement('br'),
          UI.CheckBox(
             `${selectedLang["animate-loading"]}`,'aniload','aniloadbox',
             ()=>{
@@ -467,6 +471,44 @@ const injectSettings = (panel) => {
          ),
          UI.Label(
             `*${selectedLang["note"]}: ${selectedLang["note-2"]}`
+         ),
+         document.createElement('br'),
+         UI.CheckBox(
+            `${selectedLang["Hide-linking-settings"]}`,'hidelinkset','hidelinksetbox',
+            ()=>{
+               let hidelinksetel = document.getElementById("hidelinkset")
+               let hidelinksetbox = document.getElementById("hidelinksetbox")
+
+               if (DataStore.get("Hide-linking-settings")) {
+                  hidelinksetbox.checked = false
+                  DataStore.set("Hide-linking-settings", false)
+                  hidelinksetel.removeAttribute("class")
+               }
+               else {
+                  hidelinksetbox.checked = true
+                  DataStore.set("Hide-linking-settings", true)
+                  hidelinksetel.setAttribute("class", "checked")
+               }
+            }
+         ),
+         document.createElement('br'),
+         UI.CheckBox(
+            `${selectedLang["Hide-verify-acc"]}`,'hideveriacc','hideveriaccbox',
+            ()=>{
+               let hideveriaccel = document.getElementById("hideveriacc")
+               let hideveriaccbox = document.getElementById("hideveriaccbox")
+
+               if (DataStore.get("Hide-verify-acc")) {
+                  hideveriaccbox.checked = false
+                  DataStore.set("Hide-verify-acc", false)
+                  hideveriaccel.removeAttribute("class")
+               }
+               else {
+                  hideveriaccbox.checked = true
+                  DataStore.set("Hide-verify-acc", true)
+                  hideveriaccel.setAttribute("class", "checked")
+               }
+            }
          ),
          document.createElement('br'),
          document.createElement('br'),
@@ -568,11 +610,8 @@ const injectSettings = (panel) => {
             }
          ),
          document.createElement('br'),
-         UI.Input(`${DataStore.get("Queue-ID")}`,"Queue-ID"),
-         UI.Link(
-            `${selectedLang["more-info"]}`,
-            "https://raw.githack.com/Elaina69/Elaina-V2/main/resources/Misc/QueueID.json"
-         ),
+         UI.Dropdown(QueueID, "Gamemode", `${selectedLang["Gamemode"]}`, "description", "queueId"),
+         document.createElement('br'),
          document.createElement('br'),
          UI.CheckBox(
             `${selectedLang["custom-rank-hover"]}`,'cusrankhover','cusrankhoverbox',
@@ -593,11 +632,11 @@ const injectSettings = (panel) => {
             }
          ),
          document.createElement('br'),
-         UI.Dropdown(rank, "Ranked Queue ID", `${selectedLang["Ranked Queue"]}`),
+         UI.Dropdown(rank, "Ranked Queue ID", `${selectedLang["Ranked Queue"]}`, "name", "id"),
          document.createElement('br'),
-         UI.Dropdown(rank, "Ranked Tier ID", `${selectedLang["Ranked Tier"]}`),
+         UI.Dropdown(rank, "Ranked Tier ID", `${selectedLang["Ranked Tier"]}`, "name", "id"),
          document.createElement('br'),
-         UI.Dropdown(rank, "Ranked Division ID", `${selectedLang["Ranked Division"]}`),
+         UI.Dropdown(rank, "Ranked Division ID", `${selectedLang["Ranked Division"]}`, "name", "id"),
          document.createElement('br'),
          document.createElement('br'),
          UI.CheckBox(
@@ -666,7 +705,16 @@ const injectSettings = (panel) => {
 }
 
 window.addEventListener('load', async () => {
-const interval = setInterval(() => {
+   function DeleteEl (target, confirm) {
+      try {
+         let origin = document.querySelector(`.${target}`)
+         if (confirm) {
+            origin.remove()  
+         }
+      }
+      catch{}
+   }
+   const interval = setInterval(() => {
       const manager = document.getElementById(
          'lol-uikit-layer-manager-wrapper'
       )
@@ -679,6 +727,10 @@ const interval = setInterval(() => {
                const check = setInterval (()=>{
                   if (document.getElementById("Aram only")) {
                      clearInterval(check)
+                     DeleteEl("lol-settings-account-verification-row.ember-view", DataStore.get("Hide-verify-acc"))
+                     DeleteEl("linking-settings.ember-view", DataStore.get("Hide-linking-settings"))
+                     DeleteEl("vng-publisher-settings.ember-view",DataStore.get("Hide-linking-settings"))
+
                      let updateel       = document.getElementById("update")
                      let conAudioel     = document.getElementById("conAudio")
                      let sbtel          = document.getElementById("sbt")
@@ -701,7 +753,9 @@ const interval = setInterval(() => {
                      let MCel           = document.getElementById("MC")
                      let lhel           = document.getElementById("lh")
                      let stdiatel       = document.getElementById("stdiat")
-                     let oldpnbel = document.getElementById("oldpnb")
+                     let oldpnbel       = document.getElementById("oldpnb")
+                     let hideveriaccel  = document.getElementById("hideveriacc")
+                     let hidelinksetel  = document.getElementById("hidelinkset")
                
                      if (DataStore.get("aram-only") && Aramel.getAttribute("class") == "") {
                         let Arambox = document.getElementById("Aram only checkbox")
@@ -794,6 +848,14 @@ const interval = setInterval(() => {
                      if (DataStore.get("old-prev/next-button") && oldpnbel.getAttribute("class") == "") {
                         let oldpnbbox = document.getElementById("oldpnbbox")
                         oldpnbbox.checked = true
+                     }
+                     if (DataStore.get("Hide-linking-settings") && hidelinksetel.getAttribute("class") == "") {
+                        let hidelinksetbox = document.getElementById("hidelinksetbox")
+                        hidelinksetbox.checked = true
+                     }
+                     if (DataStore.get("Hide-verify-acc") && hideveriaccel.getAttribute("class") == "") {
+                        let hideveriaccbox = document.getElementById("hideveriaccbox")
+                        hideveriaccbox.checked = true
                      }
                      /*if (DataStore.get("") && el.getAttribute("class") == "") {
                         

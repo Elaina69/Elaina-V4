@@ -14,6 +14,7 @@ import utils       from './resources/_utilselaina'
 import watermark   from './resources/Watermark'
 import Update      from './resources/CheckUpdate'
 import thisVersion from './configs/Version'
+import QueueID     from './resources/Misc/QueueID.json'
 
 //Addon plugins
 import './resources/ThemeSettings'
@@ -94,6 +95,12 @@ if (!DataStore.has("Custom-Cursor")) {
 if (!DataStore.has("settings-dialogs-transparent")) {
 	DataStore.set("settings-dialogs-transparent", false)
 }
+if (!DataStore.has("Hide-linking-settings")) {
+	DataStore.set("Hide-linking-settings", false)
+}
+if (!DataStore.has("Hide-verify-acc")) {
+	DataStore.set("Hide-verify-acc", false)
+}
 
 
 //Plugins DataStore
@@ -112,8 +119,8 @@ if (!DataStore.has("Auto-ban-pick")) {
 if (!DataStore.has("Auto-Find-Queue")) {
 	DataStore.set("Auto-Find-Queue", false)
 }
-if (!DataStore.has("Queue-ID")) {
-	DataStore.set("Queue-ID", 450)
+if (!DataStore.has("Gamemode")) {
+	DataStore.set("Gamemode", 450)
 }
 if (!DataStore.has("Custom-Rank(Hover-card)")) {
 	DataStore.set("Custom-Rank(Hover-card)", true)
