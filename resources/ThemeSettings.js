@@ -714,6 +714,11 @@ window.addEventListener('load', async () => {
       }
       catch{}
    }
+   function tickcheck (Data, el, box) {
+      if (Data && el.getAttribute("class") == "") {
+         box.checked = true
+      }
+   }
    const interval = setInterval(() => {
       const manager = document.getElementById(
          'lol-uikit-layer-manager-wrapper'
@@ -725,142 +730,89 @@ window.addEventListener('load', async () => {
             if (panel && mutations.some((record) => Array.from(record.addedNodes).includes(panel))) {
                injectSettings(panel)
                const check = setInterval (()=>{
+                  let updateel       = document.getElementById("update")
+                  let conAudioel     = document.getElementById("conAudio")
+                  let sbtel          = document.getElementById("sbt")
+                  let hidechampartel = document.getElementById("hidechampart")
+                  let cusfontel      = document.getElementById("cusfont")
+                  let cusrpel        = document.getElementById("cusrp")
+                  let cusbeel        = document.getElementById("cusbe")
+                  let cusranknameel  = document.getElementById("cusrankname")
+                  let aniloadel      = document.getElementById("aniload")
+                  let cusavel        = document.getElementById("cusav")
+                  let cusiconel      = document.getElementById("cusicon")
+                  let cuscursorel    = document.getElementById("cuscursor")
+                  let oldllel        = document.getElementById("oldll")
+                  let Aramel         = document.getElementById("Aram only")
+                  let autobpel       = document.getElementById("autobp")
+                  let autoqel        = document.getElementById("autoq")
+                  let cusrankhoverel = document.getElementById("cusrankhover")
+                  let cusstael       = document.getElementById("cussta")
+                  let _1_4el         = document.getElementById("_1_4")
+                  let MCel           = document.getElementById("MC")
+                  let lhel           = document.getElementById("lh")
+                  let stdiatel       = document.getElementById("stdiat")
+                  let oldpnbel       = document.getElementById("oldpnb")
+                  let hideveriaccel  = document.getElementById("hideveriacc")
+                  let hidelinksetel  = document.getElementById("hidelinkset")  
+                  let Arambox        = document.getElementById("Aram only checkbox")
+                  let updatebox      = document.getElementById("update checkbox")
+                  let conAudiobox    = document.getElementById("conAudiobox")
+                  let sbtbox         = document.getElementById("sbtbox")
+                  let cusrpbox       = document.getElementById("cusrpbox")
+                  let hidechampartbox= document.getElementById("hidechampartbox")
+                  let cusfontbox     = document.getElementById("cusfontbox")
+                  let cusbebox       = document.getElementById("cusbebox")
+                  let cusranknamebox = document.getElementById("cusranknamebox")
+                  let aniloadbox     = document.getElementById("aniloadbox")
+                  let cuscursorbox   = document.getElementById("cuscursorbox")
+                  let cusavbox       = document.getElementById("cusavbox")
+                  let cusiconbox     = document.getElementById("cusiconbox")
+                  let oldllbox       = document.getElementById("oldllbox")
+                  let autobpbox      = document.getElementById("autobpbox")
+                  let cusrankhoverbox= document.getElementById("cusrankhoverbox")
+                  let autoqbox       = document.getElementById("autoqbox")
+                  let cusstabox      = document.getElementById("cusstabox")
+                  let MCbox          = document.getElementById("MCbox")
+                  let _1_4box        = document.getElementById("_1_4box")
+                  let lhbox          = document.getElementById("lhbox")
+                  let stdiatbox      = document.getElementById("stdiatbox")
+                  let oldpnbbox      = document.getElementById("oldpnbbox")
+                  let hidelinksetbox = document.getElementById("hidelinksetbox")
+                  let hideveriaccbox = document.getElementById("hideveriaccbox")
+
                   if (document.getElementById("Aram only")) {
                      clearInterval(check)
+
                      DeleteEl("lol-settings-account-verification-row.ember-view", DataStore.get("Hide-verify-acc"))
                      DeleteEl("linking-settings.ember-view", DataStore.get("Hide-linking-settings"))
                      DeleteEl("vng-publisher-settings.ember-view",DataStore.get("Hide-linking-settings"))
 
-                     let updateel       = document.getElementById("update")
-                     let conAudioel     = document.getElementById("conAudio")
-                     let sbtel          = document.getElementById("sbt")
-                     let hidechampartel = document.getElementById("hidechampart")
-                     let cusfontel      = document.getElementById("cusfont")
-                     let cusrpel        = document.getElementById("cusrp")
-                     let cusbeel        = document.getElementById("cusbe")
-                     let cusranknameel  = document.getElementById("cusrankname")
-                     let aniloadel      = document.getElementById("aniload")
-                     let cusavel        = document.getElementById("cusav")
-                     let cusiconel      = document.getElementById("cusicon")
-                     let cuscursorel    = document.getElementById("cuscursor")
-                     let oldllel        = document.getElementById("oldll")
-                     let Aramel         = document.getElementById("Aram only")
-                     let autobpel       = document.getElementById("autobp")
-                     let autoqel        = document.getElementById("autoq")
-                     let cusrankhoverel = document.getElementById("cusrankhover")
-                     let cusstael       = document.getElementById("cussta")
-                     let _1_4el         = document.getElementById("_1_4")
-                     let MCel           = document.getElementById("MC")
-                     let lhel           = document.getElementById("lh")
-                     let stdiatel       = document.getElementById("stdiat")
-                     let oldpnbel       = document.getElementById("oldpnb")
-                     let hideveriaccel  = document.getElementById("hideveriacc")
-                     let hidelinksetel  = document.getElementById("hidelinkset")
-               
-                     if (DataStore.get("aram-only") && Aramel.getAttribute("class") == "") {
-                        let Arambox = document.getElementById("Aram only checkbox")
-                        Arambox.checked = true
-                     }
-                     if (DataStore.get("Receive-Update") && updateel.getAttribute("class") == "") {
-                        let updatebox = document.getElementById("update checkbox")
-                        updatebox.checked = true
-                     }
-                     if (DataStore.get("Continues_Audio") && conAudioel.getAttribute("class") == "") {
-                        let conAudiobox = document.getElementById("conAudiobox")
-                        conAudiobox.checked = true
-                     }
-                     if (DataStore.get("Sidebar-Transparent") && sbtel.getAttribute("class") == "") {
-                        let sbtbox = document.getElementById("sbtbox")
-                        sbtbox.checked = true
-                     }
-                     if (DataStore.get("Hide-Champions-Splash-Art") && hidechampartel.getAttribute("class") == "") {
-                        let hidechampartbox = document.getElementById("hidechampartbox")
-                        hidechampartbox.checked = true
-                     }
-                     if (DataStore.get("Custom-Font") && cusfontel.getAttribute("class") == "") {
-                        let cusfontbox = document.getElementById("cusfontbox")
-                        cusfontbox.checked = true
-                     }
-                     if (DataStore.get("Custom_RP") && cusrpel.getAttribute("class") == "") {
-                        let cusrpbox = document.getElementById("cusrpbox")
-                        cusrpbox.checked = true
-                     }
-                     if (DataStore.get("Custom_BE") && cusbeel.getAttribute("class") == "") {
-                        let cusbebox = document.getElementById("cusbebox")
-                        cusbebox.checked = true
-                     }
-                     if (DataStore.get("Custom-Rank-Name") && cusranknameel.getAttribute("class") == "") {
-                        let cusranknamebox = document.getElementById("cusranknamebox")
-                        cusranknamebox.checked = true
-                     }
-                     if (DataStore.get("Animate-Loading") && aniloadel.getAttribute("class") == "") {
-                        let aniloadbox = document.getElementById("aniloadbox")
-                        aniloadbox.checked = true
-                     }
-                     if (DataStore.get("Custom-Avatar") && cusavel.getAttribute("class") == "") {
-                        let cusavbox = document.getElementById("cusavbox")
-                        cusavbox.checked = true
-                     }
-                     if (DataStore.get("Custom-Icon") && cusiconel.getAttribute("class") == "") {
-                        let cusiconbox = document.getElementById("cusiconbox")
-                        cusiconbox.checked = true
-                     }
-                     if (DataStore.get("Custom-Cursor") && cuscursorel.getAttribute("class") == "") {
-                        let cuscursorbox = document.getElementById("cuscursorbox")
-                        cuscursorbox.checked = true
-                     }
-                     if (DataStore.get("Old-League-Loader-Settings") && oldllel.getAttribute("class") == "") {
-                        let oldllbox = document.getElementById("oldllbox")
-                        oldllbox.checked = true
-                     }
-                     if (DataStore.get("Auto-ban-pick") && autobpel.getAttribute("class") == "") {
-                        let autobpbox = document.getElementById("autobpbox")
-                        autobpbox.checked = true
-                     }
-                     if (DataStore.get("Auto-Find-Queue") && autoqel.getAttribute("class") == "") {
-                        let autoqbox = document.getElementById("autoqbox")
-                        autoqbox.checked = true
-                     }
-                     if (DataStore.get("Custom-Rank(Hover-card)") && cusrankhoverel.getAttribute("class") == "") {
-                        let cusrankhoverbox = document.getElementById("cusrankhoverbox")
-                        cusrankhoverbox.checked = true
-                     }
-                     if (DataStore.get("Custom-Status") && cusstael.getAttribute("class") == "") {
-                        let cusstabox = document.getElementById("cusstabox")
-                        cusstabox.checked = true
-                     }
-                     if (DataStore.get("April fool` joke") && _1_4el.getAttribute("class") == "") {
-                        let _1_4box = document.getElementById("_1_4box")
-                        _1_4box.checked = true
-                     }
-                     if (DataStore.get("Merry-Christmas") && MCel.getAttribute("class") == "") {
-                        let MCbox = document.getElementById("MCbox")
-                        MCbox.checked = true
-                     }
-                     if (DataStore.get("loot-helper") && lhel.getAttribute("class") == "") {
-                        let lhbox = document.getElementById("lhbox")
-                        lhbox.checked = true
-                     }
-                     if (DataStore.get("settings-dialogs-transparent") && stdiatel.getAttribute("class") == "") {
-                        let stdiatbox = document.getElementById("stdiatbox")
-                        stdiatbox.checked = true
-                     }
-                     if (DataStore.get("old-prev/next-button") && oldpnbel.getAttribute("class") == "") {
-                        let oldpnbbox = document.getElementById("oldpnbbox")
-                        oldpnbbox.checked = true
-                     }
-                     if (DataStore.get("Hide-linking-settings") && hidelinksetel.getAttribute("class") == "") {
-                        let hidelinksetbox = document.getElementById("hidelinksetbox")
-                        hidelinksetbox.checked = true
-                     }
-                     if (DataStore.get("Hide-verify-acc") && hideveriaccel.getAttribute("class") == "") {
-                        let hideveriaccbox = document.getElementById("hideveriaccbox")
-                        hideveriaccbox.checked = true
-                     }
-                     /*if (DataStore.get("") && el.getAttribute("class") == "") {
-                        
-                        box.checked = true
-                     }*/
+                     tickcheck(DataStore.get("aram-only"), Aramel, Arambox)
+                     tickcheck(DataStore.get("Receive-Update"), updateel, updatebox)
+                     tickcheck(DataStore.get("Continues_Audio"), conAudioel, conAudiobox)
+                     tickcheck(DataStore.get("Sidebar-Transparent"), sbtel, sbtbox)
+                     tickcheck(DataStore.get("Hide-Champions-Splash-Art"), hidechampartel, hidechampartbox)
+                     tickcheck(DataStore.get("Custom-Font"), cusfontel, cusfontbox)
+                     tickcheck(DataStore.get("Custom_RP"), cusrpel, cusrpbox)
+                     tickcheck(DataStore.get("Custom_BE"), cusbeel, cusbebox)
+                     tickcheck(DataStore.get("Custom-Rank-Name"), cusranknameel, cusranknamebox)
+                     tickcheck(DataStore.get("Animate-Loading"), aniloadel,aniloadbox)
+                     tickcheck(DataStore.get("Custom-Avatar"), cusavel, cusavbox)
+                     tickcheck(DataStore.get("Custom-Icon"), cusiconel, cusiconbox)
+                     tickcheck(DataStore.get("Custom-Cursor"), cuscursorel, cuscursorbox)
+                     tickcheck(DataStore.get("Old-League-Loader-Settings"), oldllel, oldllbox)
+                     tickcheck(DataStore.get("Auto-ban-pick"), autobpel, autobpbox)
+                     tickcheck(DataStore.get("Auto-Find-Queue"), autoqel, autoqbox)
+                     tickcheck(DataStore.get("Custom-Rank(Hover-card)"), cusrankhoverel, cusrankhoverbox)
+                     tickcheck(DataStore.get("Custom-Status"), cusstael, cusstabox)
+                     tickcheck(DataStore.get("April fool` joke"), _1_4el, _1_4box)
+                     tickcheck(DataStore.get("Merry-Christmas"), MCel, MCbox)
+                     tickcheck(DataStore.get("loot-helper"), lhel, lhbox)
+                     tickcheck(DataStore.get("settings-dialogs-transparent"), stdiatel, stdiatbox)
+                     tickcheck(DataStore.get("old-prev/next-button"), oldpnbel, oldpnbbox)
+                     tickcheck(DataStore.get("Hide-linking-settings"), hidelinksetel, hidelinksetbox)
+                     tickcheck(DataStore.get("Hide-verify-acc"), hideveriaccel, hideveriaccbox)
                   }
                },100)
             }
@@ -871,5 +823,3 @@ window.addEventListener('load', async () => {
       }
    },500)
 })
-const _UI = UI
-export { _UI as UI }
