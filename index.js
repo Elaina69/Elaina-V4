@@ -699,7 +699,7 @@ let pageChangeMutation = async (node) => {
 			if (DataStore.get("Auto-Find-Queue") && !data["Aram-only-mode"]) {
 				await fetch('/lol-lobby/v2/lobby', {
 					method: 'POST',
-					body: JSON.stringify({ queueId: DataStore.get("Queue-ID") }),
+					body: JSON.stringify({ queueId: DataStore.get("Gamemode") }),
 					headers: {
 					'Content-Type': 'application/json'
 					}
