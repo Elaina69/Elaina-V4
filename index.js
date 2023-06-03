@@ -184,7 +184,7 @@ if (!DataStore.has("wallpaper-volume")) {
 	DataStore.set("wallpaper-volume", 0.2)
 }
 if (!DataStore.has("audio-volume")) {
-	DataStore.set("audio-volume", 0.0)
+	DataStore.set("audio-volume", 0.2)
 }
 
 //___________________________________________________________________________//
