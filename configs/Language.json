@@ -103,6 +103,7 @@
         "loot-helper"     : "Loot helper",
         "custom-rank-hover":"Custom rank(Hover-card)",
         "custom-status"   : "Custom status",
+        "status-delay"    : "Delay time",
         "note-3"          : "Want easier",
         "1/4-joke"        : "April fool` joke",
         "Santa"           : "Merry Christmas"
@@ -205,6 +206,7 @@
         "loot-helper"     : "Kho báu vật 2.0",
         "custom-rank-hover":"Rank tùy chỉnh (Hover-card)",
         "custom-status"   : "Trạng thái tùy chỉnh",
+        "status-delay"    : "Thời gian delay",
         "note-3"          : "Muốn dễ dàng hơn ?",
         "1/4-joke"        : "Trò đùa ngày Cá tháng tư",
         "Santa"           : "Merry Christmas"
@@ -307,6 +309,7 @@
         "loot-helper"     : "Loot helper",
         "custom-rank-hover":"Custom rank(Hover-card)",
         "custom-status"   : "Custom status",
+        "status-delay"    : "Delay time",
         "note-3"          : "Want easier",
         "1/4-joke"        : "April fool` joke",
         "Santa"           : "Merry Christmas"
@@ -409,6 +412,7 @@
         "loot-helper"     : "Pomocnik łupów",
         "custom-rank-hover":"Niestandardowa ranga (najeżdżająca karta)",
         "custom-status"   : "Niestandardowy status",
+        "status-delay"    : "Delay time",
         "note-3"          : "Chcesz łatwiej?",
         "1/4-joke"        : "Prima aprilisowy żart",
         "Santa"           : "Wesołych Świąt"
@@ -510,6 +514,7 @@
         "loot-helper"     : "Помощник по добыче",
         "custom-rank-hover":"Пользовательский рейтинг",
         "custom-status"   : "Пользовательский статус",
+        "status-delay"    : "Delay time",
         "note-3"          : "Хотите проще",
         "1/4-joke"        : "Первоапрельская шутка",
         "Santa"           : "С Рождеством!"
@@ -610,6 +615,7 @@
         "loot-helper"     : "Loot helper",
         "custom-rank-hover":"Custom rank(Hover-card)",
         "custom-status"   : "Custom status",
+        "status-delay"    : "Delay time",
         "note-3"          : "Want easier",
         "1/4-joke"        : "April fool` joke",
         "Santa"           : "Merry Christmas"
@@ -710,6 +716,7 @@
         "loot-helper"     : "Loot helper",
         "custom-rank-hover":"Custom rank(Hover-card)",
         "custom-status"   : "Custom status",
+        "status-delay"    : "Delay time",
         "note-3"          : "Want easier",
         "1/4-joke"        : "April fool` joke",
         "Santa"           : "Merry Christmas"

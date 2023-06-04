@@ -33,11 +33,13 @@ import './resources/LootHelper'
 //___________________________________________________________________________//
 let path       = new URL(".", import.meta.url).href + "assets"
 
+let songIndex  = 0
 let wallpapers = data["wallpaper_list"]
 let Audios     = data["audio_list"]
-let songIndex  = 0;
-
 let Avatar     = DataStore.get("Custom-Avatar")
+
+const langCode = document.querySelector("html").lang
+const langMap  = lang.langlist
 //___________________________________________________________________________//
 
 
@@ -96,10 +98,10 @@ if (!DataStore.has("settings-dialogs-transparent")) {
 	DataStore.set("settings-dialogs-transparent", false)
 }
 if (!DataStore.has("Hide-linking-settings")) {
-	DataStore.set("Hide-linking-settings", false)
+	DataStore.set("Hide-linking-settings", true)
 }
 if (!DataStore.has("Hide-verify-acc")) {
-	DataStore.set("Hide-verify-acc", false)
+	DataStore.set("Hide-verify-acc", true)
 }
 
 
@@ -137,11 +139,14 @@ if (!DataStore.has("Ranked Division ID")) {
 if (!DataStore.has("Custom-Status")) {
 	DataStore.set("Custom-Status", true)
 }
+if (!DataStore.has("status-delay")) {
+	DataStore.set("status-delay", 5000)
+}
 if (!DataStore.has("Merry-Christmas")) {
 	DataStore.set("Merry-Christmas", true)
 }
 if (!DataStore.has("April fool` joke")) {
-	DataStore.set("April fool` joke", true)
+	DataStore.set("April fool` joke", false)
 }
 if (!DataStore.has("loot-helper")) {
 	DataStore.set("loot-helper", true)
@@ -181,10 +186,13 @@ else if (DataStore.get('audio-index')+1>Audios.length) {
 	DataStore.set('audio-index', 0)
 }
 if (!DataStore.has("wallpaper-volume")) {
-	DataStore.set("wallpaper-volume", 0.2)
+	DataStore.set("wallpaper-volume", 0.0)
 }
 if (!DataStore.has("audio-volume")) {
-	DataStore.set("audio-volume", 0.2)
+	DataStore.set("audio-volume", 0.3)
+}
+if (!DataStore.has("audio-loop")) {
+	DataStore.set("audio-loop", false)
 }
 
 //___________________________________________________________________________//
@@ -194,30 +202,30 @@ if (!DataStore.has("audio-volume")) {
 //___________________________________________________________________________//
 var nodeRemovedEvent = function (event) {
 	if (event.target.classList && event.target.classList.contains("lol-loading-screen-container")) {
-		let elainaBg     = document.getElementById("elaina-bg");
+		let elainaBg     = document.getElementById("elaina-bg")
 		let viewportRoot = document.getElementById("rcp-fe-viewport-root")
 
 		if (!elainaBg || !viewportRoot) {
-			return;
+			return
 		}
 		viewportRoot.style.filter = "none"
-		elainaBg.style.filter     = data["Homepage"];
+		elainaBg.style.filter     = data["Homepage"]
 
-		document.removeEventListener("DOMNodeRemoved", nodeRemovedEvent);
+		document.removeEventListener("DOMNodeRemoved", nodeRemovedEvent)
 	}
-};
+}
 
-document.addEventListener("DOMNodeRemoved", nodeRemovedEvent);
+document.addEventListener("DOMNodeRemoved", nodeRemovedEvent)
 //___________________________________________________________________________//
 
 
 
 //___________________________________________________________________________//
 function newStyle (cssvar,folder,name,css) {
-	let NStyle = document.createElement('style');
+	let NStyle = document.createElement('style')
 		NStyle.appendChild(document.createTextNode(
-			'@import url("'+css+'");:root {'+cssvar+':url('+folder+'/'+name+');}'
-		));
+			'@import url("'+css+'");:root {'+cssvar+':url('+folder+'/'+name+')}'
+		))
 	document.body.appendChild(NStyle)
 }
 //___________________________________________________________________________//
@@ -226,13 +234,13 @@ function newStyle (cssvar,folder,name,css) {
 
 //___________________________________________________________________________//
 function create_element(tagName, className, content) {
-	const el = document.createElement(tagName);
-	el.className = className;
+	const el = document.createElement(tagName)
+	el.className = className
 	if (content) {
-		el.innerHTML = content;
+		el.innerHTML = content
 	}
-	return el;
-};
+	return el
+}
 
 function go_to_default_home_page() {
 	document.querySelector(`lol-uikit-navigation-item[item-id='elaina-home']`).click()
@@ -263,12 +271,8 @@ function add_elaina_home_navbar() {
 
 			elaina_home_navbar_item.setAttribute("item-id", "elaina-home")
 			elaina_home_navbar_item.setAttribute("priority", 1)
+			elaina_home_navbar_item.textContent = lang[langMap[langCode] || "EN"]["home"]
 
-            //___________________________________________________________________________//
-			const langCode = document.querySelector("html").lang;
-			const langMap = lang.langlist
-			elaina_home_navbar_item.textContent = lang[langMap[langCode] || "EN"]["home"];
-            //___________________________________________________________________________//
 			navbar.prepend(elaina_home_navbar_item)
 		}
 	}
@@ -301,7 +305,7 @@ function play_pause_set_icon(elem) {
 	let pause_bg_icon = elem || document.querySelector(".pause-bg-icon")
 
 	if (!pause_bg_icon) {
-		return;
+		return
 	}
 	if (DataStore.get('pause-wallpaper')%2==0) {
 		pause_bg_icon.setAttribute("src", `${path}/Icon/play_button.png`)
@@ -330,7 +334,7 @@ function play_pause_set_icon_audio(elem) {
 	let pause_audio_icon = elem || document.querySelector(".pause-audio-icon")
 
 	if (!pause_audio_icon) {
-		return;
+		return
 	}
 	if (DataStore.get('pause-audio')%2==0) {
 		pause_audio_icon.setAttribute("src", `${path}/Icon/play_button.png`)
@@ -363,7 +367,7 @@ function mute_set_icon_audio(elem) {
 	let mute_audio_icon = elem || document.querySelector(".mute-audio-icon")
 
 	if (!mute_audio_icon) {
-		return;
+		return
 	}
 	if (DataStore.get("mute-audio")) {
 		mute_audio_icon.setAttribute("src", `${path}/Icon/mute.png`)
@@ -382,17 +386,17 @@ function mute_set_icon_audio(elem) {
 //___________________________________________________________________________//
 function loadBG(BG) {
 	let elainaBg = document.getElementById("elaina-bg")
-	elainaBg.src = `${path}/Backgrounds/${BG}`;
+	elainaBg.src = `${path}/Backgrounds/${BG}`
 }
 
 function loadSong(song) {
 	let audio     = document.getElementById("bg-audio")
-    	audio.src = `${path}/Backgrounds/Audio/${song}`;
+    	audio.src = `${path}/Backgrounds/Audio/${song}`
 }
 
 function next_wallpaper() {
 	let elainaBg = document.getElementById("elaina-bg")
-		elainaBg.classList.add("webm-hidden");
+		elainaBg.classList.add("webm-hidden")
 
 	DataStore.set('wallpaper-index', DataStore.get('wallpaper-index')+1)
     if (DataStore.get('wallpaper-index') > wallpapers.length-1) {
@@ -403,12 +407,12 @@ function next_wallpaper() {
 	setTimeout(function () {
 		loadBG(wallpapers[DataStore.get('wallpaper-index')].file)
 		elaina_play_pause()
-		elainaBg.classList.remove("webm-hidden");
-	}, 500);
+		elainaBg.classList.remove("webm-hidden")
+	}, 500)
 }
 function prev_wallpaper() {
 	let elainaBg = document.getElementById("elaina-bg")
-		elainaBg.classList.add("webm-hidden");
+		elainaBg.classList.add("webm-hidden")
 
 	DataStore.set('wallpaper-index', DataStore.get('wallpaper-index')-1)
     if (DataStore.get('wallpaper-index') < 0) {
@@ -419,8 +423,8 @@ function prev_wallpaper() {
 	setTimeout(function () {
 		loadBG(wallpapers[DataStore.get('wallpaper-index')].file)
 		elaina_play_pause()
-		elainaBg.classList.remove("webm-hidden");
-	}, 500);
+		elainaBg.classList.remove("webm-hidden")
+	}, 500)
 }
 
 function nextSong() {
@@ -591,7 +595,7 @@ function create_webm_buttons() {
 		container2.append(newbgchange, pauseBg)
 		newbgchange.append(bgdropdown)
 
-		for (let i = 0; i < wallpapers.length; i++) {
+		for (let i = 0 ;i < wallpapers.length ;i++) {
 			const opt = wallpapers[i]
 			const el = document.createElement("lol-uikit-dropdown-option")
 			el.setAttribute("slot", "lol-uikit-dropdown-option")
@@ -606,8 +610,8 @@ function create_webm_buttons() {
 				setTimeout(function () {
 					loadBG(wallpapers[DataStore.get('wallpaper-index')].file)
 					elaina_play_pause()
-					elainaBg.classList.remove("webm-hidden");
-				}, 500);
+					elainaBg.classList.remove("webm-hidden")
+				}, 500)
 			}
 			if (DataStore.get('wallpaper-index') == opt.id) {
 				el.setAttribute("selected", "true")
@@ -627,15 +631,14 @@ function Delbuttons() {
 
 //___________________________________________________________________________//
 let updateLobbyRegaliaBanner = async message => {
-	let phase = JSON.parse(message["data"])[2]["data"];
+	let phase = JSON.parse(message["data"])[2]["data"]
 
 	if (phase == "Lobby") {
 		window.setInterval(() => {
 			try {
 				let base = document.querySelector("lol-regalia-parties-v2-element.regalia-loaded").shadowRoot.querySelector(".regalia-parties-v2-banner-backdrop.regalia-banner-loaded")
-
-				base.shadowRoot.querySelector(".regalia-banner-asset-static-image").style.filter = "sepia(1) brightness(3.5) opacity(0.4)"
-				base.shadowRoot.querySelector(".regalia-banner-state-machine").shadowRoot.querySelector(".regalia-banner-intro.regalia-banner-video").style.filter = "grayscale(1) saturate(0) brightness(0.5)"
+					base.shadowRoot.querySelector(".regalia-banner-asset-static-image").style.filter = "sepia(1) brightness(3.5) opacity(0.4)"
+					base.shadowRoot.querySelector(".regalia-banner-state-machine").shadowRoot.querySelector(".regalia-banner-intro.regalia-banner-video").style.filter = "grayscale(1) saturate(0) brightness(0.5)"
 			}
 			catch {}
             if (Avatar) {
@@ -645,7 +648,7 @@ let updateLobbyRegaliaBanner = async message => {
 				}
 				catch {}
             }
-		}, 20)
+		},200)
 	}
 }
 //___________________________________________________________________________//
@@ -677,7 +680,7 @@ let pageChangeMutation = async (node) => {
 	console.log(pagename)
 
 	if (pagename == "rcp-fe-lol-home-main") {
-		elaina_bg_elem.style.filter = data["Homepage"];
+		elaina_bg_elem.style.filter = data["Homepage"]
 		if (!document.getElementsByClassName("webm-bottom-buttons-container").length) {
 			create_webm_buttons()
 			watermark.ElainaTrigger()
@@ -703,11 +706,11 @@ let pageChangeMutation = async (node) => {
 					headers: {
 					'Content-Type': 'application/json'
 					}
-				});
+				})
 				window.setTimeout(async () => {
 					await fetch('/lol-lobby/v2/lobby/matchmaking/search', {
 						method: 'POST'
-					});
+					})
 				},data["Find-Delay"]*1000)
 			}
 			else if (DataStore.get("Auto-Find-Queue") && data["Aram-only-mode"]) {
@@ -717,11 +720,11 @@ let pageChangeMutation = async (node) => {
 					headers: {
 					'Content-Type': 'application/json'
 					}
-				});
+				})
 				window.setTimeout(async () => {
 					await fetch('/lol-lobby/v2/lobby/matchmaking/search', {
 						method: 'POST'
-					});
+					})
 				},data["Find-Delay"]*1000)
 			}
 		},data["Create-Delay"]*1000)
@@ -749,34 +752,34 @@ let pageChangeMutation = async (node) => {
 		}
 	}
 	if (pagename == "rcp-fe-lol-uikit-full-page-modal-controller") {
-		return;
+		return
 	}
 	if (pagename == "rcp-fe-lol-yourshop") {
-		elaina_bg_elem.style.filter = data["Yourshop"];
+		elaina_bg_elem.style.filter = data["Yourshop"]
 	}
 	else if (previous_page == "rcp-fe-lol-yourshop" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = data["Homepage"];
+		elaina_bg_elem.style.filter = data["Homepage"]
 	}
 	if (pagename == "rcp-fe-lol-champ-select") {
-		elaina_bg_elem.style.filter = data["Champ-select"];
+		elaina_bg_elem.style.filter = data["Champ-select"]
 	}
 	else if (previous_page == "rcp-fe-lol-champ-select" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = data["Homepage"];
+		elaina_bg_elem.style.filter = data["Homepage"]
 	}
 	if (pagename == "rcp-fe-lol-clash-full") {
-		elaina_bg_elem.style.filter = data["Clash"];
+		elaina_bg_elem.style.filter = data["Clash"]
 	}
 	else if (previous_page == "rcp-fe-lol-clash-full" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = data["Homepage"];
+		elaina_bg_elem.style.filter = data["Homepage"]
 	}
 	if (pagename == "rcp-fe-lol-loot") {
-		elaina_bg_elem.style.filter = data["Loot"];
+		elaina_bg_elem.style.filter = data["Loot"]
 	}
 	else if (previous_page == "rcp-fe-lol-loot" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = data["Homepage"];
+		elaina_bg_elem.style.filter = data["Homepage"]
 	}
 	if (pagename == "rcp-fe-lol-store") {
-		elaina_bg_elem.style.filter = data["Store"];
+		elaina_bg_elem.style.filter = data["Store"]
 		window.setInterval(() => {
 			try {
 				let storeIframe = document.querySelector('#rcp-fe-lol-store-iframe > iframe[referrerpolicy = "no-referrer-when-downgrade"]')
@@ -784,29 +787,29 @@ let pageChangeMutation = async (node) => {
 		
 				let th = storeIframe.contentWindow.document.querySelectorAll("#root > div > div.item-page.container.content.clearfix > div.item-page-items-container-wrapper.purchase-history-page-content-wrapper > div > div > table > thead > tr > th")
 				for (let i = 0; i < th.length; i++) {
-					th[i].style.background = "transparent";
+					th[i].style.background = "transparent"
 				}
 			}
 			catch {}
 		},100)
 	}
 	else if (previous_page == "rcp-fe-lol-store" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = data["Homepage"];
+		elaina_bg_elem.style.filter = data["Homepage"]
 	}
 	if (pagename == "rcp-fe-lol-collections") {
-		elaina_bg_elem.style.filter = data["Collections"];
+		elaina_bg_elem.style.filter = data["Collections"]
 	}
 	else if (previous_page == "rcp-fe-lol-collections" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = data["Homepage"];
+		elaina_bg_elem.style.filter = data["Homepage"]
 	}
 	if (pagename == "rcp-fe-lol-postgame") {
-		elaina_bg_elem.style.filter = data["Postgame"];
+		elaina_bg_elem.style.filter = data["Postgame"]
 	}
 	else if (previous_page == "rcp-fe-lol-postgame" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = data["Homepage"];
+		elaina_bg_elem.style.filter = data["Homepage"]
 	}
 	if (pagename == "rcp-fe-lol-profiles-main") {		
-		elaina_bg_elem.style.filter = data["Profiles"];
+		elaina_bg_elem.style.filter = data["Profiles"]
         let rankedNode = document.querySelector('[section-id="profile_subsection_leagues"]')
     
         window.setInterval(() => {
@@ -842,23 +845,23 @@ let pageChangeMutation = async (node) => {
                             catch {}
                         }, 500)
                     }
-                });
-            });
-            ranked_observer.observe(document.querySelector('[section-id="profile_subsection_leagues"]'), { attributes: true, childList: false, subtree: false });
+                })
+            })
+            ranked_observer.observe(document.querySelector('[section-id="profile_subsection_leagues"]'), { attributes: true, childList: false, subtree: false })
         }		
 	}
 	else if (previous_page == "rcp-fe-lol-profiles-main") {
 		if (brightness_modifiers.indexOf(pagename) == -1)
-			elaina_bg_elem.style.filter = data["Homepage"];
+			elaina_bg_elem.style.filter = data["Homepage"]
         if (ranked_observer)
         ranked_observer.disconnect()
         ranked_observer = undefined
 	}
 	if (pagename == "rcp-fe-lol-parties") {
-		elaina_bg_elem.style.filter = data["Parties"];
+		elaina_bg_elem.style.filter = data["Parties"]
 	}
 	else if (previous_page == "rcp-fe-lol-parties" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = data["Homepage"];
+		elaina_bg_elem.style.filter = data["Homepage"]
 	}
 	if (previous_page != pagename) {
 		previous_page = pagename
@@ -943,8 +946,8 @@ import wt from './resources/Watermark'
 window.addEventListener('load', () => {
 	newStyle("--Hover-card-backdrop",path+"/Icon",data['Hover-card'])
 
-	if (DataStore.get("Sidebar-Transparent")) {utils.addCss(`${path}/Css/Addon-Css/Sidebar-Transparent.css`);}
-	else {utils.addCss(`${path}/Css/Addon-Css/Sidebar-Color.css`);}
+	if (DataStore.get("Sidebar-Transparent")) {utils.addCss(`${path}/Css/Addon-Css/Sidebar-Transparent.css`)}
+	else {utils.addCss(`${path}/Css/Addon-Css/Sidebar-Color.css`)}
 
 	if (DataStore.get("Animate-Loading")) {newStyle("--ElainaFly",path+"/Icon",data["Animation-logo"],`${path}/Css/Addon-Css/Animate-Loading-Screen.css`)}
 	else {newStyle("--ElainaStatic",path+"/Icon",data["Static-logo"],`${path}/Css/Addon-Css/Static-Loading-Screen.css`)}
@@ -963,10 +966,10 @@ window.addEventListener('load', () => {
 	}
 	
 	if (DataStore.get("Custom-Font")) {
-		let CusFont = document.createElement('style');
+		let CusFont = document.createElement('style')
 		CusFont.appendChild(document.createTextNode(
-			'@font-face {font-family: "Custom" ; src: url('+path+"/Fonts/"+data["Font-Name"]+');}'
-		));
+			'@font-face {font-family: "Custom"  src: url('+path+"/Fonts/"+data["Font-Name"]+')}'
+		))
 		document.body.appendChild(CusFont)
 	}
 
@@ -976,33 +979,33 @@ window.addEventListener('load', () => {
 			cursor.style.background = 'url('+path+"/Icon/"+data["Mouse-cursor"]+')'
 
 		document.addEventListener('mousemove', function(e){
-			var x = e.clientX;
-			var y = e.clientY;
+			var x = e.clientX
+			var y = e.clientY
 			cursor.style.transform = `translate3d(calc(${e.clientX}px - 40%), calc(${e.clientY}px - 40%), 0)`
-		});
+		})
 		let body = document.querySelector("html")
 			body.appendChild(cursor)
 		utils.addCss(`${path}/Css/Addon-Css/Cursor.css`)
 	}
 
-	let addFont = document.createElement('style');
+	let addFont = document.createElement('style')
 		addFont.appendChild(document.createTextNode(
-			'@font-face {font-family: "Elaina" ; src: url('+path + "/Fonts/BeaufortforLOL-Bold.ttf" +');}'
+			'@font-face {font-family: "Elaina"  src: url('+path + "/Fonts/BeaufortforLOL-Bold.ttf" +')}'
 		))
 	document.body.appendChild(addFont)
 	
-	const video = document.createElement('video');
-	const audio = document.createElement("audio");
+	const video = document.createElement('video')
+	const audio = document.createElement("audio")
 
-		video.id       = 'elaina-bg';
-		video.autoplay = true;
-		video.loop     = true;
+		video.id       = 'elaina-bg'
+		video.autoplay = true
+		video.loop     = true
 		video.src      = `${path}/Backgrounds/${wallpapers[DataStore.get('wallpaper-index')].file}`
 		video.volume   = DataStore.get("wallpaper-volume")
 
-		audio.id       = 'bg-audio';
-    	audio.autoplay = true;
-    	audio.loop     = false;
+		audio.id       = 'bg-audio'
+    	audio.autoplay = true
+    	audio.loop     = DataStore.get("audio-loop")
 		if (DataStore.get("Continues_Audio")) {
 			audio.src  = `${path}/Backgrounds/Audio/${Audios[DataStore.get('audio-index')]}`
 		}
@@ -1014,13 +1017,13 @@ window.addEventListener('load', () => {
 	audio.addEventListener("ended", nextSong)
 	video.addEventListener("load", ()=>{ 
 		video.play()
-	}, true);
+	}, true)
     audio.addEventListener("load", ()=>{ 
 		audio.play()
 		if (DataStore.get("Continues_Audio")) {
 			audio.currentTime = DataStore.get("currentAudioPlay")
 		}
-	}, true);
+	}, true)
 
 	document.querySelector("body").prepend(video)
     document.querySelector("body").prepend(audio)
@@ -1031,7 +1034,7 @@ window.addEventListener('load', () => {
 	utils.subscribe_endpoint('/lol-gameflow/v1/gameflow-phase', (message) => {
 		let phase = JSON.parse(message["data"])[2]["data"]
 		if (phase == "GameStart" || phase == "InProgress") {
-			document.getElementById("elaina-bg").style.filter = data["Gamestart"];
+			document.getElementById("elaina-bg").style.filter = data["Gamestart"]
 			document.getElementById("elaina-bg").pause()
 			document.getElementById("bg-audio").pause()
 		}

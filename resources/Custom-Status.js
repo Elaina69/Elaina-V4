@@ -1,20 +1,20 @@
 import data from '../configs/ElainaV2_config.json'
 
-let status = data["Custom-Status"]
-
 if (DataStore.get("Custom-Status")) {
     let time
-    if (status.length == 1) {time = 50000}
-    else {time = 650*status.length}
+    let i = 0
+    let status = data["Custom-Status"]
+    if (status.length == 1) {time = 5000000000}
+    else {time = DataStore.get("status-delay")}
     
     window.setInterval( async ()=> {
-        for (let i = 0; i < status.length; i++) {
-            const statusMessage = status[i]["lines"].slice().join("\\n")
+        if (i == status.length - 1) {i = 0}
+        else {i++}
+        const statusMessage = status[i]["lines"].slice().join("\\n")
             await fetch("/lol-chat/v1/me", {
                 method :"PUT",
                 headers:{"content-type":"application/json"},
                 body   :`{"statusMessage":"${statusMessage}"}`
-            })
-        }
+            }) 
     },time)
 }

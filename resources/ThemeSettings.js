@@ -37,14 +37,14 @@ const UI = {
       btn.setAttribute('class', cls)
       return btn
    },
-   Input: (placeholder, target) => {
+   Input: (target) => {
       const origIn = document.createElement('lol-uikit-flat-input')
       const searchbox = document.createElement('input')
 
       origIn.style.marginBottom = '12px'
 
       searchbox.type = 'url'
-      searchbox.placeholder = placeholder
+      searchbox.placeholder = DataStore.get(target)
       searchbox.style.width = '200px'
       searchbox.name = 'name'
       searchbox.oninput = ()=>{
@@ -349,7 +349,7 @@ const injectSettings = (panel) => {
             }
          ),
          document.createElement('br'),
-         UI.Input(`${DataStore.get("RP-data")}`,"RP-data"),
+         UI.Input("RP-data"),
          document.createElement('br'),
          UI.CheckBox(
             `${selectedLang["custom-be"]}`,'cusbe','cusbebox',
@@ -370,7 +370,7 @@ const injectSettings = (panel) => {
             }
          ),
          document.createElement('br'),
-         UI.Input(`${DataStore.get("BE")}`,"BE"),
+         UI.Input("BE"),
          document.createElement('br'),
          UI.CheckBox(
             `${selectedLang["custom-rank-name"]}`,'cusrankname','cusranknamebox',
@@ -391,8 +391,8 @@ const injectSettings = (panel) => {
             }
          ),
          document.createElement('br'),
-         UI.Input(`${DataStore.get("Rank-line1")}`,"Rank-line1"),
-         UI.Input(`${DataStore.get("Rank-line2")}`,"Rank-line2"),
+         UI.Input("Rank-line1"),
+         UI.Input("Rank-line2"),
          document.createElement('br'),
          UI.CheckBox(
             `${selectedLang["animate-loading"]}`,'aniload','aniloadbox',
@@ -657,6 +657,8 @@ const injectSettings = (panel) => {
                }
             }
          ),
+         UI.Label(`${selectedLang["status-delay"]}`),
+         UI.Input("status-delay"),
          UI.Link(
             `${selectedLang["note-3"]} ?`,
             'https://github.com/KebsCS/KBotExt'
