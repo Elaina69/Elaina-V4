@@ -430,7 +430,7 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
     width: 21px !important;
     height: 21px !important;
     cursor: pointer;
-	left: 7px;
+	left: 15px;
 }
 
 .next-bg-icon {
@@ -449,7 +449,7 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
     width: 21px !important;
     height: 21px !important;
     cursor: pointer;
-	left: 7px;
+	left: 15px;
 }
 
 .prev-bg-icon {
@@ -545,6 +545,27 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
 	filter: brightness(1.3) hue-rotate(263deg) saturate(0.4) !important;
 }
 
+#audio-loop {
+    position: relative !important;
+    border: 2px solid #8c8263 !important;
+    border-radius: 50% !important;
+    width: 21px !important;
+    background-color: black !important;
+    height: 21px !important;
+    cursor: pointer;
+	left: 12px;
+}
+
+.audio-loop-icon {
+	width: 17px !important;
+    margin-left: 2px !important;
+    margin-top: 2px !important;
+}
+
+#audio-loop:hover {
+	filter: brightness(1.3) hue-rotate(263deg) saturate(0.4) !important;
+}
+
 .webm-hidden {
 	opacity: 0!important
 }
@@ -588,13 +609,17 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
     left: 37px;
     position: absolute;
 }
+
 #newbgchange {
 	display: block;
 	width: 166px;
 }
+
 #bgdropdown {
 	background: #0000007a
 }
+
+
 
 /* ElainaTrigger */
 .watermark {

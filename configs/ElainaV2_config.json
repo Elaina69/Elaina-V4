@@ -1,7 +1,7 @@
 {
 "/______________________________________Wallpapers______________________________/": "",
 
-	"/__Support video formats__/" : " .webm, .mkv, .mp4, ... idk,maybe more ",
+	"/__Support video formats__/" : " .webm, .mkv, .mp4 (not support audio), ... idk,maybe more ",
 	"wallpaper_list":
 	[
 		{"id": 0, "file": "Elaina1.webm"},
@@ -12,7 +12,7 @@
 
 "/_______________________________________Audio__________________________________/": "",
 
-	"/__Support audio formats__/" : " .mp3, .flac, .ogg , ... idk,maybe more ",
+	"/__Support audio formats__/" : " .mp3, .flac (not support replay), .ogg , ... idk,maybe more ",
 	"audio_list":
 	[
 		"少女レイ-FUMIKIRI ver.flac",

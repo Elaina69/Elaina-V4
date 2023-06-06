@@ -103,6 +103,9 @@ if (!DataStore.has("Hide-linking-settings")) {
 if (!DataStore.has("Hide-verify-acc")) {
 	DataStore.set("Hide-verify-acc", true)
 }
+if (!DataStore.has("new-gamesearch-div")) {
+	DataStore.set("new-gamesearch-div", true)
+}
 
 
 //Plugins DataStore
@@ -190,6 +193,9 @@ if (!DataStore.has("wallpaper-volume")) {
 }
 if (!DataStore.has("audio-volume")) {
 	DataStore.set("audio-volume", 0.3)
+}
+if (!DataStore.has("audio-loop")) {
+	DataStore.set("audio-loop", false)
 }
 if (!DataStore.has("audio-loop")) {
 	DataStore.set("audio-loop", false)
@@ -333,9 +339,7 @@ function audio_play_pause() {
 function play_pause_set_icon_audio(elem) {
 	let pause_audio_icon = elem || document.querySelector(".pause-audio-icon")
 
-	if (!pause_audio_icon) {
-		return
-	}
+	if (!pause_audio_icon) {return}
 	if (DataStore.get('pause-audio')%2==0) {
 		pause_audio_icon.setAttribute("src", `${path}/Icon/play_button.png`)
 	}
@@ -366,14 +370,42 @@ function audio_mute() {
 function mute_set_icon_audio(elem) {
 	let mute_audio_icon = elem || document.querySelector(".mute-audio-icon")
 
-	if (!mute_audio_icon) {
-		return
-	}
+	if (!mute_audio_icon) {return}
 	if (DataStore.get("mute-audio")) {
 		mute_audio_icon.setAttribute("src", `${path}/Icon/mute.png`)
 	}
 	else {
 		mute_audio_icon.setAttribute("src", `${path}/Icon/audio.png`)
+	}
+
+}
+//___________________________________________________________________________//
+
+
+
+//___________________________________________________________________________//
+function audio_loop() {
+	let audio = document.getElementById("bg-audio")
+
+	if (DataStore.get('audio-loop')) {
+		audio.loop = true
+		audio.nodeRemovedEvent("ended")
+	}
+	else {
+		audio.loop = false
+		audio.addEventListener("ended", nextSong)
+	}
+}
+
+function audio_loop_icon(elem) {
+	let audio_loop_icon = elem || document.querySelector(".audio-loop-icon")
+
+	if (!audio_loop_icon) {return}
+	if (DataStore.get("audio-loop")) {
+		audio_loop_icon.setAttribute("src", `${path}/Icon/rotating-arrow.png`)
+	}
+	else {
+		audio_loop_icon.setAttribute("src", `${path}/Icon/Unrotating-arrow.png`)
 	}
 
 }
@@ -499,6 +531,8 @@ function create_webm_buttons() {
 
 	const muteAudio      = document.createElement("div")
 	const muteaudioIcon  = document.createElement("img")
+	const audioLoop      = document.createElement("div")
+	const audioLoopIcon  = document.createElement("img")
 
 	const bgdropdown     = document.createElement("lol-uikit-framed-dropdown")
 	
@@ -516,6 +550,7 @@ function create_webm_buttons() {
 	prevAudio.id  = "prev-audio"
 
 	muteAudio.id  = "mute-audio"
+	audioLoop.id  = "audio-loop"
 
 	newbgchange.id= "newbgchange"
 	bgdropdown.id = "bgdropdown"
@@ -529,10 +564,12 @@ function create_webm_buttons() {
 	prevAudioIcon.classList.add("prev-audio-icon")
 
 	muteaudioIcon.classList.add("mute-audio-icon")
+	audioLoopIcon.classList.add("audio-loop-icon")
 	
 	play_pause_set_icon_audio(pauseAudioIcon)
 	play_pause_set_icon(pauseBgIcon)
 	mute_set_icon_audio(muteaudioIcon)
+	audio_loop_icon(audioLoopIcon)
 
 	pauseAudio.addEventListener("click", () => {
 		DataStore.set('pause-audio', DataStore.get('pause-audio') + 1)
@@ -549,14 +586,18 @@ function create_webm_buttons() {
 		audio_mute()
 		mute_set_icon_audio()
 	})
-
+	audioLoop.addEventListener("click", () => {
+		DataStore.set("audio-loop", !DataStore.get("audio-loop"))
+		audio_loop()
+		audio_loop_icon()
+	})
 	nextBg.addEventListener("click", () => {
 		DataStore.set("NextBg_Count", DataStore.get("NextBg_Count") + 1)
+		next_wallpaper()
 		if (DataStore.get("NextBg_Count") == 69) {
 			window.open("https://media.discordapp.net/attachments/887677396315172894/1100385074299539556/100259683_p0_master1200.png", "_blank")
 			DataStore.set("NextBg_Count",0)
 		}
-		next_wallpaper()
 	})
 	prevBg.addEventListener("click", () => {
 		prev_wallpaper()
@@ -577,13 +618,14 @@ function create_webm_buttons() {
 	    showcontainer.appendChild(container)
 		showcontainer.appendChild(container2)
 	
-	container.append(muteAudio, prevAudio, pauseAudio, nextAudio)
+	container.append(muteAudio, prevAudio, pauseAudio, nextAudio, audioLoop)
 
 	muteAudio.append(muteaudioIcon)
 	pauseAudio.append(pauseAudioIcon)
 	prevAudio.append(prevAudioIcon)
 	nextAudio.append(nextAudioIcon)
 	pauseBg.append(pauseBgIcon)
+	audioLoop.append(audioLoopIcon)
 	
 	if (DataStore.get("old-prev/next-button")) {
 		container2.append(pauseBg)
@@ -872,6 +914,7 @@ let pageChangeMutation = async (node) => {
 
 
 //___________________________________________________________________________//
+//Spaghetti Code ngl
 window.setInterval(() => {
 	if (DataStore.get("settings-dialogs-transparent")) {
 		try {document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame").shadowRoot.querySelector("div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch{}
@@ -899,27 +942,29 @@ window.setInterval(() => {
 	}
 
 	try {
-		let gameinfo = document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-status-card").shadowRoot
-			gameinfo.querySelector("div").style.background = "#143c1400"
-			gameinfo.querySelector("div > div.parties-status-card-bg-container").style.color = "#36d98700"
-			gameinfo.querySelector("div > div.parties-status-card-bg-container > video").setAttribute('src', '')
-			gameinfo.querySelector("div > div.parties-status-card-header").style.visibility = "hidden"
+		if (DataStore.get("new-gamesearch-div")) {
+			let gameinfo = document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-status-card").shadowRoot
+				gameinfo.querySelector("div").style.background = "#143c1400"
+				gameinfo.querySelector("div > div.parties-status-card-bg-container").style.color = "#36d98700"
+				gameinfo.querySelector("div > div.parties-status-card-bg-container > video").setAttribute('src', '')
+				gameinfo.querySelector("div > div.parties-status-card-header").style.visibility = "hidden"
 
-		let cardbody = gameinfo.querySelector("div > div.parties-status-card-body").style
-			cardbody.marginTop = "-23px"
-			cardbody.padding = "10px 5px 10px 10px"
-			cardbody.border = "1px solid #8c8263"
-			cardbody.borderRadius = "10px"
+			let cardbody = gameinfo.querySelector("div > div.parties-status-card-body").style
+				cardbody.marginTop = "-23px"
+				cardbody.padding = "10px 5px 10px 10px"
+				cardbody.border = "1px solid #8c8263"
+				cardbody.borderRadius = "10px"
 
-		let gamesearch = document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-game-search").shadowRoot
-			gamesearch.querySelector("div").style.border = "1px solid #8c8263"
-			gamesearch.querySelector("div").style.borderRadius = "10px"
-			gamesearch.querySelector("div").style.marginTop = "9px"
-			gamesearch.querySelector("div > div.parties-game-search-divider").remove()
+			let gamesearch = document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-game-search").shadowRoot
+				gamesearch.querySelector("div").style.border = "1px solid #8c8263"
+				gamesearch.querySelector("div").style.borderRadius = "10px"
+				gamesearch.querySelector("div").style.marginTop = "9px"
+				gamesearch.querySelector("div > div.parties-game-search-divider").remove()
 
-		document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-bg-container").style.backgroundImage = "none"
-		document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-status-card").shadowRoot.
-			querySelector("div > div.parties-status-card-body > div.parties-status-card-map.game_map_howling_abyss").style.margin = "-3px 10px 0 0"
+			document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-bg-container").style.backgroundImage = "none"
+			document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-status-card").shadowRoot.
+				querySelector("div > div.parties-status-card-body > div.parties-status-card-map.game_map_howling_abyss").style.margin = "-3px 10px 0 0"
+		}
 	}
 	catch {}
 	try{
@@ -1014,7 +1059,7 @@ window.addEventListener('load', () => {
 		}
 		audio.volume   = DataStore.get("audio-volume")
 	
-	audio.addEventListener("ended", nextSong)
+	if (!DataStore.get("audio-loop")) {audio.addEventListener("ended", nextSong)}
 	video.addEventListener("load", ()=>{ 
 		video.play()
 	}, true)
@@ -1042,6 +1087,7 @@ window.addEventListener('load', () => {
 			elaina_play_pause()
 			audio_play_pause()
 			audio_mute()
+			audio_loop()
 		}
 	})
 
