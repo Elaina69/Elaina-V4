@@ -1,19 +1,28 @@
 import lang    from '../configs/Language.json'
 import QueueID from './Misc/QueueID.json'
 
+let path       = new URL("..", import.meta.url).href + "assets"
 var module = { exports: {} }
 const UI = {
-   Row: (childs) => {
+   Row: (id, childs) => {
       const row = document.createElement('div')
       row.classList.add('lol-settings-general-row')
+      row.id = id
       if (Array.isArray(childs)) childs.forEach((el) => row.appendChild(el))
       return row
    },
-   Label: (text) => {
+   Label: (text, id) => {
       const label = document.createElement('p')
       label.classList.add('lol-settings-window-size-text')
       label.innerText = text
+      label.id = id
       return label
+   },
+   Image: (image, cls) => {
+      const img = document.createElement('img')
+      img.setAttribute("src", `${path}/Icon/${image}`)
+      img.classList.add(cls)
+      return img
    },
    Link: (text, href, onClick) => {
       const link = document.createElement('p')
@@ -41,11 +50,12 @@ const UI = {
       const origIn = document.createElement('lol-uikit-flat-input')
       const searchbox = document.createElement('input')
 
+      origIn.classList.add(target)
       origIn.style.marginBottom = '12px'
 
       searchbox.type = 'url'
       searchbox.placeholder = DataStore.get(target)
-      searchbox.style.width = '200px'
+      searchbox.style.width = '190px'
       searchbox.name = 'name'
       searchbox.oninput = ()=>{
          let input = {
@@ -176,16 +186,20 @@ const injectSettings = (panel) => {
       ]
    }
    panel.prepend(
-      UI.Row([
-         UI.Link(
-            'ElainaV2',
-            'https://github.com/Elaina69/Elaina-V2'
-         ),
-         UI.Label(
-            `*${selectedLang["note"]}: ${selectedLang["note-1"]}`
-         ),
-         UI.Button (`${selectedLang["reload-client"]}`,'reload', ()=>{window.reloadClient()}),
-         document.createElement('br'),
+      UI.Row("",[
+         UI.Row("Info",[
+            UI.Row("Info-div",[
+               UI.Link(
+                  'ElainaV2',
+                  'https://github.com/Elaina69/Elaina-V2'
+               ),
+               UI.Label(
+                  `*${selectedLang["note"]}: ${selectedLang["note-1"]}`
+               ),
+               UI.Button (`${selectedLang["reload-client"]}`,'reload', ()=>{window.reloadClient()}),
+            ]),
+            UI.Image("Logo.png", "settings-logo")
+         ]),
 //________________________________________________________________________________________//
 
 
@@ -336,47 +350,52 @@ const injectSettings = (panel) => {
             }
          ),
          document.createElement('br'),
-         UI.CheckBox(
-            `${selectedLang["custom-rp"]}`,'cusrp','cusrpbox',
-            ()=>{
-               let cusrpel = document.getElementById("cusrp")
-               let cusrpbox = document.getElementById("cusrpbox")
-
-               if (DataStore.get("Custom_RP")) {
-                  cusrpbox.checked = false
-                  DataStore.set("Custom_RP", false)
-                  cusrpel.removeAttribute("class")
-               }
-               else {
-                  cusrpbox.checked = true
-                  DataStore.set("Custom_RP", true)
-                  cusrpel.setAttribute("class", "checked")
-               }
-            }
-         ),
-         document.createElement('br'),
-         UI.Input("RP-data"),
-         document.createElement('br'),
-         UI.CheckBox(
-            `${selectedLang["custom-be"]}`,'cusbe','cusbebox',
-            ()=>{
-               let cusbeel = document.getElementById("cusbe")
-               let cusbebox = document.getElementById("cusbebox")
-
-               if (DataStore.get("Custom_BE")) {
-                  cusbebox.checked = false
-                  DataStore.set("Custom_BE", false)
-                  cusbeel.removeAttribute("class")
-               }
-               else {
-                  cusbebox.checked = true
-                  DataStore.set("Custom_BE", true)
-                  cusbeel.setAttribute("class", "checked")
-               }
-            }
-         ),
-         document.createElement('br'),
-         UI.Input("BE"),
+         UI.Row("Custom-Curency",[
+            UI.Row("custom-rp",[
+               UI.CheckBox(
+                  `${selectedLang["custom-rp"]}`,'cusrp','cusrpbox',
+                  ()=>{
+                     let cusrpel = document.getElementById("cusrp")
+                     let cusrpbox = document.getElementById("cusrpbox")
+      
+                     if (DataStore.get("Custom_RP")) {
+                        cusrpbox.checked = false
+                        DataStore.set("Custom_RP", false)
+                        cusrpel.removeAttribute("class")
+                     }
+                     else {
+                        cusrpbox.checked = true
+                        DataStore.set("Custom_RP", true)
+                        cusrpel.setAttribute("class", "checked")
+                     }
+                  }
+               ),
+               document.createElement('br'),
+               UI.Input("RP-data")
+            ]),
+            UI.Row("custom-be",[
+               UI.CheckBox(
+                  `${selectedLang["custom-be"]}`,'cusbe','cusbebox',
+                  ()=>{
+                     let cusbeel = document.getElementById("cusbe")
+                     let cusbebox = document.getElementById("cusbebox")
+      
+                     if (DataStore.get("Custom_BE")) {
+                        cusbebox.checked = false
+                        DataStore.set("Custom_BE", false)
+                        cusbeel.removeAttribute("class")
+                     }
+                     else {
+                        cusbebox.checked = true
+                        DataStore.set("Custom_BE", true)
+                        cusbeel.setAttribute("class", "checked")
+                     }
+                  }
+               ),
+               document.createElement('br'),
+               UI.Input("BE")
+            ])
+         ]),
          document.createElement('br'),
          UI.CheckBox(
             `${selectedLang["custom-rank-name"]}`,'cusrankname','cusranknamebox',
@@ -640,7 +659,16 @@ const injectSettings = (panel) => {
                }
             }
          ),
-         document.createElement('br'),
+         UI.Row("Q-Delay",[
+            UI.Row("Create-Delay",[
+               UI.Label(`${selectedLang["Create-Delay"]}`, "Create-Delay-Text"),
+               UI.Input("Create-Delay"),
+            ]),
+            UI.Row("Find-Delay",[
+               UI.Label(`${selectedLang["Find-Delay"]}`, "Find-Delay-Text"),
+               UI.Input("Find-Delay")
+            ])
+         ]),
          UI.Dropdown(QueueID, "Gamemode", `${selectedLang["Gamemode"]}`, "description", "queueId"),
          document.createElement('br'),
          document.createElement('br'),

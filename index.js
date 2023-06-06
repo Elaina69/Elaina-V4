@@ -124,6 +124,12 @@ if (!DataStore.has("Auto-ban-pick")) {
 if (!DataStore.has("Auto-Find-Queue")) {
 	DataStore.set("Auto-Find-Queue", false)
 }
+if (!DataStore.has("Create-Delay")) {
+	DataStore.set("Create-Delay", 20000)
+}
+if (!DataStore.has("Find-Delay")) {
+	DataStore.set("Find-Delay", 3000)
+}
 if (!DataStore.has("Gamemode")) {
 	DataStore.set("Gamemode", 450)
 }
@@ -741,7 +747,7 @@ let pageChangeMutation = async (node) => {
 		}
 		
 		window.setTimeout(async () => {
-			if (DataStore.get("Auto-Find-Queue") && !data["Aram-only-mode"]) {
+			if (DataStore.get("Auto-Find-Queue") && !DataStore.get("aram-only")) {
 				await fetch('/lol-lobby/v2/lobby', {
 					method: 'POST',
 					body: JSON.stringify({ queueId: DataStore.get("Gamemode") }),
@@ -753,9 +759,9 @@ let pageChangeMutation = async (node) => {
 					await fetch('/lol-lobby/v2/lobby/matchmaking/search', {
 						method: 'POST'
 					})
-				},data["Find-Delay"]*1000)
+				},DataStore.get("Find-Delay"))
 			}
-			else if (DataStore.get("Auto-Find-Queue") && data["Aram-only-mode"]) {
+			else if (DataStore.get("Auto-Find-Queue") && DataStore.get("aram-only")) {
 				await fetch('/lol-lobby/v2/lobby', {
 					method: 'POST',
 					body: JSON.stringify({ queueId: 450 }),
@@ -767,9 +773,9 @@ let pageChangeMutation = async (node) => {
 					await fetch('/lol-lobby/v2/lobby/matchmaking/search', {
 						method: 'POST'
 					})
-				},data["Find-Delay"]*1000)
+				},DataStore.get("Find-Delay"))
 			}
-		},data["Create-Delay"]*1000)
+		},DataStore.get("Create-Delay"))
 		window.setInterval(() => {
 			try {
 				let homecontent = document.querySelector('.rcp-fe-lol-home > lol-uikit-section-controller > lol-uikit-section > #overview > iframe[referrerpolicy = "no-referrer-when-downgrade"]')

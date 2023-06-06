@@ -950,6 +950,47 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
 	width: 20px;
 	cursor: pointer;
 }
+
+/* Theme Settings */
+#Q-Delay {
+	display: flex;
+	margin-bottom: 0px !important;
+}
+
+#Create-Delay {
+	margin-right: 15px;
+	margin-bottom: 0px !important;
+}
+
+#Find-Delay {
+	margin-bottom: 0px !important;
+}
+
+#Custom-Curency {
+	display: flex;
+	margin-bottom: 0px !important;
+}
+
+#custom-rp {
+	margin-right: 15px;
+	margin-bottom: 0px !important;
+}
+
+#custom-be {
+	margin-bottom: 0px !important;
+}
+
+#Info {
+	display: flex;
+}
+
+#Info-div {
+	margin-right: 15px;
+}
+
+.settings-logo {
+	width: 115px;
+}
 /*_________________________________________________________________________________________________________________________________*/
 
 /* End */
