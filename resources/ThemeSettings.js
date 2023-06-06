@@ -186,6 +186,12 @@ const injectSettings = (panel) => {
          ),
          UI.Button (`${selectedLang["reload-client"]}`,'reload', ()=>{window.reloadClient()}),
          document.createElement('br'),
+//________________________________________________________________________________________//
+
+
+
+//________________________________________________________________________________________//
+// Theme Settings
          UI.Label(
             `${selectedLang["theme-settings"]}:`
          ),
@@ -511,7 +517,32 @@ const injectSettings = (panel) => {
             }
          ),
          document.createElement('br'),
+         UI.CheckBox(
+            `${selectedLang["new-gamesearch-div"]}`,"ngsd","ngsdbox",
+            () => {
+               let ngsdel = document.getElementById("ngsd")
+               let ngsdbox = document.getElementById("ngsdbox")
+
+               if (DataStore.get("new-gamesearch-div")) {
+                  ngsdbox.checked = false
+                  DataStore.set("new-gamesearch-div", false)
+                  ngsdel.removeAttribute("class")
+               }
+               else {
+                  ngsdbox.checked = true
+                  DataStore.set("new-gamesearch-div", true)
+                  ngsdel.setAttribute("class", "checked")
+               }
+            }
+         ),
          document.createElement('br'),
+         document.createElement('br'),
+//________________________________________________________________________________________//
+         
+
+
+//________________________________________________________________________________________//
+//Plugins Settings
          UI.Label(
             `${selectedLang["plugins-settings"]}`
          ),
@@ -782,6 +813,8 @@ window.addEventListener('load', async () => {
                   let oldpnbbox      = document.getElementById("oldpnbbox")
                   let hidelinksetbox = document.getElementById("hidelinksetbox")
                   let hideveriaccbox = document.getElementById("hideveriaccbox")
+                  let ngsdel         = document.getElementById("ngsd")
+                  let ngsdbox        = document.getElementById("ngsdbox")
 
                   if (document.getElementById("Aram only")) {
                      clearInterval(check)
@@ -815,6 +848,7 @@ window.addEventListener('load', async () => {
                      tickcheck(DataStore.get("old-prev/next-button"), oldpnbel, oldpnbbox)
                      tickcheck(DataStore.get("Hide-linking-settings"), hidelinksetel, hidelinksetbox)
                      tickcheck(DataStore.get("Hide-verify-acc"), hideveriaccel, hideveriaccbox)
+                     tickcheck(DataStore.get("new-gamesearch-div"),ngsdel, ngsdbox)
                   }
                },100)
             }
