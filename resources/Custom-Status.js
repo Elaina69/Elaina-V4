@@ -4,7 +4,7 @@ if (DataStore.get("Custom-Status")) {
     let time
     let i = 0
     let status = data["Custom-Status"]
-    if (status.length == 1) {time = 5000000000}
+    if (status.length == 1) {time = 10000}
     else {time = DataStore.get("status-delay")}
     
     window.setInterval( async ()=> {
