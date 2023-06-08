@@ -23,13 +23,6 @@
 
 "/________________________________Plugins Settings______________________________/": "",
 
-	"/___Delay for create queue___/": "Based on my loading client speed, you should change it for yours",
-		"Note"         : "1 is 1 second",
-		"Create-Delay" : 20,
-		"Find-Delay"   : 3,
-	
-
-
 	"Custom-Status":[
 		{"lines": [
 			"⡿⠉⠄⠄⠄⠄⠈⠙⠿⠟⠛⠉⠉⠉⠄⠄⠄⠈⠉⠉⠉⠛⠛⠻⢿⣿⣿⣿⣿⣿",
