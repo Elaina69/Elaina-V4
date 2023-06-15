@@ -4,8 +4,8 @@
 	"/__Support video formats__/" : " .webm, .mkv, .mp4 (not support audio), ... idk,maybe more ",
 	"wallpaper_list":
 	[
-		{"id": 0, "file": "Elaina1.webm"},
-		{"id": 1, "file": "Elaina2.webm"}
+		{"file": "Elaina1.webm"},
+		{"file": "Elaina2.webm"}
 	],
 
 
