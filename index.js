@@ -29,6 +29,7 @@ import './resources/Custom-Status'
 import './resources/Custom-rank(hover)'
 import './resources/Auto-Ban-Pick'
 import './resources/LootHelper'
+import './resources/RandomSkin'
 
 //___________________________________________________________________________//
 let path       = new URL(".", import.meta.url).href + "assets"
@@ -160,6 +161,9 @@ if (!DataStore.has("April fool` joke")) {
 if (!DataStore.has("loot-helper")) {
 	DataStore.set("loot-helper", true)
 }
+if (!DataStore.has("random-skin")) {
+	DataStore.set("random-skin", false)
+}
 if (!DataStore.has("")) {
 	DataStore.set("", true)
 }
@@ -184,7 +188,6 @@ if (!DataStore.has('wallpaper-index')) {
 else if (DataStore.get('wallpaper-index')+1>wallpapers.length) {
 	DataStore.set('wallpaper-index', 0)
 }
-else []
 if (!DataStore.has("NextBg_Count")) {
 	DataStore.set("NextBg_Count",0)
 }
@@ -646,13 +649,13 @@ function create_webm_buttons() {
 		for (let i = 0 ;i < wallpapers.length ;i++) {
 			const opt = wallpapers[i]
 			const el = document.createElement("lol-uikit-dropdown-option")
+			const id = i
 			el.setAttribute("slot", "lol-uikit-dropdown-option")
 			el.innerText = opt.file
-			el.id = opt.id
 			el.onclick = () => {
 				let elainaBg = document.getElementById("elaina-bg")
 					elainaBg.classList.add("webm-hidden")
-					DataStore.set('wallpaper-index', opt.id)
+					DataStore.set('wallpaper-index', id)
 				console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file)
 
 				setTimeout(function () {
@@ -661,7 +664,7 @@ function create_webm_buttons() {
 					elainaBg.classList.remove("webm-hidden")
 				}, 500)
 			}
-			if (DataStore.get('wallpaper-index') == opt.id) {
+			if (DataStore.get('wallpaper-index') == id) {
 				el.setAttribute("selected", "true")
 			}
 			bgdropdown.appendChild(el)
@@ -1019,7 +1022,7 @@ window.addEventListener('load', () => {
 	if (DataStore.get("Custom-Font")) {
 		let CusFont = document.createElement('style')
 		CusFont.appendChild(document.createTextNode(
-			'@font-face {font-family: "Custom"  src: url('+path+"/Fonts/"+data["Font-Name"]+')}'
+			'@font-face {font-family: "Custom"; src: url('+path+"/Fonts/"+data["Font-Name"]+')}'
 		))
 		document.body.appendChild(CusFont)
 	}

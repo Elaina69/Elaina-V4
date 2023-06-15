@@ -623,6 +623,25 @@ const injectSettings = (panel) => {
          ),
          document.createElement('br'),
          UI.CheckBox(
+            `${selectedLang["random-skin"]}`,'rds','rdsbox',
+            ()=>{
+               let rdsel = document.getElementById("rds")
+               let rdsbox = document.getElementById("rdsbox")
+
+               if (DataStore.get("random-skin")) {
+                  rdsbox.checked = false
+                  DataStore.set("random-skin", false)
+                  rdsel.removeAttribute("class")
+               }
+               else {
+                  rdsbox.checked = true
+                  DataStore.set("random-skin", true)
+                  rdsel.setAttribute("class", "checked")
+               }
+            }
+         ),
+         document.createElement('br'),
+         UI.CheckBox(
             `${selectedLang["auto-ban-pick"]}`,'autobp','autobpbox',
             ()=>{
                let autobpel = document.getElementById("autobp")
@@ -843,6 +862,8 @@ window.addEventListener('load', async () => {
                   let hideveriaccbox = document.getElementById("hideveriaccbox")
                   let ngsdel         = document.getElementById("ngsd")
                   let ngsdbox        = document.getElementById("ngsdbox")
+                  let rdsel          = document.getElementById("rds")
+                  let rdsbox         = document.getElementById("rdsbox")
 
                   if (document.getElementById("Aram only")) {
                      clearInterval(check)
@@ -877,6 +898,7 @@ window.addEventListener('load', async () => {
                      tickcheck(DataStore.get("Hide-linking-settings"), hidelinksetel, hidelinksetbox)
                      tickcheck(DataStore.get("Hide-verify-acc"), hideveriaccel, hideveriaccbox)
                      tickcheck(DataStore.get("new-gamesearch-div"),ngsdel, ngsdbox)
+                     tickcheck(DataStore.get("random-skin"), rdsel, rdsbox)
                   }
                },100)
             }

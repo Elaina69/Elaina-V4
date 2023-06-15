@@ -991,6 +991,10 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
 .settings-logo {
 	width: 115px;
 }
+.reload {
+	display: block !important;
+	width: 138.375px;
+}
 /*_________________________________________________________________________________________________________________________________*/
 
 /* End */
