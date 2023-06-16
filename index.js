@@ -12,27 +12,23 @@ import data        from './configs/ElainaV2_config.json'
 import lang        from './configs/Language.json'
 import utils       from './resources/_utilselaina'
 import watermark   from './resources/Watermark'
-import Update      from './resources/CheckUpdate'
 import thisVersion from './configs/Version'
 import QueueID     from './resources/Misc/QueueID.json'
 
 //Addon plugins
 import './resources/ThemeSettings'
-import './resources/LL-Settings'
-import './resources/Aram-only'
 import './resources/Auto-accept'
 import './resources/Dodge-button'
 import './resources/Offline-mode'
 import './resources/Hide_friendlist'
 import './resources/FakeIP'
-import './resources/Custom-Status'
-import './resources/Custom-rank(hover)'
 import './resources/Auto-Ban-Pick'
 import './resources/LootHelper'
 import './resources/RandomSkin'
 
 //___________________________________________________________________________//
 let path       = new URL(".", import.meta.url).href + "assets"
+let newVersion = (await (() => import('https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Version.js'))()).default
 
 let songIndex  = 0
 let wallpapers = data["wallpaper_list"]
@@ -215,27 +211,6 @@ if (!DataStore.has("audio-loop")) {
 
 
 //___________________________________________________________________________//
-var nodeRemovedEvent = function (event) {
-	if (event.target.classList && event.target.classList.contains("lol-loading-screen-container")) {
-		let elainaBg     = document.getElementById("elaina-bg")
-		let viewportRoot = document.getElementById("rcp-fe-viewport-root")
-
-		if (!elainaBg || !viewportRoot) {
-			return
-		}
-		viewportRoot.style.filter = "none"
-		elainaBg.style.filter     = data["Homepage"]
-
-		document.removeEventListener("DOMNodeRemoved", nodeRemovedEvent)
-	}
-}
-
-document.addEventListener("DOMNodeRemoved", nodeRemovedEvent)
-//___________________________________________________________________________//
-
-
-
-//___________________________________________________________________________//
 function newStyle (cssvar,folder,name,css) {
 	let NStyle = document.createElement('style')
 		NStyle.appendChild(document.createTextNode(
@@ -243,11 +218,27 @@ function newStyle (cssvar,folder,name,css) {
 		))
 	document.body.appendChild(NStyle)
 }
-//___________________________________________________________________________//
+function newFont (font,font_family) {
+	let Font = document.createElement('style')
+		Font.appendChild(document.createTextNode(
+			'@font-face {font-family: '+font_family+'; src: url('+path+"/Fonts/"+font+')}'
+		))
+	document.body.appendChild(Font)
+}
+function CustomCursor (folder,css) {
+	let cursor = document.createElement("div")
+			cursor.classList.add("cursor")
+			cursor.style.background = folder
 
-
-
-//___________________________________________________________________________//
+	document.addEventListener('mousemove', function(e){
+		var x = e.clientX
+		var y = e.clientY
+		cursor.style.transform = `translate3d(calc(${e.clientX}px - 40%), calc(${e.clientY}px - 40%), 0)`
+	})
+	let body = document.querySelector("html")
+		body.appendChild(cursor)
+	utils.addCss(css)
+}
 function create_element(tagName, className, content) {
 	const el = document.createElement(tagName)
 	el.className = className
@@ -256,11 +247,9 @@ function create_element(tagName, className, content) {
 	}
 	return el
 }
-
 function go_to_default_home_page() {
 	document.querySelector(`lol-uikit-navigation-item[item-id='elaina-home']`).click()
 }
-
 function add_elaina_home_page() {
 	let lol_home = document.querySelector(".rcp-fe-lol-home > lol-uikit-section-controller")
 
@@ -276,7 +265,6 @@ function add_elaina_home_page() {
 		}
 	}
 }
-
 function add_elaina_home_navbar() {
 	let navbar = document.querySelector(".rcp-fe-lol-home > lol-uikit-navigation-bar")
 
@@ -292,7 +280,6 @@ function add_elaina_home_navbar() {
 		}
 	}
 }
-
 function patch_default_home_page(){
 	let loop = 0
 	let intervalId = window.setInterval(() => {
@@ -301,11 +288,6 @@ function patch_default_home_page(){
 		go_to_default_home_page()
 	}, 100)
 }
-//___________________________________________________________________________//
-
-
-
-//___________________________________________________________________________//
 function elaina_play_pause() {
 	let elaina_bg_elem = document.getElementById("elaina-bg")
 	if (DataStore.get('pause-wallpaper')%2==0) {
@@ -315,7 +297,6 @@ function elaina_play_pause() {
 		elaina_bg_elem.play()
 	}
 }
-
 function play_pause_set_icon(elem) {
 	let pause_bg_icon = elem || document.querySelector(".pause-bg-icon")
 
@@ -329,11 +310,6 @@ function play_pause_set_icon(elem) {
 		pause_bg_icon.setAttribute("src", `${path}/Icon/pause_button.png`)
 	}
 }
-//___________________________________________________________________________//
-
-
-
-//___________________________________________________________________________//
 function audio_play_pause() {
 	let audio = document.getElementById("bg-audio")
 
@@ -344,7 +320,6 @@ function audio_play_pause() {
 		audio.play()
 	}
 }
-
 function play_pause_set_icon_audio(elem) {
 	let pause_audio_icon = elem || document.querySelector(".pause-audio-icon")
 
@@ -357,11 +332,6 @@ function play_pause_set_icon_audio(elem) {
 	}
 
 }
-//___________________________________________________________________________//
-
-
-
-//___________________________________________________________________________//
 function audio_mute() {
 	let audio          = document.getElementById("bg-audio")
 	let wallpaperaudio = document.getElementById("elaina-bg")
@@ -375,7 +345,6 @@ function audio_mute() {
 		audio.volume          = DataStore.get("audio-volume")
 	}
 }
-
 function mute_set_icon_audio(elem) {
 	let mute_audio_icon = elem || document.querySelector(".mute-audio-icon")
 
@@ -388,11 +357,6 @@ function mute_set_icon_audio(elem) {
 	}
 
 }
-//___________________________________________________________________________//
-
-
-
-//___________________________________________________________________________//
 function audio_loop() {
 	let audio = document.getElementById("bg-audio")
 
@@ -405,7 +369,6 @@ function audio_loop() {
 		audio.addEventListener("ended", nextSong)
 	}
 }
-
 function audio_loop_icon(elem) {
 	let audio_loop_icon = elem || document.querySelector(".audio-loop-icon")
 
@@ -418,13 +381,6 @@ function audio_loop_icon(elem) {
 	}
 
 }
-//___________________________________________________________________________//
-
-
-
-
-
-//___________________________________________________________________________//
 function loadBG(BG) {
 	let elainaBg = document.getElementById("elaina-bg")
 	elainaBg.src = `${path}/Backgrounds/${BG}`
@@ -434,7 +390,6 @@ function loadSong(song) {
 	let audio     = document.getElementById("bg-audio")
     	audio.src = `${path}/Backgrounds/Audio/${song}`
 }
-
 function next_wallpaper() {
 	let elainaBg = document.getElementById("elaina-bg")
 		elainaBg.classList.add("webm-hidden")
@@ -467,7 +422,6 @@ function prev_wallpaper() {
 		elainaBg.classList.remove("webm-hidden")
 	}, 500)
 }
-
 function nextSong() {
 	if (DataStore.get("Continues_Audio")) {
 		DataStore.set('audio-index', DataStore.get('audio-index')+1)
@@ -512,9 +466,103 @@ function prevSong() {
 		console.log("Now playing "+Audios[songIndex])
 	}
 }
+function newTicker() {
+	let ticker = document.querySelector("#lol-uikit-layer-manager-wrapper > lol-uikit-full-page-backdrop > lol-uikit-flyout-frame")
+	if (ticker) {
+		ticker.shadowRoot.querySelector("div > div.border").style.display = "none"
+		ticker.shadowRoot.querySelector("div > div.sub-border").style.display = "none"
+		ticker.shadowRoot.querySelector("div > div.caret").style.display = "none"
+		ticker.shadowRoot.querySelector("div > div.lol-uikit-flyout-frame").style.backgroundColor = "black"
+		ticker.shadowRoot.querySelector("div > div.lol-uikit-flyout-frame").style.borderRadius = "10px"
+	}
+}
+function newGameSearch() {
+	if (DataStore.get("new-gamesearch-div") && document.querySelector("lol-social-panel > lol-parties-game-info-panel")) {
+		try {
+			let gameinfo = document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-status-card").shadowRoot
+				gameinfo.querySelector("div").style.background = "#143c1400"
+				gameinfo.querySelector("div > div.parties-status-card-bg-container").style.color = "#36d98700"
+				gameinfo.querySelector("div > div.parties-status-card-bg-container > video").setAttribute('src', '')
+				gameinfo.querySelector("div > div.parties-status-card-header").style.visibility = "hidden"
+
+			let cardbody = gameinfo.querySelector("div > div.parties-status-card-body").style
+				cardbody.marginTop = "-23px"
+				cardbody.padding = "10px 5px 10px 10px"
+				cardbody.border = "1px solid #8c8263"
+				cardbody.borderRadius = "10px"
+
+			let gamesearch = document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-game-search").shadowRoot
+				gamesearch.querySelector("div").style.border = "1px solid #8c8263"
+				gamesearch.querySelector("div").style.borderRadius = "10px"
+				gamesearch.querySelector("div").style.marginTop = "9px"
+				gamesearch.querySelector("div > div.parties-game-search-divider").style.display = "none"
+
+			document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-bg-container").style.backgroundImage = "none"
+			document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-status-card").shadowRoot.
+				querySelector("div > div.parties-status-card-body > div.parties-status-card-map.game_map_howling_abyss").style.margin = "-3px 10px 0 0"
+		}catch{}
+	}
+}
+function CustomRP() {
+	let RP = document.querySelector("div.currency-rp")
+	if (DataStore.get("Custom_RP") && RP) {
+		RP.innerHTML = `${DataStore.get("RP-data")}`
+	}
+}
+function CustomBE() {
+	let BE = document.querySelector(".currency-be-component.ember-view")
+	if (DataStore.get("Custom_BE") && BE) {
+		BE.innerHTML = 
+			`<div class=\"currency-be-icon-container\">\n  
+				<div class=\"currency-be-icon-static\"></div>\n  
+				<lol-uikit-video type=\"intro\" src=\"/fe/lol-navigation/add-blue-essence.webm\" class=\"animation-add-blue-essence\"></lol-uikit-video>\n  
+				<lol-uikit-video type=\"intro\" src=\"/fe/lol-navigation/remove-blue-essence.webm\" class=\"animation-remove-blue-essence\"></lol-uikit-video>\n
+			</div>\n\n
+			${DataStore.get("BE")}\n`
+	}
+}
+function CustomStatus() {
+	let time
+    let i = 0
+    let status = data["Custom-Status"]
+    if (status.length == 1) {time = 10000}
+    else {time = DataStore.get("status-delay")}
+    
+    window.setInterval( async ()=> {
+        if (i == status.length - 1) {i = 0}
+        else {i++}
+        const statusMessage = status[i]["lines"].slice().join("\\n")
+            await fetch("/lol-chat/v1/me", {
+                method :"PUT",
+                headers:{"content-type":"application/json"},
+                body   :`{"statusMessage":"${statusMessage}"}`
+            }) 
+    },time)
+}
+function CustomRank() {
+	let queueOptions = ["RANKED_SOLO_5x5","RANKED_FLEX_SR","RANKED_FLEX_TT",
+                        "RANKED_TFT","RANKED_TFT_TURBO","RANKED_TFT_DOUBLE_UP",
+    ]
+    let tierOptions = ["IRON","BRONZE","SILVER","GOLD","PLATINUM",
+                       "DIAMOND","MASTER","GRANDMASTER","CHALLENGER"
+    ]
+    let divisionOptions = ["I", "II", "III", "IV"];
+    let requestBody = {
+        "lol": {
+            "rankedLeagueQueue"    : queueOptions[DataStore.get("Ranked Queue ID")],
+            "rankedLeagueTier"     : tierOptions[DataStore.get("Ranked Tier ID")],
+            "rankedLeagueDivision" : divisionOptions[DataStore.get("Ranked Division ID")]
+        }
+    }
+    window.setInterval(async()=>{
+        await fetch("/lol-chat/v1/me", {
+            method : "PUT",
+            headers: {"content-type": "application/json"},
+            body   : JSON.stringify(requestBody)
+        })
+    },10000)
+}
 //___________________________________________________________________________//
-
-
 
 
 
@@ -671,19 +719,180 @@ function create_webm_buttons() {
 		}
 	}
 }
-
 function Delbuttons() {
 	document.getElementsByClassName("webm-bottom-buttons-container")[0].remove()
 	document.getElementsByClassName("newbgchange-container")[0].remove()
+}
+function UpdatePopup() {
+    const noticediv   = document.createElement("div")
+    const messboxdiv  = document.createElement("div")
+    const downloaddiv = document.createElement("div")
+    const closediv    = document.createElement("div")
+    const message     = document.createElement("p")
+    const download    = document.createElement("a")
+    const notice      = document.createElement("img")
+    const close       = document.createElement("img")
+
+    messboxdiv.classList.add("messdiv")
+    downloaddiv.classList.add("downdiv")
+    closediv.classList.add("closediv")
+    close.classList.add("closenotice")
+    message.classList.add("message")
+    download.classList.add("download")
+    noticediv.classList.add("noticediv")
+    notice.classList.add("notice")
+
+    notice.setAttribute('src', `${path}/Icon/download.png`)
+    close.setAttribute('src', `${path}/Icon/close.png`)
+
+    let showcontainer = document.getElementsByClassName("rcp-fe-lol-home")[0]
+
+    showcontainer.appendChild(noticediv)
+    noticediv.append(notice)
+
+    noticediv.addEventListener('click', () => {
+		const selectedLang = lang[langMap[langCode] || "EN"]
+
+        showcontainer.appendChild(messboxdiv)
+        showcontainer.appendChild(downloaddiv)
+        showcontainer.appendChild(closediv)
+        showcontainer.appendChild(message)
+        closediv.append(close)
+        downloaddiv.append(download)
+
+        message.innerHTML = selectedLang["update_mess"]
+        download.innerHTML = selectedLang["update"]
+
+        download.setAttribute("href",'https://codeload.github.com/Elaina69/Elaina-V2/zip/refs/tags/v'+newVersion+'')
+        download.setAttribute("target", '_blank')
+
+        closediv.addEventListener('click', () => {
+            try {
+                document.getElementsByClassName("message")[0].remove()
+                document.getElementsByClassName("download")[0].remove()
+                document.getElementsByClassName("closenotice")[0].remove()
+                document.getElementsByClassName("messdiv")[0].remove()
+                document.getElementsByClassName("downdiv")[0].remove()
+                document.getElementsByClassName("closediv")[0].remove()
+            }
+            catch {}
+        })
+    })
+}
+function DelPopup() {
+    try {
+        document.getElementsByClassName("notice")[0].remove()
+        document.getElementsByClassName("noticediv")[0].remove()
+        document.getElementsByClassName("message")[0].remove()
+        document.getElementsByClassName("download")[0].remove()
+        document.getElementsByClassName("closenotice")[0].remove()
+        document.getElementsByClassName("messdiv")[0].remove()
+        document.getElementsByClassName("downdiv")[0].remove()
+        document.getElementsByClassName("closediv")[0].remove()
+    }
+    catch {}
+}
+async function createLoaderMenu(root) {
+	const { Component, jsx, render } = await import('//esm.run/nano-jsx')
+	const langCode = document.querySelector("html").lang;
+	const langMap = lang.langlist
+	const version = thisVersion
+	const TRANSLATIONS = lang
+	const _t = TRANSLATIONS[langMap[langCode] || "EN"];
+	
+	class LoaderMenu extends Component {
+		visible = false
+		frame = null
+		opener = null
+		didMount() {
+			this.opener = document.querySelector('div[action=settings]')
+			this.opener.addEventListener('click', e => {
+				if (!this.visible) {
+					e.stopImmediatePropagation()
+					this.show(true)
+				}
+			})
+		}
+		show(on) {
+			this.visible = on
+			this.update()
+			if (this.visible) {
+				this.frame.shadowRoot.querySelector('lol-uikit-close-button')
+					?.addEventListener('click', () => this.show(false))
+			}
+		}
+		showDefaultSettings() {
+			this.opener.click()
+			this.show(false)
+		}
+		render() {
+			return jsx/*html*/`
+				<div class="modal" style="position: absolute; inset: 0px; z-index: 8500" hidden=${!this.visible || undefined}>
+					<lol-uikit-full-page-backdrop class="backdrop" style="display: flex; align-items: center; justify-content: center; position: absolute; inset: 0px" />
+					<div class="dialog-confirm" style="display: flex; align-items: center; justify-content: center; position: absolute; inset: 0px">
+						<lol-uikit-dialog-frame ref=${el => (this.frame = el)} class="dialog-frame" orientation="bottom" close-button="false">
+							<div class="dialog-content">
+								<lol-uikit-content-block class="app-controls-exit-dialog" type="dialog-medium" style="position: relative; overflow: hidden">
+									<div style="position: absolute; top: 60px">
+										<video
+											src="${path}/Icon/LL-Settings.webm"
+											style="object-fit: cover; object-position: center center; height: 100%; width: 100%; transform-origin: center center; transform: scale(2.5)">
+										</video>
+									</div>
+									<div style="position: relative">
+										<div style="margin-bottom: 24px">
+											<h4 style="padding: 6px 0">Elaina-V2</h4>
+											<p>v${version}</p>
+										</div>
+										<hr class="heading-spacer" />
+										<div style="display: flex; flex-direction: column; align-items: center; gap: 12px">
+											<lol-uikit-flat-button-secondary style="display:inline-block; width: 200px" onClick=${() => window.openDevTools()}>
+												${_t['l.open_devtools']} (Ctrl-Shift-I)
+											</lol-uikit-flat-button-secondary>
+											<lol-uikit-flat-button-secondary style="display:inline-block; width: 200px" onClick=${() => window.location.reload()}>
+												${_t['l.reload_client']} (Ctrl-Shift-R)
+											</lol-uikit-flat-button-secondary>
+											<lol-uikit-flat-button-secondary style="display:inline-block; width: 200px" onClick=${() => window.openPluginsFolder()}>
+												${_t['l.open_plugins']}
+											</lol-uikit-flat-button-secondary>
+										</div>
+										<hr class="heading-spacer" />
+										<p style="padding: 20px 0" class="lol-settings-code-of-conduct-link lol-settings-window-size-text">
+											<a href="https://github.com/Elaina69/Elaina-V2/releases" target="_blank">${_t['l.theme_releases']}</a>
+										</p>
+									</div>
+								</lol-uikit-content-block>
+							</div>
+							<lol-uikit-flat-button-group type="dialog-frame">
+								<lol-uikit-flat-button tabindex="1" class="button-accept" onClick=${() => this.showDefaultSettings()}>${_t['l.open_settings']}</lol-uikit-flat-button>
+								<lol-uikit-flat-button tabindex="2" class="button-decline" onClick=${() => this.show(false)}>${_t['l.close']}</lol-uikit-flat-button>
+							</lol-uikit-flat-button-group>
+						</lol-uikit-dialog-frame>
+					</div>
+				</div>
+			`
+		}
+	}
+	render(jsx`<${LoaderMenu} />`, root)
 }
 //___________________________________________________________________________//
 
 
 
 //___________________________________________________________________________//
+let nodeRemovedEvent = function (event) {
+	if (event.target.classList && event.target.classList.contains("lol-loading-screen-container")) {
+		let elainaBg     = document.getElementById("elaina-bg")
+		let viewportRoot = document.getElementById("rcp-fe-viewport-root")
+
+		if (!elainaBg || !viewportRoot) {return}
+		viewportRoot.style.filter = "none"
+		elainaBg.style.filter     = data["Homepage"]
+		document.removeEventListener("DOMNodeRemoved", nodeRemovedEvent)
+	}
+}
 let updateLobbyRegaliaBanner = async message => {
 	let phase = JSON.parse(message["data"])[2]["data"]
-
 	if (phase == "Lobby") {
 		window.setInterval(() => {
 			try {
@@ -702,13 +911,6 @@ let updateLobbyRegaliaBanner = async message => {
 		},200)
 	}
 }
-//___________________________________________________________________________//
-
-
-
-
-
-//___________________________________________________________________________//
 let pageChangeMutation = async (node) => {
 	let pagename, previous_page, ranked_observer
 	let elaina_bg_elem = document.getElementById("elaina-bg")
@@ -736,9 +938,8 @@ let pageChangeMutation = async (node) => {
 			create_webm_buttons()
 			watermark.ElainaTrigger()
 			if (DataStore.get("Receive-Update")) {
-				let newVersion = (await (() => import('https://rawcdn.githack.com/Elaina69/Elaina-V2/0ef31f4bd1e319d7f55aedaf9790e3f1e3a77b17/configs/Version.js'))()).default
 				if (thisVersion < newVersion) {
-					Update.UpdatePopup()
+					UpdatePopup()
 				}
 			}
 		}
@@ -793,7 +994,7 @@ let pageChangeMutation = async (node) => {
 		if (document.getElementsByClassName("webm-bottom-buttons-container").length) {
 			Delbuttons()
 			watermark.DelElainaTrigger()
-			Update.DelPopup()
+			DelPopup()
 		}
 	}
 	if (pagename == "social") {
@@ -916,14 +1117,30 @@ let pageChangeMutation = async (node) => {
 	}
 	if (previous_page != pagename) {
 		previous_page = pagename
-	}	
+	}
+	if (node.getAttribute("data-screen-name") == "rcp-fe-lol-parties") {
+		window.setInterval(()=>{
+			try{
+				document.querySelector("div[data-game-mode='CLASSIC']").remove()
+				document.querySelector("div[data-game-mode='TFT']").remove()
+				document.querySelector("lol-uikit-navigation-item[data-category='VersusAi']").remove()
+				document.querySelector("lol-uikit-navigation-item[data-category='Training']").remove()
+			}
+			catch{}
+			try {
+				if (document.getElementsByClassName("parties-game-navs-list")[0].getAttribute("selectedindex") == "0") {
+					document.querySelector('div[data-game-mode=ARAM] div[class=parties-game-type-upper-half]').click()
+				}
+			}
+			catch {}
+		},10)
+	}
 }
 //___________________________________________________________________________//
 
 
 
 //___________________________________________________________________________//
-//Spaghetti Code ngl
 window.setInterval(() => {
 	if (DataStore.get("settings-dialogs-transparent")) {
 		try {document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame").shadowRoot.querySelector("div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch{}
@@ -949,47 +1166,7 @@ window.setInterval(() => {
 		}
 		catch {}
 	}
-
-	try {
-		if (DataStore.get("new-gamesearch-div")) {
-			let gameinfo = document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-status-card").shadowRoot
-				gameinfo.querySelector("div").style.background = "#143c1400"
-				gameinfo.querySelector("div > div.parties-status-card-bg-container").style.color = "#36d98700"
-				gameinfo.querySelector("div > div.parties-status-card-bg-container > video").setAttribute('src', '')
-				gameinfo.querySelector("div > div.parties-status-card-header").style.visibility = "hidden"
-
-			let cardbody = gameinfo.querySelector("div > div.parties-status-card-body").style
-				cardbody.marginTop = "-23px"
-				cardbody.padding = "10px 5px 10px 10px"
-				cardbody.border = "1px solid #8c8263"
-				cardbody.borderRadius = "10px"
-
-			let gamesearch = document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-game-search").shadowRoot
-				gamesearch.querySelector("div").style.border = "1px solid #8c8263"
-				gamesearch.querySelector("div").style.borderRadius = "10px"
-				gamesearch.querySelector("div").style.marginTop = "9px"
-				gamesearch.querySelector("div > div.parties-game-search-divider").remove()
-
-			document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-bg-container").style.backgroundImage = "none"
-			document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-status-card").shadowRoot.
-				querySelector("div > div.parties-status-card-body > div.parties-status-card-map.game_map_howling_abyss").style.margin = "-3px 10px 0 0"
-		}
-	}
-	catch {}
-	try{
-		if (DataStore.get("Custom_RP")) {
-			document.querySelector("div.currency-rp").innerHTML = `${DataStore.get("RP-data")}`
-		}
-	}
-	catch{}
-	try{
-		if (DataStore.get("Custom_BE")) {
-			document.querySelector(".currency-be-component.ember-view").innerHTML = `<div class=\"currency-be-icon-container\">\n  <div class=\"currency-be-icon-static\"></div>\n  <lol-uikit-video type=\"intro\" src=\"/fe/lol-navigation/add-blue-essence.webm\" class=\"animation-add-blue-essence\"></lol-uikit-video>\n  <lol-uikit-video type=\"intro\" src=\"/fe/lol-navigation/remove-blue-essence.webm\" class=\"animation-remove-blue-essence\"></lol-uikit-video>\n</div>\n\n${DataStore.get("BE")}\n`
-		}
-	}
-	catch{}
 }, 500)
-
 import './resources/Pandoru'
 import wt from './resources/Watermark'
 //___________________________________________________________________________//
@@ -997,8 +1174,9 @@ import wt from './resources/Watermark'
 
 
 //___________________________________________________________________________//
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
 	newStyle("--Hover-card-backdrop",path+"/Icon",data['Hover-card'])
+	newFont("BeaufortforLOL-Bold.ttf","Elaina")
 
 	if (DataStore.get("Sidebar-Transparent")) {utils.addCss(`${path}/Css/Addon-Css/Sidebar-Transparent.css`)}
 	else {utils.addCss(`${path}/Css/Addon-Css/Sidebar-Color.css`)}
@@ -1007,9 +1185,7 @@ window.addEventListener('load', () => {
 	else {newStyle("--ElainaStatic",path+"/Icon",data["Static-logo"],`${path}/Css/Addon-Css/Static-Loading-Screen.css`)}
 
 	if (DataStore.get("Hide-Champions-Splash-Art")) {utils.addCss(`${path}/Css/Addon-Css/Hide-Champs-Splash-Art.css`)}
-
 	if (Avatar) {newStyle("--Avatar",path+"/Icon",data["Avatar"],`${path}/Css/Addon-Css/Icon/Avatar.css`)}
-
 	if (DataStore.get("Custom-Icon")) {
 		newStyle("--RP-Icon",path+"/Icon",data["RP-icon"],`${path}/Css/Addon-Css/Icon/RiotPoint.css`)
 		newStyle("--BE-Icon",path+"/Icon",data["BE-icon"],`${path}/Css/Addon-Css/Icon/BlueEssence.css`)
@@ -1018,36 +1194,14 @@ window.addEventListener('load', () => {
 		newStyle("--Clash-banner",path+"/Icon",data["Class-banner"],`${path}/Css/Addon-Css/Icon/ClashBanner.css`)
 		newStyle("--Ticker",path+"/Icon",data["Ticker"],`${path}/Css/Addon-Css/Icon/Ticker.css`)
 	}
-	
-	if (DataStore.get("Custom-Font")) {
-		let CusFont = document.createElement('style')
-		CusFont.appendChild(document.createTextNode(
-			'@font-face {font-family: "Custom"; src: url('+path+"/Fonts/"+data["Font-Name"]+')}'
-		))
-		document.body.appendChild(CusFont)
-	}
+	if (DataStore.get("Custom-Font")) {newFont(data["Font-Name"],"Custom")}
+	if (DataStore.get("Custom-Cursor")) {CustomCursor('url('+path+"/Icon/"+data["Mouse-cursor"]+')',`${path}/Css/Addon-Css/Cursor.css`)}
+	if (DataStore.get("Custom-Status")) {CustomStatus()}
+	if (DataStore.get("Custom-Rank(Hover-card)")) {CustomRank()}
+	if (DataStore.get("aram-only")) {utils.addCss(`${path}/Css/Addon-Css/Aram-only.css`)}
 
-	if (DataStore.get("Custom-Cursor")) {
-		let cursor = document.createElement("div")
-			cursor.classList.add("cursor")
-			cursor.style.background = 'url('+path+"/Icon/"+data["Mouse-cursor"]+')'
-
-		document.addEventListener('mousemove', function(e){
-			var x = e.clientX
-			var y = e.clientY
-			cursor.style.transform = `translate3d(calc(${e.clientX}px - 40%), calc(${e.clientY}px - 40%), 0)`
-		})
-		let body = document.querySelector("html")
-			body.appendChild(cursor)
-		utils.addCss(`${path}/Css/Addon-Css/Cursor.css`)
-	}
-
-	let addFont = document.createElement('style')
-		addFont.appendChild(document.createTextNode(
-			'@font-face {font-family: "Elaina"  src: url('+path + "/Fonts/BeaufortforLOL-Bold.ttf" +')}'
-		))
-	document.body.appendChild(addFont)
-	
+	const manager = () => document.getElementById('lol-uikit-layer-manager-wrapper')
+	const root    = document.createElement('div')
 	const video = document.createElement('video')
 	const audio = document.createElement("audio")
 
@@ -1084,6 +1238,12 @@ window.addEventListener('load', () => {
 	elaina_play_pause()
 
 	utils.mutationObserverAddCallback(pageChangeMutation, ["screen-root"])
+
+	utils.routineAddCallback(newTicker,["flyout"])
+	utils.routineAddCallback(newGameSearch,["parties-game-section"])
+	utils.routineAddCallback(CustomRP,["currency-rp"])
+	utils.routineAddCallback(CustomBE,["currency-be"])
+
 	utils.subscribe_endpoint("/lol-gameflow/v1/gameflow-phase", updateLobbyRegaliaBanner)
 	utils.subscribe_endpoint('/lol-gameflow/v1/gameflow-phase', (message) => {
 		let phase = JSON.parse(message["data"])[2]["data"]
@@ -1106,5 +1266,11 @@ window.addEventListener('load', () => {
 
 	if (DataStore.get("Continues_Audio")) {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[DataStore.get('audio-index')])}
 	else {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[songIndex])}
+
+	if (DataStore.get("Old-League-Loader-Settings")) {
+		while (!manager()) await new Promise(r => setTimeout(r, 200))
+		await createLoaderMenu(root)
+		manager().prepend(root)
+	}
 })
 //___________________________________________________________________________//

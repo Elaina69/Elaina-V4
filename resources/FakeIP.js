@@ -54,6 +54,3 @@ if (newdate == "1/4" && DataStore.get("April fool` joke")){
     manager().appendChild(root);
   });
 }
-else {
-  console.log("Theme is running normally")
-}

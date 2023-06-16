@@ -85,7 +85,7 @@ window.addEventListener('load', () => {
 		routines.forEach(routine => {
 			routine.callback()
 		})
-	}, 1300)
+	}, 1000)
 
 	const observer = new MutationObserver((mutationsList) => {
 		for (let mutation of mutationsList) {

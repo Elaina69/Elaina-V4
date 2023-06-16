@@ -2,7 +2,6 @@ import lang    from '../configs/Language.json'
 import QueueID from './Misc/QueueID.json'
 
 let path       = new URL("..", import.meta.url).href + "assets"
-var module = { exports: {} }
 const UI = {
    Row: (id, childs) => {
       const row = document.createElement('div')
