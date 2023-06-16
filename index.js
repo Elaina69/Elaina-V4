@@ -512,13 +512,14 @@ function CustomRP() {
 function CustomBE() {
 	let BE = document.querySelector(".currency-be-component.ember-view")
 	if (DataStore.get("Custom_BE") && BE) {
-		BE.innerHTML = 
-			`<div class=\"currency-be-icon-container\">\n  
-				<div class=\"currency-be-icon-static\"></div>\n  
-				<lol-uikit-video type=\"intro\" src=\"/fe/lol-navigation/add-blue-essence.webm\" class=\"animation-add-blue-essence\"></lol-uikit-video>\n  
-				<lol-uikit-video type=\"intro\" src=\"/fe/lol-navigation/remove-blue-essence.webm\" class=\"animation-remove-blue-essence\"></lol-uikit-video>\n
-			</div>\n\n
-			${DataStore.get("BE")}\n`
+		BE.innerHTML = /* html */`
+			<div class="currency-be-icon-container">
+				<div class="currency-be-icon-static"></div>
+				<lol-uikit-video type="intro" src="/fe/lol-navigation/add-blue-essence.webm" class="animation-add-blue-essence"></lol-uikit-video>
+				<lol-uikit-video type="intro" src="/fe/lol-navigation/remove-blue-essence.webm" class="animation-remove-blue-essence"></lol-uikit-video>
+			</div>
+			${DataStore.get("BE")}
+		`
 	}
 }
 function CustomStatus() {
