@@ -751,6 +751,8 @@ function UpdatePopup() {
     noticediv.append(notice)
 
     noticediv.addEventListener('click', () => {
+		const langCode = document.querySelector("html").lang
+		const langMap  = lang.langlist
 		const selectedLang = lang[langMap[langCode] || "EN"]
 
         showcontainer.appendChild(messboxdiv)
@@ -762,8 +764,7 @@ function UpdatePopup() {
 
         message.innerHTML = selectedLang["update_mess"]
         download.innerHTML = selectedLang["update"]
-
-        download.setAttribute("href",'https://codeload.github.com/Elaina69/Elaina-V2/zip/refs/tags/v'+newVersion+'')
+		download.setAttribute("href",'https://codeload.github.com/Elaina69/Elaina-V2/zip/refs/tags/v'+newVersion+'')
         download.setAttribute("target", '_blank')
 
         closediv.addEventListener('click', () => {
@@ -1118,7 +1119,7 @@ let pageChangeMutation = async (node) => {
 	if (previous_page != pagename) {
 		previous_page = pagename
 	}
-	if (node.getAttribute("data-screen-name") == "rcp-fe-lol-parties") {
+	if (DataStore.get("aram-only") && node.getAttribute("data-screen-name") == "rcp-fe-lol-parties") {
 		window.setInterval(()=>{
 			try{
 				document.querySelector("div[data-game-mode='CLASSIC']").remove()
