@@ -1,4 +1,4 @@
-import utils from './_utilselaina'
+import utils from '../_utilselaina'
 let covert_status = "chat";
 
 function get_status() {

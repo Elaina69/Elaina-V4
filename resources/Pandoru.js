@@ -61,7 +61,3 @@ if (newdate == "25/12" && DataStore.get("Merry-Christmas")){
     console.log('           .~7!:                                         .^~!~.               .:.                                       ')
     console.log('              :~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!~^.                                                            ')
 }
-else if (DataStore.get("Merry-Christmas")) {
-    console.log("Not Xmas yet")
-}
-import wt from './Watermark'

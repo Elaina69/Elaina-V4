@@ -1,5 +1,5 @@
 import lang from '../configs/Language.json'
-let path = new URL("..", import.meta.url).href + "assets"
+let assetspath = new URL("..", import.meta.url).href + "assets"
 
 if (DataStore.get("loot-helper")) {
     function AddElement(parent, tag, params = [], classes = [], content = null) {
@@ -437,7 +437,7 @@ if (DataStore.get("loot-helper")) {
     window.addEventListener('load', () => {
         let NStyle = document.createElement('style');
 		NStyle.appendChild(document.createTextNode(
-			'@import url("'+path+'/Css/Addon-Css/LootHelper.css");:root {--OC_button:url("'+path+'/Icon/button-open-chests.png");--BE_button:url("'+path+'/Icon/button-blue-essence.png");--BE_hover:url("'+path+'/Icon/button-blue-essence-hover.png");--BE_active:url("'+path+'/Icon/button-blue-essence-click.png");--rbutton:url("'+path+'/Icon/button-refresh.png");--rhover:url("'+path+'/Icon/button-refresh-hover.png");--ractive:url("'+path+'/Icon/button-refresh-click.png");--OC_hover:url("'+path+'/Icon/button-open-chests-hover.png");--OC_active:url("'+path+'/Icon/button-open-chests-click.png");}'
+			'@import url("'+assetspath+'/Css/Addon-Css/LootHelper.css");:root {--OC_button:url("'+assetspath+'/Icon/button-open-chests.png");--BE_button:url("'+assetspath+'/Icon/button-blue-essence.png");--BE_hover:url("'+assetspath+'/Icon/button-blue-essence-hover.png");--BE_active:url("'+assetspath+'/Icon/button-blue-essence-click.png");--rbutton:url("'+assetspath+'/Icon/button-refresh.png");--rhover:url("'+assetspath+'/Icon/button-refresh-hover.png");--ractive:url("'+assetspath+'/Icon/button-refresh-click.png");--OC_hover:url("'+assetspath+'/Icon/button-open-chests-hover.png");--OC_active:url("'+assetspath+'/Icon/button-open-chests-click.png");}'
 		));
 	    document.body.appendChild(NStyle)
     

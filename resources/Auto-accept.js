@@ -1,5 +1,4 @@
-import utils from './_utilselaina';
-import data from"../configs/ElainaV2_config.json";
+import utils from '../_utilselaina';
 import lang from '../configs/Language.json'
 
 let queue_accepted = false 
@@ -17,20 +16,6 @@ function autoAcceptQueueButton(){
 	}
 }
 
-window.autoAcceptQueueButton = autoAcceptQueueButton
-
-
-let autoAcceptCallback = async message => {
-	utils.phase = JSON.parse(message["data"])[2]["data"]
-	if (utils.phase == "ReadyCheck" && DataStore.get("auto_accept") && !queue_accepted) {
-		await acceptMatchmaking(),
-		queue_accepted = true
-	}
-	else if (utils.phase != "ReadyCheck") {
-		queue_accepted = false
-	}
-}
-
 function fetch_or_create_champselect_buttons_container() {
 	if (document.querySelector(".cs-buttons-container")) {
 		return document.querySelector(".cs-buttons-container")
@@ -44,48 +29,47 @@ function fetch_or_create_champselect_buttons_container() {
 	}
 }
 
-let autoAcceptMutationObserver = (mutations) => {
-	if (document.querySelector(".v2-footer-notifications.ember-view") != null && document.getElementById("autoAcceptQueueButton") == null) {
-		let newOption = document.createElement("lol-uikit-radio-input-option");
-		let container = fetch_or_create_champselect_buttons_container()
-	
-		newOption.setAttribute("id", "autoAcceptQueueButton");
-		newOption.setAttribute("onclick", "window.autoAcceptQueueButton()");
-
-		let Option2 = document.createElement("div");
-			Option2.classList.add("auto-accept-button-text");
-
-		newOption.append(Option2)
-
-		if (DataStore.get("auto_accept")){
-			newOption.setAttribute("selected", "");
-		}
-
-		
-//___________________________________________________________________________//
-		const langCode = document.querySelector("html").lang;
-		const langMap = lang.langlist
-		Option2.innerHTML = lang[langMap[langCode] || "EN"]["auto_accept"];
-//___________________________________________________________________________//
-
-
-		container.append(newOption);
+let autoAcceptCallback = async message => {
+	utils.phase = JSON.parse(message["data"])[2]["data"]
+	if (utils.phase == "ReadyCheck" && DataStore.get("auto_accept") && !queue_accepted) {
+		await acceptMatchmaking(),
+		queue_accepted = true
+	}
+	else if (utils.phase != "ReadyCheck") {
+		queue_accepted = false
 	}
 }
-
-window.addEventListener('load', () => {
-	utils.subscribe_endpoint('/lol-gameflow/v1/gameflow-phase', autoAcceptCallback)
-	utils.routineAddCallback(autoAcceptMutationObserver, ["v2-footer-notifications.ember-view"])
-})
 
 let acceptMatchmaking = async () => {
 	if (player_declined) return;
 	await fetch('/lol-matchmaking/v1/ready-check/accept', { method: 'POST' })
-
 }
 
-window.addEventListener('load', () => {	
-	console.log('By Elaina Da Catto');
-	console.log('Meow ~~~');
-	console.log(data["custom_log"]);
+let autoAcceptMutationObserver = (mutations) => {
+	if (document.querySelector(".v2-footer-notifications.ember-view") != null && document.getElementById("autoAcceptQueueButton") == null) {
+		const langCode= document.querySelector("html").lang
+		const langMap = lang.langlist
+		let newOption = document.createElement("lol-uikit-radio-input-option")
+		let container = fetch_or_create_champselect_buttons_container()
+		let Option2   = document.createElement("div")
+	
+		newOption.setAttribute("id", "autoAcceptQueueButton")
+		newOption.setAttribute("onclick", "window.autoAcceptQueueButton()")
+
+		Option2.classList.add("auto-accept-button-text")
+		Option2.innerHTML = lang[langMap[langCode] || "EN"]["auto_accept"]
+		if (DataStore.get("auto_accept")){
+			newOption.setAttribute("selected", "")
+		}
+		
+		container.append(newOption)
+		newOption.append(Option2)
+	}
+}
+
+window.autoAcceptQueueButton = autoAcceptQueueButton
+
+window.addEventListener('load', () => {
+	utils.subscribe_endpoint('/lol-gameflow/v1/gameflow-phase', autoAcceptCallback)
+	utils.routineAddCallback(autoAcceptMutationObserver, ["v2-footer-notifications.ember-view"])
 })

@@ -5,38 +5,44 @@
  * @link https://github.com/Elaina69
  * @Nyan Meow~~~
  */
-
-import './assets/Css/ElainaV2.css'
-
-import data        from './configs/ElainaV2_config.json'
-import lang        from './configs/Language.json'
-import utils       from './resources/_utilselaina'
-import watermark   from './resources/Watermark'
-import thisVersion from './configs/Version'
-import QueueID     from './resources/Misc/QueueID.json'
-
-//Addon plugins
-import './resources/ThemeSettings'
-import './resources/Auto-accept'
-import './resources/Dodge-button'
-import './resources/Offline-mode'
-import './resources/Hide_friendlist'
-import './resources/FakeIP'
-import './resources/Auto-Ban-Pick'
-import './resources/LootHelper'
-import './resources/RandomSkin'
-
+import './configs/QueueID.json'
+import './configs/ChampionsPrices.json'
+import data from './configs/ElainaV2_config.json'
+import lang from './configs/Language.json'
 //___________________________________________________________________________//
-let path       = new URL(".", import.meta.url).href + "assets"
-let newVersion = (await (() => import('https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Version.js'))()).default
-
-let songIndex  = 0
-let wallpapers = data["wallpaper_list"]
-let Audios     = data["audio_list"]
-let Avatar     = DataStore.get("Custom-Avatar")
-
 const langCode = document.querySelector("html").lang
 const langMap  = lang.langlist
+
+let utils, watermark, thisVersion, newVersion
+let path       = new URL(".", import.meta.url).href
+let assetspath = new URL(".", import.meta.url).href + "assets"
+let pluginpath = new URL(".", import.meta.url).href + "resources"
+let configpath = new URL(".", import.meta.url).href + "configs"
+let songIndex  = 0
+let wallpapers = data["wallpaper_list"]
+let Audios     = data["audio_list"]	
+
+try{let checknver = await fetch('https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Version.js')
+if (checknver.status==200) {newVersion = (await (() => import('https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Version.js'))()).default}}catch{}
+try{let checkver = await fetch(`${configpath}/Version`)
+if (checkver.status==200) {thisVersion = (await (() => import(`${configpath}/Version`))()).default}}catch{}
+try{let utilscheck = await fetch(`${path}_utilselaina`)
+if (utilscheck.status==200) {utils = (await (() => import(`${path}_utilselaina`))()).default}}catch{}
+try{let wtcheck = await fetch(`${pluginpath}/Watermark`)
+if (wtcheck.status==200) {watermark = (await (() => import(`${pluginpath}/Watermark`))()).default}}catch{}
+
+ImportPlugins(`${pluginpath}/ThemeSettings`)
+ImportPlugins(`${pluginpath}/Auto-accept`)
+ImportPlugins(`${pluginpath}/Dodge-button`)
+ImportPlugins(`${pluginpath}/Offline-mode`)
+ImportPlugins(`${pluginpath}/Hide_friendlist`)
+ImportPlugins(`${pluginpath}/FakeIP`)
+ImportPlugins(`${pluginpath}/Auto-Ban-Pick`)
+ImportPlugins(`${pluginpath}/LootHelper`)
+ImportPlugins(`${pluginpath}/RandomSkin`)
+ImportPlugins(`${pluginpath}/Buy-all-champs`)
+ImportPlugins(`${pluginpath}/Pandoru`)
+ImportPlugins(`${pluginpath}/NameSpoofer`)
 //___________________________________________________________________________//
 
 
@@ -100,8 +106,8 @@ if (!DataStore.has("Hide-linking-settings")) {
 if (!DataStore.has("Hide-verify-acc")) {
 	DataStore.set("Hide-verify-acc", true)
 }
-if (!DataStore.has("new-gamesearch-div")) {
-	DataStore.set("new-gamesearch-div", true)
+if (!DataStore.has("new-gamesearch-queue")) {
+	DataStore.set("new-gamesearch-queue", true)
 }
 
 
@@ -160,6 +166,18 @@ if (!DataStore.has("loot-helper")) {
 if (!DataStore.has("random-skin")) {
 	DataStore.set("random-skin", false)
 }
+if (!DataStore.has("ChampsPrice")) {
+	DataStore.set("ChampsPrice", 450)
+}
+if (!DataStore.has("buy-all-champs")) {
+	DataStore.set("buy-all-champs", true)
+}
+if (!DataStore.has("Name-Spoofer")) {
+	DataStore.set("Name-Spoofer", false)
+}
+if (!DataStore.has("Spoof-name")) {
+	DataStore.set("Spoof-name", "Elaina Da Catto")
+}
 if (!DataStore.has("")) {
 	DataStore.set("", true)
 }
@@ -211,6 +229,10 @@ if (!DataStore.has("audio-loop")) {
 
 
 //___________________________________________________________________________//
+async function ImportPlugins(link) {
+	try  {let res = await fetch(link);if (res.status == 200) {(await (() => import(link))()).default}}
+	catch{console.log("File doesn't exist, can't load module/plugins")}
+}
 function newStyle (cssvar,folder,name,css) {
 	let NStyle = document.createElement('style')
 		NStyle.appendChild(document.createTextNode(
@@ -221,7 +243,7 @@ function newStyle (cssvar,folder,name,css) {
 function newFont (font,font_family) {
 	let Font = document.createElement('style')
 		Font.appendChild(document.createTextNode(
-			'@font-face {font-family: '+font_family+'; src: url('+path+"/Fonts/"+font+')}'
+			'@font-face {font-family: '+font_family+'; src: url('+assetspath+"/Fonts/"+font+')}'
 		))
 	document.body.appendChild(Font)
 }
@@ -304,10 +326,10 @@ function play_pause_set_icon(elem) {
 		return
 	}
 	if (DataStore.get('pause-wallpaper')%2==0) {
-		pause_bg_icon.setAttribute("src", `${path}/Icon/play_button.png`)
+		pause_bg_icon.setAttribute("src", `${assetspath}/Icon/play_button.png`)
 	}
 	else {
-		pause_bg_icon.setAttribute("src", `${path}/Icon/pause_button.png`)
+		pause_bg_icon.setAttribute("src", `${assetspath}/Icon/pause_button.png`)
 	}
 }
 function audio_play_pause() {
@@ -325,10 +347,10 @@ function play_pause_set_icon_audio(elem) {
 
 	if (!pause_audio_icon) {return}
 	if (DataStore.get('pause-audio')%2==0) {
-		pause_audio_icon.setAttribute("src", `${path}/Icon/play_button.png`)
+		pause_audio_icon.setAttribute("src", `${assetspath}/Icon/play_button.png`)
 	}
 	else {
-		pause_audio_icon.setAttribute("src", `${path}/Icon/pause_button.png`)
+		pause_audio_icon.setAttribute("src", `${assetspath}/Icon/pause_button.png`)
 	}
 
 }
@@ -350,10 +372,10 @@ function mute_set_icon_audio(elem) {
 
 	if (!mute_audio_icon) {return}
 	if (DataStore.get("mute-audio")) {
-		mute_audio_icon.setAttribute("src", `${path}/Icon/mute.png`)
+		mute_audio_icon.setAttribute("src", `${assetspath}/Icon/mute.png`)
 	}
 	else {
-		mute_audio_icon.setAttribute("src", `${path}/Icon/audio.png`)
+		mute_audio_icon.setAttribute("src", `${assetspath}/Icon/audio.png`)
 	}
 
 }
@@ -374,21 +396,21 @@ function audio_loop_icon(elem) {
 
 	if (!audio_loop_icon) {return}
 	if (DataStore.get("audio-loop")) {
-		audio_loop_icon.setAttribute("src", `${path}/Icon/rotating-arrow.png`)
+		audio_loop_icon.setAttribute("src", `${assetspath}/Icon/rotating-arrow.png`)
 	}
 	else {
-		audio_loop_icon.setAttribute("src", `${path}/Icon/Unrotating-arrow.png`)
+		audio_loop_icon.setAttribute("src", `${assetspath}/Icon/Unrotating-arrow.png`)
 	}
 
 }
 function loadBG(BG) {
 	let elainaBg = document.getElementById("elaina-bg")
-	elainaBg.src = `${path}/Backgrounds/${BG}`
+	elainaBg.src = `${assetspath}/Backgrounds/${BG}`
 }
 
 function loadSong(song) {
 	let audio     = document.getElementById("bg-audio")
-    	audio.src = `${path}/Backgrounds/Audio/${song}`
+    	audio.src = `${assetspath}/Backgrounds/Audio/${song}`
 }
 function next_wallpaper() {
 	let elainaBg = document.getElementById("elaina-bg")
@@ -477,7 +499,7 @@ function newTicker() {
 	}
 }
 function newGameSearch() {
-	if (DataStore.get("new-gamesearch-div") && document.querySelector("lol-social-panel > lol-parties-game-info-panel")) {
+	if (DataStore.get("new-gamesearch-queue") && document.querySelector("lol-social-panel > lol-parties-game-info-panel")) {
 		try {
 			let gameinfo = document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-status-card").shadowRoot
 				gameinfo.querySelector("div").style.background = "#143c1400"
@@ -667,10 +689,10 @@ function create_webm_buttons() {
 		prevSong()
 	})
 
-	nextBgIcon.setAttribute("src", `${path}/Icon/next_button.png`)
-	prevBgIcon.setAttribute("src", `${path}/Icon/prev_button.png`)
-	nextAudioIcon.setAttribute("src", `${path}/Icon/next-audio.png`)
-	prevAudioIcon.setAttribute("src", `${path}/Icon/prev-audio.png`)
+	nextBgIcon.setAttribute("src", `${assetspath}/Icon/next_button.png`)
+	prevBgIcon.setAttribute("src", `${assetspath}/Icon/prev_button.png`)
+	nextAudioIcon.setAttribute("src", `${assetspath}/Icon/next-audio.png`)
+	prevAudioIcon.setAttribute("src", `${assetspath}/Icon/prev-audio.png`)
 		
 	let showcontainer = document.getElementsByClassName("rcp-fe-lol-home")[0]
 	    showcontainer.appendChild(container)
@@ -743,8 +765,8 @@ function UpdatePopup() {
     noticediv.classList.add("noticediv")
     notice.classList.add("notice")
 
-    notice.setAttribute('src', `${path}/Icon/download.png`)
-    close.setAttribute('src', `${path}/Icon/close.png`)
+    notice.setAttribute('src', `${assetspath}/Icon/download.png`)
+    close.setAttribute('src', `${assetspath}/Icon/close.png`)
 
     let showcontainer = document.getElementsByClassName("rcp-fe-lol-home")[0]
 
@@ -837,7 +859,7 @@ async function createLoaderMenu(root) {
 								<lol-uikit-content-block class="app-controls-exit-dialog" type="dialog-medium" style="position: relative; overflow: hidden">
 									<div style="position: absolute; top: 60px">
 										<video
-											src="${path}/Icon/LL-Settings.webm"
+											src="${assetspath}/Icon/LL-Settings.webm"
 											style="object-fit: cover; object-position: center center; height: 100%; width: 100%; transform-origin: center center; transform: scale(2.5)">
 										</video>
 									</div>
@@ -903,7 +925,7 @@ let updateLobbyRegaliaBanner = async message => {
 					base.shadowRoot.querySelector(".regalia-banner-state-machine").shadowRoot.querySelector(".regalia-banner-intro.regalia-banner-video").style.filter = "grayscale(1) saturate(0) brightness(0.5)"
 			}
 			catch {}
-            if (Avatar) {
+            if (DataStore.get("Custom-Avatar")) {
                 try {
 					document.querySelector("div.lobby-banner.local > lol-regalia-parties-v2-element").shadowRoot.querySelector("div > div > div.regalia-parties-v2-crest-wrapper > lol-regalia-crest-v2-element").
 						shadowRoot.querySelector("div > uikit-state-machine > div.lol-regalia-summoner-icon-mask-container > div").style.backgroundImage = "var(--Avatar)"
@@ -928,7 +950,8 @@ let pageChangeMutation = async (node) => {
         "rcp-fe-lol-loot", 
         "rcp-fe-lol-clash-full",
 		"rcp-fe-lol-postgame",
-		"rcp-fe-lol-event-shop"
+		"rcp-fe-lol-event-shop",
+		"rcp-fe-lol-tft"
     ]
 
 	pagename = node.getAttribute("data-screen-name")
@@ -938,7 +961,7 @@ let pageChangeMutation = async (node) => {
 		elaina_bg_elem.style.filter = data["Homepage"]
 		if (!document.getElementsByClassName("webm-bottom-buttons-container").length) {
 			create_webm_buttons()
-			watermark.ElainaTrigger()
+			try{watermark.ElainaTrigger()}catch{}
 			if (DataStore.get("Receive-Update")) {
 				if (thisVersion < newVersion) {
 					UpdatePopup()
@@ -995,8 +1018,8 @@ let pageChangeMutation = async (node) => {
 	else if (pagename != "rcp-fe-lol-navigation-screen" && pagename != "window-controls" && pagename != "rcp-fe-lol-home" && pagename != "social") {
 		if (document.getElementsByClassName("webm-bottom-buttons-container").length) {
 			Delbuttons()
-			watermark.DelElainaTrigger()
 			DelPopup()
+			try{watermark.DelElainaTrigger()}catch{}
 		}
 	}
 	if (pagename == "social") {
@@ -1079,7 +1102,7 @@ let pageChangeMutation = async (node) => {
 				}
 				catch{}
 			}
-            if (Avatar) {
+            if (DataStore.get("Custom-Avatar")) {
                 try {
 					document.querySelector("div > lol-regalia-profile-v2-element").shadowRoot.querySelector("div > div > div.regalia-profile-crest-hover-area.picker-enabled > lol-regalia-crest-v2-element").shadowRoot.querySelector("div > uikit-state-machine > div.lol-regalia-summoner-icon-mask-container > div").style.backgroundImage = "var(--Avatar)"
 				}
@@ -1115,6 +1138,12 @@ let pageChangeMutation = async (node) => {
 		elaina_bg_elem.style.filter = data["Parties"]
 	}
 	else if (previous_page == "rcp-fe-lol-parties" && brightness_modifiers.indexOf(pagename) == -1) {
+		elaina_bg_elem.style.filter = data["Homepage"]
+	}
+	if (pagename == "rcp-fe-lol-tft") {
+		elaina_bg_elem.style.filter = data["TFT"]
+	}
+	else if (previous_page == "rcp-fe-lol-tfts" && brightness_modifiers.indexOf(pagename) == -1) {
 		elaina_bg_elem.style.filter = data["Homepage"]
 	}
 	if (previous_page != pagename) {
@@ -1153,7 +1182,7 @@ window.setInterval(() => {
 		try {document.querySelector("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame").shadowRoot.querySelector("div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch{}
 	}
 
-	if (Avatar) {
+	if (DataStore.get("Custom-Avatar")) {
 		try {
 			document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame > div > div.challenges-identity-customizer-contents > div.challenges-identity-customizer-left-container > div > lol-regalia-identity-customizer-element").
 				shadowRoot.querySelector("div > div > div.regalia-identity-customizer-crest-wrapper > lol-regalia-crest-v2-element").
@@ -1169,38 +1198,36 @@ window.setInterval(() => {
 		catch {}
 	}
 }, 500)
-import './resources/Pandoru'
-import wt from './resources/Watermark'
 //___________________________________________________________________________//
 
 
 
 //___________________________________________________________________________//
 window.addEventListener('load', async () => {
-	newStyle("--Hover-card-backdrop",path+"/Icon",data['Hover-card'])
+	newStyle("--Hover-card-backdrop",assetspath+"/Icon",data['Hover-card'])
 	newFont("BeaufortforLOL-Bold.ttf","Elaina")
 
-	if (DataStore.get("Sidebar-Transparent")) {utils.addCss(`${path}/Css/Addon-Css/Sidebar-Transparent.css`)}
-	else {utils.addCss(`${path}/Css/Addon-Css/Sidebar-Color.css`)}
+	if (DataStore.get("Sidebar-Transparent")) {utils.addCss(`${assetspath}/Css/Addon-Css/Sidebar-Transparent.css`)}
+	else {utils.addCss(`${assetspath}/Css/Addon-Css/Sidebar-Color.css`)}
 
-	if (DataStore.get("Animate-Loading")) {newStyle("--ElainaFly",path+"/Icon",data["Animation-logo"],`${path}/Css/Addon-Css/Animate-Loading-Screen.css`)}
-	else {newStyle("--ElainaStatic",path+"/Icon",data["Static-logo"],`${path}/Css/Addon-Css/Static-Loading-Screen.css`)}
+	if (DataStore.get("Animate-Loading")) {newStyle("--ElainaFly",assetspath+"/Icon",data["Animation-logo"],`${assetspath}/Css/Addon-Css/Animate-Loading-Screen.css`)}
+	else {newStyle("--ElainaStatic",assetspath+"/Icon",data["Static-logo"],`${assetspath}/Css/Addon-Css/Static-Loading-Screen.css`)}
 
-	if (DataStore.get("Hide-Champions-Splash-Art")) {utils.addCss(`${path}/Css/Addon-Css/Hide-Champs-Splash-Art.css`)}
-	if (Avatar) {newStyle("--Avatar",path+"/Icon",data["Avatar"],`${path}/Css/Addon-Css/Icon/Avatar.css`)}
+	if (DataStore.get("Hide-Champions-Splash-Art")) {utils.addCss(`${assetspath}/Css/Addon-Css/Hide-Champs-Splash-Art.css`)}
+	if (DataStore.get("Custom-Avatar")) {newStyle("--Avatar",assetspath+"/Icon",data["Avatar"],`${assetspath}/Css/Addon-Css/Icon/Avatar.css`)}
 	if (DataStore.get("Custom-Icon")) {
-		newStyle("--RP-Icon",path+"/Icon",data["RP-icon"],`${path}/Css/Addon-Css/Icon/RiotPoint.css`)
-		newStyle("--BE-Icon",path+"/Icon",data["BE-icon"],`${path}/Css/Addon-Css/Icon/BlueEssence.css`)
-		newStyle("--Rank-Icon",path+"/Icon",data["Rank-icon"],`${path}/Css/Addon-Css/Icon/Rank.css`)
-		newStyle("--Emblem",path+"/Icon",data["Emblem"],`${path}/Css/Addon-Css/Icon/Emblem.css`)
-		newStyle("--Clash-banner",path+"/Icon",data["Class-banner"],`${path}/Css/Addon-Css/Icon/ClashBanner.css`)
-		newStyle("--Ticker",path+"/Icon",data["Ticker"],`${path}/Css/Addon-Css/Icon/Ticker.css`)
+		newStyle("--RP-Icon",assetspath+"/Icon",data["RP-icon"],`${assetspath}/Css/Addon-Css/Icon/RiotPoint.css`)
+		newStyle("--BE-Icon",assetspath+"/Icon",data["BE-icon"],`${assetspath}/Css/Addon-Css/Icon/BlueEssence.css`)
+		newStyle("--Rank-Icon",assetspath+"/Icon",data["Rank-icon"],`${assetspath}/Css/Addon-Css/Icon/Rank.css`)
+		newStyle("--Emblem",assetspath+"/Icon",data["Emblem"],`${assetspath}/Css/Addon-Css/Icon/Emblem.css`)
+		newStyle("--Clash-banner",assetspath+"/Icon",data["Class-banner"],`${assetspath}/Css/Addon-Css/Icon/ClashBanner.css`)
+		newStyle("--Ticker",assetspath+"/Icon",data["Ticker"],`${assetspath}/Css/Addon-Css/Icon/Ticker.css`)
 	}
 	if (DataStore.get("Custom-Font")) {newFont(data["Font-Name"],"Custom")}
-	if (DataStore.get("Custom-Cursor")) {CustomCursor('url('+path+"/Icon/"+data["Mouse-cursor"]+')',`${path}/Css/Addon-Css/Cursor.css`)}
+	if (DataStore.get("Custom-Cursor")) {CustomCursor('url('+assetspath+"/Icon/"+data["Mouse-cursor"]+')',`${assetspath}/Css/Addon-Css/Cursor.css`)}
 	if (DataStore.get("Custom-Status")) {CustomStatus()}
 	if (DataStore.get("Custom-Rank(Hover-card)")) {CustomRank()}
-	if (DataStore.get("aram-only")) {utils.addCss(`${path}/Css/Addon-Css/Aram-only.css`)}
+	if (DataStore.get("aram-only")) {utils.addCss(`${assetspath}/Css/Addon-Css/Aram-only.css`)}
 
 	const manager = () => document.getElementById('lol-uikit-layer-manager-wrapper')
 	const root    = document.createElement('div')
@@ -1210,17 +1237,17 @@ window.addEventListener('load', async () => {
 		video.id       = 'elaina-bg'
 		video.autoplay = true
 		video.loop     = true
-		video.src      = `${path}/Backgrounds/${wallpapers[DataStore.get('wallpaper-index')].file}`
+		video.src      = `${assetspath}/Backgrounds/${wallpapers[DataStore.get('wallpaper-index')].file}`
 		video.volume   = DataStore.get("wallpaper-volume")
 
 		audio.id       = 'bg-audio'
     	audio.autoplay = true
     	audio.loop     = DataStore.get("audio-loop")
 		if (DataStore.get("Continues_Audio")) {
-			audio.src  = `${path}/Backgrounds/Audio/${Audios[DataStore.get('audio-index')]}`
+			audio.src  = `${assetspath}/Backgrounds/Audio/${Audios[DataStore.get('audio-index')]}`
 		}
 		else {
-			audio.src  = `${path}/Backgrounds/Audio/${Audios[songIndex]}`
+			audio.src  = `${assetspath}/Backgrounds/Audio/${Audios[songIndex]}`
 		}
 		audio.volume   = DataStore.get("audio-volume")
 	
@@ -1239,6 +1266,7 @@ window.addEventListener('load', async () => {
     document.querySelector("body").prepend(audio)
 	elaina_play_pause()
 
+	utils.addCss(`${assetspath}/Css/ElainaV2.css`)
 	utils.mutationObserverAddCallback(pageChangeMutation, ["screen-root"])
 
 	utils.routineAddCallback(newTicker,["flyout"])
@@ -1274,5 +1302,7 @@ window.addEventListener('load', async () => {
 		await createLoaderMenu(root)
 		manager().prepend(root)
 	}
+
+	console.log('By Elaina Da Catto');
+	console.log('Meow ~~~');
 })
-//___________________________________________________________________________//

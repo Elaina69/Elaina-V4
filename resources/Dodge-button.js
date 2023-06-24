@@ -52,7 +52,7 @@ function generateDodgeAndExitButton(t){
     t.parentNode.insertBefore(o,t)
 }
 
-import utils from './_utilselaina';
+import utils from '../_utilselaina';
 
 window.exitClient=exitClient,
 window.dodgeQueue=dodgeQueue;

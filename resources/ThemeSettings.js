@@ -1,7 +1,9 @@
 import lang    from '../configs/Language.json'
-import QueueID from './Misc/QueueID.json'
+import QueueID from '../configs/QueueID.json'
+import ChampsP from '../configs/ChampionsPrices.json'
 
-let path       = new URL("..", import.meta.url).href + "assets"
+let assetspath = new URL("..", import.meta.url).href + "assets"
+let pluginpath = new URL(".", import.meta.url).href
 const UI = {
    Row: (id, childs) => {
       const row = document.createElement('div')
@@ -19,7 +21,7 @@ const UI = {
    },
    Image: (image, cls) => {
       const img = document.createElement('img')
-      img.setAttribute("src", `${path}/Icon/${image}`)
+      img.setAttribute("src", `${assetspath}/Icon/${image}`)
       img.classList.add(cls)
       return img
    },
@@ -536,19 +538,19 @@ const injectSettings = (panel) => {
          ),
          document.createElement('br'),
          UI.CheckBox(
-            `${selectedLang["new-gamesearch-div"]}`,"ngsd","ngsdbox",
+            `${selectedLang["new-gamesearch-queue"]}`,"ngsd","ngsdbox",
             () => {
                let ngsdel = document.getElementById("ngsd")
                let ngsdbox = document.getElementById("ngsdbox")
 
-               if (DataStore.get("new-gamesearch-div")) {
+               if (DataStore.get("new-gamesearch-queue")) {
                   ngsdbox.checked = false
-                  DataStore.set("new-gamesearch-div", false)
+                  DataStore.set("new-gamesearch-queue", false)
                   ngsdel.removeAttribute("class")
                }
                else {
                   ngsdbox.checked = true
-                  DataStore.set("new-gamesearch-div", true)
+                  DataStore.set("new-gamesearch-queue", true)
                   ngsdel.setAttribute("class", "checked")
                }
             }
@@ -583,25 +585,26 @@ const injectSettings = (panel) => {
             }
          ),
          document.createElement('br'),
-         UI.CheckBox(
-            `${selectedLang["loot-helper"]}`,'lh','lhbox',
-            ()=>{
-               let lhel = document.getElementById("lh")
-               let lhbox = document.getElementById("lhbox")
+         UI.Row("loothelp",[
+            UI.CheckBox(
+               `${selectedLang["loot-helper"]}`,'lh','lhbox',
+               ()=>{
+                  let lhel = document.getElementById("lh")
+                  let lhbox = document.getElementById("lhbox")
 
-               if (DataStore.get("loot-helper")) {
-                  lhbox.checked = false
-                  DataStore.set("loot-helper", false)
-                  lhel.removeAttribute("class")
+                  if (DataStore.get("loot-helper")) {
+                     lhbox.checked = false
+                     DataStore.set("loot-helper", false)
+                     lhel.removeAttribute("class")
+                  }
+                  else {
+                     lhbox.checked = true
+                     DataStore.set("loot-helper", true)
+                     lhel.setAttribute("class", "checked")
+                  }
                }
-               else {
-                  lhbox.checked = true
-                  DataStore.set("loot-helper", true)
-                  lhel.setAttribute("class", "checked")
-               }
-            }
-         ),
-         document.createElement('br'),
+            )
+         ]),
          UI.CheckBox(
             `${selectedLang["aram-only"]}`, "Aram only", "Aram only checkbox",
             () => {
@@ -621,44 +624,109 @@ const injectSettings = (panel) => {
             }
          ),
          document.createElement('br'),
-         UI.CheckBox(
-            `${selectedLang["random-skin"]}`,'rds','rdsbox',
-            ()=>{
-               let rdsel = document.getElementById("rds")
-               let rdsbox = document.getElementById("rdsbox")
+         UI.Row("rdskin",[
+            UI.CheckBox(
+               `${selectedLang["random-skin"]}`,'rds','rdsbox',
+               ()=>{
+                  let rdsel = document.getElementById("rds")
+                  let rdsbox = document.getElementById("rdsbox")
+   
+                  if (DataStore.get("random-skin")) {
+                     rdsbox.checked = false
+                     DataStore.set("random-skin", false)
+                     rdsel.removeAttribute("class")
+                  }
+                  else {
+                     rdsbox.checked = true
+                     DataStore.set("random-skin", true)
+                     rdsel.setAttribute("class", "checked")
+                  }
+               }
+            )
+         ]),
+         UI.Row("autobanpick",[
+            UI.CheckBox(
+               `${selectedLang["auto-ban-pick"]}`,'autobp','autobpbox',
+               ()=>{
+                  let autobpel = document.getElementById("autobp")
+                  let autobpbox = document.getElementById("autobpbox")
 
-               if (DataStore.get("random-skin")) {
-                  rdsbox.checked = false
-                  DataStore.set("random-skin", false)
-                  rdsel.removeAttribute("class")
+                  if (DataStore.get("Auto-ban-pick")) {
+                     autobpbox.checked = false
+                     DataStore.set("Auto-ban-pick", false)
+                     autobpel.removeAttribute("class")
+                  }
+                  else {
+                     autobpbox.checked = true
+                     DataStore.set("Auto-ban-pick", true)
+                     autobpel.setAttribute("class", "checked")
+                  }
                }
-               else {
-                  rdsbox.checked = true
-                  DataStore.set("random-skin", true)
-                  rdsel.setAttribute("class", "checked")
-               }
-            }
-         ),
-         document.createElement('br'),
-         UI.CheckBox(
-            `${selectedLang["auto-ban-pick"]}`,'autobp','autobpbox',
-            ()=>{
-               let autobpel = document.getElementById("autobp")
-               let autobpbox = document.getElementById("autobpbox")
+            )
+         ]),
+         UI.Row("j1_4",[
+            UI.CheckBox(
+               `${selectedLang["1/4-joke"]}`,'_1_4','_1_4box',
+               ()=>{
+                  let _1_4el = document.getElementById("_1_4")
+                  let _1_4box = document.getElementById("_1_4box")
 
-               if (DataStore.get("Auto-ban-pick")) {
-                  autobpbox.checked = false
-                  DataStore.set("Auto-ban-pick", false)
-                  autobpel.removeAttribute("class")
+                  if (DataStore.get("April fool` joke")) {
+                     _1_4box.checked = false
+                     DataStore.set("April fool` joke", false)
+                     _1_4el.removeAttribute("class")
+                  }
+                  else {
+                     _1_4box.checked = true
+                     DataStore.set("April fool` joke", true)
+                     _1_4el.setAttribute("class", "checked")
+                  }
                }
-               else {
-                  autobpbox.checked = true
-                  DataStore.set("Auto-ban-pick", true)
-                  autobpel.setAttribute("class", "checked")
+            )
+         ]),
+         UI.Row("pandoru",[
+            UI.CheckBox(
+               `${selectedLang["Santa"]}`,'MC','MCbox',
+               ()=>{
+                  let MCel = document.getElementById("MC")
+                  let MCbox = document.getElementById("MCbox")
+   
+                  if (DataStore.get("Merry-Christmas")) {
+                     MCbox.checked = false
+                     DataStore.set("Merry-Christmas", false)
+                     MCel.removeAttribute("class")
+                  }
+                  else {
+                     MCbox.checked = true
+                     DataStore.set("Merry-Christmas", true)
+                     MCel.setAttribute("class", "checked")
+                  }
                }
-            }
-         ),
-         document.createElement('br'),
+            )
+         ]),
+         UI.Row("buyallchamp",[
+            UI.CheckBox(
+               `${selectedLang["buy-all-champs"]}`,'byc','bycbox',
+               ()=>{
+                  let bycel = document.getElementById("byc")
+                  let bycbox = document.getElementById("bycbox")
+
+                  if (DataStore.get("buy-all-champs")) {
+                     bycbox.checked = false
+                     DataStore.set("buy-all-champs", false)
+                     bycel.removeAttribute("class")
+                  }
+                  else {
+                     bycbox.checked = true
+                     DataStore.set("buy-all-champs", true)
+                     bycel.setAttribute("class", "checked")
+                  }
+               }
+            ),
+            document.createElement('br'),
+            UI.Dropdown(ChampsP, "ChampsPrice", `${selectedLang["prices"]}`, "description", "Cost"),
+            document.createElement('br')
+         ]),
          UI.CheckBox(
             `${selectedLang["auto-find-queue"]}`,'autoq','autoqbox',
             ()=>{
@@ -741,44 +809,29 @@ const injectSettings = (panel) => {
             'https://github.com/KebsCS/KBotExt'
          ),
          document.createElement('br'),
-         UI.CheckBox(
-            `${selectedLang["1/4-joke"]}`,'_1_4','_1_4box',
-            ()=>{
-               let _1_4el = document.getElementById("_1_4")
-               let _1_4box = document.getElementById("_1_4box")
+         UI.Row("namespoof",[
+            UI.CheckBox(
+               `${selectedLang["name-spoofer"]}`,'namespf','namespfbox',
+               ()=>{
+                  let namespfel = document.getElementById("namespf")
+                  let namespfbox = document.getElementById("namespfbox")
 
-               if (DataStore.get("April fool` joke")) {
-                  _1_4box.checked = false
-                  DataStore.set("April fool` joke", false)
-                  _1_4el.removeAttribute("class")
+                  if (DataStore.get("Name-Spoofer")) {
+                     namespfbox.checked = false
+                     DataStore.set("Name-Spoofer", false)
+                     namespfel.removeAttribute("class")
+                  }
+                  else {
+                     namespfbox.checked = true
+                     DataStore.set("Name-Spoofer", true)
+                     namespfel.setAttribute("class", "checked")
+                  }
                }
-               else {
-                  _1_4box.checked = true
-                  DataStore.set("April fool` joke", true)
-                  _1_4el.setAttribute("class", "checked")
-               }
-            }
-         ),
-         document.createElement('br'),
-         UI.CheckBox(
-            `${selectedLang["Santa"]}`,'MC','MCbox',
-            ()=>{
-               let MCel = document.getElementById("MC")
-               let MCbox = document.getElementById("MCbox")
-
-               if (DataStore.get("Merry-Christmas")) {
-                  MCbox.checked = false
-                  DataStore.set("Merry-Christmas", false)
-                  MCel.removeAttribute("class")
-               }
-               else {
-                  MCbox.checked = true
-                  DataStore.set("Merry-Christmas", true)
-                  MCel.setAttribute("class", "checked")
-               }
-            }
-         ),
-         document.createElement('br'),
+            ),
+            document.createElement('br'),
+            UI.Input("Spoof-name"),
+            document.createElement('br'),
+         ])
       ])
    )
 }
@@ -786,12 +839,17 @@ const injectSettings = (panel) => {
 window.addEventListener('load', async () => {
    function DeleteEl (target, confirm) {
       try {
-         let origin = document.querySelector(`.${target}`)
-         if (confirm) {
-            origin.remove()  
-         }
+         let origin = document.querySelector(target)
+         if (confirm) {origin.remove()}
       }
       catch{}
+   }
+   async function DeleteElcheck (target, link) {
+      try{
+         let origin = document.getElementById(target)
+         try {await fetch(link)}
+         catch{origin.remove()}
+      }catch{}
    }
    function tickcheck (Data, el, box) {
       if (Data && el.getAttribute("class") == "") {
@@ -863,14 +921,27 @@ window.addEventListener('load', async () => {
                   let ngsdbox        = document.getElementById("ngsdbox")
                   let rdsel          = document.getElementById("rds")
                   let rdsbox         = document.getElementById("rdsbox")
+                  let bycel          = document.getElementById("byc")
+                  let bycbox         = document.getElementById("bycbox")
+                  let namespfel      = document.getElementById("namespf")
+                  let namespfbox     = document.getElementById("namespfbox")
 
                   if (document.getElementById("Aram only")) {
                      clearInterval(check)
 
-                     DeleteEl("lol-settings-account-verification-row.ember-view", DataStore.get("Hide-verify-acc"))
-                     DeleteEl("linking-settings.ember-view", DataStore.get("Hide-linking-settings"))
-                     DeleteEl("vng-publisher-settings.ember-view",DataStore.get("Hide-linking-settings"))
+                     DeleteEl(".lol-settings-account-verification-row.ember-view", DataStore.get("Hide-verify-acc"))
+                     DeleteEl(".linking-settings.ember-view", DataStore.get("Hide-linking-settings"))
+                     DeleteEl(".vng-publisher-settings.ember-view", DataStore.get("Hide-linking-settings"))
 
+                     DeleteElcheck("j1_4",`${pluginpath}/FakeIP`)
+                     DeleteElcheck("autobanpick",`${pluginpath}/Auto-Ban-Pick`)
+                     DeleteElcheck("loothelp",`${pluginpath}/LootHelper`)
+                     DeleteElcheck("rdskin",`${pluginpath}/RandomSkin`)
+                     DeleteElcheck("buyallchamp",`${pluginpath}/Buy-all-champs`)
+                     DeleteElcheck("pandoru",`${pluginpath}/Pandoru`)
+                     DeleteElcheck("namespoof",`${pluginpath}/NameSpoofer`)
+
+                     tickcheck(DataStore.get("Name-Spoofer"), namespfel, namespfbox)
                      tickcheck(DataStore.get("aram-only"), Aramel, Arambox)
                      tickcheck(DataStore.get("Receive-Update"), updateel, updatebox)
                      tickcheck(DataStore.get("Continues_Audio"), conAudioel, conAudiobox)
@@ -896,8 +967,9 @@ window.addEventListener('load', async () => {
                      tickcheck(DataStore.get("old-prev/next-button"), oldpnbel, oldpnbbox)
                      tickcheck(DataStore.get("Hide-linking-settings"), hidelinksetel, hidelinksetbox)
                      tickcheck(DataStore.get("Hide-verify-acc"), hideveriaccel, hideveriaccbox)
-                     tickcheck(DataStore.get("new-gamesearch-div"),ngsdel, ngsdbox)
+                     tickcheck(DataStore.get("new-gamesearch-queue"),ngsdel, ngsdbox)
                      tickcheck(DataStore.get("random-skin"), rdsel, rdsbox)
+                     tickcheck(DataStore.get("buy-all-champs"), bycel, bycbox)
                   }
                },100)
             }

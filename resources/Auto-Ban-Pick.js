@@ -1,13 +1,6 @@
 import axios from "https://cdn.skypack.dev/axios"
-import utils from "./_utilselaina"
+import utils from "../_utilselaina"
 import lang from '../configs/Language.json'
-
-/**
- * @author
- * Nome: Yan Gabriel    
- * Discord: Balaclava#1912 (854886148455399436)    
- * GitHub: https://github.com/controlado
- */
 
 if (DataStore.get("Auto-ban-pick")) {
   const request = async (method, url, userBody = null) => {

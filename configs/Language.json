@@ -92,7 +92,7 @@
         "note-2"          : "For high-perform pc only (very lag)",
         "Hide-linking-settings": "Hide linking account settings (in Beta)",
         "Hide-verify-acc"      : "Hide account verification settings",
-        "new-gamesearch-div"   : "New game search division",
+        "new-gamesearch-queue" : "New game search queue",
 
         "plugins-settings": "Plugins Settings",
         "old-ll-settings" : "Old League Loader settings",
@@ -110,7 +110,10 @@
         "status-delay"    : "Delay time ( Miliseconds )",
         "note-3"          : "Want easier",
         "1/4-joke"        : "April fool` joke",
-        "Santa"           : "Merry Christmas"
+        "Santa"           : "Merry Christmas",
+        "buy-all-champs"  : "Buy all champions",
+        "prices"          : "Prices",
+        "name-spoofer"    : "Name spoofer"
     },
 
     "VN": {
@@ -199,7 +202,7 @@
         "note-2"          : "Chỉ dành cho thiết bị mạnh (cực lag ._.)",
         "Hide-linking-settings": "Ẩn cài đặt liên kết tài khoản (in Beta)",
         "Hide-verify-acc"      : "Ẩn cài đặt xác minh tài khoản",
-        "new-gamesearch-div"   : "Bảng tìm game mới",
+        "new-gamesearch-queue" : "Bảng tìm game mới",
 
         "plugins-settings": "Cài đặt plugins",
         "old-ll-settings" : "Bảng cài đặt League loader cũ",
@@ -217,7 +220,10 @@
         "status-delay"    : "Độ trễ ( Mili giây )",
         "note-3"          : "Muốn dễ dàng hơn ?",
         "1/4-joke"        : "Trò đùa ngày Cá tháng tư",
-        "Santa"           : "Merry Christmas"
+        "Santa"           : "Merry Christmas",
+        "buy-all-champs"  : "Mua toàn bộ tướng",
+        "prices"          : "Giá",
+        "name-spoofer"    : "Tên giả (dành cho stream)"
     },
 
     "JP": {
@@ -306,7 +312,7 @@
         "note-2"          : "For high-perform pc only (very lag)",
         "Hide-linking-settings": "Hide linking account settings (in Beta)",
         "Hide-verify-acc"      : "Hide account verification settings",
-        "new-gamesearch-div"   : "New game search division",
+        "new-gamesearch-queue" : "New game search queue",
 
         "plugins-settings": "Plugins Settings",
         "old-ll-settings" : "Old League Loader settings",
@@ -324,7 +330,10 @@
         "status-delay"    : "Delay time ( Miliseconds )",
         "note-3"          : "Want easier",
         "1/4-joke"        : "April fool` joke",
-        "Santa"           : "Merry Christmas"
+        "Santa"           : "Merry Christmas",
+        "buy-all-champs"  : "Buy all champions",
+        "prices"          : "Prices",
+        "name-spoofer"    : "Name spoofer"
     },
 
     "PL": {
@@ -413,7 +422,7 @@
         "note-2"          : "Tylko dla komputerów o wysokiej wydajności (bardzo duże opóźnienie)",
         "Hide-linking-settings": "Ukryj ustawienia łączenia konta (w wersji Beta)",
         "Hide-verify-acc"      : "Ukryj ustawienia weryfikacji konta",
-        "new-gamesearch-div"   : "Nowa kolejka wyszukiwania gier",
+        "new-gamesearch-queue" : "Nowa kolejka wyszukiwania gier",
 
         "plugins-settings": "Ustawienia wtyczek",
         "old-ll-settings" : "Stare ustawienia League Loadera",
@@ -431,7 +440,10 @@
         "status-delay"    : "Czas opóźnienia (milisekundy)",
         "note-3"          : "Chcesz łatwiej?",
         "1/4-joke"        : "Prima aprilisowy żart",
-        "Santa"           : "Wesołych Świąt"
+        "Santa"           : "Wesołych Świąt",
+        "buy-all-champs"  : "Buy all champions",
+        "prices"          : "Prices",
+        "name-spoofer"    : "Name spoofer"
     },
     "RU": {
 
@@ -519,7 +531,7 @@
         "note-2"          : "Только для высокопроизводительных ПК",
         "Hide-linking-settings": "Hide linking account settings (in Beta)",
         "Hide-verify-acc"      : "Hide account verification settings",
-        "new-gamesearch-div"   : "New game search division",
+        "new-gamesearch-queue" : "New game search queue",
 
         "plugins-settings": "Настройки плагинов",
         "old-ll-settings" : "Старые настройки загрузчика",
@@ -537,7 +549,10 @@
         "status-delay"    : "Delay time ( Miliseconds )",
         "note-3"          : "Хотите проще",
         "1/4-joke"        : "Первоапрельская шутка",
-        "Santa"           : "С Рождеством!"
+        "Santa"           : "С Рождеством!",
+        "buy-all-champs"  : "Buy all champions",
+        "prices"          : "Prices",
+        "name-spoofer"    : "Name spoofer"
     },
     "MX": {
         "/___Translated by @Legnatbird___/": "",
@@ -624,7 +639,7 @@
         "note-2"          : "For high-perform pc only (very lag)",
         "Hide-linking-settings": "Hide linking account settings (in Beta)",
         "Hide-verify-acc"      : "Hide account verification settings",
-        "new-gamesearch-div"   : "New game search division",
+        "new-gamesearch-queue" : "New game search queue",
 
         "plugins-settings": "Plugins Settings",
         "old-ll-settings" : "Old League Loader settings",
@@ -642,7 +657,10 @@
         "status-delay"    : "Delay time ( Miliseconds )",
         "note-3"          : "Want easier",
         "1/4-joke"        : "April fool` joke",
-        "Santa"           : "Merry Christmas"
+        "Santa"           : "Merry Christmas",
+        "buy-all-champs"  : "Buy all champions",
+        "prices"          : "Prices",
+        "name-spoofer"    : "Name spoofer"
     },
     "KR": {
         "/___Translated by @___/": "",
@@ -729,7 +747,7 @@
         "note-2"          : "For high-perform pc only (very lag)",
         "Hide-linking-settings": "Hide linking account settings (in Beta)",
         "Hide-verify-acc"      : "Hide account verification settings",
-        "new-gamesearch-div"   : "New game search division",
+        "new-gamesearch-queue" : "New game search queue",
 
         "plugins-settings": "Plugins Settings",
         "old-ll-settings" : "Old League Loader settings",
@@ -747,6 +765,9 @@
         "status-delay"    : "Delay time ( Miliseconds )",
         "note-3"          : "Want easier",
         "1/4-joke"        : "April fool` joke",
-        "Santa"           : "Merry Christmas"
+        "Santa"           : "Merry Christmas",
+        "buy-all-champs"  : "Buy all champions",
+        "prices"          : "Prices",
+        "name-spoofer"    : "Name spoofer"
     }
 }
