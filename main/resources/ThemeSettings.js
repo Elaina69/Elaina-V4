@@ -1,4 +1,4 @@
-import lang    from '../configs/Language.json'
+import lang    from 'https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/main/configs/Language.json' assert { type: 'json' };
 import QueueID from '../configs/QueueID.json'
 import ChampsP from '../configs/ChampionsPrices.json'
 

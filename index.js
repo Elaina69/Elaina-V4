@@ -6,7 +6,3 @@
  * @Nyan Meow~~~
  */
 import "./main/main.js"
-import "./main/configs/ChampionsPrices.json"
-import "./main/configs/ElainaV2_config.json"
-import "./main/configs/Language.json"
-import "./main/configs/QueueID.json"

@@ -1,6 +1,5 @@
 import utils from '../_utilselaina';
-import lang from '../configs/Language.json'
-
+import lang from 'https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/main/configs/Language.json' assert { type: 'json' };
 let queue_accepted = false 
 let player_declined = false 
 
