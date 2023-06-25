@@ -1,10 +1,3 @@
-/**
- * @name permaban
- * @author nomi-san
- * @description your account is permanently suspended.
- * @link https://github.com/nomi-san/permaban-plugin
- */
-
 import { jsx, render } from 'https://cdn.jsdelivr.net/npm/nano-jsx/+esm';
 const { default: trans } = await import(window.origin + '/fe/lol-social/trans-player-behavior.json', { assert: { type: 'json' } });
 
