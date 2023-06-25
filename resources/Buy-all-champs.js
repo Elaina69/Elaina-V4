@@ -1,6 +1,6 @@
 import utils from "../_utilselaina"
 import axios from "https://cdn.skypack.dev/axios"
-import ChampsP from '../configs/ChampionsPrices.json' assert { type: 'json' };
+import ChampsP from '../configs/ChampionsPrices.json'
 
 export class Store {
     constructor() {

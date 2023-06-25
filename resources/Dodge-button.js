@@ -1,4 +1,4 @@
-import lang from 'https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/main/configs/Language.json' assert { type: 'json' };
+import lang from '../configs/Language.json'
 
 async function exitClient(){
     await fetch("/process-control/v1/process/quit",
