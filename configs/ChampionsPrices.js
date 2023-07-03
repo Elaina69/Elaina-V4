@@ -1,4 +1,4 @@
-{
+const cost = {
     "ChampsPrice": [
         {
             "Cost": 450,
@@ -38,3 +38,4 @@
         }
     ]
 }
+export default cost

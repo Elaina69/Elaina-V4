@@ -1,5 +1,8 @@
-import lang from '../configs/Language.js'
+let lang
 let assetspath = new URL("..", import.meta.url).href + "assets"
+
+try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language.js`)
+if (res.status==200) {lang = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language.js`))()).default}}catch{}
 
 if (DataStore.get("loot-helper")) {
     function AddElement(parent, tag, params = [], classes = [], content = null) {

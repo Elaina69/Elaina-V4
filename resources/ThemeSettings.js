@@ -1,9 +1,14 @@
-import lang    from '../configs/Language.js'
-import QueueID from '../configs/QueueID.js'
-import ChampsP from '../configs/ChampionsPrices.json'
+import ChampsP from '../configs/ChampionsPrices.js'
 
+let lang,QueueID
 let assetspath = new URL("..", import.meta.url).href + "assets"
 let pluginpath = new URL(".", import.meta.url).href
+
+try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language.js`)
+if (res.status==200) {lang = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language.js`))()).default}}catch{}
+try{let res = await fetch('https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/QueueID.js')
+if (res.status==200) {QueueID = (await (() => import('https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/QueueID.js'))()).default}}catch{}
+
 const UI = {
    Row: (id, childs) => {
       const row = document.createElement('div')

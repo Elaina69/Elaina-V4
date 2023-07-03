@@ -1,4 +1,6 @@
-import lang from '../configs/Language.js'
+let lang
+try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language.js`)
+if (res.status==200) {lang = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language.js`))()).default}}catch{}
 
 async function exitClient(){
     await fetch("/process-control/v1/process/quit",

@@ -5,28 +5,26 @@
  * @link https://github.com/Elaina69
  * @Nyan Meow~~~
  */
-import './configs/ChampionsPrices.json'
 import data  from './configs/ElainaV2_config.json'
-import lang  from './configs/Language.js'
 import utils from './_utilselaina'
 //___________________________________________________________________________//
-const langCode = document.querySelector("html").lang
-const langMap  = lang.langlist
-
-let watermark, thisVersion, newVersion
+let watermark, thisVersion, newVersion,lang
 let assetspath = new URL(".", import.meta.url).href + "assets"
 let pluginpath = new URL(".", import.meta.url).href + "resources"
 let configpath = new URL(".", import.meta.url).href + "configs"
-let songIndex  = 0
-let wallpapers = data["wallpaper_list"]
-let Audios     = data["audio_list"]	
 
-try{let checknver = await fetch('https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Version.js')
-if (checknver.status==200) {newVersion = (await (() => import('https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Version.js'))()).default}}catch{}
-try{let checkver = await fetch(`${configpath}/Version`)
-if (checkver.status==200) {thisVersion = (await (() => import(`${configpath}/Version`))()).default}}catch{}
-try{let wtcheck = await fetch(`${pluginpath}/Watermark`)
-if (wtcheck.status==200) {watermark = (await (() => import(`${pluginpath}/Watermark`))()).default}}catch{}
+try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/resources/Watermark.js`)
+if (res.status==200) {watermark = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/resources/Watermark.js`))()).default}}catch{}
+try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language.js`)
+if (res.status==200) {lang = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language.js`))()).default}}catch{}
+try{let res = await fetch('https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Version.js')
+if (res.status==200) {newVersion = (await (() => import('https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Version.js'))()).default}}catch{}
+try{let res = await fetch(`${configpath}/Version`)
+if (res.status==200) {thisVersion = (await (() => import(`${configpath}/Version`))()).default}}catch{}
+/*
+try{let res = await fetch()
+if (res.status==200) { = (await (() => import())()).default}}catch{}
+*/
 
 ImportPlugins(`${pluginpath}/ThemeSettings`)
 ImportPlugins(`${pluginpath}/Auto-accept`)
@@ -41,6 +39,13 @@ ImportPlugins(`${pluginpath}/Buy-all-champs`)
 ImportPlugins(`${pluginpath}/Pandoru`)
 ImportPlugins(`${pluginpath}/NameSpoofer`)
 ImportPlugins(`${pluginpath}/profile-utils-master`)
+
+const langCode = document.querySelector("html").lang
+const langMap  = lang.langlist
+
+let songIndex  = 0
+let wallpapers = data["wallpaper_list"]
+let Audios     = data["audio_list"]	
 //___________________________________________________________________________//
 
 

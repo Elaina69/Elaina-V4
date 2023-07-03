@@ -1,6 +1,10 @@
 import axios from "https://cdn.skypack.dev/axios"
 import utils from "../_utilselaina"
-import lang from '../configs/Language.js'
+
+let lang
+
+try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language.js`)
+if (res.status==200) {lang = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language.js`))()).default}}catch{}
 
 if (DataStore.get("Auto-ban-pick")) {
   const request = async (method, url, userBody = null) => {

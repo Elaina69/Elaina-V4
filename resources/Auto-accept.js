@@ -1,8 +1,11 @@
 import utils from '../_utilselaina';
-import lang from '../configs/Language.js'
 
+let lang
 let queue_accepted = false 
 let player_declined = false 
+
+try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language.js`)
+if (res.status==200) {lang = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language.js`))()).default}}catch{}
 
 function autoAcceptQueueButton(){
 	let element = document.getElementById("autoAcceptQueueButton")
