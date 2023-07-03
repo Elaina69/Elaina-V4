@@ -1,22 +1,52 @@
-const version = "1.2.0"
-let riotclient_auth, riotclient_port;
+/**
+ * @author Teisseire117
+ * @Modifierss Elaina Da Catto
+ * @version 1.3.0
+ * @Nyan Meow~~~
+ */
+
+let riotclient_auth,
+	riotclient_port,
+	pvp_net_id /* automatically updated to your pvp.net id */,
+	summoner_id /* automatically updated to your summonerId */,
+	phase /* automatically updated to current gameflow phase */
 let regex_rc_auth = /^--riotclient-auth-token=(.+)$/
 let regex_rc_port = /^--riotclient-app-port=([0-9]+)$/
-let phase; // automatically updated to current gameflow phase
 let debug_sub = true // to display debug messages
 let routines = [] // array of functions that will be called routinely
 let mutationCallbacks = [] // array of functions that will be called in mutation observer
-let pvp_net_id; // automatically updated to your pvp.net id
-let summoner_id; // automatically updated to your summonerId
-let summoner_region; // player current region
+
 
 /** used to add css files to document body */
-function addCss(filename) {
-	const style = document.createElement('link')
-	style.href = filename
-	style.type = 'text/css'
-	style.rel = 'stylesheet'
-	document.body.append(style)
+function addCss (cssvar,folder,name,css) {
+	let NStyle = document.createElement('style')
+		NStyle.appendChild(document.createTextNode(
+			'@import url("'+css+'");:root {'+cssvar+':url('+folder+'/'+name+')}'
+		))
+	document.body.appendChild(NStyle)
+}
+
+function addFont (folder,font,font_family) {
+	let Font = document.createElement('style')
+		Font.appendChild(document.createTextNode(
+			'@font-face {font-family: '+font_family+'; src: url('+folder+'/'+font+')}'
+		))
+	document.body.appendChild(Font)
+}
+
+function CustomCursor (folder,css) {
+	let cursor = document.createElement("div")
+			cursor.classList.add("cursor")
+			cursor.style.background = folder
+
+	document.addEventListener('mousemove', function(e){
+		var x = e.clientX
+		var y = e.clientY
+		cursor.style.transform = `translate3d(calc(${e.clientX}px - 40%), calc(${e.clientY}px - 40%), 0)`
+	})
+	let body = document.querySelector("html")
+		body.appendChild(cursor)
+	addCss("","","",css)
 }
 
 /**
@@ -61,7 +91,7 @@ let updateUserPvpNetInfos = async message => {
 let updatePhaseCallback = async message => { phase = JSON.parse(message["data"])[2]["data"]; }
 
 /** Callback function to be sent in subscribe_endpoint() to log uri & data object */
-let debugLogEndpoints = async message => { if (debug_sub) console.log(JSON.parse(message["data"])[2]["uri"], JSON.parse(message["data"])[2]["data"]) }
+//let debugLogEndpoints = async message => { if (debug_sub) console.log(JSON.parse(message["data"])[2]["uri"], JSON.parse(message["data"])[2]["data"]) }
 
 /**
  * Add function to be called in the MutationObserver API
@@ -80,7 +110,7 @@ window.addEventListener('load', () => {
 	fetch_riotclient_credentials()
 	subscribe_endpoint("/lol-gameflow/v1/gameflow-phase", updatePhaseCallback)
 	subscribe_endpoint("/lol-chat/v1/me", updateUserPvpNetInfos)
-	subscribe_endpoint("", debugLogEndpoints)
+	//subscribe_endpoint("", debugLogEndpoints)
 	window.setInterval(() => {
 		routines.forEach(routine => {
 			routine.callback()
@@ -114,7 +144,9 @@ let utils = {
 	subscribe_endpoint: subscribe_endpoint,
 	routineAddCallback: routineAddCallback,
 	mutationObserverAddCallback: mutationObserverAddCallback,
-	addCss: addCss
+	addCss: addCss,
+	addFont: addFont,
+	CustomCursor: CustomCursor
 }
 
 export default utils

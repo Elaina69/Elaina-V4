@@ -1,4 +1,4 @@
-import lang from '../configs/Language.json'
+import lang from '../configs/Language.js'
 
 async function exitClient(){
     await fetch("/process-control/v1/process/quit",

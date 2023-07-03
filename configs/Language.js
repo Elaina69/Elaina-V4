@@ -1,4 +1,4 @@
-{
+const lang = {
     "langlist": {
         "vi-VN": "VN",
 		"ja-JP": "JP",
@@ -771,3 +771,5 @@
         "name-spoofer"    : "Name spoofer"
     }
 }
+
+export default lang

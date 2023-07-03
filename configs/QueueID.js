@@ -1,5 +1,91 @@
-{
+const List = {
     "Gamemode" :[
+        {
+            "queueId": 430,
+            "map": "Summoner's Rift",
+            "description": "5v5 Blind Pick games",
+            "notes": null
+        },
+        {
+            "queueId": 420,
+            "map": "Summoner's Rift",
+            "description": "5v5 Ranked Solo games",
+            "notes": null
+        },
+        {
+            "queueId": 440,
+            "map": "Summoner's Rift",
+            "description": "5v5 Ranked Flex games",
+            "notes": null
+        },
+        {
+            "queueId": 450,
+            "map": "Howling Abyss",
+            "description": "5v5 ARAM games",
+            "notes": null
+        },
+        {
+            "queueId": 1090,
+            "map": "Convergence",
+            "description": "Teamfight Tactics games",
+            "notes": null
+        },
+        {
+            "queueId": 1100,
+            "map": "Convergence",
+            "description": "Ranked Teamfight Tactics games",
+            "notes": null
+        },
+
+
+
+        /*{
+            "queueId": 1020,
+            "map": "Summoner's Rift",
+            "description": "One for All games",
+            "notes": null
+        },
+        {
+            "queueId": 900,
+            "map": "Summoner's Rift",
+            "description": "ARURF games",
+            "notes": null
+        },
+        {
+            "queueId": 1300,
+            "map": "Nexus Blitz",
+            "description": "Nexus Blitz games",
+            "notes": null
+        },
+        {
+            "queueId": 1400,
+            "map": "Summoner's Rift",
+            "description": "Ultimate Spellbook games",
+            "notes": null
+        },
+        {
+            "queueId": 1900,
+            "map": "Summoner's Rift",
+            "description": "Pick URF games",
+            "notes": null
+        },*/
+
+
+
+
+
+        /*{
+            "queueId": 400,
+            "map": "Summoner's Rift",
+            "description": "5v5 Draft Pick games",
+            "notes": null
+        },
+        {
+            "queueId": 325,
+            "map": "Summoner's Rift",
+            "description": "All Random games",
+            "notes": null
+        },
         {
             "queueId": 72,
             "map": "Howling Abyss",
@@ -67,42 +153,6 @@
             "notes": null
         },
         {
-            "queueId": 325,
-            "map": "Summoner's Rift",
-            "description": "All Random games",
-            "notes": null
-        },
-        {
-            "queueId": 400,
-            "map": "Summoner's Rift",
-            "description": "5v5 Draft Pick games",
-            "notes": null
-        },
-        {
-            "queueId": 420,
-            "map": "Summoner's Rift",
-            "description": "5v5 Ranked Solo games",
-            "notes": null
-        },
-        {
-            "queueId": 430,
-            "map": "Summoner's Rift",
-            "description": "5v5 Blind Pick games",
-            "notes": null
-        },
-        {
-            "queueId": 440,
-            "map": "Summoner's Rift",
-            "description": "5v5 Ranked Flex games",
-            "notes": null
-        },
-        {
-            "queueId": 450,
-            "map": "Howling Abyss",
-            "description": "5v5 ARAM games",
-            "notes": null
-        },
-        {
             "queueId": 600,
             "map": "Summoner's Rift",
             "description": "Blood Hunt Assassin games",
@@ -148,12 +198,6 @@
             "queueId": 850,
             "map": "Summoner's Rift",
             "description": "Co-op vs. AI Intermediate Bot games",
-            "notes": null
-        },
-        {
-            "queueId": 900,
-            "map": "Summoner's Rift",
-            "description": "ARURF games",
             "notes": null
         },
         {
@@ -211,12 +255,6 @@
             "notes": null
         },
         {
-            "queueId": 1020,
-            "map": "Summoner's Rift",
-            "description": "One for All games",
-            "notes": null
-        },
-        {
             "queueId": 1030,
             "map": "Crash Site",
             "description": "Odyssey Extraction: Intro games",
@@ -247,18 +285,6 @@
             "notes": null
         },
         {
-            "queueId": 1090,
-            "map": "Convergence",
-            "description": "Teamfight Tactics games",
-            "notes": null
-        },
-        {
-            "queueId": 1100,
-            "map": "Convergence",
-            "description": "Ranked Teamfight Tactics games",
-            "notes": null
-        },
-        {
             "queueId": 1110,
             "map": "Convergence",
             "description": "Teamfight Tactics Tutorial games",
@@ -268,24 +294,6 @@
             "queueId": 1111,
             "map": "Convergence",
             "description": "Teamfight Tactics test games",
-            "notes": null
-        },
-        {
-            "queueId": 1300,
-            "map": "Nexus Blitz",
-            "description": "Nexus Blitz games",
-            "notes": null
-        },
-        {
-            "queueId": 1400,
-            "map": "Summoner's Rift",
-            "description": "Ultimate Spellbook games",
-            "notes": null
-        },
-        {
-            "queueId": 1900,
-            "map": "Summoner's Rift",
-            "description": "Pick URF games",
             "notes": null
         },
         {
@@ -305,6 +313,8 @@
             "map": "Summoner's Rift",
             "description": "Tutorial 3",
             "notes": null
-        }
+        }*/
     ]
 }
+
+export default List

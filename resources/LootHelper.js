@@ -1,4 +1,4 @@
-import lang from '../configs/Language.json'
+import lang from '../configs/Language.js'
 let assetspath = new URL("..", import.meta.url).href + "assets"
 
 if (DataStore.get("loot-helper")) {

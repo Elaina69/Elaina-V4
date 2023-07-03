@@ -104,7 +104,7 @@ if (DataStore.get("random-skin")) {
     }
 
     window.addEventListener("load", async () => {
-        utils.addCss(`${assetspath}/Css/Addon-Css/reroll_button.css`)
+        utils.addCss("","","",`${assetspath}/Css/Addon-Css/reroll_button.css`)
         await delay(1000);
         if (DataStore.get("sr_enable") == undefined) DataStore.set("sr_enable", true);
         if (DataStore.get("champion_id")) DataStore.remove("champion_id")

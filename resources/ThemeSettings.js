@@ -1,5 +1,5 @@
-import lang    from '../configs/Language.json'
-import QueueID from '../configs/QueueID.json'
+import lang    from '../configs/Language.js'
+import QueueID from '../configs/QueueID.js'
 import ChampsP from '../configs/ChampionsPrices.json'
 
 let assetspath = new URL("..", import.meta.url).href + "assets"

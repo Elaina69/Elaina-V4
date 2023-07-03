@@ -1,5 +1,5 @@
 import utils from '../_utilselaina';
-import lang from '../configs/Language.json'
+import lang from '../configs/Language.js'
 
 let queue_accepted = false 
 let player_declined = false 

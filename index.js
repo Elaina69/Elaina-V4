@@ -5,16 +5,15 @@
  * @link https://github.com/Elaina69
  * @Nyan Meow~~~
  */
-import './configs/QueueID.json'
 import './configs/ChampionsPrices.json'
-import data from './configs/ElainaV2_config.json'
-import lang from './configs/Language.json'
+import data  from './configs/ElainaV2_config.json'
+import lang  from './configs/Language.js'
+import utils from './_utilselaina'
 //___________________________________________________________________________//
 const langCode = document.querySelector("html").lang
 const langMap  = lang.langlist
 
-let utils, watermark, thisVersion, newVersion
-let path       = new URL(".", import.meta.url).href
+let watermark, thisVersion, newVersion
 let assetspath = new URL(".", import.meta.url).href + "assets"
 let pluginpath = new URL(".", import.meta.url).href + "resources"
 let configpath = new URL(".", import.meta.url).href + "configs"
@@ -26,8 +25,6 @@ try{let checknver = await fetch('https://gitloaf.com/cdn/Elaina69/Elaina-V2/main
 if (checknver.status==200) {newVersion = (await (() => import('https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Version.js'))()).default}}catch{}
 try{let checkver = await fetch(`${configpath}/Version`)
 if (checkver.status==200) {thisVersion = (await (() => import(`${configpath}/Version`))()).default}}catch{}
-try{let utilscheck = await fetch(`${path}_utilselaina`)
-if (utilscheck.status==200) {utils = (await (() => import(`${path}_utilselaina`))()).default}}catch{}
 try{let wtcheck = await fetch(`${pluginpath}/Watermark`)
 if (wtcheck.status==200) {watermark = (await (() => import(`${pluginpath}/Watermark`))()).default}}catch{}
 
@@ -43,6 +40,7 @@ ImportPlugins(`${pluginpath}/RandomSkin`)
 ImportPlugins(`${pluginpath}/Buy-all-champs`)
 ImportPlugins(`${pluginpath}/Pandoru`)
 ImportPlugins(`${pluginpath}/NameSpoofer`)
+ImportPlugins(`${pluginpath}/profile-utils-master`)
 //___________________________________________________________________________//
 
 
@@ -233,34 +231,6 @@ async function ImportPlugins(link) {
 	try  {let res = await fetch(link);if (res.status == 200) {(await (() => import(link))()).default}}
 	catch{console.log("File doesn't exist, can't load module/plugins")}
 }
-function newStyle (cssvar,folder,name,css) {
-	let NStyle = document.createElement('style')
-		NStyle.appendChild(document.createTextNode(
-			'@import url("'+css+'");:root {'+cssvar+':url('+folder+'/'+name+')}'
-		))
-	document.body.appendChild(NStyle)
-}
-function newFont (font,font_family) {
-	let Font = document.createElement('style')
-		Font.appendChild(document.createTextNode(
-			'@font-face {font-family: '+font_family+'; src: url('+assetspath+"/Fonts/"+font+')}'
-		))
-	document.body.appendChild(Font)
-}
-function CustomCursor (folder,css) {
-	let cursor = document.createElement("div")
-			cursor.classList.add("cursor")
-			cursor.style.background = folder
-
-	document.addEventListener('mousemove', function(e){
-		var x = e.clientX
-		var y = e.clientY
-		cursor.style.transform = `translate3d(calc(${e.clientX}px - 40%), calc(${e.clientY}px - 40%), 0)`
-	})
-	let body = document.querySelector("html")
-		body.appendChild(cursor)
-	utils.addCss(css)
-}
 function create_element(tagName, className, content) {
 	const el = document.createElement(tagName)
 	el.className = className
@@ -366,6 +336,7 @@ function audio_mute() {
 		wallpaperaudio.volume = DataStore.get("wallpaper-volume")
 		audio.volume          = DataStore.get("audio-volume")
 	}
+	console.log(`audio and wallpaper mute ${DataStore.get("mute-audio")}`)
 }
 function mute_set_icon_audio(elem) {
 	let mute_audio_icon = elem || document.querySelector(".mute-audio-icon")
@@ -384,12 +355,13 @@ function audio_loop() {
 
 	if (DataStore.get('audio-loop')) {
 		audio.loop = true
-		audio.nodeRemovedEvent("ended")
+		audio.removeEventListener("ended", nextSong)
 	}
 	else {
 		audio.loop = false
 		audio.addEventListener("ended", nextSong)
 	}
+	console.log(`Audio loop ${DataStore.get('audio-loop')}`)
 }
 function audio_loop_icon(elem) {
 	let audio_loop_icon = elem || document.querySelector(".audio-loop-icon")
@@ -1204,30 +1176,30 @@ window.setInterval(() => {
 
 //___________________________________________________________________________//
 window.addEventListener('load', async () => {
-	newStyle("--Hover-card-backdrop",assetspath+"/Icon",data['Hover-card'])
-	newFont("BeaufortforLOL-Bold.ttf","Elaina")
+	utils.addCss("--Hover-card-backdrop",assetspath+"/Icon",data['Hover-card'])
+	utils.addFont(assetspath+"/Fonts/","BeaufortforLOL-Bold.ttf","Elaina")
 
-	if (DataStore.get("Sidebar-Transparent")) {utils.addCss(`${assetspath}/Css/Addon-Css/Sidebar-Transparent.css`)}
-	else {utils.addCss(`${assetspath}/Css/Addon-Css/Sidebar-Color.css`)}
+	if (DataStore.get("Sidebar-Transparent")) {utils.addCss("","","",`${assetspath}/Css/Addon-Css/Sidebar-Transparent.css`)}
+	else {utils.addCss("","","",`${assetspath}/Css/Addon-Css/Sidebar-Color.css`)}
 
-	if (DataStore.get("Animate-Loading")) {newStyle("--ElainaFly",assetspath+"/Icon",data["Animation-logo"],`${assetspath}/Css/Addon-Css/Animate-Loading-Screen.css`)}
-	else {newStyle("--ElainaStatic",assetspath+"/Icon",data["Static-logo"],`${assetspath}/Css/Addon-Css/Static-Loading-Screen.css`)}
+	if (DataStore.get("Animate-Loading")) {utils.addCss("--ElainaFly",assetspath+"/Icon",data["Animation-logo"],`${assetspath}/Css/Addon-Css/Animate-Loading-Screen.css`)}
+	else {utils.addCss("--ElainaStatic",assetspath+"/Icon",data["Static-logo"],`${assetspath}/Css/Addon-Css/Static-Loading-Screen.css`)}
 
-	if (DataStore.get("Hide-Champions-Splash-Art")) {utils.addCss(`${assetspath}/Css/Addon-Css/Hide-Champs-Splash-Art.css`)}
-	if (DataStore.get("Custom-Avatar")) {newStyle("--Avatar",assetspath+"/Icon",data["Avatar"],`${assetspath}/Css/Addon-Css/Icon/Avatar.css`)}
+	if (DataStore.get("Hide-Champions-Splash-Art")) {utils.addCss("","","",`${assetspath}/Css/Addon-Css/Hide-Champs-Splash-Art.css`)}
+	if (DataStore.get("Custom-Avatar")) {utils.addCss("--Avatar",assetspath+"/Icon",data["Avatar"],`${assetspath}/Css/Addon-Css/Icon/Avatar.css`)}
 	if (DataStore.get("Custom-Icon")) {
-		newStyle("--RP-Icon",assetspath+"/Icon",data["RP-icon"],`${assetspath}/Css/Addon-Css/Icon/RiotPoint.css`)
-		newStyle("--BE-Icon",assetspath+"/Icon",data["BE-icon"],`${assetspath}/Css/Addon-Css/Icon/BlueEssence.css`)
-		newStyle("--Rank-Icon",assetspath+"/Icon",data["Rank-icon"],`${assetspath}/Css/Addon-Css/Icon/Rank.css`)
-		newStyle("--Emblem",assetspath+"/Icon",data["Emblem"],`${assetspath}/Css/Addon-Css/Icon/Emblem.css`)
-		newStyle("--Clash-banner",assetspath+"/Icon",data["Class-banner"],`${assetspath}/Css/Addon-Css/Icon/ClashBanner.css`)
-		newStyle("--Ticker",assetspath+"/Icon",data["Ticker"],`${assetspath}/Css/Addon-Css/Icon/Ticker.css`)
+		utils.addCss("--RP-Icon",assetspath+"/Icon",data["RP-icon"],`${assetspath}/Css/Addon-Css/Icon/RiotPoint.css`)
+		utils.addCss("--BE-Icon",assetspath+"/Icon",data["BE-icon"],`${assetspath}/Css/Addon-Css/Icon/BlueEssence.css`)
+		utils.addCss("--Rank-Icon",assetspath+"/Icon",data["Rank-icon"],`${assetspath}/Css/Addon-Css/Icon/Rank.css`)
+		utils.addCss("--Emblem",assetspath+"/Icon",data["Emblem"],`${assetspath}/Css/Addon-Css/Icon/Emblem.css`)
+		utils.addCss("--Clash-banner",assetspath+"/Icon",data["Class-banner"],`${assetspath}/Css/Addon-Css/Icon/ClashBanner.css`)
+		utils.addCss("--Ticker",assetspath+"/Icon",data["Ticker"],`${assetspath}/Css/Addon-Css/Icon/Ticker.css`)
 	}
-	if (DataStore.get("Custom-Font")) {newFont(data["Font-Name"],"Custom")}
-	if (DataStore.get("Custom-Cursor")) {CustomCursor('url('+assetspath+"/Icon/"+data["Mouse-cursor"]+')',`${assetspath}/Css/Addon-Css/Cursor.css`)}
+	if (DataStore.get("Custom-Font")) {utils.addFont(data["Font-Name"],"Custom")}
+	if (DataStore.get("Custom-Cursor")) {utils.CustomCursor('url('+assetspath+"/Icon/"+data["Mouse-cursor"]+')',`${assetspath}/Css/Addon-Css/Cursor.css`)}
 	if (DataStore.get("Custom-Status")) {CustomStatus()}
 	if (DataStore.get("Custom-Rank(Hover-card)")) {CustomRank()}
-	if (DataStore.get("aram-only")) {utils.addCss(`${assetspath}/Css/Addon-Css/Aram-only.css`)}
+	if (DataStore.get("aram-only")) {utils.addCss("","","",`${assetspath}/Css/Addon-Css/Aram-only.css`)}
 
 	const manager = () => document.getElementById('lol-uikit-layer-manager-wrapper')
 	const root    = document.createElement('div')
@@ -1243,13 +1215,13 @@ window.addEventListener('load', async () => {
 		audio.id       = 'bg-audio'
     	audio.autoplay = true
     	audio.loop     = DataStore.get("audio-loop")
+		audio.volume   = DataStore.get("audio-volume")
 		if (DataStore.get("Continues_Audio")) {
 			audio.src  = `${assetspath}/Backgrounds/Audio/${Audios[DataStore.get('audio-index')]}`
 		}
 		else {
 			audio.src  = `${assetspath}/Backgrounds/Audio/${Audios[songIndex]}`
 		}
-		audio.volume   = DataStore.get("audio-volume")
 	
 	if (!DataStore.get("audio-loop")) {audio.addEventListener("ended", nextSong)}
 	video.addEventListener("load", ()=>{ 
@@ -1266,7 +1238,7 @@ window.addEventListener('load', async () => {
     document.querySelector("body").prepend(audio)
 	elaina_play_pause()
 
-	utils.addCss(`${assetspath}/Css/ElainaV2.css`)
+	utils.addCss("","","",`${assetspath}/Css/ElainaV2.css`)
 	utils.mutationObserverAddCallback(pageChangeMutation, ["screen-root"])
 
 	utils.routineAddCallback(newTicker,["flyout"])
@@ -1285,8 +1257,6 @@ window.addEventListener('load', async () => {
 		else {
 			elaina_play_pause()
 			audio_play_pause()
-			audio_mute()
-			audio_loop()
 		}
 	})
 
@@ -1294,7 +1264,11 @@ window.addEventListener('load', async () => {
 		DataStore.set("currentAudioPlay", audio.currentTime)
 	},100)
 
-	if (DataStore.get("Continues_Audio")) {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[DataStore.get('audio-index')])}
+	if (DataStore.get("Continues_Audio")) {
+		console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[DataStore.get('audio-index')])
+		console.log(`current wallpaper status: play/pause-time: ${DataStore.get('pause-wallpaper')}, mute: ${DataStore.get("mute-audio")}, loop: true, volume: ${DataStore.get("wallpaper-volume")}`)
+		console.log(`current audio status: play/pause-time: ${DataStore.get('pause-audio')}, mute: ${DataStore.get("mute-audio")}, loop: ${DataStore.get("audio-loop")}, volume: ${DataStore.get("audio-volume")}`)
+	}
 	else {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[songIndex])}
 
 	if (DataStore.get("Old-League-Loader-Settings")) {
