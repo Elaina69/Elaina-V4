@@ -6,7 +6,7 @@
  - [Change backgrounds and icons](#theme-settings-and-change-stuff)
 
 ## Elaina-V2
-New Elaina theme for Pengu Loader with brand new JS file
+Elaina theme for Pengu Loader
 
 > Special thanks:
 >  - Developers       : Me (ofc), [teiseire117](https://github.com/teisseire117)
