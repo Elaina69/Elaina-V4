@@ -72,7 +72,55 @@ let nodeRemovedEvent = function (event) {
 		document.removeEventListener("DOMNodeRemoved", nodeRemovedEvent)
 	}
 }
+function create_element(tagName, className, content) {
+	const el = document.createElement(tagName)
+	el.className = className
+	if (content) {
+		el.innerHTML = content
+	}
+	return el
+}
+function go_to_default_home_page() {
+	document.querySelector(`lol-uikit-navigation-item[item-id='elaina-home']`).click()
+}
+function add_elaina_home_page() {
+	let lol_home = document.querySelector(".rcp-fe-lol-home > lol-uikit-section-controller")
 
+	if (lol_home) {
+		if (!lol_home.querySelector("[section-id='elaina-home']")) {
+			let elaina_home = create_element("lol-uikit-section", "")
+			let div         = create_element("div", "wrapper")
+
+			div.id = "elaina-home"
+			elaina_home.setAttribute("section-id", "elaina-home")
+			elaina_home.append(div)
+			lol_home.prepend(elaina_home)
+		}
+	}
+}
+function add_elaina_home_navbar() {
+	let navbar = document.querySelector(".rcp-fe-lol-home > lol-uikit-navigation-bar")
+
+	if (navbar) {
+		if (!navbar.querySelector("[item-id='elaina-home']")) {
+			let elaina_home_navbar_item = create_element("lol-uikit-navigation-item", "")
+
+			elaina_home_navbar_item.setAttribute("item-id", "elaina-home")
+			elaina_home_navbar_item.setAttribute("priority", 1)
+			elaina_home_navbar_item.textContent = lang[langMap[langCode] || "EN"]["home"]
+
+			navbar.prepend(elaina_home_navbar_item)
+		}
+	}
+}
+function patch_default_home_page(){
+	let loop = 0
+	let intervalId = window.setInterval(() => {
+		loop++
+		if (loop >= 21) {window.clearInterval(intervalId)}
+		go_to_default_home_page()
+	}, 100)
+}
 function elaina_play_pause() {
 	let elaina_bg_elem = document.getElementById("elaina-bg")
 	if (DataStore.get('pause-wallpaper')%2==0) {
@@ -513,6 +561,7 @@ async function createLoaderMenu(root) {
 let loadBgandAudio = async (node) => {
     let pagename, previous_page
 	let elaina_bg_elem = document.getElementById("elaina-bg")
+	let patcher_go_to_default_home_page = true
 	let brightness_modifiers = [
 		"rcp-fe-lol-yourshop",
 		"rcp-fe-lol-home-main",
@@ -535,6 +584,12 @@ let loadBgandAudio = async (node) => {
 		elaina_bg_elem.style.filter = data["Homepage"]
 		if (!document.getElementsByClassName("webm-bottom-buttons-container").length) {
 			create_webm_buttons()
+			add_elaina_home_page()
+			add_elaina_home_navbar()
+			go_to_default_home_page()
+			if (previous_page == "rcp-fe-lol-parties" ){
+				patch_default_home_page()
+			}
 		}
 	}
 	else if (pagename != "rcp-fe-lol-navigation-screen" && pagename != "window-controls" && pagename != "rcp-fe-lol-home" && pagename != "social") {
@@ -544,6 +599,12 @@ let loadBgandAudio = async (node) => {
 	}
 	if (pagename == "rcp-fe-lol-uikit-full-page-modal-controller") {
 		return
+	}
+	if (pagename == "social") {
+		if (patcher_go_to_default_home_page){
+			go_to_default_home_page()
+			patcher_go_to_default_home_page = false
+		}
 	}
 	if (pagename == "rcp-fe-lol-yourshop") {
 		elaina_bg_elem.style.filter = data["Yourshop"]
