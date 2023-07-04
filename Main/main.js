@@ -2,30 +2,30 @@ import utils from 'https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/_utilsel
 //___________________________________________________________________________//
 let watermark, thisVersion, lang
 
-try{let res = await fetch(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/resources/Watermark.js`)
-if (res.status==200) {watermark = (await (() => import(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/resources/Watermark.min.js`))()).default}}catch{}
-try{let res = await fetch(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Language.js`)
-if (res.status==200) {lang = (await (() => import(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Language.js`))()).default}}catch{}
-try{let res = await fetch(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Version.js`)
-if (res.status==200) {thisVersion = (await (() => import(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Version.js`))()).default}}catch{}
+try{let res = await fetch(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/Watermark.js`)
+if (res.status==200) {watermark = (await (() => import(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/Watermark.js`))()).default}}catch{}
+try{let res = await fetch("https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/configs/Language.js")
+if (res.status==200) {lang = (await (() => import("https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/configs/Language.js"))()).default}}catch{}
+try{let res = await fetch(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/configs/Version.js`)
+if (res.status==200) {thisVersion = (await (() => import(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/configs/Version.js`))()).default}}catch{}
 /*
 try{let res = await fetch()
 if (res.status==200) { = (await (() => import())()).default}}catch{}
 */
 
-ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/resources/ThemeSettings`)
-ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/resources/Auto-accept`)
-ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/resources/Dodge-button`)
-ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/resources/Offline-mode`)
-ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/resources/Hide_friendlist`)
-ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/resources/FakeIP`)
-ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/resources/Auto-Ban-Pick`)
-ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/resources/LootHelper`)
-ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/resources/RandomSkin`)
-ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/resources/Buy-all-champs`)
-ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/resources/Pandoru`)
-ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/resources/NameSpoofer`)
-ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/resources/profile-utils-master`)
+ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/ThemeSettings`)
+ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/Auto-accept`)
+ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/Dodge-button`)
+ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/Offline-mode`)
+ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/Hide_friendlist`)
+ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/FakeIP`)
+ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/Auto-Ban-Pick`)
+ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/LootHelper`)
+ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/RandomSkin`)
+ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/Buy-all-champs`)
+ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/Pandoru`)
+ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/NameSpoofer`)
+ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/profile-utils-master`)
 
 const langCode = document.querySelector("html").lang
 const langMap  = lang.langlist
