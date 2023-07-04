@@ -25,7 +25,7 @@ ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/Ra
 ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/Buy-all-champs.js`)
 ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/Pandoru.js`)
 ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/NameSpoofer.js`)
-ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/profile-utils-master,jss`)
+ImportPlugins(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/profile-utils-master.js`)
 
 const langCode = document.querySelector("html").lang
 const langMap  = lang.langlist
