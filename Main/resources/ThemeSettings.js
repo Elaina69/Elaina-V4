@@ -3,10 +3,10 @@ import ChampsP from '../configs/ChampionsPrices'
 let lang,QueueID
 let pluginpath = new URL(".", import.meta.url).href
 
-try{let res = await fetch(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Language`)
-if (res.status==200) {lang = (await (() => import(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Language`))()).default}}catch{}
-try{let res = await fetch('https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/QueueID')
-if (res.status==200) {QueueID = (await (() => import('https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/QueueID'))()).default}}catch{}
+try{let res = await fetch(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Language.js`)
+if (res.status==200) {lang = (await (() => import(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Language.js`))()).default}}catch{}
+try{let res = await fetch('https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/QueueID.js')
+if (res.status==200) {QueueID = (await (() => import('https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/QueueID.js'))()).default}}catch{}
 const UI = {
    Row: (id, childs) => {
       const row = document.createElement('div')

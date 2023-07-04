@@ -1,6 +1,6 @@
 let lang
-try{let res = await fetch(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Language`)
-if (res.status==200) {lang = (await (() => import(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Language`))()).default}}catch{}
+try{let res = await fetch(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Language.js`)
+if (res.status==200) {lang = (await (() => import(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Language.js`))()).default}}catch{}
 
 async function exitClient(){
     await fetch("/process-control/v1/process/quit",
