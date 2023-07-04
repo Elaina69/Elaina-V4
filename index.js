@@ -5,15 +5,15 @@
  * @link https://github.com/Elaina69
  * @Nyan Meow~~~
  */
-
 import 'https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/main.js'
-import utils from 'https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
-import data  from './Main/configs/ElainaV2_config'
+import utils from './Main/_utilselaina.js'
+import data  from './Main/configs/ElainaV2_config.js'
 
 let lang, thisVersion
 let songIndex  = 0
 let wallpapers = data["wallpaper_list"]
-let Audios     = data["audio_list"]	
+let Audios     = data["audio_list"]
+let assetspath = new URL(".", import.meta.url).href + "Main/assets"
 
 try{let res = await fetch("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/configs/Language.js")
 if (res.status==200) {lang = (await (() => import("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/configs/Language.js"))()).default}}catch{}
@@ -60,7 +60,7 @@ if (!DataStore.has("audio-loop")) {
 	DataStore.set("audio-loop", false)
 }
 
-let assetspath = new URL(".", import.meta.url).href + "Main/assets"
+
 let nodeRemovedEvent = function (event) {
 	if (event.target.classList && event.target.classList.contains("lol-loading-screen-container")) {
 		let elainaBg     = document.getElementById("elaina-bg")
@@ -592,10 +592,8 @@ let loadBgandAudio = async (node) => {
 			}
 		}
 	}
-	else if (pagename != "rcp-fe-lol-navigation-screen" && pagename != "window-controls" && pagename != "rcp-fe-lol-home" && pagename != "social") {
-		if (document.getElementsByClassName("webm-bottom-buttons-container").length) {
-			Delbuttons()
-		}
+	else if (pagename != "rcp-fe-lol-navigation-screen" && pagename != "window-controls" && pagename != "rcp-fe-lol-home" && pagename != "social" && document.getElementsByClassName("webm-bottom-buttons-container").length) {
+		Delbuttons()
 	}
 	if (pagename == "rcp-fe-lol-uikit-full-page-modal-controller") {
 		return
@@ -651,9 +649,8 @@ let loadBgandAudio = async (node) => {
 	if (pagename == "rcp-fe-lol-profiles-main") {		
 		elaina_bg_elem.style.filter = data["Profiles"]	
 	}
-	else if (previous_page == "rcp-fe-lol-profiles-main") {
-		if (brightness_modifiers.indexOf(pagename) == -1)
-			elaina_bg_elem.style.filter = data["Homepage"]
+	else if (previous_page == "rcp-fe-lol-profiles-main" && brightness_modifiers.indexOf(pagename) == -1) {
+		elaina_bg_elem.style.filter = data["Homepage"]
 	}
 	if (pagename == "rcp-fe-lol-parties") {
 		elaina_bg_elem.style.filter = data["Parties"]
@@ -667,9 +664,7 @@ let loadBgandAudio = async (node) => {
 	else if (previous_page == "rcp-fe-lol-tfts" && brightness_modifiers.indexOf(pagename) == -1) {
 		elaina_bg_elem.style.filter = data["Homepage"]
 	}
-	if (previous_page != pagename) {
-		previous_page = pagename
-	}
+	if (previous_page != pagename) {previous_page = pagename}
 }
 window.addEventListener('load', async ()=> {
     utils.addCss("--Hover-card-backdrop",assetspath+"/Icon",data['Hover-card'])
@@ -750,7 +745,7 @@ window.addEventListener('load', async ()=> {
 		await createLoaderMenu(root)
 		manager().prepend(root)
 	}
-	
+
     if (DataStore.get("Continues_Audio")) {
 		console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[DataStore.get('audio-index')])
 		console.log(`current wallpaper status: play/pause-time: ${DataStore.get('pause-wallpaper')}, mute: ${DataStore.get("mute-audio")}, loop: true, volume: ${DataStore.get("wallpaper-volume")}`)

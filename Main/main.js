@@ -1,4 +1,5 @@
 import utils from 'https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
+
 //___________________________________________________________________________//
 let watermark, lang
 
@@ -266,14 +267,12 @@ let updateLobbyRegaliaBanner = async message => {
 				let base = document.querySelector("lol-regalia-parties-v2-element.regalia-loaded").shadowRoot.querySelector(".regalia-parties-v2-banner-backdrop.regalia-banner-loaded")
 					base.shadowRoot.querySelector(".regalia-banner-asset-static-image").style.filter = "sepia(1) brightness(3.5) opacity(0.4)"
 					base.shadowRoot.querySelector(".regalia-banner-state-machine").shadowRoot.querySelector(".regalia-banner-intro.regalia-banner-video").style.filter = "grayscale(1) saturate(0) brightness(0.5)"
-			}
-			catch {}
+			}catch {}
             if (DataStore.get("Custom-Avatar")) {
                 try {
 					document.querySelector("div.lobby-banner.local > lol-regalia-parties-v2-element").shadowRoot.querySelector("div > div > div.regalia-parties-v2-crest-wrapper > lol-regalia-crest-v2-element").
 						shadowRoot.querySelector("div > uikit-state-machine > div.lol-regalia-summoner-icon-mask-container > div").style.backgroundImage = "var(--Avatar)"
-				}
-				catch {}
+				}catch {}
             }
 		},200)
 	}
@@ -392,9 +391,7 @@ let pageChangeMutation = async (node) => {
         ranked_observer.disconnect()
         ranked_observer = undefined
 	}
-	if (previous_page != pagename) {
-		previous_page = pagename
-	}
+	if (previous_page != pagename) {previous_page = pagename}
 	if (DataStore.get("aram-only") && node.getAttribute("data-screen-name") == "rcp-fe-lol-parties") {
 		window.setInterval(()=>{
 			try{
