@@ -672,9 +672,6 @@ let loadBgandAudio = async (node) => {
 	}
 }
 window.addEventListener('load', async ()=> {
-	const manager = () => document.getElementById('lol-uikit-layer-manager-wrapper')
-	const root    = document.createElement('div')
-
     utils.addCss("--Hover-card-backdrop",assetspath+"/Icon",data['Hover-card'])
 	utils.addFont(assetspath+"/Fonts/","BeaufortforLOL-Bold.ttf","Elaina")
 
@@ -695,18 +692,6 @@ window.addEventListener('load', async ()=> {
 	if (DataStore.get("Custom-Font")) {utils.addFont(data["Font-Name"],"Custom")}
 	if (DataStore.get("Custom-Cursor")) {utils.CustomCursor('url('+assetspath+"/Icon/"+data["Mouse-cursor"]+')',`${assetspath}/Css/Addon-Css/Cursor.css`)}
 	if (DataStore.get("Custom-Status")) {CustomStatus()}
-	if (DataStore.get("Old-League-Loader-Settings")) {
-		while (!manager()) await new Promise(r => setTimeout(r, 200))
-		await createLoaderMenu(root)
-		manager().prepend(root)
-	}
-    if (DataStore.get("Continues_Audio")) {
-		console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[DataStore.get('audio-index')])
-		console.log(`current wallpaper status: play/pause-time: ${DataStore.get('pause-wallpaper')}, mute: ${DataStore.get("mute-audio")}, loop: true, volume: ${DataStore.get("wallpaper-volume")}`)
-		console.log(`current audio status: play/pause-time: ${DataStore.get('pause-audio')}, mute: ${DataStore.get("mute-audio")}, loop: ${DataStore.get("audio-loop")}, volume: ${DataStore.get("audio-volume")}`)
-	}
-	else {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[songIndex])}
-
 
 	const video = document.createElement('video')
 	const audio = document.createElement("audio")
@@ -757,4 +742,19 @@ window.addEventListener('load', async ()=> {
     window.setInterval(()=> {
 		DataStore.set("currentAudioPlay", audio.currentTime)
 	},100)
+
+	const manager = () => document.getElementById('lol-uikit-layer-manager-wrapper')
+	const root    = document.createElement('div')
+	if (DataStore.get("Old-League-Loader-Settings")) {
+		while (!manager()) await new Promise(r => setTimeout(r, 200))
+		await createLoaderMenu(root)
+		manager().prepend(root)
+	}
+	
+    if (DataStore.get("Continues_Audio")) {
+		console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[DataStore.get('audio-index')])
+		console.log(`current wallpaper status: play/pause-time: ${DataStore.get('pause-wallpaper')}, mute: ${DataStore.get("mute-audio")}, loop: true, volume: ${DataStore.get("wallpaper-volume")}`)
+		console.log(`current audio status: play/pause-time: ${DataStore.get('pause-audio')}, mute: ${DataStore.get("mute-audio")}, loop: ${DataStore.get("audio-loop")}, volume: ${DataStore.get("audio-volume")}`)
+	}
+	else {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[songIndex])}
 })
