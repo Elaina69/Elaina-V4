@@ -1,8 +1,6 @@
-import ChampsP from '../configs/ChampionsPrices'
+import ChampsP from 'https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/configs/ChampionsPrices.js'
 
 let lang,QueueID
-let pluginpath = new URL(".", import.meta.url).href
-
 try{let res = await fetch(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/configs/Language.js`)
 if (res.status==200) {lang = (await (() => import(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/configs/Language.js`))()).default}}catch{}
 try{let res = await fetch('https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/configs/QueueID.js')
@@ -936,13 +934,13 @@ window.addEventListener('load', async () => {
                      DeleteEl(".linking-settings.ember-view", DataStore.get("Hide-linking-settings"))
                      DeleteEl(".vng-publisher-settings.ember-view", DataStore.get("Hide-linking-settings"))
 
-                     DeleteElcheck("j1_4",`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/FakeIP`)
-                     DeleteElcheck("autobanpick",`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/Auto-Ban-Pick`)
-                     DeleteElcheck("loothelp",`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/LootHelper`)
-                     DeleteElcheck("rdskin",`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/RandomSkin`)
-                     DeleteElcheck("buyallchamp",`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/Buy-all-champs`)
-                     DeleteElcheck("pandoru",`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/Pandoru`)
-                     DeleteElcheck("namespoof",`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/NameSpoofer`)
+                     DeleteElcheck("j1_4",`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/FakeIP.js`)
+                     DeleteElcheck("autobanpick",`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/Auto-Ban-Pick.js`)
+                     DeleteElcheck("loothelp",`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/LootHelper.js`)
+                     DeleteElcheck("rdskin",`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/RandomSkin.js`)
+                     DeleteElcheck("buyallchamp",`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/Buy-all-champs.js`)
+                     DeleteElcheck("pandoru",`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/Pandoru.js`)
+                     DeleteElcheck("namespoof",`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/resources/NameSpoofer.js`)
 
                      tickcheck(DataStore.get("Name-Spoofer"), namespfel, namespfbox)
                      tickcheck(DataStore.get("aram-only"), Aramel, Arambox)
