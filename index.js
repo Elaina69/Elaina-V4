@@ -1,6 +1,6 @@
 import 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/index.js'
 import utils from 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
-import data  from './Main/configs/ElainaV2_config.js'
+import data  from './Main/configs/ElainaV2_config'
 
 let songIndex  = 0
 let wallpapers = data["wallpaper_list"]
