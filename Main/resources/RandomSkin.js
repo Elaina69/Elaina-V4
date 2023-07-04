@@ -78,7 +78,7 @@ if (DataStore.get("random-skin")) {
 
         buttonDiv.classList = "sr-reroll-div mission-button-component ember-view";
         button.classList = "sr-reroll mission-button use-animation";
-        button.style.backgroundImage = `url("${assetspath}/Icon/reroll_button.png")`
+        button.style.backgroundImage = `url("${assetspath}/Icon/Plugins-icons/reroll_button.png")`
 
         buttonDiv.append(button);
 

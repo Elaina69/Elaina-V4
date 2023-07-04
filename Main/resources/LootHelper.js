@@ -440,7 +440,7 @@ if (DataStore.get("loot-helper")) {
     window.addEventListener('load', () => {
         let NStyle = document.createElement('style');
 		NStyle.appendChild(document.createTextNode(
-			'@import url("'+assetspath+'/Css/Addon-Css/LootHelper.css");:root {--OC_button:url("'+assetspath+'/Icon/button-open-chests.png");--BE_button:url("'+assetspath+'/Icon/button-blue-essence.png");--BE_hover:url("'+assetspath+'/Icon/button-blue-essence-hover.png");--BE_active:url("'+assetspath+'/Icon/button-blue-essence-click.png");--rbutton:url("'+assetspath+'/Icon/button-refresh.png");--rhover:url("'+assetspath+'/Icon/button-refresh-hover.png");--ractive:url("'+assetspath+'/Icon/button-refresh-click.png");--OC_hover:url("'+assetspath+'/Icon/button-open-chests-hover.png");--OC_active:url("'+assetspath+'/Icon/button-open-chests-click.png");}'
+			'@import url("'+assetspath+'/Css/Addon-Css/LootHelper.css");:root {--OC_button:url("'+assetspath+'/Icon/Plugins-icons/button-open-chests.png");--BE_button:url("'+assetspath+'/Icon/Plugins-icons/button-blue-essence.png");--BE_hover:url("'+assetspath+'/Icon/Plugins-icons/button-blue-essence-hover.png");--BE_active:url("'+assetspath+'/Icon/Plugins-icons/button-blue-essence-click.png");--rbutton:url("'+assetspath+'/Icon/Plugins-icons/button-refresh.png");--rhover:url("'+assetspath+'/Icon/Plugins-icons/button-refresh-hover.png");--ractive:url("'+assetspath+'/Icon/Plugins-icons/button-refresh-click.png");--OC_hover:url("'+assetspath+'/Icon/Plugins-icons/button-open-chests-hover.png");--OC_active:url("'+assetspath+'/Icon/Plugins-icons/button-open-chests-click.png");}'
 		));
 	    document.body.appendChild(NStyle)
     
