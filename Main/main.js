@@ -9,10 +9,8 @@ try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/
 if (res.status==200) {watermark = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/resources/Watermark.js`))()).default}}catch{}
 try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language.js`)
 if (res.status==200) {lang = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language.js`))()).default}}catch{}
-try{let res = await fetch('https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Version.js')
-if (res.status==200) {newVersion = (await (() => import('https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Version.js'))()).default}}catch{}
-try{let res = await fetch(`${configpath}/Version`)
-if (res.status==200) {thisVersion = (await (() => import(`${configpath}/Version`))()).default}}catch{}
+try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Version.js`)
+if (res.status==200) {thisVersion = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Version.js`))()).default}}catch{}
 /*
 try{let res = await fetch()
 if (res.status==200) { = (await (() => import())()).default}}catch{}
@@ -610,7 +608,6 @@ window.setInterval(() => {
 window.addEventListener('load', async () => {
 	const manager = () => document.getElementById('lol-uikit-layer-manager-wrapper')
 	const root    = document.createElement('div')
-	if (DataStore.get("Custom-Status")) {CustomStatus()}
 	if (DataStore.get("Custom-Rank(Hover-card)")) {CustomRank()}
 	if (DataStore.get("aram-only")) {utils.addCss("","","",`${assetspath}/Css/Addon-Css/Aram-only.css`)}
 	utils.addCss("","","",`${assetspath}/Css/ElainaV2.css`)

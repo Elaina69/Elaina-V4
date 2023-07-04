@@ -543,6 +543,7 @@ window.addEventListener('load', async ()=> {
 	}
 	if (DataStore.get("Custom-Font")) {utils.addFont(data["Font-Name"],"Custom")}
 	if (DataStore.get("Custom-Cursor")) {utils.CustomCursor('url('+assetspath+"/Icon/"+data["Mouse-cursor"]+')',`${assetspath}/Css/Addon-Css/Cursor.css`)}
+	if (DataStore.get("Custom-Status")) {CustomStatus()}
 
 	
 	const video = document.createElement('video')
