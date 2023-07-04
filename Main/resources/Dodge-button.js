@@ -1,6 +1,6 @@
 let lang
-try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language`)
-if (res.status==200) {lang = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language`))()).default}}catch{}
+try{let res = await fetch(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Language`)
+if (res.status==200) {lang = (await (() => import(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Language`))()).default}}catch{}
 
 async function exitClient(){
     await fetch("/process-control/v1/process/quit",
@@ -54,7 +54,7 @@ function generateDodgeAndExitButton(t){
     t.parentNode.insertBefore(o,t)
 }
 
-import utils from 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/_utilselaina.js';
+import utils from 'https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/_utilselaina.js';
 
 window.exitClient=exitClient,
 window.dodgeQueue=dodgeQueue;

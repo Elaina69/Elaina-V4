@@ -1,5 +1,3 @@
-let assetspath = new URL("..", import.meta.url).href + "assets"
-
 function ElainaTrigger() {
     const container0  = document.createElement("div")
     const container2  = document.createElement("div")
@@ -75,7 +73,7 @@ function ElainaTrigger() {
 		
 	Elaina1Text.classList.add ("Elaina1Text")
 	Elaina1Image.classList.add("Elaina1Image")
-	Elaina1Image.setAttribute ("src", `${assetspath}/Icon/Plugins-icons/ElainaCB.png`)	
+	Elaina1Image.setAttribute ("src", `https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/ElainaCB.png`)	
 	Elaina1Image.style.visibility = "hidden"
 	
 			

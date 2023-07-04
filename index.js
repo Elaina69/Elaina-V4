@@ -6,8 +6,8 @@
  * @Nyan Meow~~~
  */
 
-import 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/main.js'
-import utils from 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
+import 'https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/main.js'
+import utils from 'https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
 import data  from './Main/configs/ElainaV2_config'
 
 let songIndex  = 0

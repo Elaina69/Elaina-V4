@@ -1,16 +1,14 @@
-import utils from 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
+import utils from 'https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
 //___________________________________________________________________________//
-let watermark, thisVersion, newVersion,lang
-let assetspath = new URL(".", import.meta.url).href + "assets"
+let watermark, thisVersion, lang
 let pluginpath = new URL(".", import.meta.url).href + "resources"
-let configpath = new URL(".", import.meta.url).href + "configs"
 
-try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/resources/Watermark.js`)
-if (res.status==200) {watermark = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/resources/Watermark.js`))()).default}}catch{}
-try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language.js`)
-if (res.status==200) {lang = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language.js`))()).default}}catch{}
-try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Version.js`)
-if (res.status==200) {thisVersion = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Version.js`))()).default}}catch{}
+try{let res = await fetch(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/resources/Watermark.js`)
+if (res.status==200) {watermark = (await (() => import(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/resources/Watermark.min.js`))()).default}}catch{}
+try{let res = await fetch(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Language.js`)
+if (res.status==200) {lang = (await (() => import(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Language.js`))()).default}}catch{}
+try{let res = await fetch(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Version.js`)
+if (res.status==200) {thisVersion = (await (() => import(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Version.js`))()).default}}catch{}
 /*
 try{let res = await fetch()
 if (res.status==200) { = (await (() => import())()).default}}catch{}
@@ -355,7 +353,7 @@ async function createLoaderMenu(root) {
 								<lol-uikit-content-block class="app-controls-exit-dialog" type="dialog-medium" style="position: relative; overflow: hidden">
 									<div style="position: absolute; top: 60px">
 										<video
-											src="${assetspath}/Icon/Plugins-icons/LL-Settings.webm"
+											src="https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/LL-Settings.webm"
 											style="object-fit: cover; object-position: center center; height: 100%; width: 100%; transform-origin: center center; transform: scale(2.5)">
 										</video>
 									</div>
@@ -609,8 +607,8 @@ window.addEventListener('load', async () => {
 	const manager = () => document.getElementById('lol-uikit-layer-manager-wrapper')
 	const root    = document.createElement('div')
 	if (DataStore.get("Custom-Rank(Hover-card)")) {CustomRank()}
-	if (DataStore.get("aram-only")) {utils.addCss("","","",`${assetspath}/Css/Addon-Css/Aram-only.css`)}
-	utils.addCss("","","",`${assetspath}/Css/ElainaV2.css`)
+	if (DataStore.get("aram-only")) {utils.addCss("","","",`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/assets/Css/Addon-Css/Aram-only.css`)}
+	utils.addCss("","","",`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/assets/Css/ElainaV2.css`)
 
 	utils.mutationObserverAddCallback(pageChangeMutation, ["screen-root"])
 	utils.subscribe_endpoint("/lol-gameflow/v1/gameflow-phase", updateLobbyRegaliaBanner)

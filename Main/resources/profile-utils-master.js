@@ -1,4 +1,4 @@
-import utils from "https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/_utilselaina.js"
+import utils from "https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/_utilselaina.js"
 
 async function request(method, endpoint, { headers = {}, body = {} } = {}) {
   const requestOptions = {

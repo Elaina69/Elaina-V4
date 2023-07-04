@@ -1,13 +1,12 @@
 import ChampsP from '../configs/ChampionsPrices'
 
 let lang,QueueID
-let assetspath = new URL("..", import.meta.url).href + "assets"
 let pluginpath = new URL(".", import.meta.url).href
 
-try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language`)
-if (res.status==200) {lang = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/Language`))()).default}}catch{}
-try{let res = await fetch('https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/QueueID')
-if (res.status==200) {QueueID = (await (() => import('https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/configs/QueueID'))()).default}}catch{}
+try{let res = await fetch(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Language`)
+if (res.status==200) {lang = (await (() => import(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Language`))()).default}}catch{}
+try{let res = await fetch('https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/QueueID')
+if (res.status==200) {QueueID = (await (() => import('https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/QueueID'))()).default}}catch{}
 const UI = {
    Row: (id, childs) => {
       const row = document.createElement('div')
@@ -25,7 +24,7 @@ const UI = {
    },
    Image: (image, cls) => {
       const img = document.createElement('img')
-      img.setAttribute("src", `${assetspath}/Icon/${image}`)
+      img.setAttribute("src", `https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/assets/Icon/${image}`)
       img.classList.add(cls)
       return img
    },
