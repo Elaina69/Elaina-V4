@@ -54,7 +54,7 @@ function generateDodgeAndExitButton(t){
     t.parentNode.insertBefore(o,t)
 }
 
-import utils from '../_utilselaina';
+import utils from 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/_utilselaina.js';
 
 window.exitClient=exitClient,
 window.dodgeQueue=dodgeQueue;

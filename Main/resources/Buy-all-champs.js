@@ -1,4 +1,4 @@
-import utils from "../_utilselaina"
+import utils from "https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/_utilselaina.js"
 import axios from "https://cdn.skypack.dev/axios"
 import ChampsP from '../configs/ChampionsPrices.js'
 

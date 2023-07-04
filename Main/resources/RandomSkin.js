@@ -1,4 +1,4 @@
-import utils from "../_utilselaina"
+import utils from "https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/_utilselaina.js"
 let assetspath = new URL("..", import.meta.url).href + "assets"
 if (DataStore.get("random-skin")) {
     const delay = (t) => new Promise((r) => setTimeout(r, t));

@@ -5,8 +5,7 @@
  * @link https://github.com/Elaina69
  * @Nyan Meow~~~
  */
-import data  from './configs/ElainaV2_config.json'
-import utils from './_utilselaina'
+import utils from 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
 //___________________________________________________________________________//
 let watermark, thisVersion, newVersion,lang
 let assetspath = new URL(".", import.meta.url).href + "assets"
@@ -294,24 +293,6 @@ function CustomBE() {
 		`
 	}
 }
-function CustomStatus() {
-	let time
-    let i = 0
-    let status = data["Custom-Status"]
-    if (status.length == 1) {time = 10000}
-    else {time = DataStore.get("status-delay")}
-    
-    window.setInterval( async ()=> {
-        if (i == status.length - 1) {i = 0}
-        else {i++}
-        const statusMessage = status[i]["lines"].slice().join("\\n")
-            await fetch("/lol-chat/v1/me", {
-                method :"PUT",
-                headers:{"content-type":"application/json"},
-                body   :`{"statusMessage":"${statusMessage}"}`
-            }) 
-    },time)
-}
 function CustomRank() {
 	let queueOptions = ["RANKED_SOLO_5x5","RANKED_FLEX_SR","RANKED_FLEX_TT",
                         "RANKED_TFT","RANKED_TFT_TURBO","RANKED_TFT_DOUBLE_UP",
@@ -498,17 +479,6 @@ async function createLoaderMenu(root) {
 
 
 //___________________________________________________________________________//
-let nodeRemovedEvent = function (event) {
-	if (event.target.classList && event.target.classList.contains("lol-loading-screen-container")) {
-		let elainaBg     = document.getElementById("elaina-bg")
-		let viewportRoot = document.getElementById("rcp-fe-viewport-root")
-
-		if (!elainaBg || !viewportRoot) {return}
-		viewportRoot.style.filter = "none"
-		elainaBg.style.filter     = data["Homepage"]
-		document.removeEventListener("DOMNodeRemoved", nodeRemovedEvent)
-	}
-}
 let updateLobbyRegaliaBanner = async message => {
 	let phase = JSON.parse(message["data"])[2]["data"]
 	if (phase == "Lobby") {
@@ -532,7 +502,7 @@ let updateLobbyRegaliaBanner = async message => {
 let pageChangeMutation = async (node) => {
 	let pagename, previous_page, ranked_observer
 	let patcher_go_to_default_home_page = true
-	
+
 	pagename = node.getAttribute("data-screen-name")
 
 	if (pagename == "rcp-fe-lol-home-main") {

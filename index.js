@@ -1,5 +1,5 @@
-import './Main/index'
-import utils from './Main/_utilselaina'
+import 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/index.js'
+import utils from 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
 import data  from './Main/configs/ElainaV2_config.json'
 
 let songIndex  = 0
@@ -47,6 +47,18 @@ if (!DataStore.has("audio-loop")) {
 }
 
 let assetspath = new URL(".", import.meta.url).href + "Main/assets"
+let nodeRemovedEvent = function (event) {
+	if (event.target.classList && event.target.classList.contains("lol-loading-screen-container")) {
+		let elainaBg     = document.getElementById("elaina-bg")
+		let viewportRoot = document.getElementById("rcp-fe-viewport-root")
+
+		if (!elainaBg || !viewportRoot) {return}
+		viewportRoot.style.filter = "none"
+		elainaBg.style.filter     = data["Homepage"]
+		document.removeEventListener("DOMNodeRemoved", nodeRemovedEvent)
+	}
+}
+
 function elaina_play_pause() {
 	let elaina_bg_elem = document.getElementById("elaina-bg")
 	if (DataStore.get('pause-wallpaper')%2==0) {
@@ -381,6 +393,24 @@ function create_webm_buttons() {
 function Delbuttons() {
 	document.getElementsByClassName("webm-bottom-buttons-container")[0].remove()
 	document.getElementsByClassName("newbgchange-container")[0].remove()
+}
+function CustomStatus() {
+	let time
+    let i = 0
+    let status = data["Custom-Status"]
+    if (status.length == 1) {time = 10000}
+    else {time = DataStore.get("status-delay")}
+    
+    window.setInterval( async ()=> {
+        if (i == status.length - 1) {i = 0}
+        else {i++}
+        const statusMessage = status[i]["lines"].slice().join("\\n")
+            await fetch("/lol-chat/v1/me", {
+                method :"PUT",
+                headers:{"content-type":"application/json"},
+                body   :`{"statusMessage":"${statusMessage}"}`
+            }) 
+    },time)
 }
 
 let loadBgandAudio = async (node) => {
