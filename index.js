@@ -6,8 +6,8 @@
  * @Nyan Meow~~~
  */
 
-import 'https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/main.js'
-import utils from 'https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
+import 'https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/main.js'
+import utils from 'https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
 import data  from './Main/configs/ElainaV2_config'
 
 let songIndex  = 0
@@ -463,7 +463,7 @@ async function createLoaderMenu(root) {
 								<lol-uikit-content-block class="app-controls-exit-dialog" type="dialog-medium" style="position: relative; overflow: hidden">
 									<div style="position: absolute; top: 60px">
 										<video
-											src="https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/LL-Settings.webm"
+											src= "${assetspath}/Icon/Plugins-icons/LL-Settings.webm"
 											style="object-fit: cover; object-position: center center; height: 100%; width: 100%; transform-origin: center center; transform: scale(2.5)">
 										</video>
 									</div>
@@ -605,33 +605,8 @@ let loadBgandAudio = async (node) => {
 	}
 }
 window.addEventListener('load', async ()=> {
-    utils.addCss("--Hover-card-backdrop",assetspath+"/Icon",data['Hover-card'])
-	utils.addFont(assetspath+"/Fonts/","BeaufortforLOL-Bold.ttf","Elaina")
-
-	if (DataStore.get("Sidebar-Transparent")) {utils.addCss("","","",`${assetspath}/Css/Addon-Css/Sidebar-Transparent.css`)}
-	else {utils.addCss("","","",`${assetspath}/Css/Addon-Css/Sidebar-Color.css`)}
-
-	if (DataStore.get("Animate-Loading")) {utils.addCss("--ElainaFly",assetspath+"/Icon",data["Animation-logo"],`${assetspath}/Css/Addon-Css/Animate-Loading-Screen.css`)}
-	else {utils.addCss("--ElainaStatic",assetspath+"/Icon",data["Static-logo"],`${assetspath}/Css/Addon-Css/Static-Loading-Screen.css`)}
-
-	if (DataStore.get("Hide-Champions-Splash-Art")) {utils.addCss("","","",`${assetspath}/Css/Addon-Css/Hide-Champs-Splash-Art.css`)}
-	if (DataStore.get("Custom-Avatar")) {utils.addCss("--Avatar",assetspath+"/Icon",data["Avatar"],`${assetspath}/Css/Addon-Css/Icon/Avatar.css`)}
-	if (DataStore.get("Custom-Icon")) {
-		utils.addCss("--RP-Icon",assetspath+"/Icon",data["RP-icon"],`${assetspath}/Css/Addon-Css/Icon/RiotPoint.css`)
-		utils.addCss("--BE-Icon",assetspath+"/Icon",data["BE-icon"],`${assetspath}/Css/Addon-Css/Icon/BlueEssence.css`)
-		utils.addCss("--Rank-Icon",assetspath+"/Icon",data["Rank-icon"],`${assetspath}/Css/Addon-Css/Icon/Rank.css`)
-		utils.addCss("--Emblem",assetspath+"/Icon",data["Emblem"],`${assetspath}/Css/Addon-Css/Icon/Emblem.css`)
-		utils.addCss("--Clash-banner",assetspath+"/Icon",data["Class-banner"],`${assetspath}/Css/Addon-Css/Icon/ClashBanner.css`)
-		utils.addCss("--Ticker",assetspath+"/Icon",data["Ticker"],`${assetspath}/Css/Addon-Css/Icon/Ticker.css`)
-	}
-	if (DataStore.get("Custom-Font")) {utils.addFont(data["Font-Name"],"Custom")}
-	if (DataStore.get("Custom-Cursor")) {utils.CustomCursor('url('+assetspath+"/Icon/"+data["Mouse-cursor"]+')',`${assetspath}/Css/Addon-Css/Cursor.css`)}
-	if (DataStore.get("Custom-Status")) {CustomStatus()}
-
-	
 	const video = document.createElement('video')
 	const audio = document.createElement("audio")
-
 		video.id       = 'elaina-bg'
 		video.autoplay = true
 		video.loop     = true
@@ -659,7 +634,6 @@ window.addEventListener('load', async ()=> {
 			audio.currentTime = DataStore.get("currentAudioPlay")
 		}
 	}, true)
-
 	document.querySelector("body").prepend(video)
     document.querySelector("body").prepend(audio)
 	elaina_play_pause()
@@ -681,6 +655,29 @@ window.addEventListener('load', async ()=> {
 		DataStore.set("currentAudioPlay", audio.currentTime)
 	},100)
 
+	const manager = () => document.getElementById('lol-uikit-layer-manager-wrapper')
+	const root    = document.createElement('div')
+
+    utils.addCss("--Hover-card-backdrop",assetspath+"/Icon",data['Hover-card'])
+	utils.addFont(assetspath+"/Fonts/","BeaufortforLOL-Bold.ttf","Elaina")
+
+	if (DataStore.get("Sidebar-Transparent")) {utils.addCss("","","",`${assetspath}/Css/Addon-Css/Sidebar-Transparent.css`)}
+	else {utils.addCss("","","",`${assetspath}/Css/Addon-Css/Sidebar-Color.css`)}
+	if (DataStore.get("Animate-Loading")) {utils.addCss("--ElainaFly",assetspath+"/Icon",data["Animation-logo"],`${assetspath}/Css/Addon-Css/Animate-Loading-Screen.css`)}
+	else {utils.addCss("--ElainaStatic",assetspath+"/Icon",data["Static-logo"],`${assetspath}/Css/Addon-Css/Static-Loading-Screen.css`)}
+	if (DataStore.get("Hide-Champions-Splash-Art")) {utils.addCss("","","",`${assetspath}/Css/Addon-Css/Hide-Champs-Splash-Art.css`)}
+	if (DataStore.get("Custom-Avatar")) {utils.addCss("--Avatar",assetspath+"/Icon",data["Avatar"],`${assetspath}/Css/Addon-Css/Icon/Avatar.css`)}
+	if (DataStore.get("Custom-Icon")) {
+		utils.addCss("--RP-Icon",assetspath+"/Icon",data["RP-icon"],`${assetspath}/Css/Addon-Css/Icon/RiotPoint.css`)
+		utils.addCss("--BE-Icon",assetspath+"/Icon",data["BE-icon"],`${assetspath}/Css/Addon-Css/Icon/BlueEssence.css`)
+		utils.addCss("--Rank-Icon",assetspath+"/Icon",data["Rank-icon"],`${assetspath}/Css/Addon-Css/Icon/Rank.css`)
+		utils.addCss("--Emblem",assetspath+"/Icon",data["Emblem"],`${assetspath}/Css/Addon-Css/Icon/Emblem.css`)
+		utils.addCss("--Clash-banner",assetspath+"/Icon",data["Class-banner"],`${assetspath}/Css/Addon-Css/Icon/ClashBanner.css`)
+		utils.addCss("--Ticker",assetspath+"/Icon",data["Ticker"],`${assetspath}/Css/Addon-Css/Icon/Ticker.css`)
+	}
+	if (DataStore.get("Custom-Font")) {utils.addFont(data["Font-Name"],"Custom")}
+	if (DataStore.get("Custom-Cursor")) {utils.CustomCursor('url('+assetspath+"/Icon/"+data["Mouse-cursor"]+')',`${assetspath}/Css/Addon-Css/Cursor.css`)}
+	if (DataStore.get("Custom-Status")) {CustomStatus()}
 	if (DataStore.get("Old-League-Loader-Settings")) {
 		while (!manager()) await new Promise(r => setTimeout(r, 200))
 		await createLoaderMenu(root)

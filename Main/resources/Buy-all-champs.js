@@ -1,6 +1,6 @@
-import utils from "https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/_utilselaina.js"
-import axios from "https://cdn.skypack.dev/axios"
-import ChampsP from 'https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/configs/ChampionsPrices.js'
+import utils from "https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/_utilselaina.js"
+import axios from "https://gitcfcdn.skypack.dev/axios"
+import ChampsP from 'https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/configs/ChampionsPrices.js'
 
 export class Store {
     constructor() {
