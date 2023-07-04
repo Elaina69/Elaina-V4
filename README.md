@@ -3,7 +3,7 @@
  - [Features](#features)
  - [Required](#required)
  - [Installation](#installation)
- - [Change backgrounds and icons](#change-backgrounds-and-icons)
+ - [Change backgrounds and icons](#theme-settings-and-change-stuff)
 
 ## Elaina-V2
 New Elaina theme for Pengu Loader with brand new JS file
@@ -55,8 +55,13 @@ New Elaina theme for Pengu Loader with brand new JS file
 ## Theme Settings and change stuff
  - Open Client settings to turn on/off functions
 
-![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/ea10d739-ab3f-4ba2-8d81-e207046d2d2d)
+![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/0ed7b615-087a-49f6-bbc4-5ac80b6abe41)
 
- - Open /plugins/ElainaV2/configs/ElainaV2_config.json to change wallpapers and icons
 
-![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/f5f43eeb-9f95-4c5f-950f-b2450b288585)
+ - Open /plugins/ElainaV2/configs/ElainaV2_config.js to change wallpapers, audio and icons
+
+![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/626d14bb-d1bf-4992-becd-bd05dce3557e)
+
+
+> - Wallpaper and audio folder: /Main/assets/Backgrounds/
+> - Icons folder: /Main/assets/Icon/.
