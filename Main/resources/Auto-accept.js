@@ -4,8 +4,8 @@ let lang
 let queue_accepted = false 
 let player_declined = false 
 
-try{let res = await fetch(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Language.js`)
-if (res.status==200) {lang = (await (() => import(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/configs/Language.js`))()).default}}catch{}
+try{let res = await fetch(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/configs/Language.js`)
+if (res.status==200) {lang = (await (() => import(`https://gitloaf.com/cdn/Elaina69/Elaina-V2/main/Main/configs/Language.js`))()).default}}catch{}
 
 function autoAcceptQueueButton(){
 	let element = document.getElementById("autoAcceptQueueButton")
