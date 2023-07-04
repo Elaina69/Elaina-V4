@@ -6,8 +6,8 @@
  * @Nyan Meow~~~
  */
 
-import 'https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/main.js'
-import utils from 'https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
+import 'https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/main.js'
+import utils from 'https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
 import data  from './Main/configs/ElainaV2_config'
 
 let lang, thisVersion
@@ -15,10 +15,10 @@ let songIndex  = 0
 let wallpapers = data["wallpaper_list"]
 let Audios     = data["audio_list"]	
 
-try{let res = await fetch("https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/configs/Language.js")
-if (res.status==200) {lang = (await (() => import("https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/configs/Language.js"))()).default}}catch{}
-try{let res = await fetch(`https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/configs/Version.js`)
-if (res.status==200) {thisVersion = (await (() => import(`https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/configs/Version.js`))()).default}}catch{}
+try{let res = await fetch("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/configs/Language.js")
+if (res.status==200) {lang = (await (() => import("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/configs/Language.js"))()).default}}catch{}
+try{let res = await fetch(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/configs/Version.js`)
+if (res.status==200) {thisVersion = (await (() => import(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/configs/Version.js`))()).default}}catch{}
 
 if (!DataStore.has("old-prev/next-button")) {
 	DataStore.set("old-prev/next-button", false)
@@ -469,7 +469,7 @@ async function createLoaderMenu(root) {
 								<lol-uikit-content-block class="app-controls-exit-dialog" type="dialog-medium" style="position: relative; overflow: hidden">
 									<div style="position: absolute; top: 60px">
 										<video
-											src= "${assetspath}/Icon/Plugins-icons/LL-Settings.webm"
+											src="${assetspath}/Icon/Plugins-icons/LL-Settings.webm"
 											style="object-fit: cover; object-position: center center; height: 100%; width: 100%; transform-origin: center center; transform: scale(2.5)">
 										</video>
 									</div>
@@ -646,7 +646,7 @@ window.addEventListener('load', async ()=> {
 	}
 	else {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[songIndex])}
 
-	
+
 	const video = document.createElement('video')
 	const audio = document.createElement("audio")
 		video.id       = 'elaina-bg'
