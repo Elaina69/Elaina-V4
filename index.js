@@ -1,3 +1,11 @@
+/**
+ * @name ElainaV2
+ * @author Elaina Da Catto
+ * @description Elaina theme 2nd Generation for Pengu Loader
+ * @link https://github.com/Elaina69
+ * @Nyan Meow~~~
+ */
+
 import 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/index.js'
 import utils from 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
 import data  from './Main/configs/ElainaV2_config'

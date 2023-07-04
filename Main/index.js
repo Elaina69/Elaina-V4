@@ -1,10 +1,3 @@
-/**
- * @name ElainaV2
- * @author Elaina Da Catto
- * @description Elaina theme 2nd Generation for Pengu Loader
- * @link https://github.com/Elaina69
- * @Nyan Meow~~~
- */
 import utils from 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
 //___________________________________________________________________________//
 let watermark, thisVersion, newVersion,lang
@@ -321,76 +314,6 @@ function CustomRank() {
 
 
 //___________________________________________________________________________//
-function UpdatePopup() {
-    const noticediv   = document.createElement("div")
-    const messboxdiv  = document.createElement("div")
-    const downloaddiv = document.createElement("div")
-    const closediv    = document.createElement("div")
-    const message     = document.createElement("p")
-    const download    = document.createElement("a")
-    const notice      = document.createElement("img")
-    const close       = document.createElement("img")
-
-    messboxdiv.classList.add("messdiv")
-    downloaddiv.classList.add("downdiv")
-    closediv.classList.add("closediv")
-    close.classList.add("closenotice")
-    message.classList.add("message")
-    download.classList.add("download")
-    noticediv.classList.add("noticediv")
-    notice.classList.add("notice")
-
-    notice.setAttribute('src', `${assetspath}/Icon/Plugins-icons/download.png`)
-    close.setAttribute('src', `${assetspath}/Icon/Plugins-icons/close.png`)
-
-    let showcontainer = document.getElementsByClassName("rcp-fe-lol-home")[0]
-
-    showcontainer.appendChild(noticediv)
-    noticediv.append(notice)
-
-    noticediv.addEventListener('click', () => {
-		const langCode = document.querySelector("html").lang
-		const langMap  = lang.langlist
-		const selectedLang = lang[langMap[langCode] || "EN"]
-
-        showcontainer.appendChild(messboxdiv)
-        showcontainer.appendChild(downloaddiv)
-        showcontainer.appendChild(closediv)
-        showcontainer.appendChild(message)
-        closediv.append(close)
-        downloaddiv.append(download)
-
-        message.innerHTML = selectedLang["update_mess"]
-        download.innerHTML = selectedLang["update"]
-		download.setAttribute("href",'https://codeload.github.com/Elaina69/Elaina-V2/zip/refs/tags/v'+newVersion+'')
-        download.setAttribute("target", '_blank')
-
-        closediv.addEventListener('click', () => {
-            try {
-                document.getElementsByClassName("message")[0].remove()
-                document.getElementsByClassName("download")[0].remove()
-                document.getElementsByClassName("closenotice")[0].remove()
-                document.getElementsByClassName("messdiv")[0].remove()
-                document.getElementsByClassName("downdiv")[0].remove()
-                document.getElementsByClassName("closediv")[0].remove()
-            }
-            catch {}
-        })
-    })
-}
-function DelPopup() {
-    try {
-        document.getElementsByClassName("notice")[0].remove()
-        document.getElementsByClassName("noticediv")[0].remove()
-        document.getElementsByClassName("message")[0].remove()
-        document.getElementsByClassName("download")[0].remove()
-        document.getElementsByClassName("closenotice")[0].remove()
-        document.getElementsByClassName("messdiv")[0].remove()
-        document.getElementsByClassName("downdiv")[0].remove()
-        document.getElementsByClassName("closediv")[0].remove()
-    }
-    catch {}
-}
 async function createLoaderMenu(root) {
 	const { Component, jsx, render } = await import('//esm.run/nano-jsx')
 	const langCode = document.querySelector("html").lang;
@@ -558,7 +481,6 @@ let pageChangeMutation = async (node) => {
 	}
 	else if (pagename != "rcp-fe-lol-navigation-screen" && pagename != "window-controls" && pagename != "rcp-fe-lol-home" && pagename != "social") {
 		if (document.getElementsByClassName("webm-bottom-buttons-container").length) {
-			DelPopup()
 			try{watermark.DelElainaTrigger()}catch{}
 		}
 	}
