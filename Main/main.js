@@ -1,13 +1,11 @@
 import utils from 'https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
 //___________________________________________________________________________//
-let watermark, thisVersion, lang
+let watermark, lang
 
 try{let res = await fetch(`https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/resources/Watermark.js`)
 if (res.status==200) {watermark = (await (() => import(`https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/resources/Watermark.js`))()).default}}catch{}
 try{let res = await fetch("https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/configs/Language.js")
 if (res.status==200) {lang = (await (() => import("https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/configs/Language.js"))()).default}}catch{}
-try{let res = await fetch(`https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/configs/Version.js`)
-if (res.status==200) {thisVersion = (await (() => import(`https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/configs/Version.js`))()).default}}catch{}
 /*
 try{let res = await fetch()
 if (res.status==200) { = (await (() => import())()).default}}catch{}

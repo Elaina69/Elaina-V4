@@ -10,9 +10,15 @@ import 'https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/main.js'
 import utils from 'https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
 import data  from './Main/configs/ElainaV2_config'
 
+let lang, thisVersion
 let songIndex  = 0
 let wallpapers = data["wallpaper_list"]
 let Audios     = data["audio_list"]	
+
+try{let res = await fetch("https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/configs/Language.js")
+if (res.status==200) {lang = (await (() => import("https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/configs/Language.js"))()).default}}catch{}
+try{let res = await fetch(`https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/configs/Version.js`)
+if (res.status==200) {thisVersion = (await (() => import(`https://gitloaf.com/gitcfcdn/Elaina69/Elaina-V2/main/Main/configs/Version.js`))()).default}}catch{}
 
 if (!DataStore.has("old-prev/next-button")) {
 	DataStore.set("old-prev/next-button", false)
