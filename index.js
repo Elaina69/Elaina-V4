@@ -6,7 +6,7 @@
  * @Nyan Meow~~~
  */
 
-import 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/index.js'
+import 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/main.js'
 import utils from 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
 import data  from './Main/configs/ElainaV2_config'
 
