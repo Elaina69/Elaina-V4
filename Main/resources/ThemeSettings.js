@@ -1,10 +1,10 @@
-import ChampsP from 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/configs/ChampionsPrices.js'
+import ChampsP from 'https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/ChampionsPrices.js'
 
 let lang,QueueID
-try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/configs/Language.js`)
-if (res.status==200) {lang = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/configs/Language.js`))()).default}}catch{}
-try{let res = await fetch('https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/configs/QueueID.js')
-if (res.status==200) {QueueID = (await (() => import('https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/configs/QueueID.js'))()).default}}catch{}
+try{let res = await fetch(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Language.js`)
+if (res.status==200) {lang = (await (() => import(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Language.js`))()).default}}catch{}
+try{let res = await fetch('https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/QueueID.js')
+if (res.status==200) {QueueID = (await (() => import('https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/QueueID.js'))()).default}}catch{}
 const UI = {
    Row: (id, childs) => {
       const row = document.createElement('div')
@@ -22,7 +22,7 @@ const UI = {
    },
    Image: (image, cls) => {
       const img = document.createElement('img')
-      img.setAttribute("src", `https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/assets/Icon/${image}`)
+      img.setAttribute("src", `https://raw.githack.com/Elaina69/Elaina-V2/main/Main/assets/Icon/${image}`)
       img.classList.add(cls)
       return img
    },
@@ -198,7 +198,7 @@ const injectSettings = (panel) => {
                UI.Label(
                   `*${selectedLang["note"]}: ${selectedLang["note-1"]}`
                ),
-               UI.Button (`${selectedLang["reload-client"]}`,'reload', ()=>{window.reloadClient()}),
+               UI.Button (`${selectedLang["reload-client"]}`,'reload', ()=>{window.restartClient()}),
             ]),
             UI.Image("Logo.png", "settings-logo")
          ]),
@@ -934,13 +934,13 @@ window.addEventListener('load', async () => {
                      DeleteEl(".linking-settings.ember-view", DataStore.get("Hide-linking-settings"))
                      DeleteEl(".vng-publisher-settings.ember-view", DataStore.get("Hide-linking-settings"))
 
-                     DeleteElcheck("j1_4",`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/FakeIP.js`)
-                     DeleteElcheck("autobanpick",`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/Auto-Ban-Pick.js`)
-                     DeleteElcheck("loothelp",`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/LootHelper.js`)
-                     DeleteElcheck("rdskin",`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/RandomSkin.js`)
-                     DeleteElcheck("buyallchamp",`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/Buy-all-champs.js`)
-                     DeleteElcheck("pandoru",`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/Pandoru.js`)
-                     DeleteElcheck("namespoof",`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/NameSpoofer.js`)
+                     DeleteElcheck("j1_4",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/FakeIP.js`)
+                     DeleteElcheck("autobanpick",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/Auto-Ban-Pick.js`)
+                     DeleteElcheck("loothelp",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/LootHelper.js`)
+                     DeleteElcheck("rdskin",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/RandomSkin.js`)
+                     DeleteElcheck("buyallchamp",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/Buy-all-champs.js`)
+                     DeleteElcheck("pandoru",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/Pandoru.js`)
+                     DeleteElcheck("namespoof",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/NameSpoofer.js`)
 
                      tickcheck(DataStore.get("Name-Spoofer"), namespfel, namespfbox)
                      tickcheck(DataStore.get("aram-only"), Aramel, Arambox)

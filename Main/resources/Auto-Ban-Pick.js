@@ -1,10 +1,10 @@
 import axios from "https://cdn.skypack.dev/axios"
-import utils from "https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/_utilselaina.js"
+import utils from "https://raw.githack.com/Elaina69/Elaina-V2/main/Main/_utilselaina.js"
 
 let lang
 
-try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/configs/Language.js`)
-if (res.status==200) {lang = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/configs/Language.js`))()).default}}catch{}
+try{let res = await fetch(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Language.js`)
+if (res.status==200) {lang = (await (() => import(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Language.js`))()).default}}catch{}
 
 if (DataStore.get("Auto-ban-pick")) {
   const request = async (method, url, userBody = null) => {

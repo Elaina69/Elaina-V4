@@ -1,11 +1,11 @@
-import utils from 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/_utilselaina.js';
+import utils from 'https://raw.githack.com/Elaina69/Elaina-V2/main/Main/_utilselaina.js';
 
 let lang
 let queue_accepted = false 
 let player_declined = false 
 
-try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/configs/Language.js`)
-if (res.status==200) {lang = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/configs/Language.js`))()).default}}catch{}
+try{let res = await fetch(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Language.js`)
+if (res.status==200) {lang = (await (() => import(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Language.js`))()).default}}catch{}
 
 function autoAcceptQueueButton(){
 	let element = document.getElementById("autoAcceptQueueButton")
