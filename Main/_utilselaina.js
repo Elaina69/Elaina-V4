@@ -74,8 +74,8 @@ async function fetch_riotclient_credentials() {
 				utils.riotclient_port = regex_rc_port.exec(elem)[1];
 		});
 	})
-	if (debug_sub)
-		console.log(utils.riotclient_auth, utils.riotclient_port)
+	//if (debug_sub)
+	//	console.log(utils.riotclient_auth, utils.riotclient_port)
 }
 
 /** Callback function to be sent in subscribe_endpoint() to update the variable holding user pvp.net infos */
