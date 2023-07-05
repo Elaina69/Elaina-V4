@@ -5,7 +5,7 @@ const data = {
         "wallpaper_list":
         [
             {"file": "Elaina1.webm"},
-            {"file": "Elaina2.webm"}
+            {"file": "Elaina2.webm"},
         ],
     
     
@@ -16,7 +16,7 @@ const data = {
         "audio_list":
         [
             "少女レイ-FUMIKIRI ver.flac",
-            "If there was an Endpoint.mp3"
+            "If there was an Endpoint.mp3",
         ],
     
     
@@ -39,8 +39,8 @@ const data = {
                 "⢀⠄⠄⣿⣿⣷⣬⣵⣿⣿⣿⣿⣿⣿⣿⣷⣟⢷⡶⢗⡰⣿⣿⠇⠘⠄⠄⠄⠄⠄",
                 "⣿⠄⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣾⣿⣿⡟⢀⠃⠄⢸⡄⠁⣸",
                 "⣿⠄⠄⠘⢿⣿⣿⣿⣿⣿⣿⢛⣿⣿⣿⣿⣿⣿⣿⣿⣿⣟⢄⡆⠄⢀⣪⡆⠄⣿",
-                "⡟⠄⠄⠄⠄⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢿⣟⣻⣩⣾⣃⣴⣿⣿⡇⠸⢾"
-            ]}
+                "⡟⠄⠄⠄⠄⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢿⣟⣻⣩⣾⣃⣴⣿⣿⡇⠸⢾",
+            ]},
         ],
         //add this for more object: {"lines": []},
     
