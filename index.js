@@ -9,6 +9,7 @@ import 'https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/main.js'
 import utils from './Main/_utilselaina.js'
 import data  from './Main/configs/ElainaV2_config.js'
 
+//___________________________________________________________________________//
 let lang, thisVersion
 let songIndex  = 0
 let wallpapers = data["wallpaper_list"]
@@ -22,7 +23,11 @@ if (res.status==200) {thisVersion = (await (() => import(`https://gitloaf.com/js
 
 const langCode = document.querySelector("html").lang;
 const langMap = lang.langlist
+//___________________________________________________________________________//
 
+
+
+//___________________________________________________________________________//
 if (!DataStore.has("old-prev/next-button")) {
 	DataStore.set("old-prev/next-button", false)
 }
@@ -62,8 +67,11 @@ if (!DataStore.has("audio-loop")) {
 if (!DataStore.has("audio-loop")) {
 	DataStore.set("audio-loop", false)
 }
+//___________________________________________________________________________//
 
 
+
+//___________________________________________________________________________//
 let nodeRemovedEvent = function (event) {
 	if (event.target.classList && event.target.classList.contains("lol-loading-screen-container")) {
 		let elainaBg     = document.getElementById("elaina-bg")
@@ -560,7 +568,11 @@ async function createLoaderMenu(root) {
 	}
 	render(jsx`<${LoaderMenu} />`, root)
 }
+//___________________________________________________________________________//
 
+
+
+//___________________________________________________________________________//
 let loadBgandAudio = async (node) => {
     let pagename, previous_page
 	let elaina_bg_elem = document.getElementById("elaina-bg")
@@ -669,6 +681,26 @@ let loadBgandAudio = async (node) => {
 	}
 	if (previous_page != pagename) {previous_page = pagename}
 }
+//___________________________________________________________________________//
+
+
+
+//___________________________________________________________________________//
+if (DataStore.get("Continues_Audio")) {
+	console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[DataStore.get('audio-index')])
+	console.log(`current wallpaper status: play/pause-time: ${DataStore.get('pause-wallpaper')}, mute: ${DataStore.get("mute-audio")}, loop: true, volume: ${DataStore.get("wallpaper-volume")}`)
+	console.log(`current audio status: play/pause-time: ${DataStore.get('pause-audio')}, mute: ${DataStore.get("mute-audio")}, loop: ${DataStore.get("audio-loop")}, volume: ${DataStore.get("audio-volume")}`)
+}
+else {
+	console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[songIndex])
+	console.log(`current wallpaper status: play/pause-time: ${DataStore.get('pause-wallpaper')}, mute: ${DataStore.get("mute-audio")}, loop: true, volume: ${DataStore.get("wallpaper-volume")}`)
+	console.log(`current audio status: play/pause-time: ${DataStore.get('pause-audio')}, mute: ${DataStore.get("mute-audio")}, loop: ${DataStore.get("audio-loop")}, volume: ${DataStore.get("audio-volume")}`)
+}
+//___________________________________________________________________________//
+
+
+
+//___________________________________________________________________________//
 window.addEventListener('load', async ()=> {
     utils.addCss("--Hover-card-backdrop",assetspath+"/Icon",data['Hover-card'])
 	utils.addFont(assetspath+"/Fonts/","BeaufortforLOL-Bold.ttf","Elaina")
@@ -703,23 +735,12 @@ window.addEventListener('load', async ()=> {
     	audio.autoplay = true
     	audio.loop     = DataStore.get("audio-loop")
 		audio.volume   = DataStore.get("audio-volume")
-		if (DataStore.get("Continues_Audio")) {
-			audio.src  = `${assetspath}/Backgrounds/Audio/${Audios[DataStore.get('audio-index')]}`
-		}
-		else {
-			audio.src  = `${assetspath}/Backgrounds/Audio/${Audios[songIndex]}`
-		}
+		if (DataStore.get("Continues_Audio")) {audio.src = `${assetspath}/Backgrounds/Audio/${Audios[DataStore.get('audio-index')]}`}
+		else {audio.src = `${assetspath}/Backgrounds/Audio/${Audios[songIndex]}`}
 	
 	if (!DataStore.get("audio-loop")) {audio.addEventListener("ended", nextSong)}
-	video.addEventListener("load", ()=>{ 
-		video.play()
-	}, true)
-    audio.addEventListener("load", ()=>{ 
-		audio.play()
-		if (DataStore.get("Continues_Audio")) {
-			audio.currentTime = DataStore.get("currentAudioPlay")
-		}
-	}, true)
+	video.addEventListener("load", ()=>{video.play()})
+    audio.addEventListener("load", ()=>{audio.play()})
 	document.querySelector("body").prepend(video)
     document.querySelector("body").prepend(audio)
 	elaina_play_pause()
@@ -737,9 +758,6 @@ window.addEventListener('load', async ()=> {
 			audio_play_pause()
 		}
 	})
-    window.setInterval(()=> {
-		DataStore.set("currentAudioPlay", audio.currentTime)
-	},100)
 
 	const manager = () => document.getElementById('lol-uikit-layer-manager-wrapper')
 	const root    = document.createElement('div')
@@ -748,11 +766,5 @@ window.addEventListener('load', async ()=> {
 		await createLoaderMenu(root)
 		manager().prepend(root)
 	}
-
-    if (DataStore.get("Continues_Audio")) {
-		console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[DataStore.get('audio-index')])
-		console.log(`current wallpaper status: play/pause-time: ${DataStore.get('pause-wallpaper')}, mute: ${DataStore.get("mute-audio")}, loop: true, volume: ${DataStore.get("wallpaper-volume")}`)
-		console.log(`current audio status: play/pause-time: ${DataStore.get('pause-audio')}, mute: ${DataStore.get("mute-audio")}, loop: ${DataStore.get("audio-loop")}, volume: ${DataStore.get("audio-volume")}`)
-	}
-	else {console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[songIndex])}
 })
+//___________________________________________________________________________//
