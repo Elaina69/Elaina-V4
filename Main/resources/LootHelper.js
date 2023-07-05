@@ -1,7 +1,7 @@
 let lang
 
-try{let res = await fetch(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/configs/Language.js`)
-if (res.status==200) {lang = (await (() => import(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/configs/Language.js`))()).default}}catch{}
+try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/configs/Language.js`)
+if (res.status==200) {lang = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/configs/Language.js`))()).default}}catch{}
 
 if (DataStore.get("loot-helper")) {
     function AddElement(parent, tag, params = [], classes = [], content = null) {
@@ -439,7 +439,7 @@ if (DataStore.get("loot-helper")) {
     window.addEventListener('load', () => {
         let NStyle = document.createElement('style');
 		NStyle.appendChild(document.createTextNode(
-			'@import url("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/assets/Css/Addon-Css/LootHelper.css");:root {--OC_button:url("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/button-open-chests.png");--BE_button:url("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/button-blue-essence.png");--BE_hover:url("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/button-blue-essence-hover.png");--BE_active:url("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/button-blue-essence-click.png");--rbutton:url("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/button-refresh.png");--rhover:url("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/button-refresh-hover.png");--ractive:url("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/button-refresh-click.png");--OC_hover:url("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/button-open-chests-hover.png");--OC_active:url("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/button-open-chests-click.png");}'
+			'@import url("https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/assets/Css/Addon-Css/LootHelper.css");:root {--OC_button:url("https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/button-open-chests.png");--BE_button:url("https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/button-blue-essence.png");--BE_hover:url("https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/button-blue-essence-hover.png");--BE_active:url("https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/button-blue-essence-click.png");--rbutton:url("https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/button-refresh.png");--rhover:url("https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/button-refresh-hover.png");--ractive:url("https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/button-refresh-click.png");--OC_hover:url("https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/button-open-chests-hover.png");--OC_active:url("https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/button-open-chests-click.png");}'
 		));
 	    document.body.appendChild(NStyle)
     

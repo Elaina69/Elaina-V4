@@ -5,7 +5,7 @@
  * @link https://github.com/Elaina69
  * @Nyan Meow~~~
  */
-import 'https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/main.js'
+import 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/main.js'
 import utils from './Main/_utilselaina.js'
 import data  from './Main/configs/ElainaV2_config.js'
 
@@ -16,10 +16,10 @@ let wallpapers = data["wallpaper_list"]
 let Audios     = data["audio_list"]
 let assetspath = new URL(".", import.meta.url).href + "Main/assets"
 
-try{let res = await fetch("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/configs/Language.js")
-if (res.status==200) {lang = (await (() => import("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/configs/Language.js"))()).default}}catch{}
-try{let res = await fetch(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/configs/Version.js`)
-if (res.status==200) {thisVersion = (await (() => import(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/configs/Version.js`))()).default}}catch{}
+try{let res = await fetch("https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/configs/Language.js")
+if (res.status==200) {lang = (await (() => import("https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/configs/Language.js"))()).default}}catch{}
+try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/configs/Version.js`)
+if (res.status==200) {thisVersion = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/configs/Version.js`))()).default}}catch{}
 
 const langCode = document.querySelector("html").lang;
 const langMap = lang.langlist

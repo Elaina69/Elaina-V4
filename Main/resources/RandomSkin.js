@@ -1,4 +1,4 @@
-import utils from "https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/_utilselaina.js"
+import utils from "https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/_utilselaina.js"
 if (DataStore.get("random-skin")) {
     const delay = (t) => new Promise((r) => setTimeout(r, t));
 
@@ -77,7 +77,7 @@ if (DataStore.get("random-skin")) {
 
         buttonDiv.classList = "sr-reroll-div mission-button-component ember-view";
         button.classList = "sr-reroll mission-button use-animation";
-        button.style.backgroundImage = `url("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/reroll_button.png")`
+        button.style.backgroundImage = `url("https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/assets/Icon/Plugins-icons/reroll_button.png")`
 
         buttonDiv.append(button);
 
@@ -103,7 +103,7 @@ if (DataStore.get("random-skin")) {
     }
 
     window.addEventListener("load", async () => {
-        utils.addCss("","","",`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/assets/Css/Addon-Css/reroll_button.css`)
+        utils.addCss("","","",`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/assets/Css/Addon-Css/reroll_button.css`)
         await delay(1000);
         if (DataStore.get("sr_enable") == undefined) DataStore.set("sr_enable", true);
         if (DataStore.get("champion_id")) DataStore.remove("champion_id")

@@ -1,30 +1,30 @@
-import utils from 'https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
+import utils from 'https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
 
 //___________________________________________________________________________//
 let watermark, lang
 
-try{let res = await fetch(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/resources/Watermark.js`)
-if (res.status==200) {watermark = (await (() => import(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/resources/Watermark.js`))()).default}}catch{}
-try{let res = await fetch("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/configs/Language.js")
-if (res.status==200) {lang = (await (() => import("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/configs/Language.js"))()).default}}catch{}
+try{let res = await fetch(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/Watermark.js`)
+if (res.status==200) {watermark = (await (() => import(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/Watermark.js`))()).default}}catch{}
+try{let res = await fetch("https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/configs/Language.js")
+if (res.status==200) {lang = (await (() => import("https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/configs/Language.js"))()).default}}catch{}
 /*
 try{let res = await fetch()
 if (res.status==200) { = (await (() => import())()).default}}catch{}
 */
 
-ImportPlugins(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/resources/ThemeSettings.js`)
-ImportPlugins(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/resources/Auto-accept.js`)
-ImportPlugins(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/resources/Dodge-button.js`)
-ImportPlugins(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/resources/Offline-mode.js`)
-ImportPlugins("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/resources/Hide_friendlist.js")
-ImportPlugins(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/resources/FakeIP.js`)
-ImportPlugins("https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/resources/Auto-Ban-Pick.js")
-ImportPlugins(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/resources/LootHelper.js`)
-ImportPlugins(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/resources/RandomSkin.js`)
-ImportPlugins(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/resources/Buy-all-champs.js`)
-ImportPlugins(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/resources/Pandoru.js`)
-ImportPlugins(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/resources/NameSpoofer.js`)
-ImportPlugins(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/resources/profile-utils-master.js`)
+ImportPlugins(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/ThemeSettings.js`)
+ImportPlugins(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/Auto-accept.js`)
+ImportPlugins(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/Dodge-button.js`)
+ImportPlugins(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/Offline-mode.js`)
+ImportPlugins("https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/Hide_friendlist.js")
+ImportPlugins(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/FakeIP.js`)
+ImportPlugins("https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/Auto-Ban-Pick.js")
+ImportPlugins(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/LootHelper.js`)
+ImportPlugins(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/RandomSkin.js`)
+ImportPlugins(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/Buy-all-champs.js`)
+ImportPlugins(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/Pandoru.js`)
+ImportPlugins(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/NameSpoofer.js`)
+ImportPlugins(`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/resources/profile-utils-master.js`)
 
 const langCode = document.querySelector("html").lang
 const langMap  = lang.langlist
@@ -447,9 +447,9 @@ console.log('Meow ~~~');
 //___________________________________________________________________________//
 window.addEventListener('load', async () => {
 	if (DataStore.get("Custom-Rank(Hover-card)")) {CustomRank()}
-	if (DataStore.get("aram-only")) {utils.addCss("","","",`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/assets/Css/Addon-Css/Aram-only.css`)}
+	if (DataStore.get("aram-only")) {utils.addCss("","","",`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/assets/Css/Addon-Css/Aram-only.css`)}
 
-	utils.addCss("","","",`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/assets/Css/ElainaV2.css`)
+	utils.addCss("","","",`https://cdn.statically.io/gh/Elaina69/Elaina-V2/main/Main/assets/Css/ElainaV2.css`)
 	utils.mutationObserverAddCallback(pageChangeMutation, ["screen-root"])
 	utils.subscribe_endpoint("/lol-gameflow/v1/gameflow-phase", updateLobbyRegaliaBanner)
 	utils.routineAddCallback(newTicker,["flyout"])
