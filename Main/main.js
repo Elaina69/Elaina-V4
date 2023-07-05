@@ -1,12 +1,12 @@
 import utils from 'https://raw.githack.com/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
 
 //___________________________________________________________________________//
-let watermark, lang
+let watermark, thisVersion
 
 try{let res = await fetch(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/Watermark.js`)
 if (res.status==200) {watermark = (await (() => import(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/Watermark.js`))()).default}}catch{}
-try{let res = await fetch("https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Language.js")
-if (res.status==200) {lang = (await (() => import("https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Language.js"))()).default}}catch{}
+try{let res = await fetch(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Version.js`)
+if (res.status==200) {thisVersion = (await (() => import(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Version.js`))()).default}}catch{}
 /*
 try{let res = await fetch()
 if (res.status==200) { = (await (() => import())()).default}}catch{}
@@ -25,14 +25,32 @@ ImportPlugins(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/Bu
 ImportPlugins(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/Pandoru.js`)
 ImportPlugins(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/NameSpoofer.js`)
 ImportPlugins(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/profile-utils-master.js`)
-
-const langCode = document.querySelector("html").lang
-const langMap  = lang.langlist
 //___________________________________________________________________________//
 
 
 
 //___________________________________________________________________________//
+//Update message
+/*
+if (!DataStore.has("Update-v")) {
+	DataStore.set("Update-v", true)
+}
+
+if (DataStore.get("Update-v")) {
+	window.alert(
+		`Update v${thisVersion}`+"\n"+
+		""+"\n"+
+		""+"\n"+
+		""+"\n"+
+		""+"\n"+
+		""+"\n"+
+		""
+	)
+	DataStore.set("Update-v", false)
+}
+//*/
+
+
 //Theme DataStore
 if (!DataStore.has("Receive-Update")) {
 	DataStore.set("Receive-Update", true)
