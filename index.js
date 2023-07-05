@@ -20,6 +20,9 @@ if (res.status==200) {lang = (await (() => import("https://gitloaf.com/jsdcdn/El
 try{let res = await fetch(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/configs/Version.js`)
 if (res.status==200) {thisVersion = (await (() => import(`https://gitloaf.com/jsdcdn/Elaina69/Elaina-V2/main/Main/configs/Version.js`))()).default}}catch{}
 
+const langCode = document.querySelector("html").lang;
+const langMap = lang.langlist
+
 if (!DataStore.has("old-prev/next-button")) {
 	DataStore.set("old-prev/next-button", false)
 }
