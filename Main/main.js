@@ -31,22 +31,21 @@ ImportPlugins(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/pr
 
 //___________________________________________________________________________//
 //Update message
-/*
-if (!DataStore.has("Update-v")) {
-	DataStore.set("Update-v", true)
+///*
+let update = "v1.8.0c"
+if (!DataStore.has(`Update-${update}`)) {
+	DataStore.set(`Update-${update}`, true)
 }
-
-if (DataStore.get("Update-v")) {
+if (DataStore.get(`Update-${update}`)) {
 	window.alert(
-		`Update v${thisVersion}`+"\n"+
-		""+"\n"+
-		""+"\n"+
-		""+"\n"+
-		""+"\n"+
-		""+"\n"+
-		""
+		// Add this ""+"\n"+
+
+		`ElainaV2 Update ${update}`+"\n"+
+		"- Add Chinese language"+"\n"+
+		"- Fix homepage"+"\n"+
+		"- Update css file"+"\n"
 	)
-	DataStore.set("Update-v", false)
+	DataStore.set(`Update-${update}`, false)
 }
 //*/
 

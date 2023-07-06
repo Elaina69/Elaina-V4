@@ -20,9 +20,6 @@ try{let res = await fetch("https://raw.githack.com/Elaina69/Elaina-V2/main/Main/
 if (res.status==200) {lang = (await (() => import("https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Language.js"))()).default}}catch{}
 try{let res = await fetch(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Version.js`)
 if (res.status==200) {thisVersion = (await (() => import(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Version.js`))()).default}}catch{}
-
-const langCode = document.querySelector("html").lang;
-const langMap = lang.langlist
 //___________________________________________________________________________//
 
 
@@ -115,6 +112,8 @@ function add_elaina_home_navbar() {
 	if (navbar) {
 		if (!navbar.querySelector("[item-id='elaina-home']")) {
 			let elaina_home_navbar_item = create_element("lol-uikit-navigation-item", "")
+			let langCode = document.querySelector("html").lang;
+			let langMap = lang.langlist
 
 			elaina_home_navbar_item.setAttribute("item-id", "elaina-home")
 			elaina_home_navbar_item.setAttribute("priority", 1)

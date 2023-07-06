@@ -76,6 +76,10 @@ iframe html {
 	background: transparent!important
 }
 
+.parties-invite-info-panel.ember-view {
+	background: transparent !important;
+}
+
 .postgame-champion-background-wrapper {
 	background: transparent !important;
 }
