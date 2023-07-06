@@ -6,7 +6,7 @@ const lang = {
 		"ru-RU": "RU",
 		"es-MX": "MX",
         "ko-KR": "KR",
-        "zh-tw": "TW"
+        "zh-TW": "TW"
     },
 
     "EN": {
