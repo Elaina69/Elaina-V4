@@ -1,12 +1,9 @@
 import utils from 'https://raw.githack.com/Elaina69/Elaina-V2/main/Main/_utilselaina.js'
-
 //___________________________________________________________________________//
-let watermark, thisVersion
+let watermark
 
 try{let res = await fetch(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/Watermark.js`)
 if (res.status==200) {watermark = (await (() => import(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/Watermark.js`))()).default}}catch{}
-try{let res = await fetch(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Version.js`)
-if (res.status==200) {thisVersion = (await (() => import(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Version.js`))()).default}}catch{}
 /*
 try{let res = await fetch()
 if (res.status==200) { = (await (() => import())()).default}}catch{}
@@ -25,6 +22,7 @@ ImportPlugins(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/Bu
 ImportPlugins(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/Pandoru.js`)
 ImportPlugins(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/NameSpoofer.js`)
 ImportPlugins(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/profile-utils-master.js`)
+ImportPlugins('https://cdn.skypack.dev/balance-buff-viewer-plugin@latest?min')
 //___________________________________________________________________________//
 
 
@@ -32,7 +30,7 @@ ImportPlugins(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/resources/pr
 //___________________________________________________________________________//
 //Update message
 ///*
-let update = "v1.8.0c"
+let update = "v1.8.1"
 if (!DataStore.has(`Update-${update}`)) {
 	DataStore.set(`Update-${update}`, true)
 }
@@ -41,9 +39,9 @@ if (DataStore.get(`Update-${update}`)) {
 		// Add this ""+"\n"+
 
 		`ElainaV2 Update ${update}`+"\n"+
-		"- Add Chinese language"+"\n"+
-		"- Fix homepage"+"\n"+
-		"- Update css file"+"\n"
+		"- Add \"balance-buff-viewer\" by Nomi"+"\n"+
+		"- Update css"+"\n"+
+		"- Optimize plugins"+"\n"
 	)
 	DataStore.set(`Update-${update}`, false)
 }
@@ -463,8 +461,12 @@ console.log('By Elaina Da Catto');
 console.log('Meow ~~~');
 //___________________________________________________________________________//
 window.addEventListener('load', async () => {
+	utils.addCss("","","",`${assetspath}/Css/Addon-Css/Hide-vertical-lines.css`)
 	if (DataStore.get("Custom-Rank(Hover-card)")) {CustomRank()}
 	if (DataStore.get("aram-only")) {utils.addCss("","","",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/assets/Css/Addon-Css/Aram-only.css`)}
+	if (DataStore.get("Hide-Champions-Splash-Art")) {utils.addCss("","","",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/assets/Css/Addon-Css/Hide-Champs-Splash-Art.css`)}
+	if (DataStore.get("Sidebar-Transparent")) {utils.addCss("","","",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/assets/Css/Addon-Css/Sidebar-Transparent.css`)}
+	else {utils.addCss("","","",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/assets/Css/Addon-Css/Sidebar-Color.css`)}
 
 	utils.addCss("","","",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/assets/Css/ElainaV2.css`)
 	utils.mutationObserverAddCallback(pageChangeMutation, ["screen-root"])

@@ -3,72 +3,37 @@
  * @author Elaina Da Catto
  * @description Elaina theme 2nd Generation for Pengu Loader
  * @link https://github.com/Elaina69
+ * @Supporters teiseire117, Nomi-san, controlado, Sarah Engel, Yurichtofen, Legnatbird, Dmitry Nemykin
  * @Nyan Meow~~~
  */
 import 'https://raw.githack.com/Elaina69/Elaina-V2/main/Main/main.js'
 import utils from './Main/_utilselaina.js'
-import data  from './Main/configs/ElainaV2_config.js'
+import data from './Main/configs/ElainaV2_config.js'
+import lang from "https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Language.js"
+import thisVersion from "https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Version.js"
 
-//___________________________________________________________________________//
-let lang, thisVersion
 let songIndex  = 0
 let wallpapers = data["wallpaper_list"]
 let Audios     = data["audio_list"]
-let assetspath = new URL(".", import.meta.url).href + "Main/assets"
-
-try{let res = await fetch("https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Language.js")
-if (res.status==200) {lang = (await (() => import("https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Language.js"))()).default}}catch{}
-try{let res = await fetch(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Version.js`)
-if (res.status==200) {thisVersion = (await (() => import(`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/configs/Version.js`))()).default}}catch{}
+let assetspath = new URL(".", import.meta.url).href+"Main/assets"
 //___________________________________________________________________________//
+//Update test
 
 
 
-//___________________________________________________________________________//
-if (!DataStore.has("old-prev/next-button")) {
-	DataStore.set("old-prev/next-button", false)
-}
-if (!DataStore.has('pause-audio')) {
-	DataStore.set('pause-audio', 1)
-}
-if (!DataStore.has("mute-audio")) {
-	DataStore.set("mute-audio", false)
-}
-if (!DataStore.has('pause-wallpaper')) {
-	DataStore.set('pause-wallpaper', 1)
-}
-if (!DataStore.has('wallpaper-index')) {
-	DataStore.set('wallpaper-index', 0)
-}
-else if (DataStore.get('wallpaper-index')+1>wallpapers.length) {
-	DataStore.set('wallpaper-index', 0)
-}
-if (!DataStore.has("NextBg_Count")) {
-	DataStore.set("NextBg_Count",0)
-}
-if (!DataStore.has('audio-index')) {
-	DataStore.set('audio-index', 0)
-}
-else if (DataStore.get('audio-index')+1>Audios.length) {
-	DataStore.set('audio-index', 0)
-}
-if (!DataStore.has("wallpaper-volume")) {
-	DataStore.set("wallpaper-volume", 0.0)
-}
-if (!DataStore.has("audio-volume")) {
-	DataStore.set("audio-volume", 0.3)
-}
-if (!DataStore.has("audio-loop")) {
-	DataStore.set("audio-loop", false)
-}
-if (!DataStore.has("audio-loop")) {
-	DataStore.set("audio-loop", false)
-}
-//___________________________________________________________________________//
 
 
 
 //___________________________________________________________________________//
+if(!DataStore.has("old-prev/next-button")){DataStore.set("old-prev/next-button",false)}if(!DataStore.has('pause-audio')){DataStore.set('pause-audio',1)}if(!DataStore.has("mute-audio")){DataStore.set("mute-audio",false)}
+if(!DataStore.has('pause-wallpaper')){DataStore.set('pause-wallpaper',1)}if(!DataStore.has('wallpaper-index')){DataStore.set('wallpaper-index',0)}else if(DataStore.get('wallpaper-index')+1>wallpapers.length){DataStore.set('wallpaper-index',0)}
+if(!DataStore.has("NextBg_Count")){DataStore.set("NextBg_Count",0)}if(!DataStore.has('audio-index')){DataStore.set('audio-index',0)}else if(DataStore.get('audio-index')+1>Audios.length){DataStore.set('audio-index',0)}
+if(!DataStore.has("wallpaper-volume")){DataStore.set("wallpaper-volume",0.0)}if(!DataStore.has("audio-volume")){DataStore.set("audio-volume",0.3)}if(!DataStore.has("audio-loop")){DataStore.set("audio-loop",false)}if(!DataStore.has("audio-loop")){DataStore.set("audio-loop",false)}
+
+async function ImportPlugins(link) {
+	try  {let res = await fetch(link);if (res.status == 200) {(await (() => import(link))()).default}}
+	catch{console.log("File doesn't exist, can't load module/plugins")}
+}
 let nodeRemovedEvent = function (event) {
 	if (event.target.classList && event.target.classList.contains("lol-loading-screen-container")) {
 		let elainaBg     = document.getElementById("elaina-bg")
@@ -83,9 +48,7 @@ let nodeRemovedEvent = function (event) {
 function create_element(tagName, className, content) {
 	const el = document.createElement(tagName)
 	el.className = className
-	if (content) {
-		el.innerHTML = content
-	}
+	if (content) {el.innerHTML = content}
 	return el
 }
 function go_to_default_home_page() {
@@ -133,12 +96,8 @@ function patch_default_home_page(){
 }
 function elaina_play_pause() {
 	let elaina_bg_elem = document.getElementById("elaina-bg")
-	if (DataStore.get('pause-wallpaper')%2==0) {
-		elaina_bg_elem.pause()
-	}
-	else {
-		elaina_bg_elem.play()
-	}
+	if (DataStore.get('pause-wallpaper')%2==0) {elaina_bg_elem.pause()}
+	else {elaina_bg_elem.play()}
 }
 function play_pause_set_icon(elem) {
 	let pause_bg_icon = elem || document.querySelector(".pause-bg-icon")
@@ -156,12 +115,8 @@ function play_pause_set_icon(elem) {
 function audio_play_pause() {
 	let audio = document.getElementById("bg-audio")
 
-	if (DataStore.get('pause-audio')%2==0) {
-		audio.pause()
-	}
-	else {
-		audio.play()
-	}
+	if (DataStore.get('pause-audio')%2==0) {audio.pause()}
+	else {audio.play()}
 }
 function play_pause_set_icon_audio(elem) {
 	let pause_audio_icon = elem || document.querySelector(".pause-audio-icon")
@@ -229,7 +184,6 @@ function loadBG(BG) {
 	let elainaBg = document.getElementById("elaina-bg")
 	elainaBg.src = `${assetspath}/Backgrounds/${BG}`
 }
-
 function loadSong(song) {
 	let audio     = document.getElementById("bg-audio")
     	audio.src = `${assetspath}/Backgrounds/Audio/${song}`
@@ -314,33 +268,27 @@ function create_webm_buttons() {
 	const container      = document.createElement("div")
 	const container2     = document.createElement("div")
 	const newbgchange    = document.createElement("div")
-
 	const pauseBg        = document.createElement("div")
 	const nextBg         = document.createElement("div")
 	const prevBg         = document.createElement("div")
-	const pauseBgIcon    = document.createElement("img")
-	const nextBgIcon     = document.createElement("img")
-	const prevBgIcon     = document.createElement("img")
-
 	const pauseAudio     = document.createElement("div")
 	const nextAudio      = document.createElement("div")
-	const prevAudio      = document.createElement("div")	
+	const prevAudio      = document.createElement("div")
+	const muteAudio      = document.createElement("div")
+	const audioLoop      = document.createElement("div")
+	const pauseBgIcon    = document.createElement("img")
+	const nextBgIcon     = document.createElement("img")
+	const prevBgIcon     = document.createElement("img")	
 	const pauseAudioIcon = document.createElement("img")
 	const nextAudioIcon  = document.createElement("img")
 	const prevAudioIcon  = document.createElement("img")
-
-	const muteAudio      = document.createElement("div")
 	const muteaudioIcon  = document.createElement("img")
-	const audioLoop      = document.createElement("div")
 	const audioLoopIcon  = document.createElement("img")
-
 	const bgdropdown     = document.createElement("lol-uikit-framed-dropdown")
 	
 	container.classList.add("webm-bottom-buttons-container")
 	container2.classList.add("newbgchange-container")
 	
-	
-
 	pauseBg.id    = "pause-bg"
 	nextBg.id     = "next-bg"
 	prevBg.id     = "prev-bg"
@@ -493,9 +441,7 @@ async function createLoaderMenu(root) {
 	const _t = TRANSLATIONS[langMap[langCode] || "EN"];
 	
 	class LoaderMenu extends Component {
-		visible = false
-		frame = null
-		opener = null
+		visible = false; frame = null; opener = null
 		didMount() {
 			this.opener = document.querySelector('div[action=settings]')
 			this.opener.addEventListener('click', e => {
@@ -576,20 +522,8 @@ let loadBgandAudio = async (node) => {
     let pagename, previous_page
 	let elaina_bg_elem = document.getElementById("elaina-bg")
 	let patcher_go_to_default_home_page = true
-	let brightness_modifiers = [
-		"rcp-fe-lol-yourshop",
-		"rcp-fe-lol-home-main",
-        "rcp-fe-lol-champ-select", 
-        "rcp-fe-lol-store", 
-        "rcp-fe-lol-collections", 
-        "rcp-fe-lol-profiles-main",
-        "rcp-fe-lol-parties", 
-        "rcp-fe-lol-loot", 
-        "rcp-fe-lol-clash-full",
-		"rcp-fe-lol-postgame",
-		"rcp-fe-lol-event-shop",
-		"rcp-fe-lol-tft"
-    ]
+	let brightness_modifiers = ["rcp-fe-lol-yourshop","rcp-fe-lol-home-main","rcp-fe-lol-champ-select", "rcp-fe-lol-store", "rcp-fe-lol-collections", "rcp-fe-lol-profiles-main",
+								"rcp-fe-lol-parties", "rcp-fe-lol-loot", "rcp-fe-lol-clash-full","rcp-fe-lol-postgame","rcp-fe-lol-event-shop","rcp-fe-lol-tft"]
 
     pagename = node.getAttribute("data-screen-name")
 	console.log(pagename)
@@ -704,11 +638,8 @@ window.addEventListener('load', async ()=> {
     utils.addCss("--Hover-card-backdrop",assetspath+"/Icon",data['Hover-card'])
 	utils.addFont(assetspath+"/Fonts/","BeaufortforLOL-Bold.ttf","Elaina")
 
-	if (DataStore.get("Sidebar-Transparent")) {utils.addCss("","","",`${assetspath}/Css/Addon-Css/Sidebar-Transparent.css`)}
-	else {utils.addCss("","","",`${assetspath}/Css/Addon-Css/Sidebar-Color.css`)}
 	if (DataStore.get("Animate-Loading")) {utils.addCss("--ElainaFly",assetspath+"/Icon",data["Animation-logo"],`${assetspath}/Css/Addon-Css/Animate-Loading-Screen.css`)}
 	else {utils.addCss("--ElainaStatic",assetspath+"/Icon",data["Static-logo"],`${assetspath}/Css/Addon-Css/Static-Loading-Screen.css`)}
-	if (DataStore.get("Hide-Champions-Splash-Art")) {utils.addCss("","","",`${assetspath}/Css/Addon-Css/Hide-Champs-Splash-Art.css`)}
 	if (DataStore.get("Custom-Avatar")) {utils.addCss("--Avatar",assetspath+"/Icon",data["Avatar"],`${assetspath}/Css/Addon-Css/Icon/Avatar.css`)}
 	if (DataStore.get("Custom-Icon")) {
 		utils.addCss("--RP-Icon",assetspath+"/Icon",data["RP-icon"],`${assetspath}/Css/Addon-Css/Icon/RiotPoint.css`)

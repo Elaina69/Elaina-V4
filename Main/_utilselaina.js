@@ -96,7 +96,7 @@ let updatePhaseCallback = async message => { phase = JSON.parse(message["data"])
 /**
  * Add function to be called in the MutationObserver API
  * @param {function} callback The callback function
- * @param {[string]} targets The list of class targets
+ * @param {string} target The list of class targets
  */
 function routineAddCallback(callback, target) {
 	routines.push({ "callback": callback, "targets": target })
