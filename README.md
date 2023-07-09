@@ -10,7 +10,7 @@ Elaina theme for Pengu Loader
 
 > Special thanks:
 >  - Developers       : Me (ofc), [teiseire117](https://github.com/teisseire117)
->  - Supporter        : [teiseire117](https://github.com/teisseire117), [Nomi-san](https://github.com/nomi-san), [controlado](https://github.com/controlado), [Sarah Engel](https://github.com/PrincessAkira), [Yurichtofen](https://github.com/Yurichtofen), [Legnatbird](https://github.com/Legnatbird), [Dmitry Nemykin](https://github.com/DmitryFisk)
+>  - Supporters       : [teiseire117](https://github.com/teisseire117), [Nomi-san](https://github.com/nomi-san), [controlado](https://github.com/controlado), [Sarah Engel](https://github.com/PrincessAkira), [Yurichtofen](https://github.com/Yurichtofen), [Legnatbird](https://github.com/Legnatbird), [Dmitry Nemykin](https://github.com/DmitryFisk)
 >  - Theme Optimizers : [Yurichtofen](https://github.com/Yurichtofen)
 >  - Translators      : 
 >    + English : (A lot)
