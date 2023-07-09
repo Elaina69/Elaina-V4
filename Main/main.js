@@ -461,7 +461,7 @@ console.log('By Elaina Da Catto');
 console.log('Meow ~~~');
 //___________________________________________________________________________//
 window.addEventListener('load', async () => {
-	utils.addCss("","","",`${assetspath}/Css/Addon-Css/Hide-vertical-lines.css`)
+	utils.addCss("","","",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/assets/Css/Addon-Css/Hide-vertical-lines.css`)
 	if (DataStore.get("Custom-Rank(Hover-card)")) {CustomRank()}
 	if (DataStore.get("aram-only")) {utils.addCss("","","",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/assets/Css/Addon-Css/Aram-only.css`)}
 	if (DataStore.get("Hide-Champions-Splash-Art")) {utils.addCss("","","",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/assets/Css/Addon-Css/Hide-Champs-Splash-Art.css`)}
