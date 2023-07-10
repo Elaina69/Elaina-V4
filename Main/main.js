@@ -109,6 +109,9 @@ if (!DataStore.has("Hide-verify-acc")) {
 if (!DataStore.has("new-gamesearch-queue")) {
 	DataStore.set("new-gamesearch-queue", true)
 }
+if (!DataStore.has("hide-vertical-lines")) {
+	DataStore.set("hide-vertical-lines", true)
+}
 
 
 //Plugins DataStore
@@ -461,7 +464,7 @@ console.log('By Elaina Da Catto');
 console.log('Meow ~~~');
 //___________________________________________________________________________//
 window.addEventListener('load', async () => {
-	utils.addCss("","","",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/assets/Css/Addon-Css/Hide-vertical-lines.css`)
+	if (DataStore.get("hide-vertical-lines")) {utils.addCss("","","",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/assets/Css/Addon-Css/Hide-vertical-lines.css`)}
 	if (DataStore.get("Custom-Rank(Hover-card)")) {CustomRank()}
 	if (DataStore.get("aram-only")) {utils.addCss("","","",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/assets/Css/Addon-Css/Aram-only.css`)}
 	if (DataStore.get("Hide-Champions-Splash-Art")) {utils.addCss("","","",`https://raw.githack.com/Elaina69/Elaina-V2/main/Main/assets/Css/Addon-Css/Hide-Champs-Splash-Art.css`)}

@@ -94,6 +94,7 @@ const lang = {
         "Hide-linking-settings": "Hide linking account settings (in Beta)",
         "Hide-verify-acc"      : "Hide account verification settings",
         "new-gamesearch-queue" : "New game search queue",
+        "hide-vertical-lines"  : "Hide vertical lines on the right of the navbar",
 
         "plugins-settings": "Plugins Settings",
         "old-ll-settings" : "Old League Loader settings",
@@ -204,6 +205,7 @@ const lang = {
         "Hide-linking-settings": "Ẩn cài đặt liên kết tài khoản (in Beta)",
         "Hide-verify-acc"      : "Ẩn cài đặt xác minh tài khoản",
         "new-gamesearch-queue" : "Bảng tìm game mới",
+        "hide-vertical-lines"  : "Ẩn các đường ngăn cách bên phải thanh điều hướng",
 
         "plugins-settings": "Cài đặt plugins",
         "old-ll-settings" : "Bảng cài đặt League loader cũ",
@@ -314,6 +316,7 @@ const lang = {
         "Hide-linking-settings": "Hide linking account settings (in Beta)",
         "Hide-verify-acc"      : "Hide account verification settings",
         "new-gamesearch-queue" : "New game search queue",
+        "hide-vertical-lines"  : "Hide vertical lines on the right of the navbar",
 
         "plugins-settings": "Plugins Settings",
         "old-ll-settings" : "Old League Loader settings",
@@ -424,6 +427,7 @@ const lang = {
         "Hide-linking-settings": "Ukryj ustawienia łączenia konta (w wersji Beta)",
         "Hide-verify-acc"      : "Ukryj ustawienia weryfikacji konta",
         "new-gamesearch-queue" : "Nowa kolejka wyszukiwania gier",
+        "hide-vertical-lines"  : "Hide vertical lines on the right of the navbar",
 
         "plugins-settings": "Ustawienia wtyczek",
         "old-ll-settings" : "Stare ustawienia League Loadera",
@@ -533,6 +537,7 @@ const lang = {
         "Hide-linking-settings": "Hide linking account settings (in Beta)",
         "Hide-verify-acc"      : "Hide account verification settings",
         "new-gamesearch-queue" : "New game search queue",
+        "hide-vertical-lines"  : "Hide vertical lines on the right of the navbar",
 
         "plugins-settings": "Настройки плагинов",
         "old-ll-settings" : "Старые настройки загрузчика",
@@ -641,6 +646,7 @@ const lang = {
         "Hide-linking-settings": "Hide linking account settings (in Beta)",
         "Hide-verify-acc"      : "Hide account verification settings",
         "new-gamesearch-queue" : "New game search queue",
+        "hide-vertical-lines"  : "Hide vertical lines on the right of the navbar",
 
         "plugins-settings": "Plugins Settings",
         "old-ll-settings" : "Old League Loader settings",
@@ -749,6 +755,7 @@ const lang = {
         "Hide-linking-settings": "Hide linking account settings (in Beta)",
         "Hide-verify-acc"      : "Hide account verification settings",
         "new-gamesearch-queue" : "New game search queue",
+        "hide-vertical-lines"  : "Hide vertical lines on the right of the navbar",
 
         "plugins-settings": "Plugins Settings",
         "old-ll-settings" : "Old League Loader settings",
@@ -856,6 +863,7 @@ const lang = {
         "Hide-linking-settings": "隱藏關聯帳戶設置（測試版）",
         "Hide-verify-acc"      : "隱藏帳戶驗證設置",
         "new-gamesearch-queue" : "新遊戲搜索列隊",
+        "hide-vertical-lines"  : "Hide vertical lines on the right of the navbar",
 
         "plugins-settings": "插件設定",
         "old-ll-settings" : "舊版載入設定",
