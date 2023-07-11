@@ -1,11 +1,11 @@
 ## Table of Contents
- - [About](#elaina-v2)
+ - [About](#elaina-v3)
  - [Features](#features)
  - [Required](#required)
  - [Installation](#installation)
  - [Change backgrounds and icons](#theme-settings-and-change-stuff)
 
-## Elaina-V2
+## Elaina-V3
 Elaina theme for Pengu Loader
 
 > Special thanks:
@@ -19,6 +19,7 @@ Elaina theme for Pengu Loader
 >    + Polish     : [Yurichtofen](https://github.com/Yurichtofen)
 >    + Russian    : [Flirip](https://github.com/Flirip)
 >    + Spanish    : [Legnatbird](https://github.com/Legnatbird)
+>    + Chinese    : []()
 >    + Korean     : []()
 
 
@@ -35,7 +36,8 @@ Elaina theme for Pengu Loader
    + Japanese
    + Russian
    + Polish
-   + Spanish 
+   + Spanish
+   + Chinese
    + Korean
    + Other language will show English instead
 
@@ -50,7 +52,7 @@ Elaina theme for Pengu Loader
 > Recommended: Windows 10/11, Intel Core I5 9400 // 16gb ram // NVIDIA GTX1050 Ti and Higher
  
 ## Installation:
- - Read [Tutorial](https://github.com/Elaina69/Elaina-V2/blob/main/Tutorial.md)
+ - Read [Tutorial](https://github.com/Elaina69/Elaina-V3/blob/main/Tutorial.md)
 
 ## Theme Settings and change stuff
  - Open Client settings to turn on/off functions
