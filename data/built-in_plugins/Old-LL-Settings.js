@@ -1,5 +1,5 @@
-import lang from 'https://cdn.jsdelivr.net/npm/elainav3-data@latest/data/configs/Language.js'
-import thisVersion from "https://cdn.jsdelivr.net/npm/elainav3-data@latest/data/configs/Version.js"
+import lang from 'https://fastly.jsdelivr.net/npm/elainav3-data@latest/data/configs/Language.js'
+import thisVersion from "https://fastly.jsdelivr.net/npm/elainav3-data@latest/data/configs/Version.js"
 let datapath = new URL("..", import.meta.url).href
 
 async function createLoaderMenu(root) {

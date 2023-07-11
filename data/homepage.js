@@ -1,5 +1,5 @@
 import data from './configs/Configs.js'
-import lang from 'https://cdn.jsdelivr.net/npm/elainav3-data@latest/data/configs/Language.js'
+import lang from 'https://fastly.jsdelivr.net/npm/elainav3-data@latest/data/configs/Language.js'
 import utils from './_utils.js'
 
 let songIndex  = 0
