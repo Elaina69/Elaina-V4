@@ -16,9 +16,9 @@ import "./data/ChangeFilters.js"
 import "./data/homepage.js"
 import "./data/loadCss.js"
 try  {
-	let res = await fetch("https://fastly.jsdelivr.net/npm/elainav3-data@latest/index.js")
+	let res = await fetch("https://unpkg.com/elainav3-data@latest/index.js")
 	if (res.status == 200) {
-		(await (() => import("https://fastly.jsdelivr.net/npm/elainav3-data@latest/index.js"))()).default
+		(await (() => import("https://unpkg.com/elainav3-data@latest/index.js"))()).default
 	}
 }
 catch{console.log(`File doesn't exist, can't load ElainaV3 data`)}
