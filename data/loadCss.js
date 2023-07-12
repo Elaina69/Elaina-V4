@@ -194,7 +194,7 @@ window.addEventListener("load", ()=> {
 		utils.addCss("--Clash-banner",datapath+"assets/Icon",data["Class-banner"],`${datapath}assets/Css/Addon-Css/Icon/ClashBanner.css`)
 		utils.addCss("--Ticker",datapath+"assets/Icon",data["Ticker"],`${datapath}assets/Css/Addon-Css/Icon/Ticker.css`)
 	}
-	if (DataStore.get("Custom-Font")) {utils.addFont(data["Font-Name"],"Custom")}
+	if (DataStore.get("Custom-Font")) {utils.addFont(`${datapath}assets/Fonts`,data["Font-Name"],"Custom")}
 	if (DataStore.get("Custom-Cursor")) {utils.CustomCursor('url('+datapath+"assets/Icon/"+data["Mouse-cursor"]+')',`${datapath}assets/Css/Addon-Css/Cursor.css`)}
 
     if (DataStore.get("hide-vertical-lines")) {utils.addCss("","","",`${datapath}assets/Css/Addon-Css/Hide-vertical-lines.css`)}
