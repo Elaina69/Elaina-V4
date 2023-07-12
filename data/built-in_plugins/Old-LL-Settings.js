@@ -49,7 +49,7 @@ async function createLoaderMenu(root) {
 									</div>
 									<div style="position: relative">
 										<div style="margin-bottom: 24px">
-											<h4 style="padding: 6px 0">Elaina-V2</h4>
+											<h4 style="padding: 6px 0">Elaina-V3</h4>
 											<p>v${version}</p>
 										</div>
 										<hr class="heading-spacer" />
