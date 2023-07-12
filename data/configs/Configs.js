@@ -42,7 +42,7 @@ const data = {
                 "⡟⠄⠄⠄⠄⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢿⣟⣻⣩⣾⣃⣴⣿⣿⡇⠸⢾",
             ]},
         ],
-        //add this for more object: {"lines": []},
+        //Add this for more object: {"lines": []},
     
     //___________________________________Theme Icons______________________________//
     
@@ -58,9 +58,16 @@ const data = {
         "Hover-card"    : "Hover-card-backdrop.jpg",
         "Mouse-cursor"  : "ElainaDed.png",
         
-        "Custom-Font":"",
-            "Font-Name"     : "AegirSeaborn.ttf",
-    
+        //Custom-Font
+            "Font-Name" : "AegirSeaborn.ttf",
+
+        //Runes
+            "Precision"  : "8000.jpg",
+            "Domination" : "8100.jpg",
+            "Sorcery"    : "8200.jpg",
+            "Resolve"    : "8400.jpg",
+            "Inspiration": "8300.jpg",
+        
     //____________________________________Filters___________________________________//
     
         "Homepage"    : "brightness(0.8)",
@@ -86,6 +93,8 @@ const data = {
         "Postgame"    : "brightness(0.3)",
     
         "TFT"         : "brightness(0.8)",
+
+        "Runes"       : "brightness(0.4)",
     
     //______________________________________________________________________________//
 }
