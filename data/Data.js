@@ -112,8 +112,8 @@ if (!DataStore.has("Find-Delay")) {
 if (!DataStore.has("Gamemode")) {
 	DataStore.set("Gamemode", 450)
 }
-if (!DataStore.has("Custom-Rank(Hover-card)")) {
-	DataStore.set("Custom-Rank(Hover-card)", true)
+if (!DataStore.has("Custom-Rank-Hover-card")) {
+	DataStore.set("Custom-Rank-Hover-card", true)
 }
 if (!DataStore.has("Ranked Queue ID")) {
 	DataStore.set("Ranked Queue ID", 0)
