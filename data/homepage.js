@@ -131,12 +131,12 @@ function audio_mute() {
 	let wallpaperaudio = document.getElementById("elaina-bg")
 
 	if (DataStore.get("mute-audio")) {
-		wallpaperaudio.volume = 0.0
-		audio.volume          = 0.0
+		wallpaperaudio.muted = true
+		audio.muted          = true
 	}
 	else {
-		wallpaperaudio.volume = DataStore.get("wallpaper-volume")
-		audio.volume          = DataStore.get("audio-volume")
+		wallpaperaudio.muted = false
+		audio.muted          = false
 	}
 	console.log(`audio and wallpaper mute ${DataStore.get("mute-audio")}`)
 }
@@ -452,13 +452,13 @@ let addHomepage = async (node) => {
 
 if (DataStore.get("Continues_Audio")) {
 	console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[DataStore.get('audio-index')])
-	console.log(`current wallpaper status: play/pause-time: ${DataStore.get('pause-wallpaper')}, mute: ${DataStore.get("mute-audio")}, loop: true, volume: ${DataStore.get("wallpaper-volume")}`)
-	console.log(`current audio status: play/pause-time: ${DataStore.get('pause-audio')}, mute: ${DataStore.get("mute-audio")}, loop: ${DataStore.get("audio-loop")}, volume: ${DataStore.get("audio-volume")}`)
+	console.log(`current wallpaper status: play/pause-time: ${DataStore.get('pause-wallpaper')}, mute: ${DataStore.get("mute-audio")}, loop: true, volume: ${DataStore.get("wallpaper-volume")*100}%`)
+	console.log(`current audio status: play/pause-time: ${DataStore.get('pause-audio')}, mute: ${DataStore.get("mute-audio")}, loop: ${DataStore.get("audio-loop")}, volume: ${DataStore.get("audio-volume")*100}%`)
 }
 else {
 	console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[songIndex])
-	console.log(`current wallpaper status: play/pause-time: ${DataStore.get('pause-wallpaper')}, mute: ${DataStore.get("mute-audio")}, loop: true, volume: ${DataStore.get("wallpaper-volume")}`)
-	console.log(`current audio status: play/pause-time: ${DataStore.get('pause-audio')}, mute: ${DataStore.get("mute-audio")}, loop: ${DataStore.get("audio-loop")}, volume: ${DataStore.get("audio-volume")}`)
+	console.log(`current wallpaper status: play/pause-time: ${DataStore.get('pause-wallpaper')}, mute: ${DataStore.get("mute-audio")}, loop: true, volume: ${DataStore.get("wallpaper-volume")*100}%`)
+	console.log(`current audio status: play/pause-time: ${DataStore.get('pause-audio')}, mute: ${DataStore.get("mute-audio")}, loop: ${DataStore.get("audio-loop")}, volume: ${DataStore.get("audio-volume")*100}%`)
 }
 
 window.addEventListener("load", ()=> {
@@ -469,17 +469,17 @@ window.addEventListener("load", ()=> {
 		video.loop     = true
 		video.src      = `${datapath}assets/Backgrounds/${wallpapers[DataStore.get('wallpaper-index')].file}`
 		video.volume   = DataStore.get("wallpaper-volume")
+		video.muted    = DataStore.get("mute-audio")
 
 		audio.id       = 'bg-audio'
     	audio.autoplay = true
     	audio.loop     = DataStore.get("audio-loop")
 		audio.volume   = DataStore.get("audio-volume")
+		audio.muted    = DataStore.get("mute-audio")
 		if (DataStore.get("Continues_Audio")) {audio.src = `${datapath}assets/Backgrounds/Audio/${Audios[DataStore.get('audio-index')]}`}
 		else {audio.src = `${datapath}assets/Backgrounds/Audio/${Audios[songIndex]}`}
 	
 	if (!DataStore.get("audio-loop")) {audio.addEventListener("ended", nextSong)}
-	video.addEventListener("load", ()=>{video.play()})
-    audio.addEventListener("load", ()=>{audio.play()})
 	document.querySelector("body").prepend(video)
     document.querySelector("body").prepend(audio)
 	elaina_play_pause()
