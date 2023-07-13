@@ -154,6 +154,9 @@ if (!DataStore.has("Name-Spoofer")) {
 if (!DataStore.has("Spoof-name")) {
 	DataStore.set("Spoof-name", "Elaina Da Catto")
 }
+if (!DataStore.has("Dev-mode")) {
+	DataStore.set("Dev-mode", false)
+}
 if (!DataStore.has("")) {
 	DataStore.set("", true)
 }
