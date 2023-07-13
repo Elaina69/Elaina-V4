@@ -15,6 +15,7 @@ import "./data/built-in_plugins/Old-LL-Settings"
 import "./data/ChangeFilters.js"
 import "./data/homepage.js"
 import "./data/loadCss.js"
+import "./data/_utils.js"
 try  {
 	let res = await fetch("https://unpkg.com/elainav3-data@latest/index.js")
 	if (res.status == 200) {
