@@ -115,24 +115,45 @@ let loadCss = async (node) => {
 		},10)
 	}
 	if (pagename == "rcp-fe-lol-uikit-full-page-modal-controller") {
-		window.setInterval(()=> {
-			try {
-				document.querySelector(".perks-construct-minspec").style.top = "0px"
-				document.querySelector(".perks-construct-minspec").style.left = "0px"
-				document.querySelector(".perks-construct-minspec").style.filter = data["Runes"]
-			}
-			catch{}
-			try {document.querySelector("#rcp-fe-viewport-root > section.rcp-fe-viewport-overlay > div[data-screen-name=\"rcp-fe-lol-uikit-full-page-modal-controller\"] > lol-uikit-full-page-modal > span > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8000\"]").style.backgroundImage = "var(--pri8000)"}catch{}
-			try {document.querySelector("#rcp-fe-viewport-root > section.rcp-fe-viewport-overlay > div[data-screen-name=\"rcp-fe-lol-uikit-full-page-modal-controller\"] > lol-uikit-full-page-modal > span > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8100\"]").style.backgroundImage = "var(--pri8100)"}catch{}
-			try {document.querySelector("#rcp-fe-viewport-root > section.rcp-fe-viewport-overlay > div[data-screen-name=\"rcp-fe-lol-uikit-full-page-modal-controller\"] > lol-uikit-full-page-modal > span > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8200\"]").style.backgroundImage = "var(--pri8200)"}catch{}
-			try {document.querySelector("#rcp-fe-viewport-root > section.rcp-fe-viewport-overlay > div[data-screen-name=\"rcp-fe-lol-uikit-full-page-modal-controller\"] > lol-uikit-full-page-modal > span > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8300\"]").style.backgroundImage = "var(--pri8300)"}catch{}
-			try {document.querySelector("#rcp-fe-viewport-root > section.rcp-fe-viewport-overlay > div[data-screen-name=\"rcp-fe-lol-uikit-full-page-modal-controller\"] > lol-uikit-full-page-modal > span > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8400\"]").style.backgroundImage = "var(--pri8400)"}catch{}
-			try {document.querySelector("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame > div > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8000\"]").style.backgroundImage = "var(--pri8000)"}catch{}
-			try {document.querySelector("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame > div > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8100\"]").style.backgroundImage = "var(--pri8100)"}catch{}
-			try {document.querySelector("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame > div > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8200\"]").style.backgroundImage = "var(--pri8200)"}catch{}
-			try {document.querySelector("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame > div > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8300\"]").style.backgroundImage = "var(--pri8300)"}catch{}
-			try {document.querySelector("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame > div > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8400\"]").style.backgroundImage = "var(--pri8400)"}catch{}
-		},100)
+		if (DataStore.get("Runes-BG")) {
+			window.setInterval(()=> {
+				try {
+					document.querySelector(".perks-construct-minspec").style.top = "0px"
+					document.querySelector(".perks-construct-minspec").style.left = "0px"
+					document.querySelector(".perks-construct-minspec").style.filter = data["Runes"]
+				}catch{}
+				try {
+					let a = document.querySelectorAll("#rcp-fe-viewport-root > section.rcp-fe-viewport-overlay > div[data-screen-name=\"rcp-fe-lol-uikit-full-page-modal-controller\"] > lol-uikit-full-page-modal > span > div > div > div > div > div > lol-perks-construct-minspec > .aux")
+					let b = document.querySelectorAll("#rcp-fe-viewport-root > section.rcp-fe-viewport-overlay > div[data-screen-name=\"rcp-fe-lol-uikit-full-page-modal-controller\"] > lol-uikit-full-page-modal > span > div > div > div > div > div > lol-perks-construct-minspec > #splash")
+					let c = document.querySelectorAll("#rcp-fe-viewport-root > section.rcp-fe-viewport-overlay > div[data-screen-name=\"rcp-fe-lol-uikit-full-page-modal-controller\"] > lol-uikit-full-page-modal > span > div > div > div > div > div > lol-perks-construct-minspec > #construct")
+					let g = document.querySelectorAll("#rcp-fe-viewport-root > section.rcp-fe-viewport-overlay > div[data-screen-name=\"rcp-fe-lol-uikit-full-page-modal-controller\"] > lol-uikit-full-page-modal > span > div > div > div > div > div > lol-perks-construct-minspec > #keystone")
+					for (let i= 0; i < a.length; i++) {a[i].style.display = "none"}
+					for (let i= 0; i < b.length; i++) {b[i].style.display = "none"}
+					for (let i= 0; i < c.length; i++) {c[i].style.display = "none"}
+					for (let i= 0; i < g.length; i++) {g[i].style.display = "none"}
+				}catch {}
+				try {
+					let d = document.querySelectorAll("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame > div > div > div > div > div > div > lol-perks-construct-minspec > .aux")
+					let e = document.querySelectorAll("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame > div > div > div > div > div > div > lol-perks-construct-minspec > #splash")
+					let f = document.querySelectorAll("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame > div > div > div > div > div > div > lol-perks-construct-minspec > #construct")
+					let h = document.querySelectorAll("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame > div > div > div > div > div > div > lol-perks-construct-minspec > #keystone")
+					for (let i= 0; i < d.length; i++) {d[i].style.display = "none"}
+					for (let i= 0; i < e.length; i++) {e[i].style.display = "none"}
+					for (let i= 0; i < f.length; i++) {f[i].style.display = "none"}
+					for (let i= 0; i < h.length; i++) {h[i].style.display = "none"}
+				}catch {}
+				try {document.querySelector("#rcp-fe-viewport-root > section.rcp-fe-viewport-overlay > div[data-screen-name=\"rcp-fe-lol-uikit-full-page-modal-controller\"] > lol-uikit-full-page-modal > span > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8000\"]").style.backgroundImage = "var(--pri8000)"}catch{}
+				try {document.querySelector("#rcp-fe-viewport-root > section.rcp-fe-viewport-overlay > div[data-screen-name=\"rcp-fe-lol-uikit-full-page-modal-controller\"] > lol-uikit-full-page-modal > span > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8100\"]").style.backgroundImage = "var(--pri8100)"}catch{}
+				try {document.querySelector("#rcp-fe-viewport-root > section.rcp-fe-viewport-overlay > div[data-screen-name=\"rcp-fe-lol-uikit-full-page-modal-controller\"] > lol-uikit-full-page-modal > span > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8200\"]").style.backgroundImage = "var(--pri8200)"}catch{}
+				try {document.querySelector("#rcp-fe-viewport-root > section.rcp-fe-viewport-overlay > div[data-screen-name=\"rcp-fe-lol-uikit-full-page-modal-controller\"] > lol-uikit-full-page-modal > span > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8300\"]").style.backgroundImage = "var(--pri8300)"}catch{}
+				try {document.querySelector("#rcp-fe-viewport-root > section.rcp-fe-viewport-overlay > div[data-screen-name=\"rcp-fe-lol-uikit-full-page-modal-controller\"] > lol-uikit-full-page-modal > span > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8400\"]").style.backgroundImage = "var(--pri8400)"}catch{}
+				try {document.querySelector("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame > div > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8000\"]").style.backgroundImage = "var(--pri8000)"}catch{}
+				try {document.querySelector("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame > div > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8100\"]").style.backgroundImage = "var(--pri8100)"}catch{}
+				try {document.querySelector("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame > div > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8200\"]").style.backgroundImage = "var(--pri8200)"}catch{}
+				try {document.querySelector("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame > div > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8300\"]").style.backgroundImage = "var(--pri8300)"}catch{}
+				try {document.querySelector("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame > div > div > div > div > div > div > lol-perks-construct-minspec[primary=\"8400\"]").style.backgroundImage = "var(--pri8400)"}catch{}
+			},100)
+		}
 	}
 }
 
@@ -200,14 +221,15 @@ window.setInterval(() => {
 }, 500)
 
 window.addEventListener("load", ()=> {
-    utils.addCss("--Hover-card-backdrop",`${datapath}assets/Icon`,data['Hover-card'])
-	utils.addFont(`${datapath}assets/Fonts`,"BeaufortforLOL-Bold.ttf","Elaina")
-	utils.addCss("--pri8000",`${datapath}assets/Backgrounds/Runes`,data['Precision'])
-	utils.addCss("--pri8100",`${datapath}assets/Backgrounds/Runes`,data['Domination'])
-	utils.addCss("--pri8200",`${datapath}assets/Backgrounds/Runes`,data['Sorcery'])
-	utils.addCss("--pri8300",`${datapath}assets/Backgrounds/Runes`,data['Inspiration'])
-	utils.addCss("--pri8400",`${datapath}assets/Backgrounds/Runes`,data['Resolve'])
-
+    if (DataStore.get("Runes-BG")) {
+		utils.addCss("--Hover-card-backdrop",`${datapath}assets/Icon`,data['Hover-card'])
+		utils.addFont(`${datapath}assets/Fonts`,"BeaufortforLOL-Bold.ttf","Elaina")
+		utils.addCss("--pri8000",`${datapath}assets/Backgrounds/Runes`,data['Precision'])
+		utils.addCss("--pri8100",`${datapath}assets/Backgrounds/Runes`,data['Domination'])
+		utils.addCss("--pri8200",`${datapath}assets/Backgrounds/Runes`,data['Sorcery'])
+		utils.addCss("--pri8300",`${datapath}assets/Backgrounds/Runes`,data['Inspiration'])
+		utils.addCss("--pri8400",`${datapath}assets/Backgrounds/Runes`,data['Resolve'])
+	}
 	if (DataStore.get("Animate-Loading")) {utils.addCss("--ElainaFly",`${datapath}assets/Icon`,data["Animation-logo"],`${datapath}assets/Css/Addon-Css/Animate-Loading-Screen.css`)}
 	else {utils.addCss("--ElainaStatic",`${datapath}assets/Icon`,data["Static-logo"],`${datapath}assets/Css/Addon-Css/Static-Loading-Screen.css`)}
 	if (DataStore.get("Custom-Avatar")) {utils.addCss("--Avatar",`${datapath}assets/Icon`,data["Avatar"],`${datapath}assets/Css/Addon-Css/Icon/Avatar.css`)}
