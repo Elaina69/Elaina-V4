@@ -74,8 +74,10 @@ async function fetch_riotclient_credentials() {
 				utils.riotclient_port = regex_rc_port.exec(elem)[1];
 		});
 	})
-	//if (debug_sub)
-	//	console.log(utils.riotclient_auth, utils.riotclient_port)
+	if (DataStore.get("Dev-mode")) {
+		if (debug_sub)
+			console.log(utils.riotclient_auth, utils.riotclient_port)
+	}
 }
 
 /** Callback function to be sent in subscribe_endpoint() to update the variable holding user pvp.net infos */
@@ -91,7 +93,12 @@ let updateUserPvpNetInfos = async message => {
 let updatePhaseCallback = async message => { phase = JSON.parse(message["data"])[2]["data"]; }
 
 /** Callback function to be sent in subscribe_endpoint() to log uri & data object */
-//let debugLogEndpoints = async message => { if (debug_sub) console.log(JSON.parse(message["data"])[2]["uri"], JSON.parse(message["data"])[2]["data"]) }
+let debugLogEndpoints = async message => { 
+	if (DataStore.get("Dev-mode")) {
+		if (debug_sub) console.log(JSON.parse(message["data"])[2]["uri"], 
+		JSON.parse(message["data"])[2]["data"]) 
+	}
+}
 
 /**
  * Add function to be called in the MutationObserver API
@@ -110,7 +117,9 @@ window.addEventListener('load', () => {
 	fetch_riotclient_credentials()
 	subscribe_endpoint("/lol-gameflow/v1/gameflow-phase", updatePhaseCallback)
 	subscribe_endpoint("/lol-chat/v1/me", updateUserPvpNetInfos)
-	//subscribe_endpoint("", debugLogEndpoints)
+	if (DataStore.get("Dev-mode")) {
+		subscribe_endpoint("", debugLogEndpoints)
+	}
 	window.setInterval(() => {
 		routines.forEach(routine => {
 			routine.callback()
