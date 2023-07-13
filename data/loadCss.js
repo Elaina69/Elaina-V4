@@ -1,5 +1,6 @@
 import utils from './_utils.js'
-import data from './configs/Configs.js'
+import icdata from './configs/Icons.js'
+import filters from './configs/Filters.js'
 
 let datapath = new URL(".", import.meta.url).href
 
@@ -72,7 +73,7 @@ let loadCss = async (node) => {
 				}
 				catch {}
             }
-        }, 10)
+        }, 100)
         
         if (!ranked_observer && rankedNode) {
             ranked_observer = new MutationObserver(mutations => {
@@ -112,7 +113,7 @@ let loadCss = async (node) => {
 				}
 			}
 			catch {}
-		},10)
+		},100)
 	}
 	if (pagename == "rcp-fe-lol-uikit-full-page-modal-controller") {
 		if (DataStore.get("Runes-BG")) {
@@ -120,7 +121,7 @@ let loadCss = async (node) => {
 				try {
 					document.querySelector(".perks-construct-minspec").style.top = "0px"
 					document.querySelector(".perks-construct-minspec").style.left = "0px"
-					document.querySelector(".perks-construct-minspec").style.filter = data["Runes"]
+					document.querySelector(".perks-construct-minspec").style.filter = filters["Runes"]
 				}catch{}
 				try {
 					let a = document.querySelectorAll("#rcp-fe-viewport-root > section.rcp-fe-viewport-overlay > div[data-screen-name=\"rcp-fe-lol-uikit-full-page-modal-controller\"] > lol-uikit-full-page-modal > span > div > div > div > div > div > lol-perks-construct-minspec > .aux")
@@ -222,27 +223,27 @@ window.setInterval(() => {
 
 window.addEventListener("load", ()=> {
     if (DataStore.get("Runes-BG")) {
-		utils.addCss("--Hover-card-backdrop",`${datapath}assets/Icon`,data['Hover-card'])
+		utils.addCss("--Hover-card-backdrop",`${datapath}assets/Icon`,icdata['Hover-card'])
 		utils.addFont(`${datapath}assets/Fonts`,"BeaufortforLOL-Bold.ttf","Elaina")
-		utils.addCss("--pri8000",`${datapath}assets/Backgrounds/Runes`,data['Precision'])
-		utils.addCss("--pri8100",`${datapath}assets/Backgrounds/Runes`,data['Domination'])
-		utils.addCss("--pri8200",`${datapath}assets/Backgrounds/Runes`,data['Sorcery'])
-		utils.addCss("--pri8300",`${datapath}assets/Backgrounds/Runes`,data['Inspiration'])
-		utils.addCss("--pri8400",`${datapath}assets/Backgrounds/Runes`,data['Resolve'])
+		utils.addCss("--pri8000",`${datapath}assets/Backgrounds/Runes`,icdata['Precision'])
+		utils.addCss("--pri8100",`${datapath}assets/Backgrounds/Runes`,icdata['Domination'])
+		utils.addCss("--pri8200",`${datapath}assets/Backgrounds/Runes`,icdata['Sorcery'])
+		utils.addCss("--pri8300",`${datapath}assets/Backgrounds/Runes`,icdata['Inspiration'])
+		utils.addCss("--pri8400",`${datapath}assets/Backgrounds/Runes`,icdata['Resolve'])
 	}
-	if (DataStore.get("Animate-Loading")) {utils.addCss("--ElainaFly",`${datapath}assets/Icon`,data["Animation-logo"],`${datapath}assets/Css/Addon-Css/Animate-Loading-Screen.css`)}
-	else {utils.addCss("--ElainaStatic",`${datapath}assets/Icon`,data["Static-logo"],`${datapath}assets/Css/Addon-Css/Static-Loading-Screen.css`)}
-	if (DataStore.get("Custom-Avatar")) {utils.addCss("--Avatar",`${datapath}assets/Icon`,data["Avatar"],`${datapath}assets/Css/Addon-Css/Icon/Avatar.css`)}
+	if (DataStore.get("Animate-Loading")) {utils.addCss("--ElainaFly",`${datapath}assets/Icon`,icdata["Animation-logo"],`${datapath}assets/Css/Addon-Css/Animate-Loading-Screen.css`)}
+	else {utils.addCss("--ElainaStatic",`${datapath}assets/Icon`,icdata["Static-logo"],`${datapath}assets/Css/Addon-Css/Static-Loading-Screen.css`)}
+	if (DataStore.get("Custom-Avatar")) {utils.addCss("--Avatar",`${datapath}assets/Icon`,icdata["Avatar"],`${datapath}assets/Css/Addon-Css/Icon/Avatar.css`)}
 	if (DataStore.get("Custom-Icon")) {
-		utils.addCss("--RP-Icon",`${datapath}assets/Icon`,data["RP-icon"],`${datapath}assets/Css/Addon-Css/Icon/RiotPoint.css`)
-		utils.addCss("--BE-Icon",`${datapath}assets/Icon`,data["BE-icon"],`${datapath}assets/Css/Addon-Css/Icon/BlueEssence.css`)
-		utils.addCss("--Rank-Icon",`${datapath}assets/Icon`,data["Rank-icon"],`${datapath}assets/Css/Addon-Css/Icon/Rank.css`)
-		utils.addCss("--Emblem",`${datapath}assets/Icon`,data["Emblem"],`${datapath}assets/Css/Addon-Css/Icon/Emblem.css`)
-		utils.addCss("--Clash-banner",`${datapath}assets/Icon`,data["Class-banner"],`${datapath}assets/Css/Addon-Css/Icon/ClashBanner.css`)
-		utils.addCss("--Ticker",`${datapath}assets/Icon`,data["Ticker"],`${datapath}assets/Css/Addon-Css/Icon/Ticker.css`)
+		utils.addCss("--RP-Icon",`${datapath}assets/Icon`,icdata["RP-icon"],`${datapath}assets/Css/Addon-Css/Icon/RiotPoint.css`)
+		utils.addCss("--BE-Icon",`${datapath}assets/Icon`,icdata["BE-icon"],`${datapath}assets/Css/Addon-Css/Icon/BlueEssence.css`)
+		utils.addCss("--Rank-Icon",`${datapath}assets/Icon`,icdata["Rank-icon"],`${datapath}assets/Css/Addon-Css/Icon/Rank.css`)
+		utils.addCss("--Emblem",`${datapath}assets/Icon`,icdata["Emblem"],`${datapath}assets/Css/Addon-Css/Icon/Emblem.css`)
+		utils.addCss("--Clash-banner",`${datapath}assets/Icon`,icdata["Class-banner"],`${datapath}assets/Css/Addon-Css/Icon/ClashBanner.css`)
+		utils.addCss("--Ticker",`${datapath}assets/Icon`,icdata["Ticker"],`${datapath}assets/Css/Addon-Css/Icon/Ticker.css`)
 	}
-	if (DataStore.get("Custom-Font")) {utils.addFont(`${datapath}assets/Fonts`,data["Font-Name"],"Custom")}
-	if (DataStore.get("Custom-Cursor")) {utils.CustomCursor(`url("${datapath}assets/Icon/${data["Mouse-cursor"]}")`,`${datapath}assets/Css/Addon-Css/Cursor.css`)}
+	if (DataStore.get("Custom-Font")) {utils.addFont(`${datapath}assets/Fonts`,icdata["Font-Name"],"Custom")}
+	if (DataStore.get("Custom-Cursor")) {utils.CustomCursor(`url("${datapath}assets/Icon/${icdata["Mouse-cursor"]}")`,`${datapath}assets/Css/Addon-Css/Cursor.css`)}
 
     if (DataStore.get("hide-vertical-lines")) {utils.addCss("","","",`${datapath}assets/Css/Addon-Css/Hide-vertical-lines.css`)}
 	if (DataStore.get("aram-only")) {utils.addCss("","","",`${datapath}assets/Css/Addon-Css/Aram-only.css`)}

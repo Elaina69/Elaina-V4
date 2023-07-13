@@ -1,10 +1,11 @@
-import data from './configs/Configs.js'
+import wadata from './configs/Wallpaper&Audio.js'
+import filters from './configs/Filters.js'
 import lang from 'https://unpkg.com/elainav3-data@latest/data/configs/Language.js'
 import utils from './_utils.js'
 
 let songIndex  = 0
-let wallpapers = data["wallpaper_list"]
-let Audios     = data["audio_list"]
+let wallpapers = wadata["wallpaper_list"]
+let Audios     = wadata["audio_list"]
 let datapath = new URL(".", import.meta.url).href
 
 if(!DataStore.has('audio-index')){
@@ -27,7 +28,7 @@ let nodeRemovedEvent = function (event) {
 
 		if (!elainaBg || !viewportRoot) {return}
 		viewportRoot.style.filter = "none"
-		elainaBg.style.filter     = data["Homepage"]
+		elainaBg.style.filter     = filters["Homepage"]
 		document.removeEventListener("DOMNodeRemoved", nodeRemovedEvent)
 	}
 }

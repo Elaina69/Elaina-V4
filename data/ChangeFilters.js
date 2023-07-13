@@ -1,5 +1,5 @@
 import utils from './_utils.js'
-import data from './configs/Configs.js'
+import data from './configs/Filters.js'
 
 let changeFilters = async (node) => {
     let pagename, previous_page

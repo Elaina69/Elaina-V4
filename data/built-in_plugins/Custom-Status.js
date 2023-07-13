@@ -1,4 +1,4 @@
-import data from '../configs/Configs.js'
+import data from '../configs/Plugins.js'
 
 if (DataStore.get("Custom-Status")) {
     let time
