@@ -73,7 +73,7 @@ let changeFilters = async (node) => {
 	if (pagename == "rcp-fe-lol-tft") {
 		elaina_bg_elem.style.filter = data["TFT"]
 	}
-	else if (previous_page == "rcp-fe-lol-tfts" && brightness_modifiers.indexOf(pagename) == -1) {
+	else if (previous_page == "rcp-fe-lol-tft" && brightness_modifiers.indexOf(pagename) == -1) {
 		elaina_bg_elem.style.filter = data["Homepage"]
 	}
 	if (previous_page != pagename) {previous_page = pagename}
