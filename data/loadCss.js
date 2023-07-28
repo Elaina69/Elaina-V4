@@ -170,7 +170,7 @@ window.setInterval(() => {
 		try {document.querySelector("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame").shadowRoot.querySelector("div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch{}
 	}
 
-	if (DataStore.get("Custom-Avatar")) {
+	if (DataStore.get("Custom-Icon") && DataStore.get("Custom-Avatar")) {
 		try {
 			document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame > div > div.challenges-identity-customizer-contents > div.challenges-identity-customizer-left-container > div > lol-regalia-identity-customizer-element").
 				shadowRoot.querySelector("div > div > div.regalia-identity-customizer-crest-wrapper > lol-regalia-crest-v2-element").
@@ -186,7 +186,7 @@ window.setInterval(() => {
 		catch {}
 	}
 
-	if (ticker) {
+	if (DataStore.get("Custom-Icon") && ticker) {
 		ticker.shadowRoot.querySelector("div > div.border").style.display = "none"
 		ticker.shadowRoot.querySelector("div > div.sub-border").style.display = "none"
 		ticker.shadowRoot.querySelector("div > div.caret").style.display = "none"
@@ -219,6 +219,33 @@ window.setInterval(() => {
 				querySelector("div > div.parties-status-card-body > div.parties-status-card-map.game_map_howling_abyss").style.margin = "-3px 10px 0 0"
 		}catch{}
 	}
+
+	if (DataStore.get("Custom-Icon") && DataStore.get("Custom-Border")) {
+		try {
+			document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame > div > div.challenges-identity-customizer-contents > div.challenges-identity-customizer-left-container > div > lol-regalia-identity-customizer-element").shadowRoot.
+			querySelector("div > div > div.regalia-identity-customizer-crest-wrapper > lol-regalia-crest-v2-element").shadowRoot.querySelector("div > uikit-state-machine > lol-uikit-themed-level-ring-v2").shadowRoot.
+			querySelector("div").style.backgroundImage = 'var(--Border)'
+		}
+		catch{}
+		try {
+			document.querySelector("#lol-uikit-tooltip-root > div > div > div.hover-card.right.has-regalia.regalia-loaded > div > div.hover-card-info-container > div.hover-card-identity > lol-regalia-hovercard-v2-element").shadowRoot.
+			querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("div > uikit-state-machine > lol-uikit-themed-level-ring-v2").shadowRoot.
+			querySelector("div").style.backgroundImage = 'var(--Border)'
+		}
+		catch{}
+		try {
+			document.querySelector("div.lobby-banner.local > lol-regalia-parties-v2-element").shadowRoot.querySelector("div > div > div.regalia-parties-v2-crest-wrapper > lol-regalia-crest-v2-element").shadowRoot.
+			querySelector("div > uikit-state-machine > lol-uikit-themed-level-ring-v2").shadowRoot.
+			querySelector("div").style.backgroundImage = 'var(--Border)'
+		}
+		catch{}
+		try {
+			document.querySelector("div > lol-regalia-profile-v2-element").shadowRoot.querySelector("div > div > div.regalia-profile-crest-hover-area.picker-enabled > lol-regalia-crest-v2-element").shadowRoot.
+			querySelector("div > uikit-state-machine > lol-uikit-themed-level-ring-v2").shadowRoot.
+			querySelector("div").style.backgroundImage = 'var(--Border)'
+		}
+		catch{}
+	}
 }, 500)
 
 window.addEventListener("load", ()=> {
@@ -233,14 +260,35 @@ window.addEventListener("load", ()=> {
 	}
 	if (DataStore.get("Animate-Loading")) {utils.addCss("--ElainaFly",`${datapath}assets/Icon`,icdata["Animation-logo"],`${datapath}assets/Css/Addon-Css/Animate-Loading-Screen.css`)}
 	else {utils.addCss("--ElainaStatic",`${datapath}assets/Icon`,icdata["Static-logo"],`${datapath}assets/Css/Addon-Css/Static-Loading-Screen.css`)}
-	if (DataStore.get("Custom-Avatar")) {utils.addCss("--Avatar",`${datapath}assets/Icon`,icdata["Avatar"],`${datapath}assets/Css/Addon-Css/Icon/Avatar.css`)}
+
 	if (DataStore.get("Custom-Icon")) {
-		utils.addCss("--RP-Icon",`${datapath}assets/Icon`,icdata["RP-icon"],`${datapath}assets/Css/Addon-Css/Icon/RiotPoint.css`)
-		utils.addCss("--BE-Icon",`${datapath}assets/Icon`,icdata["BE-icon"],`${datapath}assets/Css/Addon-Css/Icon/BlueEssence.css`)
-		utils.addCss("--Rank-Icon",`${datapath}assets/Icon`,icdata["Rank-icon"],`${datapath}assets/Css/Addon-Css/Icon/Rank.css`)
-		utils.addCss("--Emblem",`${datapath}assets/Icon`,icdata["Emblem"],`${datapath}assets/Css/Addon-Css/Icon/Emblem.css`)
-		utils.addCss("--Clash-banner",`${datapath}assets/Icon`,icdata["Class-banner"],`${datapath}assets/Css/Addon-Css/Icon/ClashBanner.css`)
-		utils.addCss("--Ticker",`${datapath}assets/Icon`,icdata["Ticker"],`${datapath}assets/Css/Addon-Css/Icon/Ticker.css`)
+		if (DataStore.get("Custom-Avatar")) {
+			utils.addCss("--Avatar",`${datapath}assets/Icon`,icdata["Avatar"],`${datapath}assets/Css/Addon-Css/Icon/Avatar.css`)
+		}
+		if (DataStore.get("Custom-RP-Icon")) {
+			utils.addCss("--RP-Icon",`${datapath}assets/Icon`,icdata["RP-icon"],`${datapath}assets/Css/Addon-Css/Icon/RiotPoint.css`)
+		}
+		if (DataStore.get("Custom-BE-Icon")) {
+			utils.addCss("--BE-Icon",`${datapath}assets/Icon`,icdata["BE-icon"],`${datapath}assets/Css/Addon-Css/Icon/BlueEssence.css`)
+		}
+		if (DataStore.get("Custom-Rank-Icon")) {
+			utils.addCss("--Rank-Icon",`${datapath}assets/Icon`,icdata["Rank-icon"],`${datapath}assets/Css/Addon-Css/Icon/Rank.css`)
+		}
+		if (DataStore.get("Custom-Emblem")) {
+			utils.addCss("--Emblem",`${datapath}assets/Icon`,icdata["Honor"],`${datapath}assets/Css/Addon-Css/Icon/Emblem.css`)
+		}
+		if (DataStore.get("Custom-Clash-banner")) {
+			utils.addCss("--Clash-banner",`${datapath}assets/Icon`,icdata["Class-banner"],`${datapath}assets/Css/Addon-Css/Icon/ClashBanner.css`)
+		}
+		if (DataStore.get("Custom-Ticker")) {
+			utils.addCss("--Ticker",`${datapath}assets/Icon`,icdata["Ticker"],`${datapath}assets/Css/Addon-Css/Icon/Ticker.css`)
+		}
+		if (DataStore.get("Custom-Trophy")) {
+			utils.addCss("--Trophy",`${datapath}assets/Icon`,icdata["Trophy"],`${datapath}assets/Css/Addon-Css/Icon/Trophy.css`)
+		}
+		if (DataStore.get("Custom-Border")) {
+			utils.addCss("--Border",`${datapath}assets/Icon`,icdata["Border"])
+		}
 	}
 	if (DataStore.get("Custom-Font")) {utils.addFont(`${datapath}assets/Fonts`,icdata["Font-Name"],"Custom")}
 	if (DataStore.get("Custom-Cursor")) {utils.CustomCursor(`url("${datapath}assets/Icon/${icdata["Mouse-cursor"]}")`,`${datapath}assets/Css/Addon-Css/Cursor.css`)}
