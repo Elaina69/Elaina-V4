@@ -49,6 +49,12 @@ function CustomCursor (folder,css) {
 	addCss("","","",css)
 }
 
+async function getSummonerIDByName(name) {
+	let res = await fetch(`/lol-summoner/v1/summoners?name=${name}`)
+	let data = await res.json()
+	return JSON.parse(data["summonerId"])
+}
+
 /**
  * Subscribe to a specific endpoint, and trigger callback function when that endpoint is called
  * @param {string} endpoint Endpoint you wish to monitor. ex: /lol-gameflow/v1/gameflow-phase , send "" to subscribe to all
@@ -155,7 +161,8 @@ let utils = {
 	mutationObserverAddCallback: mutationObserverAddCallback,
 	addCss: addCss,
 	addFont: addFont,
-	CustomCursor: CustomCursor
+	CustomCursor: CustomCursor,
+	getSummonerIDByName: getSummonerIDByName
 }
 
 export default utils
