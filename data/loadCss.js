@@ -205,9 +205,11 @@ window.setInterval(()=>{
 
 window.setInterval(()=>{
 	if (DataStore.get("Custom-Icon") && DataStore.get("Custom-Hover-card-backdrop")) {
-		if (document.querySelector("#lol-uikit-tooltip-root > div > div > div.hover-card.right.has-regalia.regalia-loaded > div > div.hover-card-info-container > div.hover-card-identity > lol-regalia-hovercard-v2-element").getAttribute("summoner-id") == DataStore.get("Summoner-ID")) {
-			document.querySelector("#hover-card-backdrop").style.backgroundImage = "var(--Hover-card-backdrop)"
-		}
+		try {
+			if (document.querySelector("#lol-uikit-tooltip-root > div > div > div.hover-card.right.has-regalia.regalia-loaded > div > div.hover-card-info-container > div.hover-card-identity > lol-regalia-hovercard-v2-element").getAttribute("summoner-id") == DataStore.get("Summoner-ID")) {
+				document.querySelector("#hover-card-backdrop").style.backgroundImage = "var(--Hover-card-backdrop)"
+			}
+		}catch{}
 	}
 
 	if (DataStore.get("Custom-Icon") && DataStore.get("Custom-Avatar")) {
