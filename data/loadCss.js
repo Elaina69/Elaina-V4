@@ -4,24 +4,6 @@ import filters from './configs/Filters.js'
 
 let datapath = new URL(".", import.meta.url).href
 
-let updateLobbyRegaliaBanner = async message => {
-	let phase = JSON.parse(message["data"])[2]["data"]
-	if (phase == "Lobby") {
-		window.setInterval(() => {
-			try {
-				let base = document.querySelector("lol-regalia-parties-v2-element.regalia-loaded").shadowRoot.querySelector(".regalia-parties-v2-banner-backdrop.regalia-banner-loaded")
-					base.shadowRoot.querySelector(".regalia-banner-asset-static-image").style.filter = "sepia(1) brightness(3.5) opacity(0.4)"
-					base.shadowRoot.querySelector(".regalia-banner-state-machine").shadowRoot.querySelector(".regalia-banner-intro.regalia-banner-video").style.filter = "grayscale(1) saturate(0) brightness(0.5)"
-			}catch {}
-            if (DataStore.get("Custom-Avatar")) {
-                try {
-					document.querySelector("div.lobby-banner.local > lol-regalia-parties-v2-element").shadowRoot.querySelector("div > div > div.regalia-parties-v2-crest-wrapper > lol-regalia-crest-v2-element").
-						shadowRoot.querySelector("div > uikit-state-machine > div.lol-regalia-summoner-icon-mask-container > div").style.backgroundImage = "var(--Avatar)"
-				}catch {}
-            }
-		},200)
-	}
-}
 let loadCss = async (node) => {
 	let pagename, previous_page, ranked_observer
 	pagename = node.getAttribute("data-screen-name")
@@ -56,23 +38,29 @@ let loadCss = async (node) => {
     
         window.setInterval(() => {
             try {
-                document.querySelector("div > lol-regalia-profile-v2-element").shadowRoot.querySelector("div > lol-regalia-banner-v2-element").shadowRoot.querySelector("div > uikit-state-machine > div:nth-child(2) > img").remove()
                 document.querySelector("div > div.summoner-xp-radial").remove()
             }
             catch {}
-			if (DataStore.get("Custom-Rank-Name")) {
+			if (DataStore.get("Custom-Icon") && DataStore.get("Custom-Rank-Name")) {
 				try {
 					document.querySelector(".style-profile-ranked-component.ember-view > .style-profile-emblem-wrapper  > .style-profile-emblem-header > .style-profile-emblem-header-title").innerHTML = DataStore.get("Rank-line1")
 					document.querySelector(".style-profile-emblem-subheader-ranked > div").innerHTML = DataStore.get("Rank-line2")
 				}
 				catch{}
 			}
-            if (DataStore.get("Custom-Avatar")) {
+            if (DataStore.get("Custom-Icon") && DataStore.get("Custom-Avatar")) {
                 try {
 					document.querySelector("div > lol-regalia-profile-v2-element").shadowRoot.querySelector("div > div > div.regalia-profile-crest-hover-area.picker-enabled > lol-regalia-crest-v2-element").shadowRoot.querySelector("div > uikit-state-machine > div.lol-regalia-summoner-icon-mask-container > div").style.backgroundImage = "var(--Avatar)"
 				}
 				catch {}
             }
+			if (DataStore.get("Custom-Icon") && DataStore.get("Custom-Regalia-Banner")) {
+				try {
+					document.querySelector("div > lol-regalia-profile-v2-element").shadowRoot.querySelector("div > lol-regalia-banner-v2-element").
+						shadowRoot.querySelector("div > uikit-state-machine > div:nth-child(2) > img").src = `${datapath}assets/Icon/Regalia-Banners/${icdata["Regalia-banner"]}`
+				}
+				catch {}
+			}
         }, 100)
         
         if (!ranked_observer && rankedNode) {
@@ -158,33 +146,18 @@ let loadCss = async (node) => {
 	}
 }
 
-window.setInterval(() => {
-	let ticker = document.querySelector("#lol-uikit-layer-manager-wrapper > lol-uikit-full-page-backdrop > lol-uikit-flyout-frame")
-	
-	if (DataStore.get("settings-dialogs-transparent")) {
-		try {document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame").shadowRoot.querySelector("div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch{}
-		try {document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame > div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch {}
-		try {document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame > div > div.challenges-identity-customizer-contents > div.challenges-identity-customizer-left-container > div > lol-regalia-identity-customizer-element").shadowRoot.querySelector("div > lol-regalia-banner-v2-element").remove()}catch{}
-		try {document.querySelector(".lol-settings-container").style.background = "var(--Settings-and-Dialog-frame-color)"}catch {}
-		try {document.querySelector(".lol-settings-container").shadowRoot.querySelector("div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch{}
-		try {document.querySelector("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame").shadowRoot.querySelector("div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch{}
-	}
 
-	if (DataStore.get("Custom-Icon") && DataStore.get("Custom-Avatar")) {
-		try {
-			document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame > div > div.challenges-identity-customizer-contents > div.challenges-identity-customizer-left-container > div > lol-regalia-identity-customizer-element").
-				shadowRoot.querySelector("div > div > div.regalia-identity-customizer-crest-wrapper > lol-regalia-crest-v2-element").
-				shadowRoot.querySelector("div > uikit-state-machine > div.lol-regalia-summoner-icon-mask-container > div").style.backgroundImage = "var(--Avatar)"
-				}
-		catch {}
-		try {
-			document.querySelector("#hover-card-backdrop").style.backgroundImage = "var(--Hover-card-backdrop)"
-			document.querySelector("#lol-uikit-tooltip-root > div > div > div.hover-card.right.has-regalia.regalia-loaded > div > div.hover-card-info-container").style.background = "#1a1c21"
-			document.querySelector("#lol-uikit-tooltip-root > div > div > div.hover-card.right.has-regalia.regalia-loaded > div > div.hover-card-info-container > div.hover-card-identity > lol-regalia-hovercard-v2-element").
-				shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("div > uikit-state-machine > div.lol-regalia-summoner-icon-mask-container > div").style.backgroundImage = "var(--Avatar)"
+window.setInterval(async ()=>{
+	try {
+		let getName = document.querySelector(".name > .player-name-component.ember-view > .player-name__summoner").textContent
+		if (!DataStore.has("Summoner-ID")) {
+			DataStore.set("Summoner-ID", await utils.getSummonerIDByName(getName))
 		}
-		catch {}
-	}
+	}catch{}
+},5000)
+
+window.setInterval(()=>{
+	let ticker = document.querySelector("#lol-uikit-layer-manager-wrapper > lol-uikit-full-page-backdrop > lol-uikit-flyout-frame")
 
 	if (DataStore.get("Custom-Icon") && ticker) {
 		ticker.shadowRoot.querySelector("div > div.border").style.display = "none"
@@ -192,6 +165,15 @@ window.setInterval(() => {
 		ticker.shadowRoot.querySelector("div > div.caret").style.display = "none"
 		ticker.shadowRoot.querySelector("div > div.lol-uikit-flyout-frame").style.backgroundColor = "black"
 		ticker.shadowRoot.querySelector("div > div.lol-uikit-flyout-frame").style.borderRadius = "10px"
+	}
+
+	if (DataStore.get("settings-dialogs-transparent")) {
+		try {document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame").shadowRoot.querySelector("div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch{}
+		try {document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame > div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch {}
+		try {document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame > div > div.challenges-identity-customizer-contents > div.challenges-identity-customizer-left-container > div > lol-regalia-identity-customizer-element").shadowRoot.querySelector("div > lol-regalia-banner-v2-element").remove()}catch{}
+		try {document.querySelector(".lol-settings-container").style.background = "var(--Settings-and-Dialog-frame-color)"}catch {}
+		try {document.querySelector(".lol-settings-container").shadowRoot.querySelector("div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch{}
+		try {document.querySelector("#lol-uikit-layer-manager-wrapper > div.modal > div > lol-uikit-dialog-frame").shadowRoot.querySelector("div").style.background = "var(--Settings-and-Dialog-frame-color)"}catch{}
 	}
 
 	if (DataStore.get("new-gamesearch-queue") && document.querySelector("lol-social-panel > lol-parties-game-info-panel")) {
@@ -219,34 +201,70 @@ window.setInterval(() => {
 				querySelector("div > div.parties-status-card-body > div.parties-status-card-map.game_map_howling_abyss").style.margin = "-3px 10px 0 0"
 		}catch{}
 	}
+}, 500)
+
+window.setInterval(()=>{
+	if (DataStore.get("Custom-Icon") && DataStore.get("Custom-Hover-card-backdrop")) {
+		if (document.querySelector("#lol-uikit-tooltip-root > div > div > div.hover-card.right.has-regalia.regalia-loaded > div > div.hover-card-info-container > div.hover-card-identity > lol-regalia-hovercard-v2-element").getAttribute("summoner-id") == DataStore.get("Summoner-ID")) {
+			document.querySelector("#hover-card-backdrop").style.backgroundImage = "var(--Hover-card-backdrop)"
+		}
+	}
+
+	if (DataStore.get("Custom-Icon") && DataStore.get("Custom-Avatar")) {
+		try {
+			document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame > div > div.challenges-identity-customizer-contents > div.challenges-identity-customizer-left-container > div > lol-regalia-identity-customizer-element").
+				shadowRoot.querySelector("div > div > div.regalia-identity-customizer-crest-wrapper > lol-regalia-crest-v2-element").
+				shadowRoot.querySelector("div > uikit-state-machine > div.lol-regalia-summoner-icon-mask-container > div").style.backgroundImage = "var(--Avatar)"
+		}catch {}
+		try {
+			document.querySelector("#lol-uikit-tooltip-root > div > div > div.hover-card.right.has-regalia.regalia-loaded > div > div.hover-card-info-container").style.background = "#1a1c21"
+			document.querySelector(`#lol-uikit-tooltip-root > div > div > div.hover-card.right.has-regalia.regalia-loaded > div > div.hover-card-info-container > div.hover-card-identity > lol-regalia-hovercard-v2-element[summoner-id="${DataStore.get("Summoner-ID")}"]`).
+				shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("div > uikit-state-machine > div.lol-regalia-summoner-icon-mask-container > div").style.backgroundImage = "var(--Avatar)"
+		}catch {}
+		try {
+			document.querySelector("div.lobby-banner.local > lol-regalia-parties-v2-element").shadowRoot.querySelector("div > div > div.regalia-parties-v2-crest-wrapper > lol-regalia-crest-v2-element").
+				shadowRoot.querySelector("div > uikit-state-machine > div.lol-regalia-summoner-icon-mask-container > div").style.backgroundImage = "var(--Avatar)"
+		}catch {}
+	}
 
 	if (DataStore.get("Custom-Icon") && DataStore.get("Custom-Border")) {
 		try {
 			document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame > div > div.challenges-identity-customizer-contents > div.challenges-identity-customizer-left-container > div > lol-regalia-identity-customizer-element").shadowRoot.
-			querySelector("div > div > div.regalia-identity-customizer-crest-wrapper > lol-regalia-crest-v2-element").shadowRoot.querySelector("div > uikit-state-machine > lol-uikit-themed-level-ring-v2").shadowRoot.
-			querySelector("div").style.backgroundImage = 'var(--Border)'
+				querySelector("div > div > div.regalia-identity-customizer-crest-wrapper > lol-regalia-crest-v2-element").shadowRoot.querySelector("div > uikit-state-machine > lol-uikit-themed-level-ring-v2").shadowRoot.
+				querySelector("div").style.backgroundImage = 'var(--Border)'
 		}
 		catch{}
 		try {
-			document.querySelector("#lol-uikit-tooltip-root > div > div > div.hover-card.right.has-regalia.regalia-loaded > div > div.hover-card-info-container > div.hover-card-identity > lol-regalia-hovercard-v2-element").shadowRoot.
-			querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("div > uikit-state-machine > lol-uikit-themed-level-ring-v2").shadowRoot.
-			querySelector("div").style.backgroundImage = 'var(--Border)'
+			document.querySelector(`#lol-uikit-tooltip-root > div > div > div.hover-card.right.has-regalia.regalia-loaded > div > div.hover-card-info-container > div.hover-card-identity > lol-regalia-hovercard-v2-element[summoner-id="${DataStore.get("Summoner-ID")}"]`).shadowRoot.
+				querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("div > uikit-state-machine > lol-uikit-themed-level-ring-v2").shadowRoot.
+				querySelector("div").style.backgroundImage = 'var(--Border)'
 		}
 		catch{}
 		try {
 			document.querySelector("div.lobby-banner.local > lol-regalia-parties-v2-element").shadowRoot.querySelector("div > div > div.regalia-parties-v2-crest-wrapper > lol-regalia-crest-v2-element").shadowRoot.
-			querySelector("div > uikit-state-machine > lol-uikit-themed-level-ring-v2").shadowRoot.
-			querySelector("div").style.backgroundImage = 'var(--Border)'
+				querySelector("div > uikit-state-machine > lol-uikit-themed-level-ring-v2").shadowRoot.
+				querySelector("div").style.backgroundImage = 'var(--Border)'
 		}
 		catch{}
 		try {
 			document.querySelector("div > lol-regalia-profile-v2-element").shadowRoot.querySelector("div > div > div.regalia-profile-crest-hover-area.picker-enabled > lol-regalia-crest-v2-element").shadowRoot.
-			querySelector("div > uikit-state-machine > lol-uikit-themed-level-ring-v2").shadowRoot.
-			querySelector("div").style.backgroundImage = 'var(--Border)'
+				querySelector("div > uikit-state-machine > lol-uikit-themed-level-ring-v2").shadowRoot.
+				querySelector("div").style.backgroundImage = 'var(--Border)'
 		}
 		catch{}
 	}
-}, 500)
+
+	if (DataStore.get("Custom-Icon") && DataStore.get("Custom-Regalia-Banner")) {
+		try {
+			document.querySelector("div.lobby-banner.local > lol-regalia-parties-v2-element").shadowRoot.querySelector("div > lol-regalia-banner-v2-element").
+				shadowRoot.querySelector("div > uikit-state-machine > div:nth-child(2) > img").src = `${datapath}assets/Icon/Regalia-Banners/${icdata["Regalia-banner"]}`
+		}catch{}
+		try {
+			document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame > div > div.challenges-identity-customizer-contents > div.challenges-identity-customizer-left-container > div > lol-regalia-identity-customizer-element").shadowRoot.querySelector("div > lol-regalia-banner-v2-element").
+				shadowRoot.querySelector("div > uikit-state-machine > div:nth-child(2) > img").src = `${datapath}assets/Icon/Regalia-Banners/${icdata["Regalia-banner"]}`
+		}catch{}
+	}
+}, 300)
 
 window.addEventListener("load", ()=> {
     if (DataStore.get("Runes-BG")) {
@@ -300,5 +318,4 @@ window.addEventListener("load", ()=> {
 	else {utils.addCss("","","",`${datapath}assets/Css/Addon-Css/Sidebar-Color.css`)}
     utils.addCss("","","",`${datapath}assets/Css/ElainaV2.css`)
 	utils.mutationObserverAddCallback(loadCss, ["screen-root"])
-	utils.subscribe_endpoint("/lol-gameflow/v1/gameflow-phase", updateLobbyRegaliaBanner)
 })

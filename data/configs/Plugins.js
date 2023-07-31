@@ -22,6 +22,8 @@ const data = {
     ],
     //Add this for more object: {"lines": []},
 
+    "Custom Mastery Number" : 6969
+
 
     //______________________________________________________________________________//
 }

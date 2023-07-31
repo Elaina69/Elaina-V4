@@ -3,18 +3,25 @@ const data = {
 
     "Animation-logo": "ElainaFly.gif",
     "Static-logo"   : "Logo.png",
+
     "Avatar"        : "Avatar.gif",
     "Border"        : "spirit-of-ionia-crests-wild-rift.png",
+    "Regalia-banner": "Soul-Fighters_2023.png",
+    "Hover-card"    : "Hover-card-backdrop.jpg",
+
     "RP-icon"       : "ApprenticeWitch.png",
     "BE-icon"       : "ElainaStare.png",
+
     "Rank-icon"     : "Rank.png",
     "Honor"         : "emblem_5.png",
     "Trophy"        : "trophy_empty.png",
     "Class-banner"  : "Clash.png",
+
     "Ticker"        : "ticker.png",
-    "Hover-card"    : "Hover-card-backdrop.jpg",
+    
     "Mouse-cursor"  : "ElainaDed.png",
-        
+       
+    
     //Custom-Font
         "Font-Name" : "AegirSeaborn.ttf",
 
