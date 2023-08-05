@@ -9,6 +9,14 @@
 console.log('By Elaina Da Catto');
 console.log('Meow ~~~');
 
+export function getPluginsName() {
+	let scriptPath = getScriptPath()
+	let regex = /\/([^/]+)\/index\.js$/
+	let match = scriptPath.match(regex)
+	let pluginsname = match ? match[1]:null
+	return pluginsname
+}
+
 import "./data/Data.js"
 import "./data/built-in_plugins/Custom-Status"
 import "./data/built-in_plugins/Old-LL-Settings"
@@ -18,12 +26,23 @@ import "./data/loadCss.js"
 import "./data/_utils.js"
 import "./testUpdate.js"
 //*
-try  {
-	let res = await fetch("https://unpkg.com/elainav3-data@latest/index.js")
-	if (res.status == 200) {
-		(await (() => import("https://unpkg.com/elainav3-data@latest/index.js"))()).default
+if (DataStore.get("Dev-mode")) {
+	try  {
+		let res = await fetch(`//plugins/${getPluginsName()}/ElainaV3-Data/index.js`)
+		if (res.status == 200) {
+			(await (() => import(`//plugins/${getPluginsName()}/ElainaV3-Data/index.js`))()).default
+		}
 	}
+	catch{console.log(`File doesn't exist, can't load ElainaV3 data`)}
 }
-catch{console.log(`File doesn't exist, can't load ElainaV3 data`)}
+else {
+	try  {
+		let res = await fetch("https://unpkg.com/elainav3-data@latest/index.js")
+		if (res.status == 200) {
+			(await (() => import("https://unpkg.com/elainav3-data@latest/index.js"))()).default
+		}
+	}
+	catch{console.log(`File doesn't exist, can't load ElainaV3 data`)}
+}
 /**/
 //import "./data/built-in_plugins/ThemeSettings.js"
