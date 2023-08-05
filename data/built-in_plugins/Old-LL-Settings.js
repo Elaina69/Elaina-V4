@@ -1,6 +1,10 @@
 import lang from 'https://unpkg.com/elainav3-data@latest/data/configs/Language.js'
 import thisVersion from "https://unpkg.com/elainav3-data@latest/data/configs/Version.js"
+import {openAssets, openConfigs} from "../openFolder.js"
+
 let datapath = new URL("..", import.meta.url).href
+
+
 
 async function createLoaderMenu(root) {
 	const { Component, jsx, render } = await import('//esm.run/nano-jsx')
@@ -54,19 +58,19 @@ async function createLoaderMenu(root) {
 										</div>
 										<hr class="heading-spacer" />
 										<div style="display: flex; flex-direction: column; align-items: center; gap: 12px">
-											<lol-uikit-flat-button-secondary style="display:inline-block; width: 200px" onClick=${() => window.openDevTools()}>
-												${_t['l.open_devtools']} (Ctrl-Shift-I)
-											</lol-uikit-flat-button-secondary>
 											<lol-uikit-flat-button-secondary style="display:inline-block; width: 200px" onClick=${() => window.location.reload()}>
 												${_t['l.reload_client']} (Ctrl-Shift-R)
 											</lol-uikit-flat-button-secondary>
-											<lol-uikit-flat-button-secondary style="display:inline-block; width: 200px" onClick=${() => window.openPluginsFolder()}>
-												${_t['l.open_plugins']}
+											<lol-uikit-flat-button-secondary style="display:inline-block; width: 200px" onClick=${() => openAssets()}>
+												${_t['l.open_assets']}
+											</lol-uikit-flat-button-secondary>
+											<lol-uikit-flat-button-secondary style="display:inline-block; width: 200px" onClick=${() => openConfigs()}>
+												${_t['l.open_configs']}
 											</lol-uikit-flat-button-secondary>
 										</div>
 										<hr class="heading-spacer" />
 										<p style="padding: 20px 0" class="lol-settings-code-of-conduct-link lol-settings-window-size-text">
-											<a href="https://github.com/Elaina69/Elaina-V2/releases" target="_blank">${_t['l.theme_releases']}</a>
+											<a href="https://github.com/Elaina69/Elaina-V3/releases" target="_blank">${_t['l.theme_releases']}</a>
 										</p>
 									</div>
 								</lol-uikit-content-block>
