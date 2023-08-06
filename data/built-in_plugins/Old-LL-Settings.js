@@ -1,9 +1,26 @@
-import lang from 'https://unpkg.com/elainav3-data@latest/data/configs/Language.js'
 import thisVersion from "https://unpkg.com/elainav3-data@latest/data/configs/Version.js"
-import {openAssets, openConfigs} from "../openFolder.js"
+import {openAssets, openConfigs, getPluginsName} from "../openFolder.js"
 
+let lang
 let datapath = new URL("..", import.meta.url).href
-
+if (DataStore.get("Dev-mode")) {
+	try  {
+		let res = await fetch(`//plugins/${getPluginsName()}/ElainaV3-Data/data/configs/Language.js`)
+		if (res.status == 200) {
+			lang = (await (() => import(`//plugins/${getPluginsName()}/ElainaV3-Data/data/configs/Language.js`))()).default
+		}
+	}
+	catch{console.log(`File doesn't exist`)}
+}
+else {
+	try  {
+		let res = await fetch("https://unpkg.com/elainav3-data@latest/data/configs/Language.js")
+		if (res.status == 200) {
+			lang = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/Language.js"))()).default
+		}
+	}
+	catch{console.log(`File doesn't exist`)}
+}
 
 
 async function createLoaderMenu(root) {
@@ -58,7 +75,7 @@ async function createLoaderMenu(root) {
 										</div>
 										<hr class="heading-spacer" />
 										<div style="display: flex; flex-direction: column; align-items: center; gap: 12px">
-											<lol-uikit-flat-button-secondary style="display:inline-block; width: 200px" onClick=${() => window.location.reload()}>
+											<lol-uikit-flat-button-secondary style="display:inline-block; width: 200px" onClick=${() => window.location.restartClient()}>
 												${_t['l.reload_client']} (Ctrl-Shift-R)
 											</lol-uikit-flat-button-secondary>
 											<lol-uikit-flat-button-secondary style="display:inline-block; width: 200px" onClick=${() => openAssets()}>

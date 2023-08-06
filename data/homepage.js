@@ -1,12 +1,32 @@
 import wadata from './configs/Wallpaper&Audio.js'
 import filters from './configs/Filters.js'
-import lang from 'https://unpkg.com/elainav3-data@latest/data/configs/Language.js'
 import utils from './_utils.js'
 
 let songIndex  = 0
 let wallpapers = wadata["wallpaper_list"]
 let Audios     = wadata["audio_list"]
 let datapath = new URL(".", import.meta.url).href
+let path = new URL("..", import.meta.url).href
+let lang
+
+if (DataStore.get("Dev-mode")) {
+	try  {
+		let res = await fetch(`${path}ElainaV3-Data/data/configs/Language.js`)
+		if (res.status == 200) {
+			lang = (await (() => import(`${path}ElainaV3-Data/data/configs/Language.js`))()).default
+		}
+	}
+	catch{console.log(`File doesn't exist`)}
+}
+else {
+	try  {
+		let res = await fetch("https://unpkg.com/elainav3-data@latest/data/configs/Language.js")
+		if (res.status == 200) {
+			lang = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/Language.js"))()).default
+		}
+	}
+	catch{console.log(`File doesn't exist`)}
+}
 
 if(!DataStore.has('audio-index')){
     DataStore.set('audio-index',0)
