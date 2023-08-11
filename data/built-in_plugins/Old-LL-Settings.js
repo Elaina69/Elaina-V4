@@ -75,7 +75,7 @@ async function createLoaderMenu(root) {
 										</div>
 										<hr class="heading-spacer" />
 										<div style="display: flex; flex-direction: column; align-items: center; gap: 12px">
-											<lol-uikit-flat-button-secondary style="display:inline-block; width: 200px" onClick=${() => window.location.restartClient()}>
+											<lol-uikit-flat-button-secondary style="display:inline-block; width: 200px" onClick=${() => window.restartClient()}>
 												${_t['l.reload_client']} (Ctrl-Shift-R)
 											</lol-uikit-flat-button-secondary>
 											<lol-uikit-flat-button-secondary style="display:inline-block; width: 200px" onClick=${() => openAssets()}>
