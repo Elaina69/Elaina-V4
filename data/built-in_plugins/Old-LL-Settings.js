@@ -28,8 +28,7 @@ async function createLoaderMenu(root) {
 	const langCode = document.querySelector("html").lang;
 	const langMap = lang.langlist
 	const version = thisVersion
-	const TRANSLATIONS = lang
-	const _t = TRANSLATIONS[langMap[langCode] || "EN"];
+	const _t = lang[langMap[langCode] || "EN"];
 	
 	class LoaderMenu extends Component {
 		visible = false; frame = null; opener = null
@@ -94,7 +93,6 @@ async function createLoaderMenu(root) {
 							</div>
 							<lol-uikit-flat-button-group type="dialog-frame">
 								<lol-uikit-flat-button tabindex="1" class="button-accept" onClick=${() => this.showDefaultSettings()}>${_t['l.open_settings']}</lol-uikit-flat-button>
-								<lol-uikit-flat-button tabindex="2" class="button-decline" onClick=${() => this.show(false)}>${_t['l.close']}</lol-uikit-flat-button>
 							</lol-uikit-flat-button-group>
 						</lol-uikit-dialog-frame>
 					</div>
