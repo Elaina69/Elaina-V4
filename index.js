@@ -27,8 +27,8 @@ import "./data/ChangeFilters.js"
 import "./data/homepage.js"
 import "./data/loadCss.js"
 import "./data/_utils.js"
-import "./testUpdate.js"
-import	"./data/built-in_plugins/KeyCombines.js"
+import "./data/built-in_plugins/KeyCombines.js"
+import "./data/configs/Custom-Status.txt?raw"
 
 if (DataStore.get("Dev-mode")) {
 	try  {
