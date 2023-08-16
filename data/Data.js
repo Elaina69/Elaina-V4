@@ -116,7 +116,7 @@ if (!DataStore.has("Ranked Queue ID")) {
 	DataStore.set("Ranked Queue ID", 0)
 }
 if (!DataStore.has("Ranked Tier ID")) {
-	DataStore.set("Ranked Tier ID", 8)
+	DataStore.set("Ranked Tier ID", 9)
 }
 if (!DataStore.has("Ranked Division ID")) {
 	DataStore.set("Ranked Division ID", 0)
@@ -153,6 +153,75 @@ if (!DataStore.has("Spoof-name")) {
 }
 if (!DataStore.has("Dev-mode")) {
 	DataStore.set("Dev-mode", false)
+}
+if (!DataStore.has("Custom-rank")) {
+	DataStore.set("Custom-rank", true)
+}
+if (!DataStore.has("Runes-BG")) {
+	DataStore.set("Runes-BG", true)
+}
+if (!DataStore.has("hide-overview")) {
+	DataStore.set("hide-overview", true)
+}
+if (!DataStore.has("hide-merch")) {
+	DataStore.set("hide-merch", true)
+}
+if (!DataStore.has("hide-patch-note")) {
+	DataStore.set("hide-patch-note", true)
+}
+if (!DataStore.has("hide-esport")) {
+	DataStore.set("hide-esport", true)
+}
+if (!DataStore.has("Custom-Border")) {
+	DataStore.set("Custom-Border", true)
+}
+if (!DataStore.has("Custom-RP-Icon")) {
+	DataStore.set("Custom-RP-Icon", true)
+}
+if (!DataStore.has("Custom-BE-Icon")) {
+	DataStore.set("Custom-BE-Icon", true)
+}
+if (!DataStore.has("Custom-Rank-Icon")) {
+	DataStore.set("Custom-Rank-Icon", true)
+}
+if (!DataStore.has("Custom-Emblem")) {
+	DataStore.set("Custom-Emblem", true)
+}
+if (!DataStore.has("Custom-Clash-banner")) {
+	DataStore.set("Custom-Clash-banner", true)
+}
+if (!DataStore.has("Custom-Ticker")) {
+	DataStore.set("Custom-Ticker", true)
+}
+if (!DataStore.has("Custom-Trophy")) {
+	DataStore.set("Custom-Trophy", true)
+}
+if (!DataStore.has("Custom-Regalia-Banner")) {
+	DataStore.set("Custom-Regalia-Banner", true)
+}
+if (!DataStore.has("Custom-Hover-card-backdrop")) {
+	DataStore.set("Custom-Hover-card-backdrop", true)
+}
+if (!DataStore.has("Debug-mode")) {
+	DataStore.set("Debug-mode", false)
+}
+if (!DataStore.has("Custom-profile-hover")) {
+	DataStore.set("Custom-profile-hover", true)
+}
+if (!DataStore.has("Custom-mastery-score")) {
+	DataStore.set("Custom-mastery-score", true)
+}
+if (!DataStore.has("Custom-challenge-crystal")) {
+	DataStore.set("Custom-challenge-crystal", true)
+}
+if (!DataStore.has("Mastery-Score")) {
+	DataStore.set("Mastery-Score", 6969)
+}
+if (!DataStore.has("Challenge-Points")) {
+	DataStore.set("Challenge-Points", 6969)
+}
+if (!DataStore.has("challengeCrystalLevel")) {
+	DataStore.set("challengeCrystalLevel", 9)
 }
 if (!DataStore.has("")) {
 	DataStore.set("", true)
