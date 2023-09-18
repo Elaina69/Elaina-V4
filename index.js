@@ -6,8 +6,11 @@
  * @Nyan Meow~~~
  */
 
-console.log('By Elaina Da Catto');
-console.log('Meow ~~~');
+let eConsole = "%c ElainaV3 "
+let eCss = "color: #ffffff; background-color: #f77fbe"
+
+console.log(eConsole+'%c By %cElaina Da Catto',eCss,"", "color: #e4c2b3")
+console.log(eConsole+'%c Meow ~~~',eCss, "color: #e4c2b3")
 
 export function getPluginsName() {
 	let scriptPath = getScriptPath()
@@ -37,7 +40,7 @@ if (DataStore.get("Dev-mode")) {
 			(await (() => import(`//plugins/${getPluginsName()}/ElainaV3-Data/index.js`))()).default
 		}
 	}
-	catch{console.log(`File doesn't exist, can't load ElainaV3 data`)}
+	catch{console.warn(`File doesn't exist, can't load ElainaV3 data`)}
 }
 else {
 	try  {
@@ -46,5 +49,5 @@ else {
 			(await (() => import("https://unpkg.com/elainav3-data@latest/index.js"))()).default
 		}
 	}
-	catch{console.log(`File doesn't exist, can't load ElainaV3 data`)}
+	catch{console.warn(`File doesn't exist, can't load ElainaV3 data`)}
 }

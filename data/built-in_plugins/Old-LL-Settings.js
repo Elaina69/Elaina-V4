@@ -10,7 +10,7 @@ if (DataStore.get("Dev-mode")) {
 			lang = (await (() => import(`//plugins/${getPluginsName()}/ElainaV3-Data/data/configs/Language.js`))()).default
 		}
 	}
-	catch{console.log(`File doesn't exist`)}
+	catch{console.warn(`File doesn't exist`)}
 }
 else {
 	try  {
@@ -19,9 +19,8 @@ else {
 			lang = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/Language.js"))()).default
 		}
 	}
-	catch{console.log(`File doesn't exist`)}
+	catch{console.warn(`File doesn't exist`)}
 }
-
 
 async function createLoaderMenu(root) {
 	const { Component, jsx, render } = await import('//esm.run/nano-jsx')

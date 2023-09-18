@@ -1,6 +1,9 @@
 import utils from './_utils.js'
 import data from './configs/Filters.js'
 
+let eConsole = "%c ElainaV3 "
+let eCss = "color: #ffffff; background-color: #f77fbe"
+
 let changeFilters = async (node) => {
     let pagename, previous_page
 	let elaina_bg_elem = document.getElementById("elaina-bg")
@@ -8,7 +11,7 @@ let changeFilters = async (node) => {
 								"rcp-fe-lol-parties", "rcp-fe-lol-loot", "rcp-fe-lol-clash-full","rcp-fe-lol-postgame","rcp-fe-lol-event-shop","rcp-fe-lol-tft"]
 
     pagename = node.getAttribute("data-screen-name")
-	console.log(pagename)
+	console.log(eConsole+"%c "+pagename,eCss,"color: #e4c2b3")
 
     if (pagename == "rcp-fe-lol-home-main") {
 		elaina_bg_elem.style.filter = data["Homepage"]

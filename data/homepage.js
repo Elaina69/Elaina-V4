@@ -8,6 +8,11 @@ let Audios     = wadata["audio_list"]
 let datapath = new URL(".", import.meta.url).href
 let path = new URL("..", import.meta.url).href
 let lang
+let eConsole = "%c ElainaV3 "
+let eCss = "color: #ffffff; background-color: #f77fbe"
+let loopwallCss,muteCss
+if (DataStore.get("mute-audio")) {muteCss = "color: #00ff44"} else {muteCss = "color: red"}
+if (DataStore.get("audio-loop")) {loopwallCss = "color: #00ff44"} else {loopwallCss = "color: red"}
 
 if (DataStore.get("Dev-mode")) {
 	try  {
@@ -16,7 +21,7 @@ if (DataStore.get("Dev-mode")) {
 			lang = (await (() => import(`${path}ElainaV3-Data/data/configs/Language.js`))()).default
 		}
 	}
-	catch{console.log(`File doesn't exist`)}
+	catch{console.warn(`File doesn't exist`)}
 }
 else {
 	try  {
@@ -25,7 +30,7 @@ else {
 			lang = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/Language.js"))()).default
 		}
 	}
-	catch{console.log(`File doesn't exist`)}
+	catch{console.warn(`File doesn't exist`)}
 }
 
 if(!DataStore.has('audio-index')){
@@ -154,12 +159,13 @@ function audio_mute() {
 	if (DataStore.get("mute-audio")) {
 		wallpaperaudio.muted = true
 		audio.muted          = true
+		console.log(eConsole+`%c audio and wallpaper mute: %c${DataStore.get("mute-audio")}`,eCss,"","color: #00ff44")
 	}
 	else {
 		wallpaperaudio.muted = false
 		audio.muted          = false
+		console.log(eConsole+`%c audio and wallpaper mute: %c${DataStore.get("mute-audio")}`,eCss,"","color: red")
 	}
-	console.log(`audio and wallpaper mute ${DataStore.get("mute-audio")}`)
 }
 
 function mute_set_icon_audio(elem) {
@@ -181,12 +187,13 @@ function audio_loop() {
 	if (DataStore.get('audio-loop')) {
 		audio.loop = true
 		audio.removeEventListener("ended", nextSong)
+		console.log(eConsole+`%c Audio loop: %c${DataStore.get('audio-loop')}`,eCss,"","color: #00ff44")
 	}
 	else {
 		audio.loop = false
 		audio.addEventListener("ended", nextSong)
+		console.log(eConsole+`%c Audio loop: %c${DataStore.get('audio-loop')}`,eCss,"","color: red")
 	}
-	console.log(`Audio loop ${DataStore.get('audio-loop')}`)
 }
 
 function audio_loop_icon(elem) {
@@ -219,7 +226,7 @@ function next_wallpaper() {
     if (DataStore.get('wallpaper-index') > wallpapers.length-1) {
         DataStore.set('wallpaper-index', 0)
     }
-	console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file)
+	console.log(eConsole+`%c Now playing %c${wallpapers[DataStore.get('wallpaper-index')].file}`,eCss,"","color: #0070ff")
 
 	setTimeout(function () {
 		loadBG(wallpapers[DataStore.get('wallpaper-index')].file)
@@ -236,7 +243,7 @@ function prev_wallpaper() {
     if (DataStore.get('wallpaper-index') < 0) {
         DataStore.set('wallpaper-index', wallpapers.length-1)
     }
-	console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file)
+	console.log(eConsole+`%c Now playing %c${wallpapers[DataStore.get('wallpaper-index')].file}`,eCss,"","color: #0070ff")
 
 	setTimeout(function () {
 		loadBG(wallpapers[DataStore.get('wallpaper-index')].file)
@@ -254,7 +261,7 @@ function nextSong() {
 		}
 		loadSong(Audios[DataStore.get('audio-index')])
 		audio_play_pause()
-		console.log("Now playing "+Audios[DataStore.get('audio-index')])
+		console.log(eConsole+`%c Now playing %c${Audios[DataStore.get('audio-index')]}`,eCss,"", "color: #0070ff")
 	}
 	else {
 		songIndex++
@@ -264,7 +271,7 @@ function nextSong() {
 		}
 		loadSong(Audios[songIndex])
 		audio_play_pause()
-		console.log("Now playing "+Audios[songIndex])
+		console.log(eConsole+`%c Now playing %c${Audios[songIndex]}`,eCss,"", "color: #0070ff")
 	}
 }
 
@@ -277,7 +284,7 @@ function prevSong() {
 		}
 		loadSong(Audios[DataStore.get('audio-index')])
 		audio_play_pause()
-		console.log("Now playing "+Audios[DataStore.get('audio-index')])
+		console.log(eConsole+`%c Now playing %c${Audios[DataStore.get('audio-index')]}`,eCss,"", "color: #0070ff")
 	}
 	else {
 		songIndex--
@@ -287,7 +294,7 @@ function prevSong() {
 		}
 		loadSong(Audios[songIndex])
 		audio_play_pause()
-		console.log("Now playing "+Audios[songIndex])
+		console.log(eConsole+`%c Now playing %c${Audios[songIndex]}`,eCss,"", "color: #0070ff")
 	}
 }
 
@@ -422,7 +429,7 @@ function create_webm_buttons() {
 				let elainaBg = document.getElementById("elaina-bg")
 					elainaBg.classList.add("webm-hidden")
 					DataStore.set('wallpaper-index', id)
-				console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file)
+					console.log(eConsole+`%c Now playing %c${wallpapers[DataStore.get('wallpaper-index')].file}`,eCss,"","color: #0070ff")
 
 				setTimeout(function () {
 					loadBG(wallpapers[DataStore.get('wallpaper-index')].file)
@@ -470,16 +477,19 @@ let addHomepage = async (node) => {
 	}
     if (previous_page != pagename) {previous_page = pagename}
 }
-
+if (DataStore.get("Dev-mode")) {
+	console.log(eConsole+"%c Running %cElaina theme - %cDev %cversion",eCss,"","color: #e4c2b3","color: red","")
+}
+else {console.log(eConsole+"%c Running %cElaina theme - %cStable %cversion",eCss,"","color: #e4c2b3","color: #00ff44","")}
 if (DataStore.get("Continues_Audio")) {
-	console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[DataStore.get('audio-index')])
-	console.log(`current wallpaper status: play/pause-time: ${DataStore.get('pause-wallpaper')}, mute: ${DataStore.get("mute-audio")}, loop: true, volume: ${DataStore.get("wallpaper-volume")*100}%`)
-	console.log(`current audio status: play/pause-time: ${DataStore.get('pause-audio')}, mute: ${DataStore.get("mute-audio")}, loop: ${DataStore.get("audio-loop")}, volume: ${DataStore.get("audio-volume")*100}%`)
+	console.log(eConsole+`%c Now playing %c${wallpapers[DataStore.get('wallpaper-index')].file} %cand %c${Audios[DataStore.get('audio-index')]}`,eCss,"","color: #0070ff","","color: #0070ff")
+	console.log(eConsole+`%c current wallpaper status: play/pause-time: %c${DataStore.get('pause-wallpaper')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %ctrue%c, volume: %c${DataStore.get("wallpaper-volume")*100}%`,eCss,"","color: #0070ff","",muteCss,"","color: #00ff44","","color: #0070ff")
+	console.log(eConsole+`%c current audio status: play/pause-time: %c${DataStore.get('pause-audio')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %c${DataStore.get("audio-loop")}%c, volume: %c${DataStore.get("audio-volume")*100}%`,eCss,"","color: #0070ff","",muteCss,"",loopwallCss,"","color: #0070ff")
 }
 else {
-	console.log("Now playing "+wallpapers[DataStore.get('wallpaper-index')].file+" and "+Audios[songIndex])
-	console.log(`current wallpaper status: play/pause-time: ${DataStore.get('pause-wallpaper')}, mute: ${DataStore.get("mute-audio")}, loop: true, volume: ${DataStore.get("wallpaper-volume")*100}%`)
-	console.log(`current audio status: play/pause-time: ${DataStore.get('pause-audio')}, mute: ${DataStore.get("mute-audio")}, loop: ${DataStore.get("audio-loop")}, volume: ${DataStore.get("audio-volume")*100}%`)
+	console.log(eConsole+`%c Now playing %c${wallpapers[DataStore.get('wallpaper-index')].file} %cand %c${Audios[songIndex]}`,eCss,"","color: #0070ff","","color: #0070ff")
+	console.log(eConsole+`%c current wallpaper status: play/pause-time: %c${DataStore.get('pause-wallpaper')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %ctrue%c, volume: %c${DataStore.get("wallpaper-volume")*100}%`,eCss,"","color: #0070ff","",muteCss,"","color: #00ff44","","color: #0070ff")
+	console.log(eConsole+`%c current audio status: play/pause-time: %c${DataStore.get('pause-audio')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %c${DataStore.get("audio-loop")}%c, volume: %c${DataStore.get("audio-volume")*100}%`,eCss,"","color: #0070ff","",muteCss,"",loopwallCss,"","color: #0070ff")
 }
 
 window.addEventListener("load", ()=> {

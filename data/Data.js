@@ -223,6 +223,9 @@ if (!DataStore.has("Challenge-Points")) {
 if (!DataStore.has("challengeCrystalLevel")) {
 	DataStore.set("challengeCrystalLevel", 9)
 }
+if (!DataStore.has("Active-dev-button")) {
+	DataStore.set("Active-dev-button", 0)
+}
 if (!DataStore.has("")) {
 	DataStore.set("", true)
 }
