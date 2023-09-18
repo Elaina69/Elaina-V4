@@ -318,6 +318,6 @@ window.addEventListener("load", ()=> {
 	if (DataStore.get("Hide-Champions-Splash-Art")) {utils.addCss("","","",`${datapath}assets/Css/Addon-Css/Hide-Champs-Splash-Art.css`)}
 	if (DataStore.get("Sidebar-Transparent")) {utils.addCss("","","",`${datapath}assets/Css/Addon-Css/Sidebar-Transparent.css`)}
 	else {utils.addCss("","","",`${datapath}assets/Css/Addon-Css/Sidebar-Color.css`)}
-    utils.addCss("","","",`${datapath}assets/Css/ElainaV2.css`)
+    utils.addCss("","","",`${datapath}assets/Css/ElainaV3.css`)
 	utils.mutationObserverAddCallback(loadCss, ["screen-root"])
 })
