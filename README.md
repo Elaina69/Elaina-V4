@@ -23,23 +23,13 @@ Elaina theme for Pengu Loader
 >    + Korean     : []()
 
 
- - Github version: [Download](https://github.com/Elaina69/Elaina-V2/releases)
  - Highest Wallpaper resolution (For strong device only): [Download](https://drive.google.com/drive/folders/1wvNF18fM9QkzE-a0aBDvJQjB36lWcFbU?usp=sharing)
 
 ## Features
  - Customizable icon and background
  - Support homepage audio (not client audio ofc)
  - Addon plugins
- - Support language:
-   + English
-   + Vietnamese
-   + Japanese
-   + Russian
-   + Polish
-   + Spanish
-   + Chinese
-   + Korean
-   + Other language will show English instead
+ - Support multi language (not all)
 
 > You can help me add more languages by joining [Pengu discord server](https://chat.pengu.lol/)
 
@@ -55,12 +45,12 @@ Elaina theme for Pengu Loader
  - Read [Tutorial](https://github.com/Elaina69/Elaina-V3/blob/main/Tutorial.md)
 
 ## Theme Settings and change stuff
- - Open Client settings to turn on/off functions
+ - Open Client settings
 
-![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/0ed7b615-087a-49f6-bbc4-5ac80b6abe41)
+![image](https://github.com/Elaina69/Elaina-V3/assets/94338907/18defd38-83e8-4035-b3aa-90e90a90ddac)
 
 
- - Open /plugins/ElainaV3/Data/configs/Configs.js to change wallpapers, audio and icons
+ - Open /plugins/ElainaV3/Data/configs/ to change wallpapers, audio, icons and a lot 
 
 ![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/626d14bb-d1bf-4992-becd-bd05dce3557e)
 
