@@ -20,8 +20,8 @@ export function getPluginsName() {
 	return pluginsname
 }
 
-//export * from "./ElainaV3-Data/data/built-in_plugins/Settings.js" 
-export * from "https://unpkg.com/elainav3-data@latest/data/built-in_plugins/Settings.js" 
+export * from "./ElainaV3-Data/data/built-in_plugins/Settings.js" 
+//export * from "https://unpkg.com/elainav3-data@latest/data/built-in_plugins/Settings.js" 
 
 import "./data/Data.js"
 import "./data/built-in_plugins/Custom-Status"
@@ -32,6 +32,7 @@ import "./data/loadCss.js"
 import "./data/_utils.js"
 import "./data/built-in_plugins/KeyCombines.js"
 import "./data/configs/Custom-Status.txt?raw"
+import "./data/Manual-Update.js"
 
 if (DataStore.get("Dev-mode")) {
 	try  {
