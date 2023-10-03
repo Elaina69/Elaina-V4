@@ -20,8 +20,7 @@ export function getPluginsName() {
 	return pluginsname
 }
 
-//export * from "./ElainaV3-Data/data/built-in_plugins/Settings.js" 
-export * from "https://unpkg.com/elainav3-data@latest/data/built-in_plugins/Settings.js" 
+export * from "./data/ImportSettings.js" 
 
 import "./data/Data.js"
 import "./data/built-in_plugins/Custom-Status"
