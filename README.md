@@ -3,7 +3,6 @@
  - [Features](#features)
  - [Required](#required)
  - [Installation](#installation)
- - [Change backgrounds and icons](#theme-settings-and-change-stuff)
 
 ## Elaina-V3
 Elaina theme for Pengu Loader
@@ -42,18 +41,4 @@ Elaina theme for Pengu Loader
 > Recommended: Windows 10/11, Intel Core I5 9400 // 16gb ram // NVIDIA GTX1050 Ti and Higher
  
 ## Installation:
- - Read [Tutorial](https://github.com/Elaina69/Elaina-V3/blob/main/Tutorial.md)
-
-## Theme Settings and change stuff
- - Open Client settings
-
-![image](https://github.com/Elaina69/Elaina-V3/assets/94338907/18defd38-83e8-4035-b3aa-90e90a90ddac)
-
-
- - Open /plugins/ElainaV3/Data/configs/ to change wallpapers, audio, icons and a lot 
-
-![image](https://github.com/Elaina69/Elaina-V2/assets/94338907/626d14bb-d1bf-4992-becd-bd05dce3557e)
-
-
-> - Wallpaper and audio folder: /data/assets/Backgrounds/
-> - Icons folder: /data/assets/Icon/.
+ - Read our [wiki](https://github.com/Elaina69/Elaina-V3/wiki) pages
