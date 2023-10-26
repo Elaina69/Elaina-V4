@@ -104,11 +104,9 @@ function add_elaina_home_navbar() {
 }
 
 function patch_default_home_page(){
-	let loop = 0
 	let intervalId = window.setInterval(() => {
-		loop++
-		if (loop >= 21) {window.clearInterval(intervalId)}
 		go_to_default_home_page()
+		if (document.querySelector("#rcp-fe-viewport-root lol-uikit-navigation-item:nth-child(1)").getAttribute("active") == "true") {window.clearInterval(intervalId)}
 	}, 100)
 }
 
