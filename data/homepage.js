@@ -463,6 +463,26 @@ let addHomepage = async (node) => {
 				patch_default_home_page()
 			}
 		}
+		let delnavtab = window.setInterval(()=> {
+			if (document.querySelector('lol-uikit-navigation-item[item-id="overview"]')) {
+				window.clearInterval(delnavtab)
+				if (DataStore.get("hide-overview")) {
+					document.querySelector('lol-uikit-navigation-item[item-id="overview"]').style.display = "none"
+				}
+				if (DataStore.get("hide-merch")) {
+					try {document.querySelector('lol-uikit-navigation-item[item-id="merch"]').style.display = "none"}
+					catch {console.warn("Merch tab deleted")}
+				}
+				if (DataStore.get("hide-patch-note")) {
+					try {document.querySelector('lol-uikit-navigation-item[item-id="latest_patch_notes"]').style.display = "none"}
+					catch {console.warn("Patch note tab deleted")}
+				}
+				if (DataStore.get("hide-esport")) {
+					try {document.querySelector('lol-uikit-navigation-item[item-id="news"]').style.display = "none"}
+					catch {console.warn("Esport tab deleted")}
+				}
+			}
+		},1000)
 	}
 	else if (pagename != "rcp-fe-lol-navigation-screen" && pagename != "window-controls" && pagename != "rcp-fe-lol-home" && pagename != "social" && document.getElementsByClassName("webm-bottom-buttons-container").length) {
 		Delbuttons()
