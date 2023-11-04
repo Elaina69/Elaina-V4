@@ -25,10 +25,9 @@ Elaina theme for Pengu Loader
  - Highest Wallpaper resolution (For strong device only): [Download](https://drive.google.com/drive/folders/1wvNF18fM9QkzE-a0aBDvJQjB36lWcFbU?usp=sharing)
 
 ## Features
- - Customizable icon and background
- - Support homepage audio (not client audio ofc)
+ - Customizable icon, wallpaper and background music
  - Addon plugins
- - Support multi language (not all)
+ - Some weeb stuff
 
 > You can help me add more languages by joining [Pengu discord server](https://chat.pengu.lol/)
 
