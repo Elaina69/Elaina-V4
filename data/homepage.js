@@ -1,10 +1,7 @@
-import wadata from './configs/Wallpaper&Audio.js'
 import filters from './configs/Filters.js'
 import utils from './_utils.js'
 
 let songIndex  = 0
-let wallpapers = wadata["wallpaper_list"]
-let Audios     = wadata["audio_list"]
 let datapath = new URL(".", import.meta.url).href
 let path = new URL("..", import.meta.url).href
 let lang
@@ -33,16 +30,22 @@ else {
 	catch{console.warn(`File doesn't exist`)}
 }
 
+if (!DataStore.has("Wallpaper-list")) {
+	DataStore.set("Wallpaper-list",["Elaina1.webm","Elaina2.webm"])
+}
+if (!DataStore.has("Audio-list")) {
+	DataStore.set("Audio-list", ["少女レイ-FUMIKIRI ver.flac","If there was an Endpoint.mp3"])
+}
 if(!DataStore.has('audio-index')){
     DataStore.set('audio-index',0)
 }
-else if(DataStore.get('audio-index')+1>Audios.length){
+else if(DataStore.get('audio-index')+1>DataStore.get("Audio-list").length){
     DataStore.set('audio-index',0)
 }
 if(!DataStore.has('wallpaper-index')){
     DataStore.set('wallpaper-index',0)
 }
-else if(DataStore.get('wallpaper-index')+1>wallpapers.length){
+else if(DataStore.get('wallpaper-index')+1>DataStore.get("Wallpaper-list").length){
     DataStore.set('wallpaper-index',0)
 }
 
@@ -208,7 +211,7 @@ function audio_loop_icon(elem) {
 
 function loadBG(BG) {
 	let elainaBg = document.getElementById("elaina-bg")
-	elainaBg.src = `${datapath}assets/Backgrounds/${BG}`
+	elainaBg.src = `${datapath}assets/Backgrounds/Wallpapers/${BG}`
 }
 
 function loadSong(song) {
@@ -221,13 +224,13 @@ function next_wallpaper() {
 		elainaBg.classList.add("webm-hidden")
 
 	DataStore.set('wallpaper-index', DataStore.get('wallpaper-index')+1)
-    if (DataStore.get('wallpaper-index') > wallpapers.length-1) {
+    if (DataStore.get('wallpaper-index') > DataStore.get("Wallpaper-list").length-1) {
         DataStore.set('wallpaper-index', 0)
     }
-	console.log(eConsole+`%c Now playing %c${wallpapers[DataStore.get('wallpaper-index')].file}`,eCss,"","color: #0070ff")
+	console.log(eConsole+`%c Now playing %c${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]}`,eCss,"","color: #0070ff")
 
 	setTimeout(function () {
-		loadBG(wallpapers[DataStore.get('wallpaper-index')].file)
+		loadBG(DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')])
 		elaina_play_pause()
 		elainaBg.classList.remove("webm-hidden")
 	}, 500)
@@ -239,12 +242,12 @@ function prev_wallpaper() {
 
 	DataStore.set('wallpaper-index', DataStore.get('wallpaper-index')-1)
     if (DataStore.get('wallpaper-index') < 0) {
-        DataStore.set('wallpaper-index', wallpapers.length-1)
+        DataStore.set('wallpaper-index', DataStore.get("Wallpaper-list").length-1)
     }
-	console.log(eConsole+`%c Now playing %c${wallpapers[DataStore.get('wallpaper-index')].file}`,eCss,"","color: #0070ff")
+	console.log(eConsole+`%c Now playing %c${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]}`,eCss,"","color: #0070ff")
 
 	setTimeout(function () {
-		loadBG(wallpapers[DataStore.get('wallpaper-index')].file)
+		loadBG(DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')])
 		elaina_play_pause()
 		elainaBg.classList.remove("webm-hidden")
 	}, 500)
@@ -254,22 +257,22 @@ function nextSong() {
 	if (DataStore.get("Continues_Audio")) {
 		DataStore.set('audio-index', DataStore.get('audio-index')+1)
 
-		if (DataStore.get('audio-index') > Audios.length-1) {
+		if (DataStore.get('audio-index') > DataStore.get("Audio-list").length-1) {
 			DataStore.set('audio-index', 0)
 		}
-		loadSong(Audios[DataStore.get('audio-index')])
+		loadSong(DataStore.get("Audio-list")[DataStore.get('audio-index')])
 		audio_play_pause()
-		console.log(eConsole+`%c Now playing %c${Audios[DataStore.get('audio-index')]}`,eCss,"", "color: #0070ff")
+		console.log(eConsole+`%c Now playing %c${DataStore.get("Audio-list")[DataStore.get('audio-index')]}`,eCss,"", "color: #0070ff")
 	}
 	else {
 		songIndex++
 
-		if (songIndex > Audios.length-1) {
+		if (songIndex > DataStore.get("Audio-list").length-1) {
 			songIndex = 0
 		}
-		loadSong(Audios[songIndex])
+		loadSong(DataStore.get("Audio-list")[songIndex])
 		audio_play_pause()
-		console.log(eConsole+`%c Now playing %c${Audios[songIndex]}`,eCss,"", "color: #0070ff")
+		console.log(eConsole+`%c Now playing %c${DataStore.get("Audio-list")[songIndex]}`,eCss,"", "color: #0070ff")
 	}
 }
 
@@ -278,21 +281,21 @@ function prevSong() {
     	DataStore.set('audio-index', DataStore.get('audio-index')-1)
 
 		if (DataStore.get('audio-index') < 0) {
-			DataStore.set('audio-index', Audios.length-1)
+			DataStore.set('audio-index', DataStore.get("Audio-list").length-1)
 		}
-		loadSong(Audios[DataStore.get('audio-index')])
+		loadSong(DataStore.get("Audio-list")[DataStore.get('audio-index')])
 		audio_play_pause()
-		console.log(eConsole+`%c Now playing %c${Audios[DataStore.get('audio-index')]}`,eCss,"", "color: #0070ff")
+		console.log(eConsole+`%c Now playing %c${DataStore.get("Audio-list")[DataStore.get('audio-index')]}`,eCss,"", "color: #0070ff")
 	}
 	else {
 		songIndex--
 
 		if (songIndex < 0) {
-			songIndex = Audios.length-1
+			songIndex = DataStore.get("Audio-list").length-1
 		}
-		loadSong(Audios[songIndex])
+		loadSong(DataStore.get("Audio-list")[songIndex])
 		audio_play_pause()
-		console.log(eConsole+`%c Now playing %c${Audios[songIndex]}`,eCss,"", "color: #0070ff")
+		console.log(eConsole+`%c Now playing %c${DataStore.get("Audio-list")[songIndex]}`,eCss,"", "color: #0070ff")
 	}
 }
 
@@ -417,23 +420,29 @@ function create_webm_buttons() {
 		container2.append(newbgchange, pauseBg)
 		newbgchange.append(bgdropdown)
 
-		for (let i = 0 ;i < wallpapers.length ;i++) {
-			const opt = wallpapers[i]
+		for (let i = 0 ;i < DataStore.get("Wallpaper-list").length ;i++) {
+			const opt = DataStore.get("Wallpaper-list")[i]
 			const el = document.createElement("lol-uikit-dropdown-option")
 			const id = i
 			el.setAttribute("slot", "lol-uikit-dropdown-option")
-			el.innerText = opt.file
+			el.innerText = opt
 			el.onclick = () => {
-				let elainaBg = document.getElementById("elaina-bg")
+				if (document.querySelector("#bgdropdown").getElementsByClassName("framed-dropdown-type").length == DataStore.get("Wallpaper-list").length) {
+					let elainaBg = document.getElementById("elaina-bg")
 					elainaBg.classList.add("webm-hidden")
 					DataStore.set('wallpaper-index', id)
-					console.log(eConsole+`%c Now playing %c${wallpapers[DataStore.get('wallpaper-index')].file}`,eCss,"","color: #0070ff")
+					console.log(eConsole+`%c Now playing %c${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]}`,eCss,"","color: #0070ff")
 
-				setTimeout(function () {
-					loadBG(wallpapers[DataStore.get('wallpaper-index')].file)
-					elaina_play_pause()
-					elainaBg.classList.remove("webm-hidden")
-				}, 500)
+					setTimeout(function () {
+						loadBG(DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')])
+						elaina_play_pause()
+						elainaBg.classList.remove("webm-hidden")
+					}, 500)
+				}
+				else {
+					Delbuttons()
+					create_webm_buttons()
+				}
 			}
 			if (DataStore.get('wallpaper-index') == id) {
 				el.setAttribute("selected", "true")
@@ -500,12 +509,12 @@ if (DataStore.get("Dev-mode")) {
 }
 else {console.log(eConsole+"%c Running %cElaina theme - %cStable %cversion",eCss,"","color: #e4c2b3","color: #00ff44","")}
 if (DataStore.get("Continues_Audio")) {
-	console.log(eConsole+`%c Now playing %c${wallpapers[DataStore.get('wallpaper-index')].file} %cand %c${Audios[DataStore.get('audio-index')]}`,eCss,"","color: #0070ff","","color: #0070ff")
+	console.log(eConsole+`%c Now playing %c${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]} %cand %c${DataStore.get("Audio-list")[DataStore.get('audio-index')]}`,eCss,"","color: #0070ff","","color: #0070ff")
 	console.log(eConsole+`%c current wallpaper status: play/pause-time: %c${DataStore.get('pause-wallpaper')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %ctrue%c, volume: %c${DataStore.get("wallpaper-volume")*100}%`,eCss,"","color: #0070ff","",muteCss,"","color: #00ff44","","color: #0070ff")
 	console.log(eConsole+`%c current audio status: play/pause-time: %c${DataStore.get('pause-audio')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %c${DataStore.get("audio-loop")}%c, volume: %c${DataStore.get("audio-volume")*100}%`,eCss,"","color: #0070ff","",muteCss,"",loopwallCss,"","color: #0070ff")
 }
 else {
-	console.log(eConsole+`%c Now playing %c${wallpapers[DataStore.get('wallpaper-index')].file} %cand %c${Audios[songIndex]}`,eCss,"","color: #0070ff","","color: #0070ff")
+	console.log(eConsole+`%c Now playing %c${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]} %cand %c${DataStore.get("Audio-list")[songIndex]}`,eCss,"","color: #0070ff","","color: #0070ff")
 	console.log(eConsole+`%c current wallpaper status: play/pause-time: %c${DataStore.get('pause-wallpaper')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %ctrue%c, volume: %c${DataStore.get("wallpaper-volume")*100}%`,eCss,"","color: #0070ff","",muteCss,"","color: #00ff44","","color: #0070ff")
 	console.log(eConsole+`%c current audio status: play/pause-time: %c${DataStore.get('pause-audio')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %c${DataStore.get("audio-loop")}%c, volume: %c${DataStore.get("audio-volume")*100}%`,eCss,"","color: #0070ff","",muteCss,"",loopwallCss,"","color: #0070ff")
 }
@@ -516,7 +525,7 @@ window.addEventListener("load", ()=> {
 		video.id       = 'elaina-bg'
 		video.autoplay = true
 		video.loop     = true
-		video.src      = `${datapath}assets/Backgrounds/${wallpapers[DataStore.get('wallpaper-index')].file}`
+		video.src      = `${datapath}assets/Backgrounds/Wallpapers/${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]}`
 		video.volume   = DataStore.get("wallpaper-volume")
 		video.muted    = DataStore.get("mute-audio")
 
@@ -525,8 +534,8 @@ window.addEventListener("load", ()=> {
     	audio.loop     = DataStore.get("audio-loop")
 		audio.volume   = DataStore.get("audio-volume")
 		audio.muted    = DataStore.get("mute-audio")
-		if (DataStore.get("Continues_Audio")) {audio.src = `${datapath}assets/Backgrounds/Audio/${Audios[DataStore.get('audio-index')]}`}
-		else {audio.src = `${datapath}assets/Backgrounds/Audio/${Audios[songIndex]}`}
+		if (DataStore.get("Continues_Audio")) {audio.src = `${datapath}assets/Backgrounds/Audio/${DataStore.get("Audio-list")[DataStore.get('audio-index')]}`}
+		else {audio.src = `${datapath}assets/Backgrounds/Audio/${DataStore.get("Audio-list")[songIndex]}`}
 	
 	if (!DataStore.get("audio-loop")) {audio.addEventListener("ended", nextSong)}
 	document.querySelector("body").prepend(video)
