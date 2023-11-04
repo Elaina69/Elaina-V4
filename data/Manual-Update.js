@@ -7,30 +7,40 @@ let eCss = "color: #ffffff; background-color: #f77fbe"
 
 console.log(eConsole+`%c Checking theme version...`, eCss,"color: #e4c2b3")
 
-if (DataStore.get("Dev-mode")) {
-	try  {
+try {
+	if (DataStore.get("Dev-mode")) {
 		let res = await fetch(`//plugins/${getPluginsName()}/ElainaV3-Data/data/configs/UpdateKey-CDN.js`)
 		if (res.status == 200) {
 			CdnKey = (await (() => import(`//plugins/${getPluginsName()}/ElainaV3-Data/data/configs/UpdateKey-CDN.js`))()).default
 		}
 	}
-	catch{console.warn(`File doesn't exist`)}
-}
-else {
-	try  {
+	else {
 		let res = await fetch("https://unpkg.com/elainav3-data@latest/data/configs/UpdateKey-CDN.js")
 		if (res.status == 200) {
 			CdnKey = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/UpdateKey-CDN.js"))()).default
 		}
 	}
-	catch{console.warn(`File doesn't exist`)}
 }
+catch{console.warn(`File doesn't exist`)}
 
-if (LocalKey != CdnKey) {
-    DataStore.set(`Force-Update`, true)
-    console.log(eConsole+`%c New theme update available`, eCss,"color: #e4c2b3")
-}
-else {
-    DataStore.set(`Force-Update`, false)
-    console.log(eConsole+`%c Latest release now`, eCss,"color: #e4c2b3")
-}
+if (LocalKey == CdnKey) {DataStore.set(`Force-Update`, false)}
+else {DataStore.set(`Force-Update`, true)}
+
+let myTask = new Promise((resolve, reject) => {
+	setTimeout(() => {
+	  	if (LocalKey == CdnKey) {
+			resolve()
+			console.log(eConsole+`%c Latest release now`, eCss,"color: #e4c2b3")
+	  	}
+	  	else {
+			reject()
+    		console.log(eConsole+`%c New theme manual update available`, eCss,"color: #e4c2b3")
+		}
+	},2000)
+})
+  
+  Toast.promise(myTask, {
+	loading: 'Checking theme version...',
+	success: 'Latest release now',
+	error: 'New theme manual update available'
+  })

@@ -19,7 +19,6 @@ export function getPluginsName() {
 	let pluginsname = match ? match[1]:null
 	return pluginsname
 }
-
 export * from "./data/ImportSettings.js" 
 
 import "./data/Data.js"
@@ -32,22 +31,36 @@ import "./data/_utils.js"
 import "./data/built-in_plugins/KeyCombines.js"
 import "./data/configs/Custom-Status.txt?raw"
 import "./data/Manual-Update.js"
+import axios from "https://cdn.skypack.dev/axios"
 
-if (DataStore.get("Dev-mode")) {
-	try  {
+try {
+	if (DataStore.get("Dev-mode")) {
 		let res = await fetch(`//plugins/${getPluginsName()}/ElainaV3-Data/index.js`)
 		if (res.status == 200) {
 			(await (() => import(`//plugins/${getPluginsName()}/ElainaV3-Data/index.js`))()).default
 		}
 	}
-	catch{console.warn(`File doesn't exist, can't load ElainaV3 data`)}
-}
-else {
-	try  {
+	else {
 		let res = await fetch("https://unpkg.com/elainav3-data@latest/index.js")
 		if (res.status == 200) {
 			(await (() => import("https://unpkg.com/elainav3-data@latest/index.js"))()).default
 		}
 	}
-	catch{console.warn(`File doesn't exist, can't load ElainaV3 data`)}
 }
+catch {
+	console.warn(`Failed to load ElainaV3 data`)
+	Toast.error("Failed to load ElainaV3 data");
+}
+
+window.setInterval(async ()=> {
+	let originWallpaperList = await PluginFS.ls("./data/assets/Backgrounds/Wallpapers")
+	let originAudioList = await PluginFS.ls("./data/assets/Backgrounds/Audio")
+	  
+	const Wallpaperregex = /\.(mp4|webm|mkv|mov|avi|wmv)$/
+	const Audioregex = /\.(mp3|flac|ogg|wav|aac)$/
+	const WallpaperList = originWallpaperList.filter((file) => Wallpaperregex.test(file))
+	const AudioList = originAudioList.filter((file) => Audioregex.test(file))
+
+	DataStore.set("Wallpaper-list", WallpaperList)
+	DataStore.set("Audio-list", AudioList)
+},1000)
