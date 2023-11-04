@@ -104,7 +104,7 @@ window.addEventListener("load", async ()=> {
     const manager = () => document.getElementById('lol-uikit-layer-manager-wrapper')
 	const root    = document.createElement('div')
 	if (DataStore.get("Old-League-Loader-Settings")) {
-		while (!manager()) await new Promise(r => setTimeout(r, 200))
+		while (!manager()) await new Promise(r => setTimeout(r, 300))
 		await createLoaderMenu(root)
 		manager().prepend(root)
 	}

@@ -99,7 +99,7 @@ let loadCss = async (node) => {
 			}catch{}
 			try {
 				let remove = window.setInterval(()=> {
-					let test = document.querySelectorAll("div.custom-game-list-body > table > lol-uikit-scrollable > tbody > tr")
+					let test = document.querySelectorAll("div.custom-game-list-body lol-uikit-scrollable > tbody > tr")
 					for (let i=0;i< test.length;i++) {
 						if (test[i].querySelector("td.custom-game-list-table-body-map").innerText == "Summoner's Rift") {
 							test[i].remove()
@@ -165,55 +165,32 @@ utils.subscribeToElementCreation("lol-uikit-flyout-frame", (e)=> {
 
 	}
 })
-utils.subscribeToElementCreation("lol-parties-game-info-panel", (e)=> {
-	if (DataStore.get("new-gamesearch-queue")) {
-		let panelRoot = e.shadowRoot;
-    	let statusCardRoot = panelRoot.querySelector("lol-parties-status-card").shadowRoot;
-    	let gameSearch = panelRoot.querySelector("lol-parties-game-search").shadowRoot
-
-		let statusCardStyle = document.createElement("style");
-		let gameSearchStyle = document.createElement("style");
-
-		statusCardStyle.textContent = /*css*/`
-			.parties-status-card {
-				background: #143c1400 !important
-			}
-			div.parties-status-card-bg-container {
-				color: #36d98700 !important
-			}
-			div.parties-status-card-bg-container > video {
-				visibility: hidden !important
-			}
-			div.parties-status-card-header {
-				visibility: hidden !important
-			}
-			div > div.parties-status-card-body {
-				margin-top: -23px !important;
-				padding: 10px 5px 10px 10px !important;
-				border: 1px solid #8c8263 !important;
-				border-radius: 10px !important
-			}
-			div.parties-status-card-map.game_map_howling_abyss {
-				margin: -3px 10px 0 0 !important
-			}
-		`
-		gameSearchStyle.textContent = /*css*/`
-			.parties-game-search-status {
-				bordser: 1px solid #8c8263 !important;
-				border-radius: 10px !important;
-				margin-top: 9px !important;
-			}
-			div.parties-game-search-divider" {
-				display: none !important
-			}
-		`
-		panelRoot.querySelector("div > div.parties-game-info-panel-bg-container").style.backgroundImage = "none"
-
-		statusCardRoot.appendChild(statusCardStyle)
-		gameSearch.appendChild(gameSearchStyle)
-	}
-})
 window.setInterval(()=>{
+	if (DataStore.get("new-gamesearch-queue") && document.querySelector("lol-social-panel > lol-parties-game-info-panel")) {
+		try {
+			let gameinfo = document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-status-card").shadowRoot
+				gameinfo.querySelector("div").style.background = "#143c1400"
+				gameinfo.querySelector("div > div.parties-status-card-bg-container").style.color = "#36d98700"
+				gameinfo.querySelector("div > div.parties-status-card-bg-container > video").setAttribute('src', '')
+				gameinfo.querySelector("div > div.parties-status-card-header").style.visibility = "hidden"
+
+			let cardbody = gameinfo.querySelector("div > div.parties-status-card-body").style
+				cardbody.marginTop = "-23px"
+				cardbody.padding = "10px 5px 10px 10px"
+				cardbody.border = "1px solid #8c8263"
+				cardbody.borderRadius = "10px"
+
+			let gamesearch = document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-game-search").shadowRoot
+				gamesearch.querySelector("div").style.border = "1px solid #8c8263"
+				gamesearch.querySelector("div").style.borderRadius = "10px"
+				gamesearch.querySelector("div").style.marginTop = "9px"
+				gamesearch.querySelector("div > div.parties-game-search-divider").style.display = "none"
+
+			document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-bg-container").style.backgroundImage = "none"
+			document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-status-card").shadowRoot.
+				querySelector("div > div.parties-status-card-body > div.parties-status-card-map.game_map_howling_abyss").style.margin = "-3px 10px 0 0"
+		}catch{}
+	}
 	if (DataStore.get("settings-dialogs-transparent")) {
 		let style = "var(--Settings-and-Dialog-frame-color)"
 		try {document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame").shadowRoot.querySelector("div").style.background = style}catch{}
