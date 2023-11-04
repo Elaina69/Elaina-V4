@@ -5,13 +5,10 @@
  * @Nyan Meow~~~
  */
 
-let riotclient_auth,
-	riotclient_port,
+let 
 	pvp_net_id /* automatically updated to your pvp.net id */,
 	summoner_id /* automatically updated to your summonerId */,
 	phase /* automatically updated to current gameflow phase */
-let regex_rc_auth = /^--riotclient-auth-token=(.+)$/
-let regex_rc_port = /^--riotclient-app-port=([0-9]+)$/
 let routines = [] // array of functions that will be called routinely
 let mutationCallbacks = [] // array of functions that will be called in mutation observer
 let idCreationCallbacks = []
@@ -70,20 +67,6 @@ async function subscribe_endpoint(endpoint, callback) {
 	ws.onmessage = callback
 }
 
-/** fetch the Riot client API port/auth and save it to variables that can be exported */
-async function fetch_riotclient_credentials() {
-	await fetch("/riotclient/command-line-args", {
-		"method": "GET",
-	}).then(response => response.json()).then(data => {
-		data.forEach(elem => {
-			if (regex_rc_auth.exec(elem))
-				utils.riotclient_auth = regex_rc_auth.exec(elem)[1];
-			else if (regex_rc_port.exec(elem))
-				utils.riotclient_port = regex_rc_port.exec(elem)[1];
-		});
-	})
-}
-
 /** Callback function to be sent in subscribe_endpoint() to update the variable holding user pvp.net infos */
 let updateUserPvpNetInfos = async message => {
 	let data = JSON.parse(message["data"])[2]["data"];
@@ -134,7 +117,6 @@ function subscribeToElementDeletion(target, callback) {
 }
 
 window.addEventListener('load', () => {
-	fetch_riotclient_credentials()
 	subscribe_endpoint("/lol-gameflow/v1/gameflow-phase", updatePhaseCallback)
 	subscribe_endpoint("/lol-chat/v1/me", updateUserPvpNetInfos)
 	window.setInterval(() => {
@@ -222,8 +204,6 @@ window.addEventListener('load', () => {
 })
 
 let utils = {
-	riotclient_auth: riotclient_auth,
-	riotclient_port: riotclient_port,
 	phase: phase,
 	summoner_id: summoner_id,
 	pvp_net_id: pvp_net_id,
