@@ -113,7 +113,7 @@ if (!DataStore.has("Gamemode")) {
 	DataStore.set("Gamemode", 450)
 }
 if (!DataStore.has("Ranked Queue ID")) {
-	DataStore.set("Ranked Queue ID", 0)
+	DataStore.set("Ranked Queue ID", 2)
 }
 if (!DataStore.has("Ranked Tier ID")) {
 	DataStore.set("Ranked Tier ID", 9)
@@ -206,7 +206,7 @@ if (!DataStore.has("Debug-mode")) {
 	DataStore.set("Debug-mode", false)
 }
 if (!DataStore.has("Custom-profile-hover")) {
-	DataStore.set("Custom-profile-hover", true)
+	DataStore.set("Custom-profile-hover", false)
 }
 if (!DataStore.has("Custom-mastery-score")) {
 	DataStore.set("Custom-mastery-score", true)
@@ -231,6 +231,9 @@ if (!DataStore.has("hide-theme-usage-time")) {
 }
 if (!DataStore.has("auto_accept_button")) {
 	DataStore.set("auto_accept_button", true)
+}
+if (!DataStore.has(`Force-Update`)) {
+	DataStore.set(`Force-Update`, false)
 }
 if (!DataStore.has("")) {
 	DataStore.set("", true)

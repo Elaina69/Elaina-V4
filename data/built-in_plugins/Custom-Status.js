@@ -1,6 +1,6 @@
 import text from "../configs/Custom-Status.txt?raw"
 
-if (DataStore.get("Custom-Status")) {
+if (DataStore.get("Custom-Status") && DataStore.get("Custom-profile-hover")) {
     let time
     let i = 0
     let statusMessage = JSON.stringify(text)
