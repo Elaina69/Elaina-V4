@@ -1,12 +1,11 @@
 import {getPluginsName} from "../openFolder"
 
-function KeyPress(e) {
-    let key = window.event? event : e
-    if (key.keyCode==80 && key.ctrlKey) {
+window.addEventListener("keydown", async (event)=>{
+    let key = event.key
+    if (event.ctrlKey && key=="p") {
         window.openPluginsFolder(`${getPluginsName()}`)
     }
-    if (key.altKey && key.keyCode== 82) {
+    if (event.altKey && key=="r") {
         window.restartClient()
     }
-}
-document.onkeydown = KeyPress 
+})
