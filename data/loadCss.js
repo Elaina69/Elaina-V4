@@ -146,7 +146,7 @@ utils.subscribeToElementCreation("lol-uikit-flyout-frame", (e)=> {
 		let ticker = e.shadowRoot
 		let tickerStyle = document.createElement("style");
 
-		tickerStyle.textContent = `
+		tickerStyle.textContent = /*css*/`
 			div.border {
 				dispaly: none !important
 			}
@@ -174,7 +174,7 @@ utils.subscribeToElementCreation("lol-parties-game-info-panel", (e)=> {
 		let statusCardStyle = document.createElement("style");
 		let gameSearchStyle = document.createElement("style");
 
-		statusCardStyle.textContent = `
+		statusCardStyle.textContent = /*css*/`
 			.parties-status-card {
 				background: #143c1400 !important
 			}
@@ -197,7 +197,7 @@ utils.subscribeToElementCreation("lol-parties-game-info-panel", (e)=> {
 				margin: -3px 10px 0 0 !important
 			}
 		`
-		gameSearchStyle.textContent = `
+		gameSearchStyle.textContent = /*css*/`
 			.parties-game-search-status {
 				bordser: 1px solid #8c8263 !important;
 				border-radius: 10px !important;
@@ -335,7 +335,7 @@ window.addEventListener("load", ()=> {
 		}
 	}
 	if (DataStore.get("Custom-Font")) {
-		utils.addFont(`${datapath}assets/Fonts`,icdata["Font-Name"],"Custom")
+		utils.addFont(`${datapath}assets/Fonts/Custom`,icdata["Font-Name"],"Custom")
 	}
 	if (DataStore.get("Custom-Cursor")) {
 		utils.CustomCursor(`url("${datapath}assets/Icon/${icdata["Mouse-cursor"]}")`,`${datapath}assets/Css/Addon-Css/Cursor.css`)
