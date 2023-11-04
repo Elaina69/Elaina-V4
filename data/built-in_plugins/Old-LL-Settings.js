@@ -61,13 +61,11 @@ async function createLoaderMenu(root) {
 							<div class="dialog-content">
 								<lol-uikit-content-block class="app-controls-exit-dialog" type="dialog-medium" style="position: relative; overflow: hidden">
 									<div style="position: absolute; top: 60px">
-										<video
-											src="${datapath}assets/Icon/Plugins-icons/LL-Settings.webm"
-											style="object-fit: cover; object-position: center center; height: 100%; width: 100%; transform-origin: center center; transform: scale(2.5)">
-										</video>
+										<img src="${datapath}assets/Icon/Plugins-icons/LL-Settings.jpg" style="object-fit: cover; width: 290px; transform: scale(2.5); margin-left: 100px; filter: brightness(0.7)">
+									</div>
 									</div>
 									<div style="position: relative">
-										<div style="margin-bottom: 24px">
+										<div style="margin-bottom: 24px"> 
 											<h4 style="padding: 6px 0">Elaina-V3</h4>
 											<p>v${version}</p>
 										</div>
