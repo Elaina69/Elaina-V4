@@ -26,7 +26,7 @@ catch{console.warn(`File doesn't exist`)}
 if (LocalKey == CdnKey) {DataStore.set(`Force-Update`, false)}
 else {DataStore.set(`Force-Update`, true)}
 
-let myTask = new Promise((resolve, reject) => {
+let checkVersion = new Promise((resolve, reject) => {
 	setTimeout(() => {
 	  	if (LocalKey == CdnKey) {
 			resolve()
@@ -39,8 +39,8 @@ let myTask = new Promise((resolve, reject) => {
 	},2000)
 })
   
-  Toast.promise(myTask, {
+Toast.promise(checkVersion, {
 	loading: 'Checking theme version...',
 	success: 'Latest release now',
 	error: 'New theme manual update available'
-  })
+})
