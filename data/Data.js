@@ -22,9 +22,6 @@ if(!DataStore.has("audio-volume")){
 if(!DataStore.has("audio-loop")){
     DataStore.set("audio-loop",false)
 }
-if(!DataStore.has("audio-loop")){
-    DataStore.set("audio-loop",false)
-}
 if (!DataStore.has("Receive-Update")) {
 	DataStore.set("Receive-Update", true)
 }
@@ -38,16 +35,16 @@ if (!DataStore.has("Hide-Champions-Splash-Art")) {
 	DataStore.set("Hide-Champions-Splash-Art", true)
 }
 if (!DataStore.has("Custom-Font")) {
-	DataStore.set("Custom-Font", true)
+	DataStore.set("Custom-Font", false)
 }
 if (!DataStore.has("Custom_RP")) {
-	DataStore.set("Custom_RP", true)
+	DataStore.set("Custom_RP", false)
 }
 if (!DataStore.has("RP-data")) {
 	DataStore.set("RP-data", "-69")
 }
 if (!DataStore.has("Custom_BE")) {
-	DataStore.set("Custom_BE", true)
+	DataStore.set("Custom_BE", false)
 }
 if (!DataStore.has("BE")) {
 	DataStore.set("BE", "-69")
