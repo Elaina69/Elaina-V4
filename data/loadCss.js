@@ -272,7 +272,7 @@ window.setInterval(()=>{
 window.addEventListener("load", ()=> {
     if (DataStore.get("Runes-BG")) {
 		utils.addCss("--Hover-card-backdrop",`${datapath}assets/Icon`,icdata['Hover-card'])
-		utils.addFont(`${datapath}assets/Fonts`,"BeaufortforLOL-Bold.ttf","Elaina")
+		utils.addFont(`${datapath}assets/Fonts`,"BeaufortforLOL-Bold.ttf","Lol-font","Elaina")
 		utils.addCss("--pri8000",`${datapath}assets/Backgrounds/Runes`,icdata['Precision'])
 		utils.addCss("--pri8100",`${datapath}assets/Backgrounds/Runes`,icdata['Domination'])
 		utils.addCss("--pri8200",`${datapath}assets/Backgrounds/Runes`,icdata['Sorcery'])
@@ -312,7 +312,8 @@ window.addEventListener("load", ()=> {
 		}
 	}
 	if (DataStore.get("Custom-Font")) {
-		utils.addFont(`${datapath}assets/Fonts/Custom`,icdata["Font-Name"],"Custom")
+		DataStore.set("Font-folder", `${datapath}assets/Fonts/Custom`)
+		utils.addFont(DataStore.get("Font-folder"),DataStore.get("CurrentFont"),"Custom-font","Custom")
 	}
 	if (DataStore.get("Custom-Cursor")) {
 		utils.CustomCursor(`url("${datapath}assets/Icon/${icdata["Mouse-cursor"]}")`,`${datapath}assets/Css/Addon-Css/Cursor.css`)

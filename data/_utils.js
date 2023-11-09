@@ -27,8 +27,9 @@ function addCss (cssvar,folder,name,css) {
 	document.body.appendChild(NStyle)
 }
 
-function addFont (folder,font,font_family) {
+function addFont (folder,font,font_id,font_family) {
 	let Font = document.createElement('style')
+		Font.id = font_id
 		Font.appendChild(document.createTextNode(
 			'@font-face {font-family: '+font_family+'; src: url('+folder+'/'+font+')}'
 		))
