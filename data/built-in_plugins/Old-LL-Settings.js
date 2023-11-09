@@ -1,32 +1,54 @@
-import thisVersion from "https://unpkg.com/elainav3-data@latest/data/configs/Version.js"
 import {openAssets, openConfigs, getPluginsName} from "../openFolder.js"
+import LocalKey from "../UpdateKey-Local.js"
 
-let lang
+let lang,thisVersion,CdnKey
 let datapath = new URL("..", import.meta.url).href
-if (DataStore.get("Dev-mode")) {
-	try  {
+
+try {
+	if (DataStore.get("Dev-mode")) {
+		let res = await fetch(`//plugins/${getPluginsName()}/ElainaV3-Data/data/configs/UpdateKey-CDN.js`)
+		if (res.status == 200) {
+			CdnKey = (await (() => import(`//plugins/${getPluginsName()}/ElainaV3-Data/data/configs/UpdateKey-CDN.js`))()).default
+		}
+	}
+	else {
+		let res = await fetch("https://unpkg.com/elainav3-data@latest/data/configs/UpdateKey-CDN.js")
+		if (res.status == 200) {
+			CdnKey = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/UpdateKey-CDN.js"))()).default
+		}
+	}
+
+	if (CdnKey == LocalKey) {
+		let res = await fetch("https://unpkg.com/elainav3-data@latest/data/configs/Version.js")
+		if (res.status == 200) {
+			thisVersion = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/Version.js"))()).default
+			DataStore.set("Theme-version", thisVersion)
+		}
+	}
+}
+catch{console.warn(`File doesn't exist`)}
+
+try  {
+	if (DataStore.get("Dev-mode")) {
 		let res = await fetch(`//plugins/${getPluginsName()}/ElainaV3-Data/data/configs/Language.js`)
 		if (res.status == 200) {
 			lang = (await (() => import(`//plugins/${getPluginsName()}/ElainaV3-Data/data/configs/Language.js`))()).default
 		}
 	}
-	catch{console.warn(`File doesn't exist`)}
-}
-else {
-	try  {
+	else {
 		let res = await fetch("https://unpkg.com/elainav3-data@latest/data/configs/Language.js")
 		if (res.status == 200) {
 			lang = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/Language.js"))()).default
 		}
 	}
-	catch{console.warn(`File doesn't exist`)}
 }
+catch{console.warn(`File doesn't exist`)}
 
 async function createLoaderMenu(root) {
 	const { Component, jsx, render } = await import('//esm.run/nano-jsx')
 	const langCode = document.querySelector("html").lang;
 	const langMap = lang.langlist
-	const version = thisVersion
+	const version = DataStore.get("Theme-version")
 	const _t = lang[langMap[langCode] || "EN"];
 	
 	class LoaderMenu extends Component {

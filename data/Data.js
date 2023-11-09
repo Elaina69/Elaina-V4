@@ -38,7 +38,7 @@ if (!DataStore.has("Hide-Champions-Splash-Art")) {
 	DataStore.set("Hide-Champions-Splash-Art", true)
 }
 if (!DataStore.has("Custom-Font")) {
-	DataStore.set("Custom-Font", false)
+	DataStore.set("Custom-Font", true)
 }
 if (!DataStore.has("Custom_RP")) {
 	DataStore.set("Custom_RP", true)
@@ -234,6 +234,12 @@ if (!DataStore.has("auto_accept_button")) {
 }
 if (!DataStore.has(`Force-Update`)) {
 	DataStore.set(`Force-Update`, false)
+}
+if (!DataStore.has("CurrentFont")) {
+	DataStore.set("CurrentFont", "MinecraftRegular-Bmg3.otf")
+}
+if (!DataStore.has("prevent-manual-update")) {
+	DataStore.set("prevent-manual-update", false)
 }
 if (!DataStore.has("")) {
 	DataStore.set("", true)

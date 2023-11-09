@@ -20,17 +20,13 @@ const data = {
     "Ticker"        : "ticker.png",
     
     "Mouse-cursor"  : "ElainaDed.png",
-       
-    
-    //Custom-Font
-        "Font-Name" : "AegirSeaborn.ttf",
 
     //Runes
-        "Precision"  : "8000.jpg",
-        "Domination" : "8100.jpg",
-        "Sorcery"    : "8200.jpg",
-        "Resolve"    : "8400.jpg",
-        "Inspiration": "8300.jpg",
+    "Precision"  : "8000.jpg",
+    "Domination" : "8100.jpg",
+    "Sorcery"    : "8200.jpg",
+    "Resolve"    : "8400.jpg",
+    "Inspiration": "8300.jpg",
 
         
     //______________________________________________________________________________//

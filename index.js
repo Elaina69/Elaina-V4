@@ -36,14 +36,19 @@ import axios from "https://cdn.skypack.dev/axios"
 window.setInterval(async ()=> {
 	let originWallpaperList = await PluginFS.ls("./data/assets/Backgrounds/Wallpapers")
 	let originAudioList = await PluginFS.ls("./data/assets/Backgrounds/Audio")
+	let originFontList = await PluginFS.ls("./data/assets/Fonts/Custom")
 	  
 	const Wallpaperregex = /\.(mp4|webm|mkv|mov|avi|wmv)$/
 	const Audioregex = /\.(mp3|flac|ogg|wav|aac)$/
+	const Fontregex = /\.(ttf|otf)$/
+	
 	const WallpaperList = originWallpaperList.filter((file) => Wallpaperregex.test(file))
 	const AudioList = originAudioList.filter((file) => Audioregex.test(file))
+	const FontList = originFontList.filter((file) => Fontregex.test(file)) 
 
 	DataStore.set("Wallpaper-list", WallpaperList)
 	DataStore.set("Audio-list", AudioList)
+	DataStore.set("Font-list", FontList)
 },1000)
 
 if (DataStore.get("Dev-mode")) {
