@@ -427,22 +427,16 @@ function create_webm_buttons() {
 			el.setAttribute("slot", "lol-uikit-dropdown-option")
 			el.innerText = opt
 			el.onclick = () => {
-				if (document.querySelector("#bgdropdown").getElementsByClassName("framed-dropdown-type").length == DataStore.get("Wallpaper-list").length) {
-					let elainaBg = document.getElementById("elaina-bg")
-					elainaBg.classList.add("webm-hidden")
-					DataStore.set('wallpaper-index', id)
-					console.log(eConsole+`%c Now playing %c${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]}`,eCss,"","color: #0070ff")
+				let elainaBg = document.getElementById("elaina-bg")
+				elainaBg.classList.add("webm-hidden")
+				DataStore.set('wallpaper-index', id)
+				console.log(eConsole+`%c Now playing %c${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]}`,eCss,"","color: #0070ff")
 
-					setTimeout(function () {
-						loadBG(DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')])
-						elaina_play_pause()
-						elainaBg.classList.remove("webm-hidden")
-					}, 500)
-				}
-				else {
-					Delbuttons()
-					create_webm_buttons()
-				}
+				setTimeout(function () {
+					loadBG(DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')])
+					elaina_play_pause()
+					elainaBg.classList.remove("webm-hidden")
+				}, 500)
 			}
 			if (DataStore.get('wallpaper-index') == id) {
 				el.setAttribute("selected", "true")
@@ -518,6 +512,15 @@ else {
 	console.log(eConsole+`%c current wallpaper status: play/pause-time: %c${DataStore.get('pause-wallpaper')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %ctrue%c, volume: %c${DataStore.get("wallpaper-volume")*100}%`,eCss,"","color: #0070ff","",muteCss,"","color: #00ff44","","color: #0070ff")
 	console.log(eConsole+`%c current audio status: play/pause-time: %c${DataStore.get('pause-audio')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %c${DataStore.get("audio-loop")}%c, volume: %c${DataStore.get("audio-volume")*100}%`,eCss,"","color: #0070ff","",muteCss,"",loopwallCss,"","color: #0070ff")
 }
+
+window.setInterval(()=> {
+	try {
+		if(document.querySelector("#bgdropdown").getElementsByClassName("framed-dropdown-type").length != DataStore.get("Wallpaper-list").length) {
+			Delbuttons()
+			create_webm_buttons()
+		}
+	}catch{}
+},1000)
 
 window.addEventListener("load", ()=> {
     const video = document.createElement('video')
