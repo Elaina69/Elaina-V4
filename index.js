@@ -19,7 +19,7 @@ export function getPluginsName() {
 	let pluginsname = match ? match[1]:null
 	return pluginsname
 }
-export * from "./data/ImportSettings.js" 
+export * from "./data/ImportPlugins.js" 
 
 import "./data/Data.js"
 import "./data/built-in_plugins/Custom-Status"
