@@ -32,7 +32,7 @@ Elaina theme for Pengu Loader
 > You can help me add more languages by joining [Pengu discord server](https://chat.pengu.lol/)
 
 ## Required: 
- - [Pengu Loader v1.0.6 and later](https://github.com/PenguLoader/PenguLoader/releases)
+ - [Pengu Loader v1.0.6 or later](https://github.com/PenguLoader/PenguLoader/releases)
  - A good-enough PC/Laptop
 
 > Minimum: Windows 10/11, Intel Core I5 2400 // 8gb ram // NVIDIA GT630
