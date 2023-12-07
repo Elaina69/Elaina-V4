@@ -7,21 +7,20 @@ let eCss = "color: #ffffff; background-color: #f77fbe"
 
 console.log(eConsole+`%c Checking theme version...`, eCss,"color: #e4c2b3")
 
-try {
-	if (DataStore.get("Dev-mode")) {
-		let res = await fetch(`//plugins/${getPluginsName()}/ElainaV3-Data/data/configs/UpdateKey-CDN.js`)
-		if (res.status == 200) {
-			CdnKey = (await (() => import(`//plugins/${getPluginsName()}/ElainaV3-Data/data/configs/UpdateKey-CDN.js`))()).default
-		}
+if (DataStore.get("Dev-mode")) {
+	let res = await fetch(`//plugins/${getPluginsName()}/ElainaV3-Data/data/configs/UpdateKey-CDN.js`)
+	if (res.status == 200) {
+		CdnKey = (await (() => import(`//plugins/${getPluginsName()}/ElainaV3-Data/data/configs/UpdateKey-CDN.js`))()).default
 	}
-	else {
-		let res = await fetch("https://unpkg.com/elainav3-data@latest/data/configs/UpdateKey-CDN.js")
-		if (res.status == 200) {
-			CdnKey = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/UpdateKey-CDN.js"))()).default
-		}
-	}
+	else {console.warn(eConsole+`%c File doesn't exist`,eCss,"")}
 }
-catch{console.warn(`File doesn't exist`)}
+else {
+	let res = await fetch("https://unpkg.com/elainav3-data@latest/data/configs/UpdateKey-CDN.js")
+	if (res.status == 200) {
+		CdnKey = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/UpdateKey-CDN.js"))()).default
+	}
+	else {console.warn(eConsole+`%c File doesn't exist`,eCss,"")}
+}
 
 if (!DataStore.get("prevent-manual-update")) {
 	if (LocalKey == CdnKey) {DataStore.set(`Force-Update`, false)}

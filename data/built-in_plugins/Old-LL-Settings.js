@@ -3,30 +3,32 @@ import LocalKey from "../UpdateKey-Local.js"
 
 let lang,thisVersion,CdnKey
 let datapath = new URL("..", import.meta.url).href
+let eConsole = "%c ElainaV3 "
+let eCss = "color: #ffffff; background-color: #f77fbe"
 
-try {
-	if (DataStore.get("Dev-mode")) {
-		let res = await fetch(`//plugins/${getPluginsName()}/ElainaV3-Data/data/configs/UpdateKey-CDN.js`)
-		if (res.status == 200) {
-			CdnKey = (await (() => import(`//plugins/${getPluginsName()}/ElainaV3-Data/data/configs/UpdateKey-CDN.js`))()).default
-		}
+if (DataStore.get("Dev-mode")) {
+	let res = await fetch(`//plugins/${getPluginsName()}/ElainaV3-Data/data/configs/UpdateKey-CDN.js`)
+	if (res.status == 200) {
+		CdnKey = (await (() => import(`//plugins/${getPluginsName()}/ElainaV3-Data/data/configs/UpdateKey-CDN.js`))()).default
 	}
-	else {
-		let res = await fetch("https://unpkg.com/elainav3-data@latest/data/configs/UpdateKey-CDN.js")
-		if (res.status == 200) {
-			CdnKey = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/UpdateKey-CDN.js"))()).default
-		}
-	}
-
-	if (CdnKey == LocalKey) {
-		let res = await fetch("https://unpkg.com/elainav3-data@latest/data/configs/Version.js")
-		if (res.status == 200) {
-			thisVersion = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/Version.js"))()).default
-			DataStore.set("Theme-version", thisVersion)
-		}
-	}
+	else {console.warn(eConsole+`%c File doesn't exist`,eCss,"")}
 }
-catch{console.warn(`File doesn't exist`)}
+else {
+	let res = await fetch("https://unpkg.com/elainav3-data@latest/data/configs/UpdateKey-CDN.js")
+	if (res.status == 200) {
+		CdnKey = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/UpdateKey-CDN.js"))()).default
+	}
+	else {console.warn(eConsole+`%c File doesn't exist`,eCss,"")}
+}
+
+if (CdnKey == LocalKey) {
+	let res = await fetch("https://unpkg.com/elainav3-data@latest/data/configs/Version.js")
+	if (res.status == 200) {
+		thisVersion = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/Version.js"))()).default
+		DataStore.set("Theme-version", thisVersion)
+	}
+	else {console.warn(eConsole+`%c Failed to get version number`,eCss,"")}
+}
 
 try  {
 	if (DataStore.get("Dev-mode")) {

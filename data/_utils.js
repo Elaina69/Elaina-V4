@@ -1,7 +1,7 @@
 /**
  * @author Teisseire117
  * @Modifierss Elaina Da Catto
- * @version 1.4.0
+ * @version 1.4.1
  * @Nyan Meow~~~
  */
 
@@ -49,9 +49,9 @@ function CustomCursor (folder,css) {
 	addCss("","","",css)
 }
 
-async function getSummonerIDByName(name) {
-	let res = await fetch(`/lol-summoner/v1/summoners?name=${name}`)
-	let data = await res.json()
+async function getSummonerID() {
+	let res = await fetch("/lol-summoner/v1/current-summoner")
+    let data = await res.json()
 	return JSON.parse(data["summonerId"])
 }
 
@@ -216,7 +216,7 @@ let utils = {
 	addCss: addCss,
 	addFont: addFont,
 	CustomCursor: CustomCursor,
-	getSummonerIDByName: getSummonerIDByName
+	getSummonerID: getSummonerID
 }
 
 export default utils

@@ -31,7 +31,27 @@ import "./data/_utils.js"
 import "./data/built-in_plugins/KeyCombines.js"
 import "./data/configs/Custom-Status.txt?raw"
 import "./data/Manual-Update.js"
-import axios from "https://cdn.skypack.dev/axios"
+
+if (DataStore.get("Dev-mode")) {
+	let res = await fetch(`//plugins/${getPluginsName()}/ElainaV3-Data/index.js`)
+	if (res.status == 200) {
+		(await (() => import(`//plugins/${getPluginsName()}/ElainaV3-Data/index.js`))()).default
+	}
+	else {
+		console.warn(eConsole+`%c Failed to load ElainaV3 data`,eCss,"")
+		Toast.error("Failed to load ElainaV3 data")
+	}
+}
+else {
+	let res = await fetch("https://unpkg.com/elainav3-data@latest/index.js")
+	if (res.status == 200) {
+		(await (() => import("https://unpkg.com/elainav3-data@latest/index.js"))()).default
+	}
+	else {
+		console.warn(eConsole+`%c Failed to load ElainaV3 data`,eCss,"")
+		Toast.error("Failed to load ElainaV3 data")
+	}
+}
 
 window.setInterval(async ()=> {
 	let originWallpaperList = await PluginFS.ls("./data/assets/Backgrounds/Wallpapers")
@@ -50,24 +70,3 @@ window.setInterval(async ()=> {
 	DataStore.set("Audio-list", AudioList)
 	DataStore.set("Font-list", FontList)
 },1000)
-
-if (DataStore.get("Dev-mode")) {
-	let res = await fetch(`//plugins/${getPluginsName()}/ElainaV3-Data/index.js`)
-	if (res.status == 200) {
-		(await (() => import(`//plugins/${getPluginsName()}/ElainaV3-Data/index.js`))()).default
-	}
-	else {
-		console.warn(`Failed to load ElainaV3 data`)
-		Toast.error("Failed to load ElainaV3 data")
-	}
-}
-else {
-	let res = await fetch("https://unpkg.com/elainav3-data@latest/index.js")
-	if (res.status == 200) {
-		(await (() => import("https://unpkg.com/elainav3-data@latest/index.js"))()).default
-	}
-	else {
-		console.warn(`Failed to load ElainaV3 data`)
-		Toast.error("Failed to load ElainaV3 data")
-	}
-}

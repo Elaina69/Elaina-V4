@@ -7,29 +7,12 @@ let path = new URL("..", import.meta.url).href
 let lang
 let eConsole = "%c ElainaV3 "
 let eCss = "color: #ffffff; background-color: #f77fbe"
-let loopwallCss,muteCss
+let loopwallCss,muteCss,pausewall,pauseau
+
 if (DataStore.get("mute-audio")) {muteCss = "color: #00ff44"} else {muteCss = "color: red"}
 if (DataStore.get("audio-loop")) {loopwallCss = "color: #00ff44"} else {loopwallCss = "color: red"}
-
-if (DataStore.get("Dev-mode")) {
-	try  {
-		let res = await fetch(`${path}ElainaV3-Data/data/configs/Language.js`)
-		if (res.status == 200) {
-			lang = (await (() => import(`${path}ElainaV3-Data/data/configs/Language.js`))()).default
-		}
-	}
-	catch{console.warn(`File doesn't exist`)}
-}
-else {
-	try  {
-		let res = await fetch("https://unpkg.com/elainav3-data@latest/data/configs/Language.js")
-		if (res.status == 200) {
-			lang = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/Language.js"))()).default
-		}
-	}
-	catch{console.warn(`File doesn't exist`)}
-}
-
+if (DataStore.get('pause-wallpaper')%2==0) {pausewall = "color: #00ff44"} else {pausewall = "color: red"}
+if (DataStore.get('pause-audio')%2==0) {pauseau = "color: #00ff44"} else {pauseau = "color: red"}
 if (!DataStore.has("Wallpaper-list")) {
 	DataStore.set("Wallpaper-list",["Elaina1.webm","Elaina2.webm"])
 }
@@ -47,6 +30,20 @@ if(!DataStore.has('wallpaper-index')){
 }
 else if(DataStore.get('wallpaper-index')+1>DataStore.get("Wallpaper-list").length){
     DataStore.set('wallpaper-index',0)
+}
+if (DataStore.get("Dev-mode")) {
+	let res = await fetch(`${path}ElainaV3-Data/data/configs/Language.js`)
+	if (res.status == 200) {
+		lang = (await (() => import(`${path}ElainaV3-Data/data/configs/Language.js`))()).default
+	}
+	else {console.warn(eConsole+`%c File doesn't exist`,eCss,"")}
+}
+else {
+	let res = await fetch("https://unpkg.com/elainav3-data@latest/data/configs/Language.js")
+	if (res.status == 200) {
+		lang = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/Language.js"))()).default
+	}
+	else {console.warn(eConsole+`%c File doesn't exist`,eCss,"")}
 }
 
 let nodeRemovedEvent = function (event) {
@@ -377,7 +374,7 @@ function create_webm_buttons() {
 	nextBg.addEventListener("click", () => {
 		DataStore.set("NextBg_Count", DataStore.get("NextBg_Count") + 1)
 		next_wallpaper()
-		if (DataStore.get("NextBg_Count") == 69) {
+		if (DataStore.get("NextBg_Count") >= 69 && DataStore.get("NSFW-Content")) {
 			window.open("https://media.discordapp.net/attachments/887677396315172894/1100385074299539556/100259683_p0_master1200.png", "_blank")
 			DataStore.set("NextBg_Count",0)
 		}
@@ -471,18 +468,28 @@ let addHomepage = async (node) => {
 				window.clearInterval(delnavtab)
 				if (DataStore.get("hide-overview")) {
 					document.querySelector('lol-uikit-navigation-item[item-id="overview"]').style.display = "none"
+					console.warn(eConsole+"%c Overview tab deleted",eCss,"")
 				}
 				if (DataStore.get("hide-merch")) {
-					try {document.querySelector('lol-uikit-navigation-item[item-id="merch"]').style.display = "none"}
-					catch {console.warn("Merch tab deleted")}
+					try {
+						document.querySelector('lol-uikit-navigation-item[item-id="merch"]').style.display = "none"
+						console.warn(eConsole+"%c Merch tab deleted",eCss,"")
+					}
+					catch {console.warn(eConsole+"%c This client don't have Merch tab",eCss,"")}
 				}
 				if (DataStore.get("hide-patch-note")) {
-					try {document.querySelector('lol-uikit-navigation-item[item-id="latest_patch_notes"]').style.display = "none"}
-					catch {console.warn("Patch note tab deleted")}
+					try {
+						document.querySelector('lol-uikit-navigation-item[item-id="latest_patch_notes"]').style.display = "none"
+						console.warn(eConsole+"%c Patch note tab deleted",eCss,"")
+					}
+					catch {console.warn(eConsole+"%c This client don't have Patch note tab",eCss,"")}
 				}
 				if (DataStore.get("hide-esport")) {
-					try {document.querySelector('lol-uikit-navigation-item[item-id="news"]').style.display = "none"}
-					catch {console.warn("Esport tab deleted")}
+					try {
+						document.querySelector('lol-uikit-navigation-item[item-id="news"]').style.display = "none"
+						console.warn(eConsole+"%c Esport tab deleted",eCss,"")
+					}
+					catch {console.warn(eConsole+"%c This client don't have Esport tab",eCss,"")}
 				}
 			}
 		},1000)
@@ -504,13 +511,8 @@ if (DataStore.get("Dev-mode")) {
 else {console.log(eConsole+"%c Running %cElaina theme - %cStable %cversion",eCss,"","color: #e4c2b3","color: #00ff44","")}
 if (DataStore.get("Continues_Audio")) {
 	console.log(eConsole+`%c Now playing %c${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]} %cand %c${DataStore.get("Audio-list")[DataStore.get('audio-index')]}`,eCss,"","color: #0070ff","","color: #0070ff")
-	console.log(eConsole+`%c current wallpaper status: play/pause-time: %c${DataStore.get('pause-wallpaper')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %ctrue%c, volume: %c${DataStore.get("wallpaper-volume")*100}%`,eCss,"","color: #0070ff","",muteCss,"","color: #00ff44","","color: #0070ff")
-	console.log(eConsole+`%c current audio status: play/pause-time: %c${DataStore.get('pause-audio')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %c${DataStore.get("audio-loop")}%c, volume: %c${DataStore.get("audio-volume")*100}%`,eCss,"","color: #0070ff","",muteCss,"",loopwallCss,"","color: #0070ff")
-}
-else {
-	console.log(eConsole+`%c Now playing %c${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]} %cand %c${DataStore.get("Audio-list")[songIndex]}`,eCss,"","color: #0070ff","","color: #0070ff")
-	console.log(eConsole+`%c current wallpaper status: play/pause-time: %c${DataStore.get('pause-wallpaper')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %ctrue%c, volume: %c${DataStore.get("wallpaper-volume")*100}%`,eCss,"","color: #0070ff","",muteCss,"","color: #00ff44","","color: #0070ff")
-	console.log(eConsole+`%c current audio status: play/pause-time: %c${DataStore.get('pause-audio')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %c${DataStore.get("audio-loop")}%c, volume: %c${DataStore.get("audio-volume")*100}%`,eCss,"","color: #0070ff","",muteCss,"",loopwallCss,"","color: #0070ff")
+	console.log(eConsole+`%c current wallpaper status: pause: %c${DataStore.get('pause-wallpaper')%2==0}%c, play/pause-time: %c${DataStore.get('pause-wallpaper')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %ctrue%c, volume: %c${DataStore.get("wallpaper-volume")*100}%`,eCss,"",pausewall,"","color: #0070ff","",muteCss,"","color: #00ff44","","color: #0070ff")
+	console.log(eConsole+`%c current audio status: pause: %c${DataStore.get('pause-audio')%2==0}%c, play/pause-time: %c${DataStore.get('pause-audio')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %c${DataStore.get("audio-loop")}%c, volume: %c${DataStore.get("audio-volume")*100}%`,eCss,"",pauseau,"","color: #0070ff","",muteCss,"",loopwallCss,"","color: #0070ff")
 }
 
 window.setInterval(()=> {

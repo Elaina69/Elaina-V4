@@ -6,6 +6,11 @@ let datapath = new URL(".", import.meta.url).href
 let eConsole = "%c ElainaV3 "
 let eCss = "color: #ffffff; background-color: #f77fbe"
 
+window.setTimeout(async()=> {
+	DataStore.set("Summoner-ID", await utils.getSummonerID())
+	console.log(eConsole+"%c Current summonerID: "+`%c${DataStore.get("Summoner-ID")}`,eCss,"color: #e4c2b3","color: #0070ff")
+},5000)
+
 let loadCss = async (node) => {
 	let pagename, previous_page, ranked_observer
 	pagename = node.getAttribute("data-screen-name")
@@ -120,77 +125,66 @@ let loadCss = async (node) => {
 			utils.subscribeToElementCreation('#keystone', style)
 
 			utils.subscribeToElementCreation('.perks-construct-minspec', (element) => {
-				element.style.top = "0px"
-				element.style.left = "0px"
-				element.style.filter = filters["Runes"]
 				window.setInterval(()=>{
-					element.style.backgroundImage = `var(--pri${element.getAttribute('primary')})`
+					element.style.cssText = `
+						top: 0px; 
+						left: 0px; 
+						filter: ${filters["Runes"]}; 
+						background-image: var(--pri${element.getAttribute('primary')})
+					`
 				},100)
 			})
 		}
 	}
 }
 
-let getID = window.setInterval(async ()=>{
+function tickerCss(defaults) {
 	try {
-		let getName = document.querySelector(".name > .player-name-component.ember-view > .player-name__summoner").textContent
-		if (!DataStore.has("Summoner-ID")) {
-			DataStore.set("Summoner-ID", await utils.getSummonerIDByName(getName))
-		}
-		if (getName) {window.clearInterval(getID)}
+		Object.entries(defaults).forEach(([key, value]) => {
+			let ticker = document.querySelector("#lol-uikit-layer-manager-wrapper lol-uikit-flyout-frame").shadowRoot
+			if (DataStore.get("Custom-Icon")) {
+				ticker.querySelector(key).style.cssText = value
+			}
+		});
 	}catch{}
-},5000)
+}
+function newGameSearchCss(css1,css2) {
+	try {
+		let main = document.querySelector("lol-social-panel lol-parties-game-info-panel")
+		let gameinfo = main.shadowRoot.querySelector("div lol-parties-status-card").shadowRoot
+		let gamesearch = main.shadowRoot.querySelector("div lol-parties-game-search").shadowRoot
+		if (DataStore.get("new-gamesearch-queue") && main) {
+			gameinfo.querySelector("div div.parties-status-card-body").style.cssText = "margin-top: -23px; padding: 10px 5px 10px 10px; border: 1px solid #8c8263; border-radius: 10px"
+			gameinfo.querySelector("div > div.parties-status-card-bg-container > video").setAttribute('src', '')
+			main.shadowRoot.querySelector("div div.parties-game-info-panel-bg-container").style.backgroundImage = "none"
+			main.shadowRoot.querySelector("div lol-parties-status-card").shadowRoot.querySelector("div div.parties-status-card-map.game_map_howling_abyss").style.margin = "-3px 10px 0 0"
+			Object.entries(css1).forEach(([key, value]) => {gameinfo.querySelector(key).style.cssText = value});
+			Object.entries(css2).forEach(([key, value]) => {gamesearch.querySelector(key).style.cssText = value});
+		}
+	}catch{}
+}
 
-utils.subscribeToElementCreation("lol-uikit-flyout-frame", (e)=> {
-	if (DataStore.get("Custom-Icon")) {
-		let ticker = e.shadowRoot
-		let tickerStyle = document.createElement("style");
-
-		tickerStyle.textContent = /*css*/`
-			div.border {
-				dispaly: none !important
-			}
-			div.sub-border {
-				display: none !important
-			}
-			div.caret {
-				dispaly: none important
-			}
-			div.lol-uikit-flyout-frame {
-				background-color: black !important
-				border-radius: 10px !important
-			}
-		`
-		ticker.appendChild(tickerStyle)
-
-	}
-})
 window.setInterval(()=>{
-	if (DataStore.get("new-gamesearch-queue") && document.querySelector("lol-social-panel > lol-parties-game-info-panel")) {
-		try {
-			let gameinfo = document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-status-card").shadowRoot
-				gameinfo.querySelector("div").style.background = "#143c1400"
-				gameinfo.querySelector("div > div.parties-status-card-bg-container").style.color = "#36d98700"
-				gameinfo.querySelector("div > div.parties-status-card-bg-container > video").setAttribute('src', '')
-				gameinfo.querySelector("div > div.parties-status-card-header").style.visibility = "hidden"
-
-			let cardbody = gameinfo.querySelector("div > div.parties-status-card-body").style
-				cardbody.marginTop = "-23px"
-				cardbody.padding = "10px 5px 10px 10px"
-				cardbody.border = "1px solid #8c8263"
-				cardbody.borderRadius = "10px"
-
-			let gamesearch = document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-game-search").shadowRoot
-				gamesearch.querySelector("div").style.border = "1px solid #8c8263"
-				gamesearch.querySelector("div").style.borderRadius = "10px"
-				gamesearch.querySelector("div").style.marginTop = "9px"
-				gamesearch.querySelector("div > div.parties-game-search-divider").style.display = "none"
-
-			document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-bg-container").style.backgroundImage = "none"
-			document.querySelector("lol-social-panel > lol-parties-game-info-panel").shadowRoot.querySelector("div > div.parties-game-info-panel-content > lol-parties-status-card").shadowRoot.
-				querySelector("div > div.parties-status-card-body > div.parties-status-card-map.game_map_howling_abyss").style.margin = "-3px 10px 0 0"
-		}catch{}
-	}
+	tickerCss(
+		{
+			"div > div.border": "display: none;",
+			"div > div.sub-border": "display: none;",
+			"div > div.caret": "display: none;",
+			"div > div.lol-uikit-flyout-frame": "background-color: black; border-radius: 10px;"
+		}
+	)
+	newGameSearchCss(
+		{
+			"div": "background: #143c1400;",
+			"div > div.parties-status-card-bg-container": "color: #36d98700;",
+			"div > div.parties-status-card-header": "visibility: hidden;"
+		},
+		{
+			"div": "border: 1px solid #8c8263; border-radius: 10px; margin-top: 9px",
+			"div > div.parties-game-search-divider": "display: none"
+		}
+	)
+	
 	if (DataStore.get("settings-dialogs-transparent")) {
 		let style = "var(--Settings-and-Dialog-frame-color)"
 		try {document.querySelector("lol-uikit-full-page-backdrop > lol-uikit-dialog-frame").shadowRoot.querySelector("div").style.background = style}catch{}
@@ -233,26 +227,22 @@ window.setInterval(()=>{
 			document.querySelector("lol-uikit-full-page-backdrop lol-regalia-identity-customizer-element").shadowRoot.
 				querySelector("div.regalia-identity-customizer-crest-wrapper > lol-regalia-crest-v2-element").shadowRoot.
 				querySelector("uikit-state-machine > lol-uikit-themed-level-ring-v2").shadowRoot.querySelector("div").style.backgroundImage = 'var(--Border)'
-		}
-		catch{}
+		}catch{}
 		try {
 			document.querySelector(`#lol-uikit-tooltip-root lol-regalia-hovercard-v2-element[summoner-id="${DataStore.get("Summoner-ID")}"]`).shadowRoot.
 				querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("div > uikit-state-machine > lol-uikit-themed-level-ring-v2").shadowRoot.
 				querySelector("div").style.backgroundImage = 'var(--Border)'
-		}
-		catch{}
+		}catch{}
 		try {
 			document.querySelector("div.lobby-banner.local > lol-regalia-parties-v2-element").shadowRoot.querySelector("div.regalia-parties-v2-crest-wrapper > lol-regalia-crest-v2-element").shadowRoot.
 				querySelector("uikit-state-machine > lol-uikit-themed-level-ring-v2").shadowRoot.
 				querySelector("div").style.backgroundImage = 'var(--Border)'
-		}
-		catch{}
+		}catch{}
 		try {
 			document.querySelector("div > lol-regalia-profile-v2-element").shadowRoot.querySelector("div.regalia-profile-crest-hover-area.picker-enabled > lol-regalia-crest-v2-element").shadowRoot.
 				querySelector("uikit-state-machine > lol-uikit-themed-level-ring-v2").shadowRoot.
 				querySelector("div").style.backgroundImage = 'var(--Border)'
-		}
-		catch{}
+		}catch{}
 	}
 
 	if (DataStore.get("Custom-Icon") && DataStore.get("Custom-Regalia-Banner")) {

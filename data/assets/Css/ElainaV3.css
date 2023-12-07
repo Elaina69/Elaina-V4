@@ -1039,5 +1039,9 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
 #pandoru {
 	margin-bottom: 17px;
 }
+
+.parties-invite-dropzone {
+	bottom: -40px !important;
+}
 /*_________________________________________________________________________________________________________________________________*/
 /* End */
