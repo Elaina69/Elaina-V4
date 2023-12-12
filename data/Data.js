@@ -4,7 +4,6 @@ function setDefaultData(defaults) {
       		DataStore.set(key, value);
     	}
   	});
-  	console.log("Default Data restored")
 }
 
 setDefaultData({
