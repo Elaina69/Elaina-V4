@@ -148,21 +148,6 @@ function tickerCss(defaults) {
 		});
 	}catch{}
 }
-function newGameSearchCss(css1,css2) {
-	try {
-		let main = document.querySelector("lol-social-panel lol-parties-game-info-panel")
-		let gameinfo = main.shadowRoot.querySelector("div lol-parties-status-card").shadowRoot
-		let gamesearch = main.shadowRoot.querySelector("div lol-parties-game-search").shadowRoot
-		if (DataStore.get("new-gamesearch-queue") && main) {
-			gameinfo.querySelector("div div.parties-status-card-body").style.cssText = "margin-top: -23px; padding: 10px 5px 10px 10px; border: 1px solid #8c8263; border-radius: 10px"
-			gameinfo.querySelector("div > div.parties-status-card-bg-container > video").setAttribute('src', '')
-			main.shadowRoot.querySelector("div div.parties-game-info-panel-bg-container").style.backgroundImage = "none"
-			main.shadowRoot.querySelector("div lol-parties-status-card").shadowRoot.querySelector("div div.parties-status-card-map.game_map_howling_abyss").style.margin = "-3px 10px 0 0"
-			Object.entries(css1).forEach(([key, value]) => {gameinfo.querySelector(key).style.cssText = value});
-			Object.entries(css2).forEach(([key, value]) => {gamesearch.querySelector(key).style.cssText = value});
-		}
-	}catch{}
-}
 
 window.setInterval(()=>{
 	tickerCss(
@@ -173,17 +158,38 @@ window.setInterval(()=>{
 			"div > div.lol-uikit-flyout-frame": "background-color: black; border-radius: 10px;"
 		}
 	)
-	newGameSearchCss(
-		{
-			"div": "background: #143c1400;",
-			"div > div.parties-status-card-bg-container": "color: #36d98700;",
-			"div > div.parties-status-card-header": "visibility: hidden;"
-		},
-		{
-			"div": "border: 1px solid #8c8263; border-radius: 10px; margin-top: 9px",
-			"div > div.parties-game-search-divider": "display: none"
-		}
-	)
+
+	if (DataStore.get("new-gamesearch-queue")) {
+		try {
+			let main = document.querySelector("lol-social-panel lol-parties-game-info-panel").shadowRoot
+			let gameinfo = main.querySelector("lol-parties-status-card").shadowRoot
+			let gamesearch = main.querySelector("lol-parties-game-search").shadowRoot
+			let check = gameinfo.querySelector(".parties-status-card-bg-container")
+
+			if (main && check.style.display != "none") {
+				gameinfo.querySelector(".parties-status-card-body").style.cssText = `
+					margin-top: -23px; 
+					padding: 10px 5px 10px 10px; 
+					border: 1px solid #8c8263; 
+					border-radius: 10px
+				`
+				gameinfo.querySelector(".parties-status-card-header").style.cssText = `
+					visibility: hidden;
+					height: 14px;
+				`
+				gameinfo.querySelector(".parties-status-card-map").style.margin = "-3px 10px 0 0"
+				gameinfo.querySelector(".parties-status-card").style.background = "transparent"
+				gamesearch.querySelector("div").style.cssText = `
+					border: 1px solid #8c8263; 
+					border-radius: 10px; 
+					margin-top: 9px
+				`
+				gamesearch.querySelector(".parties-game-search-divider").style.display = "none"
+				main.querySelector(".parties-game-info-panel-bg-container").style.display = "none"
+				check.style.display = "none"
+			}
+		}catch{}
+	}
 	
 	if (DataStore.get("settings-dialogs-transparent")) {
 		let style = "var(--Settings-and-Dialog-frame-color)"
