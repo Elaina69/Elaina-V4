@@ -24,17 +24,17 @@ async function loadData(cdn) {
 }
 
 if (DataStore.get("Dev-mode")) {
-	initLink = `//plugins/${getPluginsName()}/ElainaV3-Data/init.js`
+	initLink = `//plugins/${getPluginsName()}/ElainaV3-Data/cdninit.js`
 	loadData(`//plugins/${getPluginsName()}/ElainaV3-Data/index.js`)
 }
 else {
 	if (!DataStore.has("ElainaV3-First run")) {
-		initLink = `https://unpkg.com/elainav3-data@latest/init.js`
+		initLink = `https://unpkg.com/elainav3-data@latest/cdninit.js`
 		loadData("https://unpkg.com/elainav3-data@latest/index.js")
 		DataStore.set("ElainaV3-First run", true)
 	}
 	else {
-		initLink = `https://unpkg.com/elainav3-data@${DataStore.get("Theme-version")}/init.js`
+		initLink = `https://unpkg.com/elainav3-data@${DataStore.get("Theme-version")}/cdninit.js`
 		loadData(`https://unpkg.com/elainav3-data@${DataStore.get("Theme-version")}/index.js`)
 	}
 }
