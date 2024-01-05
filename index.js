@@ -60,7 +60,7 @@ export function init(context) {
 }
 window.setInterval(async ()=> {
 	let renewList = (target, list) => {
-		if (DataStore.get(target).length != list.length) 
+		if (!DataStore.has(target) || DataStore.get(target).length != list.length) 
 			DataStore.set(target, list)
 	}
 	let originLists = await Promise.all([
