@@ -136,10 +136,6 @@ iframe .bg-cover {
 	display: none !important;
 }
 
-.hextech-loading-animation > svg {
-	display: none !important;
-}
-
 .postgame-champion-background {
 	display: none !important;
 }
@@ -386,6 +382,10 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
     background-color: #000000ad !important;
     border-radius: 10px !important;
     border: 2px solid var(--default-color, #cdbe91) !important;
+}
+
+div[data-screen-name="rcp-fe-lol-navigation-screen"] {
+    border-top: 1.8px solid #785a28 !important;
 }
 /*_________________________________________________________________________________________________________________________________*/
 
@@ -1042,6 +1042,115 @@ div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
 
 .parties-invite-dropzone {
 	bottom: -40px !important;
+}
+
+.ready-check-map-background.ember-view {
+    display: none !important;
+}
+
+#Custom-icon-list {
+	margin-left: 25px !important;
+}
+
+#customprf {
+	margin-left: 25px !important;
+}
+
+.donate {
+	width: 60px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.friend-header {
+	display: block !important;
+	margin-left: 11px !important;
+	padding: 0px !important;
+	font-size: 12px !important;
+	line-height: 13px !important;
+}
+
+#dev-div {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+	text-align: center;
+}
+
+.dev_ava {
+    width: 150px;
+    border-radius: 50%;
+    border: 5px solid #ff8787;
+}
+
+#dev-avatar {
+	display: flex;
+}
+
+#first_line {
+	font-size: 18px;
+    color: #cdbe91;
+    font-weight: 600;
+}
+
+#first_line_b {
+	font-size: 18px;
+    color: #5ed5e8;
+    font-weight: 600;
+}
+
+#first_line_p {
+	font-size: 18px;
+    color: #f9a8a8;
+    font-weight: 600;
+}
+
+#Contributors-row {
+	display: flex;
+}
+
+#contributors {
+	font-size: 16px;
+    color: #cdbe91;
+    font-weight: 600;
+}
+
+#Contrib {
+	width: 220px;
+    display: flex;
+    border: 2px solid #cdbe91;
+    height: 60px;
+    border-radius: 10px;
+    margin-right: 15px;
+}
+
+.contributor-img {
+	width: 50px;
+    height: 50px;
+    padding: 5px 5px 5px 5px;
+    border: 0px;
+    border-radius: 10px;
+}
+
+#contributor-name {
+	font-size: 15px;
+    font-weight: 600;
+    margin-top: 11px !important;
+    color: #cdbe91;
+    margin-bottom: 3px !important;
+}
+
+#Donation {
+	text-align: center;
+}
+
+#Donation-row {
+    display: flex;
+    justify-content: center;
+}
+
+.currency-be {
+    margin-left: 10px !important;
 }
 /*_________________________________________________________________________________________________________________________________*/
 /* End */

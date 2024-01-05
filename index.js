@@ -6,11 +6,44 @@
  * @Nyan Meow~~~
  */
 
+let initLink
 let eConsole = "%c ElainaV3 "
 let eCss = "color: #ffffff; background-color: #f77fbe"
 
-console.log(eConsole+'%c By %cElaina Da Catto',eCss,"", "color: #e4c2b3")
-console.log(eConsole+'%c Meow ~~~',eCss, "color: #e4c2b3")
+import "./data/Theme.js"
+
+async function loadData(cdn) {
+	let res = await fetch(cdn)
+	if (res.status == 200) (await (() => import(cdn))()).default
+	else {
+		console.warn(eConsole+`%c Failed to load ElainaV3 data`,eCss,"")
+		Toast.error("Failed to load ElainaV3 data")
+	}
+	console.log(eConsole+'%c By %cElaina Da Catto',eCss,"", "color: #e4c2b3")
+	console.log(eConsole+'%c Meow ~~~',eCss, "color: #e4c2b3")
+}
+
+if (DataStore.get("Dev-mode")) {
+	initLink = `//plugins/${getPluginsName()}/ElainaV3-Data/init.js`
+	loadData(`//plugins/${getPluginsName()}/ElainaV3-Data/index.js`)
+}
+else {
+	if (!DataStore.has("ElainaV3-First run")) {
+		initLink = `https://unpkg.com/elainav3-data@latest/init.js`
+		loadData("https://unpkg.com/elainav3-data@latest/index.js")
+		DataStore.set("ElainaV3-First run", true)
+	}
+	else {
+		initLink = `https://unpkg.com/elainav3-data@${DataStore.get("Theme-version")}/init.js`
+		loadData(`https://unpkg.com/elainav3-data@${DataStore.get("Theme-version")}/index.js`)
+	}
+}
+
+let {Cdninit} = await import (initLink)
+import { setHomePage, transparentLobby, themeList } from "./data/Theme.js"
+import "./data/Manual-Update.js"
+import "./data/built-in_plugins/Custom-Status"
+import "./data/configs/Custom-Status.txt?raw"
 
 export function getPluginsName() {
 	let scriptPath = getScriptPath()
@@ -19,54 +52,41 @@ export function getPluginsName() {
 	let pluginsname = match ? match[1]:null
 	return pluginsname
 }
-export * from "./data/ImportPlugins.js" 
-
-import "./data/Data.js"
-import "./data/built-in_plugins/Custom-Status"
-import "./data/built-in_plugins/Old-LL-Settings"
-import "./data/ChangeFilters.js"
-import "./data/homepage.js"
-import "./data/loadCss.js"
-import "./data/_utils.js"
-import "./data/built-in_plugins/KeyCombines.js"
-import "./data/configs/Custom-Status.txt?raw"
-import "./data/Manual-Update.js"
-
-if (DataStore.get("Dev-mode")) {
-	let res = await fetch(`//plugins/${getPluginsName()}/ElainaV3-Data/index.js`)
-	if (res.status == 200) {
-		(await (() => import(`//plugins/${getPluginsName()}/ElainaV3-Data/index.js`))()).default
-	}
-	else {
-		console.warn(eConsole+`%c Failed to load ElainaV3 data`,eCss,"")
-		Toast.error("Failed to load ElainaV3 data")
-	}
+export function init(context) {
+	setHomePage(context)
+	transparentLobby(context)
+	Cdninit(context)
+	themeList(context)
 }
-else {
-	let res = await fetch("https://unpkg.com/elainav3-data@latest/index.js")
-	if (res.status == 200) {
-		(await (() => import("https://unpkg.com/elainav3-data@latest/index.js"))()).default
-	}
-	else {
-		console.warn(eConsole+`%c Failed to load ElainaV3 data`,eCss,"")
-		Toast.error("Failed to load ElainaV3 data")
-	}
-}
-
 window.setInterval(async ()=> {
-	let originWallpaperList = await PluginFS.ls("./data/assets/Backgrounds/Wallpapers")
-	let originAudioList = await PluginFS.ls("./data/assets/Backgrounds/Audio")
-	let originFontList = await PluginFS.ls("./data/assets/Fonts/Custom")
-	  
-	const Wallpaperregex = /\.(mp4|webm|mkv|mov|avi|wmv)$/
-	const Audioregex = /\.(mp3|flac|ogg|wav|aac)$/
-	const Fontregex = /\.(ttf|otf)$/
-	
-	const WallpaperList = originWallpaperList.filter((file) => Wallpaperregex.test(file))
-	const AudioList = originAudioList.filter((file) => Audioregex.test(file))
-	const FontList = originFontList.filter((file) => Fontregex.test(file)) 
+	let renewList = (target, list) => {
+		if (DataStore.get(target).length != list.length) 
+			DataStore.set(target, list)
+	}
+	let originLists = await Promise.all([
+		PluginFS.ls("./data/assets/Backgrounds/Wallpapers"),
+		PluginFS.ls("./data/assets/Backgrounds/Audio"),
+		PluginFS.ls("./data/assets/Fonts/Custom"),
+		PluginFS.ls("./data/assets/Icon/Regalia-Banners"),
+	]);
+	let [originWallpaperList, originAudioList, originFontList, originBannerList] = originLists;
 
-	DataStore.set("Wallpaper-list", WallpaperList)
-	DataStore.set("Audio-list", AudioList)
-	DataStore.set("Font-list", FontList)
+	let regex = {
+		Wallpaper: /\.(mp4|webm|mkv|mov|avi|wmv)$/,
+		Audio: /\.(mp3|flac|ogg|wav|aac)$/,
+		Font: /\.(ttf|otf)$/,
+		Banner: /\.(png|jpg|jpeg|gif)$/,
+	};
+
+	let Lists = {
+		Wallpaper: originWallpaperList.filter(file => regex.Wallpaper.test(file)),
+		Audio: originAudioList.filter(file => regex.Audio.test(file)),
+		Font: originFontList.filter(file => regex.Font.test(file)),
+		Banner: originBannerList.filter(file => regex.Banner.test(file))
+	};
+
+	renewList("Wallpaper-list", Lists.Wallpaper)
+	renewList("Audio-list", Lists.Audio)
+	renewList("Font-list", Lists.Font)
+	renewList("Banner-list", Lists.Banner)
 },1000)

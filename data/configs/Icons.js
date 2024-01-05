@@ -6,7 +6,6 @@ const data = {
 
     "Avatar"        : "Avatar.gif",
     "Border"        : "spirit-of-ionia-crests-wild-rift.png",
-    "Regalia-banner": "Soul-Fighters_2023.png",
     "Hover-card"    : "Hover-card-backdrop.jpg",
 
     "RP-icon"       : "ApprenticeWitch.png",
@@ -21,6 +20,8 @@ const data = {
     
     "Mouse-cursor"  : "ElainaDed.png",
 
+    "LL_Settings"   : "LL-Settings.jpg",
+
     //Runes
     "Precision"  : "8000.jpg",
     "Domination" : "8100.jpg",
@@ -28,7 +29,19 @@ const data = {
     "Resolve"    : "8400.jpg",
     "Inspiration": "8300.jpg",
 
-        
+    //Gamemodes
+    "classic_def"  : "classic-default.png",
+    "classic_act"  : "classic-active.png",
+    "classic_video": "classic-video.webm",
+    "aram_def"     : "aram-default.png",
+    "aram_act"     : "aram-active.png",
+    "aram_video"   : "aram-video.webm",
+    "tft_def"      : "tft-default.png",
+    "tft_act"      : "tft-active.png",
+    "tft_video"    : "tft-video.webm",
+    "cherry_def"   : "cherry-default.png",
+    "cherry_act"   : "cherry-active.png",
+    "cherry_video" : "cherry-video.webm",
     //______________________________________________________________________________//
 }
 export default data

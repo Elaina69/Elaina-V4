@@ -1,5 +1,5 @@
 import LocalKey from "./UpdateKey-Local.js"
-import {getPluginsName} from "./openFolder.js"
+import {getPluginsName} from "../index.js"
 
 let CdnKey
 let eConsole = "%c ElainaV3 "

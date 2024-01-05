@@ -5,33 +5,25 @@
  * @Nyan Meow~~~
  */
 
-let 
-	pvp_net_id /* automatically updated to your pvp.net id */,
+let pvp_net_id /* automatically updated to your pvp.net id */,
 	summoner_id /* automatically updated to your summonerId */,
 	phase /* automatically updated to current gameflow phase */
 let routines = [] // array of functions that will be called routinely
 let mutationCallbacks = [] // array of functions that will be called in mutation observer
-let idCreationCallbacks = []
-let idDeletionCallbacks = []
-let tagCreationCallbacks = []
-let tagDeletionCallbacks = []
-let classCreationCallbacks = []
-let classDeletionCallbacks = []
 
 /** used to add css files to document body */
-function addCss (cssvar,folder,name,css) {
+
+function addStyle(style) {
 	let NStyle = document.createElement('style')
-		NStyle.appendChild(document.createTextNode(
-			'@import url("'+css+'");:root {'+cssvar+':url('+folder+'/'+name+')}'
-		))
+		NStyle.appendChild(document.createTextNode(style))
 	document.body.appendChild(NStyle)
 }
 
-function addFont (folder,font,font_id,font_family) {
+function addFont (folder,font_id,font_family) {
 	let Font = document.createElement('style')
 		Font.id = font_id
 		Font.appendChild(document.createTextNode(
-			'@font-face {font-family: '+font_family+'; src: url('+folder+'/'+font+')}'
+			'@font-face {font-family: '+font_family+'; src: url('+folder+')}'
 		))
 	document.body.appendChild(Font)
 }
@@ -46,7 +38,7 @@ function CustomCursor (folder,css) {
 	})
 	let body = document.querySelector("html")
 		body.appendChild(cursor)
-	addCss("","","",css)
+	addStyle(css)
 }
 
 async function getSummonerID() {
@@ -93,30 +85,6 @@ function mutationObserverAddCallback(callback, target) {
 	mutationCallbacks.push({ "callback": callback, "targets": target })
 }
 
-function subscribeToElementCreation(target, callback) {
-    if (target[0] === '.') {
-        target = target.slice(1)
-        classCreationCallbacks.push({ target, callback })
-    } else if (target[0] === '#') {
-        target = target.slice(1)
-        idCreationCallbacks.push({ target, callback })
-    } else {
-        tagCreationCallbacks.push({ target, callback })
-    }
-}
-
-function subscribeToElementDeletion(target, callback) {
-    if (target[0] === '.') {
-        target = target.slice(1)
-        classDeletionCallbacks.push({ target, callback })
-    } else if (target[0] === '#') {
-        target = target.slice(1)
-        idDeletionCallbacks.push({ target, callback })
-    } else {
-        tagDeletionCallbacks.push({ target, callback })
-    }
-}
-
 window.addEventListener('load', () => {
 	subscribe_endpoint("/lol-gameflow/v1/gameflow-phase", updatePhaseCallback)
 	subscribe_endpoint("/lol-chat/v1/me", updateUserPvpNetInfos)
@@ -139,66 +107,6 @@ window.addEventListener('load', () => {
 					}
 				}
 			}
-
-			for (let node of mutation.addedNodes) {
-				if (node.nodeType === Node.ELEMENT_NODE) {
-					if (node.id != '') {    
-						for (let obj of idCreationCallbacks) {
-							if (node.id.indexOf(obj.target) != -1) {
-								obj.callback(node)
-							}
-						}
-					}
-	
-					let tagLowered = node.tagName.toLowerCase()
-					for (let obj of tagCreationCallbacks) {
-						if (tagLowered.indexOf(obj.target) != -1) {
-							obj.callback(node)
-						}
-					}
-	
-					let classList = node.classList
-					if (classList) {
-						for (let nodeClass of classList) {
-							let classLowered = nodeClass.toLowerCase()
-							for (let obj of classCreationCallbacks) {
-								if (classLowered.indexOf(obj.target) != -1) {
-									obj.callback(node)
-								}
-							}
-						}
-					}
-				}
-			}
-	
-			for (let node of mutation.removedNodes) {
-				if (node.nodeType === Node.ELEMENT_NODE) {
-					for (let obj of idDeletionCallbacks) {
-						if (node.id.indexOf(obj.target) != -1) {
-							obj.callback(node)
-						}
-					}
-	
-					let tagLowered = node.tagName.toLowerCase()
-					for (let obj of tagDeletionCallbacks) {
-						if (tagLowered.indexOf(obj.target) != -1) {
-							obj.callback(node)
-						}
-					}
-	
-					let classList = node.classList
-					if (classList) {
-						for (let nodeClass of classList) {
-							let classLowered = nodeClass.toLowerCase()
-							for (let obj of classDeletionCallbacks) {
-								if (classLowered.indexOf(obj.target) != -1) {
-									obj.callback(node)
-								}
-							}
-						}
-					}
-				}
-			}
 		}
 	});
 	observer.observe(document, { attributes: true, childList: true, subtree: true });
@@ -211,9 +119,7 @@ let utils = {
 	subscribe_endpoint: subscribe_endpoint,
 	routineAddCallback: routineAddCallback,
 	mutationObserverAddCallback: mutationObserverAddCallback,
-	subscribeToElementCreation:subscribeToElementCreation,
-	subscribeToElementDeletion:subscribeToElementDeletion,
-	addCss: addCss,
+	addStyle: addStyle,
 	addFont: addFont,
 	CustomCursor: CustomCursor,
 	getSummonerID: getSummonerID

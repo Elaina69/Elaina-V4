@@ -10,7 +10,7 @@ if (DataStore.get("Custom-Status") && DataStore.get("Custom-profile-hover")) {
 
     let MultiStatus   = statusMessage.split("\\r\\n(end status)\\r\\n")
 
-    if   (MultiStatus.length == 1) {time = 10000}
+    if   (MultiStatus.length == 1) {time = 100000}
     else {time = DataStore.get("status-delay")}
     
     window.setInterval( async ()=> {
