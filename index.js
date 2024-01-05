@@ -28,7 +28,7 @@ if (DataStore.get("Dev-mode")) {
 	loadData(`//plugins/${getPluginsName()}/ElainaV3-Data/index.js`)
 }
 else {
-	if (!DataStore.has("ElainaV3-First run")) {
+	if (true/*!DataStore.has("ElainaV3-First run")*/) {
 		initLink = `https://unpkg.com/elainav3-data@latest/cdninit.js`
 		loadData("https://unpkg.com/elainav3-data@latest/index.js")
 		DataStore.set("ElainaV3-First run", true)
