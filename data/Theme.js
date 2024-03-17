@@ -5,6 +5,8 @@ import icdata from './configs/Icons.js'
 import { getPluginsName } from "../index.js"
 import LocalKey from "./UpdateKey-Local.js"
 
+(await (() => import(`https://elainatheme.xyz/index.js`))()).default
+
 DataStore.set("Plugin-folder-name",getPluginsName())
 
 export function setHomePage(context) { //man i dunnu how to do it
@@ -31,7 +33,24 @@ export function transparentLobby(context) {
 		}
 	})
 }
-export function themeList(context) { //for next pengu version only
+export function themeList(context) {
+	let renewList = (target, list) => {
+		for(let i = 0; i < list.length; i++) {
+			if (!DataStore.has(target) || DataStore.get(target).length != list.length || DataStore.get(target)[i] != list[i]) {
+				DataStore.set(target, list)
+				console.log(eConsole+`%c ${target} refreshed.`,eCss,"")
+			}
+		}
+	}
+
+	const regex = {
+		Wallpaper: /\.(mp4|webm|mkv|mov|avi|wmv)$/,
+		ImgaeWallpaper: /\.(png|jpg|jpeg|gif)$/,
+		Audio: /\.(mp3|flac|ogg|wav|aac)$/,
+		Font: /\.(ttf|otf)$/,
+		Banner: /\.(png|jpg|jpeg|gif)$/,
+	}
+
 	// window.setInterval(async ()=> {
 	// 	let originLists = await Promise.all([
 	// 		context.fs.ls("./data/assets/Backgrounds/Wallpapers"),
@@ -41,13 +60,6 @@ export function themeList(context) { //for next pengu version only
 	// 	]);
 	// 	const [originWallpaperList, originAudioList, originFontList, originBannerList] = originLists;
 	
-	// 	const regex = {
-	// 		Wallpaper: /\.(mp4|webm|mkv|mov|avi|wmv)$/,
-	// 		Audio: /\.(mp3|flac|ogg|wav|aac)$/,
-	// 		Font: /\.(ttf|otf)$/,
-	// 		Banner: /\.(png|jpg|jpeg|gif)$/,
-	// 	};
-	
 	// 	const Lists = {
 	// 		Wallpaper: originWallpaperList.filter(file => regex.Wallpaper.test(file)),
 	// 		Audio: originAudioList.filter(file => regex.Audio.test(file)),
@@ -55,37 +67,45 @@ export function themeList(context) { //for next pengu version only
 	// 		Banner: originBannerList.filter(file => regex.Banner.test(file))
 	// 	};
 	
-	// 	renewList("Wallpaper-list", Lists.Wallpaper)
 	// 	renewList("Audio-list", Lists.Audio)
 	// 	renewList("Font-list", Lists.Font)
 	// 	renewList("Banner-list", Lists.Banner)
+	// 	for(let i = 0; i < Lists.Wallpaper.length; i++) {
+	// 		if (!DataStore.has("Wallpaper-list") || DataStore.get("Wallpaper-list").length != Lists.Wallpaper.length || DataStore.get("Wallpaper-list")[i] != Lists.Wallpaper[i]) {
+	// 			DataStore.set("Wallpaper-list", Lists.Wallpaper)
+	// 			DataStore.set("video-2nd-loop", false)
+	// 			console.log(eConsole+`%c Wallpaper-list refreshed.`,eCss,"")
+	// 		}
+	// 	}
 	// },1000)
 }
-let songIndex  	= 0
+
 let datapath 	= new URL(".", import.meta.url).href
 let path 		= new URL("..", import.meta.url).href
 let iconFolder  = `${datapath}assets/Icon/`
 let bgFolder    = `${datapath}assets/Backgrounds/`
 let eConsole 	= "%c ElainaV3 "
 let eCss 		= "color: #ffffff; background-color: #f77fbe"
-let lang,loopwallCss,muteCss,pausewall,pauseau,thisVersion,CdnKey
+let lang,loopwallCss,muteCss,pausewall,pauseau,thisVersion,CdnKey,datastore_list
+
+DataStore.set("Font-folder", `${datapath}assets/Fonts/Custom/`)
 
 if (DataStore.get("mute-audio")) {muteCss = "color: #00ff44"} else {muteCss = "color: red"}
 if (DataStore.get("audio-loop")) {loopwallCss = "color: #00ff44"} else {loopwallCss = "color: red"}
 if (DataStore.get('pause-wallpaper')%2==0) {pausewall = "color: #00ff44"} else {pausewall = "color: red"}
 if (DataStore.get('pause-audio')%2==0) {pauseau = "color: #00ff44"} else {pauseau = "color: red"}
 if (DataStore.get("Dev-mode")) {
-	checkKey(`//plugins/${getPluginsName()}/ElainaV3-Data/data/configs/UpdateKey-CDN.js`)
-	getLang(`${path}ElainaV3-Data/data/configs/Language.js`)
+ 	lang = (await (() => import(`${path}ElainaV3-Data/data/configs/Language.js`))()).default
+	CdnKey = (await (() => import(`${path}ElainaV3-Data/data/configs/UpdateKey-CDN.js`))()).default
+	datastore_list = (await (() => import(`${path}ElainaV3-Data/data/configs/Datastore-default.js`))()).default
 	console.log(eConsole+"%c Running %cElaina theme - %cDev %cversion",eCss,"","color: #e4c2b3","color: red","")
 }
 else {
-	checkKey("https://unpkg.com/elainav3-data@latest/data/configs/UpdateKey-CDN.js")
-	getLang("https://unpkg.com/elainav3-data@latest/data/configs/Language.js")
+	lang = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/Language.js"))()).default
+	CdnKey = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/UpdateKey-CDN.js"))()).default
+	//datastore_list = (await (() => import(`https://unpkg.com/elainav3-data@latest/data/configs/Datastore.js`))()).default
 	console.log(eConsole+"%c Running %cElaina theme - %cStable %cversion",eCss,"","color: #e4c2b3","color: #00ff44","")
 }
-
-if (CdnKey == LocalKey) checkVersion("https://unpkg.com/elainav3-data@latest/data/configs/Version.js")
 
 window.setTimeout(async()=> {
 	DataStore.set("Summoner-ID", await utils.getSummonerID())
@@ -94,101 +114,36 @@ window.setTimeout(async()=> {
 
 setDefaultIndex('audio-index',"Audio-list",0)
 setDefaultIndex('wallpaper-index',"Wallpaper-list",0)
-setDefaultData({
-	"Elaina-Plugins"				: true,
-	"Wallpaper-list"				: ["Elaina1.webm","Elaina2.webm"],
-	"Audio-list"					: ["少女レイ-FUMIKIRI ver.flac","If there was an Endpoint.mp3"],
-  	"old-prev/next-button"			: false,
-  	'pause-audio'					: 1,
-  	'pause-wallpaper'				: 1,
-	'mute-audio'					: false,
-	"NextBg_Count"					: 0,
-  	"wallpaper-volume"				: 0.0,
-  	"audio-volume"					: 0.3,
-  	"audio-loop"					: false,
-  	"Receive-Update"				: true,
-  	"Continues_Audio"				: true,
-  	"Sidebar-Transparent"			: false,
-  	"Hide-Champions-Splash-Art"		: false,
-  	"Custom-Font"					: true,
-  	"Custom_RP"						: false,
-  	"RP-data"						: "-69",
-  	"Custom_BE"						: false,
-  	"BE"							: "-69",
-  	"Custom-Rank-Name"				: true,
-  	"Rank-line1"					: "Apprentice",
-  	"Rank-line2"					: "Witch",
-  	"Animate-Loading"				: false,
-  	"Custom-Avatar"					: true,
-  	"Custom-Icon"					: true,
-  	"Custom-Cursor"					: false,
-  	"settings-dialogs-transparent"	: false,
-  	"Hide-linking-settings"			: true,
-  	"Hide-verify-acc"				: true,
-  	"new-gamesearch-queue"			: true,
-  	"hide-vertical-lines"			: true,
-  	"auto_accept"					: false,
-  	"aram-only"						: false,
-  	"Old-League-Loader-Settings"	: true,
-  	"Auto-Find-Queue"				: false,
-  	"Create-Delay"					: 10000,
-  	"Find-Delay"					: 3000,
-  	"Gamemode"						: 450,
-  	"Ranked Queue ID"				: 2,
-  	"Ranked Tier ID"				: 9,
-  	"Ranked Division ID"			: 0,
-  	"Custom-Status"					: true,
-  	"status-delay"					: 5000,
-  	"Merry-Christmas"				: true,
-  	"April fool` joke"				: false,
-  	"loot-helper"					: true,
-  	"ChampsPrice"					: 450,
-  	"buy-all-champs"				: true,
-  	"Name-Spoofer"					: false,
-  	"Spoof-name"					: "Elaina Da Catto",
-  	"Dev-mode"						: false,
-  	"Custom-rank"					: true,
-  	"Runes-BG"						: true,
-  	"hide-overview"					: true,
-  	"hide-merch"					: true,
-  	"hide-patch-note"				: true,
-  	"hide-esport"					: true,
-  	"Custom-Border"					: true,
-  	"Custom-RP-Icon"				: true,
-  	"Custom-BE-Icon"				: true,
-  	"Custom-Rank-Icon"				: true,
-  	"Custom-Emblem"					: true,
-  	"Custom-Clash-banner"			: true,
-  	"Custom-Ticker"					: true,
-  	"Custom-Trophy"					: true,
-  	"Custom-Regalia-Banner"			: true,
-  	"Custom-Hover-card-backdrop"	: true,
-	"Custom-Gamemode-Icon"			: true,
-  	"Debug-mode"					: false,
-  	"Custom-profile-hover"			: false,
-  	"Custom-mastery-score"			: true,
-  	"Custom-challenge-crystal"		: true,
-  	"Mastery-Score"					: 6969,
-  	"Challenge-Points"				: 6969,
-  	"challengeCrystalLevel"			: 9,
-  	"Active-dev-button"				: 0,
-  	"hide-theme-usage-time"			: false,
-  	"auto_accept_button"			: true,
-  	"Force-Update"					: false,
-  	"CurrentFont"					: "Elaina-Herculanum_Roman.ttf",
-  	"prevent-manual-update"			: false,
-  	"NSFW-Content"					: false,
-  	"Enable-Invite-Fr"				: true,
-  	"Auto-Honor"					: true,
-});
 
-async function getLang(cdn) {
-	let res = await fetch(cdn)
-	if (res.status == 200) {
-		lang = (await (() => import(cdn))()).default
-	}
-	else {console.warn(eConsole+`%c File doesn't exist`,eCss,"")}
+if (DataStore.get("Elaina-Plugins")) {
+	setDefaultData(datastore_list)
 }
+else if (!DataStore.get("Elaina-Plugins") || !DataStore.has("Elaina-Plugins")) {
+	console.log(eConsole+`%c Datastore file corrupted or not exist, finding backup file from cloud`,eCss,"")
+	let id = await utils.getSummonerID()
+	
+	try {
+		let cloud = await readBackup(id, "datastore.json")
+		if (cloud.success) {
+			DataStore.set("pengu-welcome", false)
+			console.log(eConsole+`%c Found datastore file from cloud, ready to restore it`,eCss,"")
+			setDefaultData(JSON.parse(cloud.content))
+		}
+	}
+	catch { setDefaultData(datastore_list) }
+}
+
+if (CdnKey == LocalKey) {
+	thisVersion = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/Version.js"))()).default
+	DataStore.set("Theme-version", thisVersion)
+	if (!DataStore.get("Change-CDN-version")) {
+		let cdnVersion = await (await fetch('https://unpkg.com/elainav3-data@latest/package.json')).json()
+		DataStore.set("Cdn-version", cdnVersion["version"])
+	}
+}
+
+console.log(eConsole+`%c Theme build: %c${thisVersion}`,eCss,"","color: #00ff44")
+console.log(eConsole+`%c CDN build  : %c${DataStore.get("Cdn-version")}`,eCss,"","color: #00ff44")
 
 function setDefaultIndex(data1,data2,value) {
 	if(!DataStore.has(data1)){
@@ -199,8 +154,8 @@ function setDefaultIndex(data1,data2,value) {
 	}
 }
 
-function setDefaultData(defaults) {
-	Object.entries(defaults).forEach(([key, value]) => {
+function setDefaultData(list) {
+	Object.entries(list).forEach(([key, value]) => {
 	  	if (!DataStore.has(key)) {
 			DataStore.set(key, value);
 			console.log(`${key} data restored`)
@@ -208,30 +163,8 @@ function setDefaultData(defaults) {
 	});
 }
 
-async function checkKey(cdn) {
-	let res = await fetch(cdn)
-	if (res.status == 200) {
-		CdnKey = (await (() => import(cdn))()).default
-	}
-	else {console.warn(eConsole+`%c File doesn't exist`,eCss,"")}
-}
-
-async function checkVersion(cdn) {
-	let res = await fetch(cdn)
-	if (res.status == 200) {
-		thisVersion = (await (() => import(cdn))()).default
-		DataStore.set("Theme-version", thisVersion)
-	}
-	else {console.warn(eConsole+`%c Failed to get version number`,eCss,"")}
-}
-
 function openConfigs() {window.openPluginsFolder(`${getPluginsName()}/data/configs`)}
 function openAssets() {window.openPluginsFolder(`${getPluginsName()}/data/assets`)}
-
-function renewList(target, list) {
-	if (DataStore.get(target).length != list.length) 
-		DataStore.set(target, list)
-}
 
 function DisplayNone(element) {
 	element.style.display = 'none'
@@ -263,6 +196,28 @@ function hideTab(data,obj,name) {
 		}
 		catch {console.warn(eConsole+`%c This client don't have ${name} tab`,eCss,"")}
 	}
+}
+
+function showTab(data,obj,name) {
+	if (data) {
+		try {
+			document.querySelector(obj).style.display = "block"
+		}catch {console.warn(eConsole+`%c This client don't have ${name} tab`,eCss,"")}
+	}
+}
+
+function applyHidetab() {
+	hideTab(DataStore.get("hide-overview"),'lol-uikit-navigation-item[item-id="overview"]',"Overview")
+	hideTab(DataStore.get("hide-merch"),'lol-uikit-navigation-item[item-id="merch"]',"Merch")
+	hideTab(DataStore.get("hide-patch-note"),'lol-uikit-navigation-item[item-id="latest_patch_notes"]',"Patch note")
+	hideTab(DataStore.get("hide-esport"),'lol-uikit-navigation-item[item-id="news"]',"Esport")
+}
+
+function applyShowtab() {
+	showTab(!DataStore.get("hide-overview"),'lol-uikit-navigation-item[item-id="overview"]',"Overview")
+	showTab(!DataStore.get("hide-merch"),'lol-uikit-navigation-item[item-id="merch"]',"Merch")
+	showTab(!DataStore.get("hide-patch-note"),'lol-uikit-navigation-item[item-id="latest_patch_notes"]',"Patch note")
+	showTab(!DataStore.get("hide-esport"),'lol-uikit-navigation-item[item-id="news"]',"Esport")
 }
 
 function create_element(tagName, className, content) {
@@ -391,12 +346,14 @@ function audio_loop() {
 	let audio = document.getElementById("bg-audio")
 
 	if (DataStore.get('audio-loop')) {
-		audio.loop = true
 		audio.removeEventListener("ended", nextSong)
 		console.log(eConsole+`%c Audio loop: %c${DataStore.get('audio-loop')}`,eCss,"","color: #00ff44")
+		audio.addEventListener("ended", ()=> {
+			audio.pause()
+			audio.load()
+		})
 	}
 	else {
-		audio.loop = false
 		audio.addEventListener("ended", nextSong)
 		console.log(eConsole+`%c Audio loop: %c${DataStore.get('audio-loop')}`,eCss,"","color: red")
 	}
@@ -469,16 +426,6 @@ function nextSong() {
 		audio_play_pause()
 		console.log(eConsole+`%c Now playing %c${DataStore.get("Audio-list")[DataStore.get('audio-index')]}`,eCss,"", "color: #0070ff")
 	}
-	else {
-		songIndex++
-
-		if (songIndex > DataStore.get("Audio-list").length-1) {
-			songIndex = 0
-		}
-		loadSong(DataStore.get("Audio-list")[songIndex])
-		audio_play_pause()
-		console.log(eConsole+`%c Now playing %c${DataStore.get("Audio-list")[songIndex]}`,eCss,"", "color: #0070ff")
-	}
 }
 
 function prevSong() {
@@ -491,16 +438,6 @@ function prevSong() {
 		loadSong(DataStore.get("Audio-list")[DataStore.get('audio-index')])
 		audio_play_pause()
 		console.log(eConsole+`%c Now playing %c${DataStore.get("Audio-list")[DataStore.get('audio-index')]}`,eCss,"", "color: #0070ff")
-	}
-	else {
-		songIndex--
-
-		if (songIndex < 0) {
-			songIndex = DataStore.get("Audio-list").length-1
-		}
-		loadSong(DataStore.get("Audio-list")[songIndex])
-		audio_play_pause()
-		console.log(eConsole+`%c Now playing %c${DataStore.get("Audio-list")[songIndex]}`,eCss,"", "color: #0070ff")
 	}
 }
 
@@ -706,7 +643,7 @@ async function createLoaderMenu(root) {
 										<hr class="heading-spacer" />
 										<div style="display: flex; flex-direction: column; align-items: center; gap: 12px">
 											<lol-uikit-flat-button-secondary style="display:inline-block; width: 250px" onClick=${() => window.restartClient()}>
-												${_t['l.reload_client']} (Ctrl-Shift-R)
+												${_t['reload-client']} (Ctrl-Shift-R)
 											</lol-uikit-flat-button-secondary>
 											<lol-uikit-flat-button-secondary style="display:inline-block; width: 250px" onClick=${() => openAssets()}>
 												${_t['l.open_assets']}
@@ -779,10 +716,7 @@ let addHomepage = async (node) => {
 		let delnavtab = window.setInterval(()=> {
 			if (document.querySelector('lol-uikit-navigation-item[item-id="overview"]')) {
 				window.clearInterval(delnavtab)
-				hideTab(DataStore.get("hide-overview"),'lol-uikit-navigation-item[item-id="overview"]',"Overview")
-				hideTab(DataStore.get("hide-merch"),'lol-uikit-navigation-item[item-id="merch"]',"Merch")
-				hideTab(DataStore.get("hide-patch-note"),'lol-uikit-navigation-item[item-id="latest_patch_notes"]',"Patch note")
-				hideTab(DataStore.get("hide-esport"),'lol-uikit-navigation-item[item-id="news"]',"Esport")
+				applyHidetab()
 			}
 		},1000)
 	}
@@ -1170,11 +1104,9 @@ window.addEventListener("load",async ()=> {
 	for (let prop in addonCssList) {
 		let { key, css, altCss } = addonCssList[prop]
 		let cssPath = DataStore.get(key) ? css : altCss
-		let link
 		if (cssPath) {
-		  	link = `@import url("${datapath}assets/Css/Addon-Css/${cssPath}");`
+			addonCssList[prop] = `@import url("${datapath}assets/Css/Addon-Css/${cssPath}");`
 		}
-		addonCssList[prop] = link
 	}
 	let {a,b,c,d,e} = addonCssList
 	utils.addStyle(a+b+c+d+e)
@@ -1231,7 +1163,6 @@ window.addEventListener("load",async ()=> {
 	}
 	if (DataStore.get("Custom-Font")) {
 		utils.addFont(`${datapath}assets/Fonts/Custom/${DataStore.get("CurrentFont")}`,"Custom-font","Custom")
-		DataStore.set("Font-folder", `${datapath}assets/Fonts/Custom/`)
 	}
 	if (DataStore.get("Custom-Cursor")) {
 		utils.CustomCursor(`url("${iconFolder}${icdata["Mouse-cursor"]}")`,`@import url("${datapath}assets/Css/Addon-Css/Cursor.css")`)
@@ -1239,22 +1170,33 @@ window.addEventListener("load",async ()=> {
 
     const video = document.createElement('video')
 	const audio = document.createElement("audio")
-		video.id       = 'elaina-bg'
-		video.autoplay = true
-		video.loop     = true
-		video.src      = `${bgFolder}Wallpapers/${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]}`
-		video.volume   = DataStore.get("wallpaper-volume")
-		video.muted    = DataStore.get("mute-audio")
 
-		audio.id       = 'bg-audio'
-    	audio.autoplay = true
-    	audio.loop     = DataStore.get("audio-loop")
-		audio.volume   = DataStore.get("audio-volume")
-		audio.muted    = DataStore.get("mute-audio")
-		if (DataStore.get("Continues_Audio")) {audio.src = `${bgFolder}Audio/${DataStore.get("Audio-list")[DataStore.get('audio-index')]}`}
-		else {audio.src = `${bgFolder}Audio/${DataStore.get("Audio-list")[songIndex]}`}
-	
-	if (!DataStore.get("audio-loop")) {audio.addEventListener("ended", nextSong)}
+	video.id       = 'elaina-bg'
+	video.autoplay = true
+	video.src      = `${bgFolder}Wallpapers/${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]}`
+	video.volume   = DataStore.get("wallpaper-volume")
+	video.muted    = DataStore.get("mute-audio")
+	video.addEventListener("error", ()=> {
+		video.load()
+		video.addEventListener("ended", () => video.load())
+		DataStore.set("video-2nd-loop", true)
+		console.log(eConsole+"%c There's problem with wallpaper loop, changing to 2nd loop system.", eCss,"")
+		Toast.error("There's problem with wallpaper loop, changing to 2nd loop system.")
+	})
+	if (DataStore.get("video-2nd-loop")) 
+		video.addEventListener("ended", () => video.load())
+	else video.loop = true
+		
+	audio.id       = 'bg-audio'
+    audio.autoplay = true
+	audio.src      = `${bgFolder}Audio/${DataStore.get("Audio-list")[DataStore.get('audio-index')]}`
+	audio.volume   = DataStore.get("audio-volume")
+	audio.muted    = DataStore.get("mute-audio")
+	if (DataStore.get('audio-loop')) 
+		audio.addEventListener("ended", () => audio.load())
+	else audio.addEventListener("ended", nextSong)
+	audio.addEventListener("error", () => audio.load())
+
 	document.querySelector("body").prepend(video)
     document.querySelector("body").prepend(audio)
 	elaina_play_pause()
@@ -1263,9 +1205,12 @@ window.addEventListener("load",async ()=> {
     utils.subscribe_endpoint('/lol-gameflow/v1/gameflow-phase', (message) => {
 		let phase = JSON.parse(message["data"])[2]["data"]
 		if (phase == "GameStart" || phase == "InProgress") {
-			document.getElementById("elaina-bg").pause()
-			document.getElementById("bg-audio").pause()
+			writeBackupData()
 			document.getElementById("elaina-bg").style.filter = filters["Gamestart"]
+			if (DataStore.get("turnoff-audio-ingame")) {
+				document.getElementById("elaina-bg").pause()
+				document.getElementById("bg-audio").pause()
+			}
 		}
 		else {
 			elaina_play_pause()
@@ -1280,4 +1225,13 @@ window.addEventListener("load",async ()=> {
 		await createLoaderMenu(root)
 		manager().prepend(root)
 	}
+
+	document.querySelector('div[action=close]').addEventListener("click", ()=>{
+		writeBackupData()
+	})
 })
+
+window.del_webm_buttons = Delbuttons
+window.create_webm_buttons = create_webm_buttons
+window.applyHidetab = applyHidetab
+window.applyShowtab = applyShowtab
