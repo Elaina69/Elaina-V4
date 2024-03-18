@@ -103,7 +103,7 @@ if (DataStore.get("Dev-mode")) {
 else {
 	lang = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/Language.js"))()).default
 	CdnKey = (await (() => import("https://unpkg.com/elainav3-data@latest/data/configs/UpdateKey-CDN.js"))()).default
-	datastore_list = (await (() => import(`https://unpkg.com/elainav3-data@latest/data/configs/Datastore.js`))()).default
+	datastore_list = (await (() => import(`https://unpkg.com/elainav3-data@latest/data/configs/Datastore-default.js`))()).default
 	console.log(eConsole+"%c Running %cElaina theme - %cStable %cversion",eCss,"","color: #e4c2b3","color: #00ff44","")
 }
 
@@ -130,7 +130,10 @@ else if (!DataStore.get("Elaina-Plugins") || !DataStore.has("Elaina-Plugins")) {
 			setDefaultData(JSON.parse(cloud.content))
 		}
 	}
-	catch { setDefaultData(datastore_list) }
+	catch { 
+		console.log(eConsole+`%c Datastore file not found, use default theme's settings instead`,eCss,"")
+		setDefaultData(datastore_list)
+	}
 }
 
 if (CdnKey == LocalKey) {
