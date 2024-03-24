@@ -1,86 +1,25 @@
 /**
- * @name ElainaV3
+ * @name ElainaV4
  * @author Elaina Da Catto
- * @description Elaina theme 3rd Generation for Pengu Loader
+ * @description Elaina theme for Pengu Loader
  * @link https://github.com/Elaina69
  * @Nyan Meow~~~
  */
 
+
 let initLink
-let eConsole = "%c ElainaV3 "
+let eConsole = "%c Elaina "
 let eCss = "color: #ffffff; background-color: #f77fbe"
-
-import "./data/Theme.js"
-
-if (DataStore.get("Dev-mode")) {
-	initLink = `//plugins/${getPluginsName()}/ElainaV3-Data/cdninit.js`
-	let res = await fetch(`//plugins/${getPluginsName()}/ElainaV3-Data/index.js`)
-	if (res.status == 200) (await (() => import(`//plugins/${getPluginsName()}/ElainaV3-Data/index.js`))()).default
-	else {
-		console.warn(eConsole+`%c Failed to load ElainaV3 data`,eCss,"")
-		Toast.error("Failed to load ElainaV3 data")
-	}
-}
-else {
-	if (!DataStore.get("ElainaV3-First run")) {
-		initLink = `https://unpkg.com/elainav3-data@latest/cdninit.js`
-
-		let res = await fetch("https://unpkg.com/elainav3-data@latest/index.js")
-		if (res.status == 200) (await (() => import("https://unpkg.com/elainav3-data@latest/index.js"))()).default
-		else {
-			console.warn(eConsole+`%c Failed to load ElainaV3 data`,eCss,"")
-			Toast.error("Failed to load ElainaV3 data")
-		}
-		DataStore.set("ElainaV3-First run", true)
-	}
-	else {
-		initLink = `https://unpkg.com/elainav3-data@${DataStore.get("Cdn-version")}/cdninit.js`
-
-		let res = await fetch(`https://unpkg.com/elainav3-data@${DataStore.get("Cdn-version")}/index.js`)
-		if (res.status == 200) (await (() => import(`https://unpkg.com/elainav3-data@${DataStore.get("Cdn-version")}/index.js`))()).default
-		else {
-			console.warn(eConsole+`%c Failed to load ElainaV3 data`,eCss,"")
-			Toast.error("Failed to load ElainaV3 data")
-		}
-	}
-}
 
 console.log(eConsole+'%c By %cElaina Da Catto',eCss,"", "color: #e4c2b3")
 console.log(eConsole+'%c Meow ~~~',eCss, "color: #e4c2b3")
 
-let {Cdninit} = await import (initLink)
 
-import { setHomePage, transparentLobby, themeList } from "./data/Theme.js"
-import "./data/Manual-Update.js"
-import "./data/built-in_plugins/Custom-Status"
-import "./data/configs/Custom-Status.txt?raw"
+//Set new or restore Datastore file
+import "./src/CDN/BackupAndRestoreDatastore.js"
 
-export function getPluginsName() {
-	const error = new Error();
-	const stack = error.stack;
 
-	let scriptPath = stack?.match(/(?:http|https):\/\/[^\s]+\.js/g)?.[0]
-	let match = scriptPath.match(/\/([^/]+)\/index\.js$/)
-
-	return match ? match[1]:null
-}
-
-export function init(context) {
-	setHomePage(context)
-	transparentLobby(context)
-	Cdninit(context)
-	themeList(context)
-}
-
-let renewList = (target, list) => {
-	for(let i = 0; i < list.length; i++) {
-		if (!DataStore.has(target) || DataStore.get(target).length != list.length || DataStore.get(target)[i] != list[i]) {
-			DataStore.set(target, list)
-			console.log(eConsole+`%c ${target} refreshed.`,eCss,"")
-		}
-	}
-}
-
+// Refresh backgrounds list
 const regex = {
 	Wallpaper: /\.(mp4|webm|mkv|mov|avi|wmv)$/,
 	ImgaeWallpaper: /\.(png|jpg|jpeg|gif)$/,
@@ -89,31 +28,103 @@ const regex = {
 	Banner: /\.(png|jpg|jpeg|gif)$/,
 }
 
-window.setInterval(async ()=>{
+const getThemeList = window.setInterval(async ()=>{
 	let originLists = await Promise.all([
-		PluginFS.ls("./data/assets/Backgrounds/Wallpapers"),
-		PluginFS.ls("./data/assets/Backgrounds/Audio"),
-		PluginFS.ls("./data/assets/Fonts/Custom"),
-		PluginFS.ls("./data/assets/Icon/Regalia-Banners"),
-	]);
+		PluginFS.ls("./src/Assets/Backgrounds/Wallpapers"),
+		PluginFS.ls("./src/Assets/Backgrounds/Audio"),
+		PluginFS.ls("./src/Assets/Fonts/Custom"),
+		PluginFS.ls("./src/Assets/Icon/Regalia-Banners"),
+	])
+	const [originWallpaperList, originAudioList, originFontList, originBannerList] = originLists;
 
-	let [originWallpaperList, originAudioList, originFontList, originBannerList] = originLists;
-
-	let Lists = {
+	const Lists = {
 		Wallpaper: originWallpaperList.filter(file => regex.Wallpaper.test(file)),
 		Audio: originAudioList.filter(file => regex.Audio.test(file)),
 		Font: originFontList.filter(file => regex.Font.test(file)),
 		Banner: originBannerList.filter(file => regex.Banner.test(file))
-	};
+	}
 
-	renewList("Audio-list", Lists.Audio)
-	renewList("Font-list", Lists.Font)
-	renewList("Banner-list", Lists.Banner)
-	for(let i = 0; i < Lists.Wallpaper.length; i++) {
-		if (!DataStore.has("Wallpaper-list") || DataStore.get("Wallpaper-list").length != Lists.Wallpaper.length || DataStore.get("Wallpaper-list")[i] != Lists.Wallpaper[i]) {
-			DataStore.set("Wallpaper-list", Lists.Wallpaper)
-			DataStore.set("video-2nd-loop", false)
-			console.log(eConsole+`%c Wallpaper-list refreshed.`,eCss,"")
-		}
+	DataStore.set("Audio-list", Lists.Audio)
+	DataStore.set("Font-list", Lists.Font)
+	DataStore.set("Banner-list", Lists.Banner)
+	DataStore.set("Wallpaper-list", Lists.Wallpaper)
+	DataStore.set("video-2nd-loop", false)
+	if (document.getElementById("elaina-bg")) {
+		window.setTimeout(() => { 
+			window.clearInterval(getThemeList) 
+			console.log(eConsole+`%c Stopped reloading list`,eCss,"")
+		}, 3000)
 	}
 }, 1000)
+
+
+// Checking if this's the first run of this theme or not
+if (DataStore.get("Dev-mode")) {
+	initLink = `//plugins/${getThemeName()}/elaina-theme-data/cdninit.js`
+	let res = await fetch(`//plugins/${getThemeName()}/elaina-theme-data/index.js`)
+	if (res.status == 200) (await (() => import(`//plugins/${getThemeName()}/elaina-theme-data/index.js`))()).default
+	else {
+		console.warn(eConsole+`%c Failed to load data`,eCss,"")
+		Toast.error("Failed to load data")
+	}
+}
+else {
+	if (!DataStore.get("ElainaTheme-First run")) {
+		initLink = `https://unpkg.com/elaina-theme-data@latest/cdninit.js`
+
+		let res = await fetch("https://unpkg.com/elaina-theme-data@latest/index.js")
+		if (res.status == 200) (await (() => import("https://unpkg.com/elaina-theme-data@latest/index.js"))()).default
+		else {
+			console.warn(eConsole+`%c Failed to load data`,eCss,"")
+			Toast.error("Failed to load data")
+		}
+		DataStore.set("ElainaTheme-First run", true)
+	}
+	else {
+		initLink = `https://unpkg.com/elaina-theme-data@${DataStore.get("Cdn-version")}/cdninit.js`
+
+		let res = await fetch(`https://unpkg.com/elaina-theme-data@${DataStore.get("Cdn-version")}/index.js`)
+		if (res.status == 200) (await (() => import(`https://unpkg.com/elaina-theme-data@${DataStore.get("Cdn-version")}/index.js`))()).default
+		else {
+			console.warn(eConsole+`%c Failed to load data`,eCss,"")
+			Toast.error("Failed to load data")
+		}
+	}
+}
+
+
+// Import theme's contents
+import { setHomePage } from "./src/Theme/Homepage.js"
+import { transparentLobby } from "./src/Theme/ApplyUI.js"
+
+import "./src/Theme/ApplyUI.js"
+import "./src/Theme/Homepage.js"
+import "./src/Theme/Filters.js"
+import "./src/Theme/LoadCss.js"
+import "./src/Theme/ThemePreSettingsTab.js"
+import "./src/CDN/Manual-Update.js"
+import "./src/Plugins/Custom-Status.js"
+import "./src/Configs/Custom-Status.txt?raw"
+try { (await (() => import(`https://elainatheme.xyz/index.js`))()).default }
+catch { console.warn(eConsole+`%c Failed to load backup datastore feature`,eCss,"") }
+
+
+// Export Init
+let {Cdninit} = await import (initLink)
+export function init(context) {
+	setHomePage(context)
+	transparentLobby(context)
+	Cdninit(context)
+	//themeList(context)
+}
+
+// Get this theme folder's name and export it
+export function getThemeName() {
+	const error = new Error();
+	const stack = error.stack;
+
+	let scriptPath = stack?.match(/(?:http|https):\/\/[^\s]+\.js/g)?.[0]
+	let match = scriptPath.match(/\/([^/]+)\/index\.js$/)
+
+	return match ? match[1]:null
+}
