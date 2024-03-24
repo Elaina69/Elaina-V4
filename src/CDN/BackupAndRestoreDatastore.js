@@ -44,7 +44,7 @@ else if (!DataStore.get("Elaina-Plugins") || !DataStore.has("Elaina-Plugins")) {
 						if (cloud.success) {
 							console.log(eConsole+`%c Found datastore file from cloud, ready to restore it`,eCss,"")
 							setDefaultData(JSON.parse(cloud.content), true)
-							window.restartClient()
+							window.setTimeout(()=>window.restartClient())
 						}
 					}
 					catch { 
@@ -60,7 +60,7 @@ else if (!DataStore.get("Elaina-Plugins") || !DataStore.has("Elaina-Plugins")) {
 			success: 'Restore complete!',
 			error: ''
 		})
-	},10000)
+	},15000)
 }
 
 
