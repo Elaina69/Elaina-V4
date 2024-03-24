@@ -15,6 +15,8 @@ DataStore.set("Plugin-folder-name",getThemeName())
 
 //Set default value for backgrounds
 let DefaultData = {
+	"Wallpaper-list"	: ["Elaina1.webm"],
+	"Audio-list"		: ["If_there_was_an_Endpoint.mp3"],
 	"wallpaper-index"	: 0,
 	"audio-index"		: 0,
 	"wallpaper-volume"	: 0.0,
