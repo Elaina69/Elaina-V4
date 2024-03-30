@@ -1,3 +1,8 @@
+/**
+ * @author Nomi
+ * @description This's just a LL-settings from League Loader, but i change it a little bit for my theme
+ */
+
 import { getThemeName } from '../OtherThings.js'
 import icdata from "../Configs/Icons.js"
 

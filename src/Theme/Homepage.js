@@ -83,6 +83,7 @@ async function add_elaina_home_navbar() {
 	}
 }
 
+/**This will be replaced by under code in near future */
 function go_to_default_home_page() {
 	let intervalId = window.setInterval(() => {
 		let home = document.querySelector(`lol-uikit-navigation-item[item-id='elaina-home']`)
@@ -545,22 +546,8 @@ let addHomepage = async (node) => {
     if (previous_page != pagename) {previous_page = pagename}
 }
 
-
-// For debugging
-let loopwallCss,muteCss,pausewall,pauseau
-if (DataStore.get("mute-audio")) {muteCss = "color: #00ff44"} else {muteCss = "color: red"}
-if (DataStore.get("audio-loop")) {loopwallCss = "color: #00ff44"} else {loopwallCss = "color: red"}
-if (DataStore.get('pause-wallpaper')%2==0) {pausewall = "color: #00ff44"} else {pausewall = "color: red"}
-if (DataStore.get('pause-audio')%2==0) {pauseau = "color: #00ff44"} else {pauseau = "color: red"}
-
-if (DataStore.get("Continues_Audio")) {
-	console.log(eConsole+`%c Now playing %c${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]} %cand %c${DataStore.get("Audio-list")[DataStore.get('audio-index')]}`,eCss,"","color: #0070ff","","color: #0070ff")
-	console.log(eConsole+`%c current wallpaper status: pause: %c${DataStore.get('pause-wallpaper')%2==0}%c, play/pause-time: %c${DataStore.get('pause-wallpaper')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %ctrue%c, volume: %c${DataStore.get("wallpaper-volume")*100}%`,eCss,"",pausewall,"","color: #0070ff","",muteCss,"","color: #00ff44","","color: #0070ff")
-	console.log(eConsole+`%c current audio status: pause: %c${DataStore.get('pause-audio')%2==0}%c, play/pause-time: %c${DataStore.get('pause-audio')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %c${DataStore.get("audio-loop")}%c, volume: %c${DataStore.get("audio-volume")*100}%`,eCss,"",pauseau,"","color: #0070ff","",muteCss,"",loopwallCss,"","color: #0070ff")
-}
-
-
 window.addEventListener("load",async ()=> {
+	// Make sure video and element doesn't load before wallpaper/audio list
 	window.setTimeout(()=>{
 		const video = document.createElement('video')
 		video.id       = 'elaina-bg'
@@ -610,6 +597,20 @@ window.addEventListener("load",async ()=> {
 		})
 	},2000)
 })
+
+
+// For debugging
+let loopwallCss,muteCss,pausewall,pauseau
+if (DataStore.get("mute-audio")) {muteCss = "color: #00ff44"} else {muteCss = "color: red"}
+if (DataStore.get("audio-loop")) {loopwallCss = "color: #00ff44"} else {loopwallCss = "color: red"}
+if (DataStore.get('pause-wallpaper')%2==0) {pausewall = "color: #00ff44"} else {pausewall = "color: red"}
+if (DataStore.get('pause-audio')%2==0) {pauseau = "color: #00ff44"} else {pauseau = "color: red"}
+
+if (DataStore.get("Continues_Audio")) {
+	console.log(eConsole+`%c Now playing %c${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]} %cand %c${DataStore.get("Audio-list")[DataStore.get('audio-index')]}`,eCss,"","color: #0070ff","","color: #0070ff")
+	console.log(eConsole+`%c current wallpaper status: pause: %c${DataStore.get('pause-wallpaper')%2==0}%c, play/pause-time: %c${DataStore.get('pause-wallpaper')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %ctrue%c, volume: %c${DataStore.get("wallpaper-volume")*100}%`,eCss,"",pausewall,"","color: #0070ff","",muteCss,"","color: #00ff44","","color: #0070ff")
+	console.log(eConsole+`%c current audio status: pause: %c${DataStore.get('pause-audio')%2==0}%c, play/pause-time: %c${DataStore.get('pause-audio')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %c${DataStore.get("audio-loop")}%c, volume: %c${DataStore.get("audio-volume")*100}%`,eCss,"",pauseau,"","color: #0070ff","",muteCss,"",loopwallCss,"","color: #0070ff")
+}
 
 window.del_webm_buttons = Delbuttons
 window.create_webm_buttons = create_webm_buttons
