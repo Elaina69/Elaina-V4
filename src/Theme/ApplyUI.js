@@ -1,30 +1,11 @@
 import * as observer from "../Utilities/_observer.js"
 import filters from "../Configs/Filters.js"
+import icdata from "../Configs/Icons.js"
 
 let datapath = new URL("..", import.meta.url).href
 let iconFolder  = `${datapath}Assets/Icon/`
 
-export function transparentLobby(context) {
-	context.socket.observe('/lol-gameflow/v1/gameflow-phase',async (data) => {
-		if(data["data"]=="Matchmaking") {
-			let a = document.getElementsByClassName("placeholder-invited-container")
-			for (let i =0; i< a.length; i++) {
-				let div = document.createElement("div")
-				div.classList.add("placeholder-invited-image")
-				a[i].querySelector(".placeholder-invited-video").remove()
-				a[i].append(div)
-			}
-		}
-	})
-}
-
-function DisplayNone(element) {
-	element.style.display = 'none'
-}
-function removeNode(obj) {
-	try {document.querySelector(obj).remove()}catch{}
-}
-
+//For observer
 function freezeProperties(object, properties) {
 	for (const type in object) {
 		if ((properties && properties.length && properties.includes(type)) || (!properties || !properties.length)) {
@@ -40,6 +21,20 @@ function freezeProperties(object, properties) {
 	}
 }
 
+export function transparentLobby(context) {
+	context.socket.observe('/lol-gameflow/v1/gameflow-phase',async (data) => {
+		if(data["data"]=="Matchmaking") {
+			let a = document.getElementsByClassName("placeholder-invited-container")
+			for (let i =0; i< a.length; i++) {
+				let div = document.createElement("div")
+				div.classList.add("placeholder-invited-image")
+				a[i].querySelector(".placeholder-invited-video").remove()
+				a[i].append(div)
+			}
+		}
+	})
+}
+
 observer.subscribeToElementCreation(".summoner-xp-radial", (element)=> {element.remove()})
 
 observer.subscribeToElementCreation("lol-uikit-parallax-background",(element)=> {
@@ -47,7 +42,11 @@ observer.subscribeToElementCreation("lol-uikit-parallax-background",(element)=> 
 })	
 
 if (DataStore.get("aram-only")) {
+	function removeNode(obj) {
+		try {document.querySelector(obj).remove()}catch{}
+	}
  	let interval
+
  	observer.subscribeToElementCreation(".parties-game-type-select-wrapper",(element)=>{
  		element.querySelector('div[data-game-mode=ARAM] div[class=parties-game-type-upper-half]').click()
 			
@@ -102,6 +101,10 @@ if (DataStore.get("Runes-BG")) {
 }
 
 if (DataStore.get("new-gamesearch-queue")) {
+	function DisplayNone(element) {
+		element.style.display = 'none'
+	}
+
 	observer.subscribeToElementCreation('lol-parties-game-search', (element) => {
 		element.shadowRoot.querySelector("div").style.cssText = `
 			border: 1px solid #8c8263; 
@@ -275,31 +278,31 @@ if (DataStore.get("Custom-Icon")) {
 			window.clearInterval(bannerInterval)
 		})
 	}
-// 	if (DataStore.get("Custom-Hover-card-backdrop")) {
-// 		observer.subscribeToElementCreation("#lol-uikit-tooltip-root",(element)=>{
-// 			try {
-// 				if (element.querySelector("lol-regalia-hovercard-v2-element").getAttribute("summoner-id") == DataStore.get("Summoner-ID")) {
-// 					document.querySelector("#hover-card-backdrop").style.backgroundImage = "var(--Hover-card-backdrop)"
-// 				}
-// 			}catch{}
-// 		})
-// 	}
-// 	if (DataStore.get('Custom-Gamemode-Icon')) {
-// 		observer.subscribeToElementCreation("lol-uikit-video-group",(element)=>{
-// 			function gameModeIcon_active(obj, name) {
-// 				try {
-// 					let a = document.querySelector(`${obj} lol-uikit-video-state[state='active'] lol-uikit-video`)
-// 					a.setAttribute("src", `${iconFolder}Gamemodes/${name}`)
-// 					a.querySelector("video").setAttribute("src", `${iconFolder}Gamemodes/${name}`)
-// 				}catch{}
-// 			}
-// 			gameModeIcon_active("div[data-game-mode='CLASSIC']",icdata["classic_video"])
-// 			gameModeIcon_active("div[data-game-mode='TFT']", icdata["tft_video"])
-// 			gameModeIcon_active("div[data-game-mode='ARAM']", icdata["aram_video"])
-// 			gameModeIcon_active("div[data-game-mode='CHERRY']",icdata["cherry_video"])
-// 			gameModeIcon_active('div[data-map-id="11"]',icdata["classic_video"])
-// 			gameModeIcon_active('div[data-map-id="12"]',icdata["aram_video"])
-// 		})
-// 	}
+	if (DataStore.get("Custom-Hover-card-backdrop")) {
+		observer.subscribeToElementCreation("#lol-uikit-tooltip-root",(element)=>{
+			try {
+				if (element.querySelector("lol-regalia-hovercard-v2-element").getAttribute("summoner-id") == DataStore.get("Summoner-ID")) {
+					document.querySelector("#hover-card-backdrop").style.backgroundImage = "var(--Hover-card-backdrop)"
+				}
+			}catch{}
+		})
+	}
+	if (DataStore.get('Custom-Gamemode-Icon')) {
+		observer.subscribeToElementCreation("lol-uikit-video-group",(element)=>{
+			function gameModeIcon_active(obj, name) {
+				try {
+					let a = document.querySelector(`${obj} lol-uikit-video-state[state='active'] lol-uikit-video`)
+					a.setAttribute("src", `${iconFolder}Gamemodes/${name}`)
+					a.querySelector("video").setAttribute("src", `${iconFolder}Gamemodes/${name}`)
+				}catch{}
+			}
+			gameModeIcon_active("div[data-game-mode='CLASSIC']",icdata["classic_video"])
+			gameModeIcon_active("div[data-game-mode='TFT']", icdata["tft_video"])
+			gameModeIcon_active("div[data-game-mode='ARAM']", icdata["aram_video"])
+			gameModeIcon_active("div[data-game-mode='CHERRY']",icdata["cherry_video"])
+			gameModeIcon_active('div[data-map-id="11"]',icdata["classic_video"])
+			gameModeIcon_active('div[data-map-id="12"]',icdata["aram_video"])
+		})
+	}
 }
 //observer.subscribeToElementCreation("",(element)=>{})
