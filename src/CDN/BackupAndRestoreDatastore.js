@@ -30,37 +30,34 @@ if (DataStore.get("Elaina-Plugins")) {
 	setDefaultData(datastore_list, false)
 }
 else if (!DataStore.get("Elaina-Plugins") || !DataStore.has("Elaina-Plugins")) {
-	console.log(eConsole+`%c Finding backup file from cloud...`,eCss,"")
+	//console.log(eConsole+`%c Finding backup file from cloud...`,eCss,"")
 	setDefaultData(datastore_list)
 
-	window.setTimeout(() => {
-		let restoreData = new Promise((resolve, reject) => {
-			setTimeout(async () => {
-				if (true) {
-					resolve()
-					try { 
-						let summonerID = await utils.getSummonerID()
-						let cloud = await readBackup(summonerID, "datastore.json")
-						if (cloud.success) {
-							console.log(eConsole+`%c Found datastore file from cloud, ready to restore it`,eCss,"")
-							setDefaultData(JSON.parse(cloud.content), true)
-							window.setTimeout(()=>window.restartClient())
-						}
-					}
-					catch { 
-						console.log(eConsole+`%c Datastore file not found, use default theme's settings instead`,eCss,"")
-					}
-				}
-				else reject()
-			},5000)
-		})
+	// window.setTimeout(() => {
+	// 	let restoreData = new Promise((resolve, reject) => {
+	// 		setTimeout(async () => {
+	// 			resolve()
+	// 			try { 
+	// 				let summonerID = await utils.getSummonerID()
+	// 				let cloud = await readBackup(summonerID, "datastore.json")
+	// 				if (cloud.success) {
+	// 					console.log(eConsole+`%c Found datastore file from cloud, ready to restore it`,eCss,"")
+	// 					setDefaultData(JSON.parse(cloud.content), true)
+	// 					window.setTimeout(()=>window.restartClient())
+	// 				}
+	// 			}
+	// 			catch { 
+	// 				console.log(eConsole+`%c Datastore file not found, use default theme's settings instead`,eCss,"")
+	// 			}
+	// 		},5000)
+	// 	})
 		
-		Toast.promise(restoreData, {
-			loading: 'Restoring Datastore...',
-			success: 'Restore complete!',
-			error: ''
-		})
-	},15000)
+	// 	Toast.promise(restoreData, {
+	// 		loading: 'Restoring Datastore...',
+	// 		success: 'Restore complete!',
+	// 		error: ''
+	// 	})
+	// },15000)
 }
 
 

@@ -14,16 +14,6 @@ DataStore.set("Plugin-folder-name",getThemeName())
 
 
 //Set default value for backgrounds
-let DefaultData = {
-	"Wallpaper-list"	: ["Elaina1.webm"],
-	"Audio-list"		: ["If_there_was_an_Endpoint.mp3"],
-	"wallpaper-index"	: 0,
-	"audio-index"		: 0,
-	"wallpaper-volume"	: 0.0,
-  	"audio-volume"		: 0.3,
-	'mute-audio'		: false,
-}
-
 function setDefaultData(list) {
 	Object.entries(list).forEach(([key, value]) => {
 	  	if (!DataStore.has(key)) {
@@ -33,7 +23,18 @@ function setDefaultData(list) {
 	});
 }
 
-setDefaultData(DefaultData)
+setDefaultData({
+	"Wallpaper-list"	: ["Elaina1.webm"],
+	"Audio-list"		: ["If_there_was_an_Endpoint.mp3"],
+	"wallpaper-index"	: 0,
+	"audio-index"		: 0,
+	"wallpaper-volume"	: 0.0,
+  	"audio-volume"		: 0.3,
+	'mute-audio'		: false,
+	"Playback-speed"	: 100,
+	"Audio-currentTime"	: 0,
+	"Wallpaper-currentTime": 0
+})
 
 
 //get current summonerID
@@ -43,7 +44,7 @@ window.setTimeout(async()=> {
 },7000)
 
 
-//Add Elaina theme's homepage and set as default
+/**
 function create_element(tagName, className, content) {
 	const el = document.createElement(tagName)
 	el.className = className
@@ -75,6 +76,7 @@ async function add_elaina_home_navbar() {
 			let elaina_home_navbar_item = create_element("lol-uikit-navigation-item", "")
 
 			elaina_home_navbar_item.setAttribute("item-id", "elaina-home")
+			elaina_home_navbar_item.setAttribute("class", "elaina-home-navbar")
 			elaina_home_navbar_item.setAttribute("priority", 1)
 			elaina_home_navbar_item.textContent = await getString("home")
 
@@ -83,7 +85,6 @@ async function add_elaina_home_navbar() {
 	}
 }
 
-/**This will be replaced by under code in near future */
 function go_to_default_home_page() {
 	let intervalId = window.setInterval(() => {
 		let home = document.querySelector(`lol-uikit-navigation-item[item-id='elaina-home']`)
@@ -97,18 +98,40 @@ function go_to_default_home_page() {
 		}
 	}, 100)
 }
+*/
 
-/**this not work yet, use above code instead */
-export function setHomePage(context) { //man i dunnu how to do it
-	// context.rcp.postInit("rcp-fe-lol-navigation", async (api) => {
-	// 	const navigationManager = api._apiHome.navigationManager
-	// 	api._apiHome.navigationManager = new Proxy(navigationManager, {
-	// 		set(target, property, value) {
-	// 			target[property] = (property === "firstNavItemId") ? "overview": value
-	// 			return true
-	// 		}
-	// 	})
-	// })
+//Add Elaina theme's homepage and set as default
+export function setHomePage(context) {
+	context.rcp.postInit('rcp-fe-lol-navigation', async (api) => {
+        window.__RCP_NAV_API = api
+        
+        const originalCreate = api._apiHome.navigationManager.createSubNavigationFromJSON
+        api._apiHome.navigationManager.createSubNavigationFromJSON = async function (e, t, n) {
+            console.dir(n)
+
+            n.push({
+                id: 'elaina-home',
+                displayName: await getString("home"),
+                isPlugin: false,
+                enabled: true,
+                visibile: true,
+                priority: 1,
+                url: 'https://elainatheme.xyz/',
+            })
+
+            return originalCreate.apply(this, [e, t, n])
+        }
+    })
+
+	context.rcp.postInit("rcp-fe-lol-navigation", async (api) => {
+		const navigationManager = api._apiHome.navigationManager
+		api._apiHome.navigationManager = new Proxy(navigationManager, {
+			set(target, property, value) {
+				target[property] = (property === "firstNavItemId") ? 'elaina-home': value
+				return true
+			}
+		})
+	})
 }
 
 
@@ -167,6 +190,15 @@ function applyShowtab() {
 	showTab(!DataStore.get("hide-merch"),'lol-uikit-navigation-item[item-id="merch"]',"Merch")
 	showTab(!DataStore.get("hide-patch-note"),'lol-uikit-navigation-item[item-id="latest_patch_notes"]',"Patch note")
 	showTab(!DataStore.get("hide-esport"),'lol-uikit-navigation-item[item-id="news"]',"Esport")
+}
+
+function deleteNavbarTab() {
+	let delnavtab = window.setInterval(()=> {
+		if (document.querySelector('lol-uikit-navigation-item[item-id="overview"]')) {
+			window.clearInterval(delnavtab)
+			applyHidetab()
+		}
+	},1000)
 }
 
 
@@ -272,6 +304,7 @@ function audio_loop_icon(elem) {
 function loadBG(BG) {
 	let elainaBg = document.getElementById("elaina-bg")
 	elainaBg.src = `${bgFolder}Wallpapers/${BG}`
+	elainaBg.playbackRate = DataStore.get("Playback-speed")/100
 }
 
 function loadSong(song) {
@@ -360,9 +393,17 @@ function create_webm_buttons() {
 	const muteaudioIcon  = document.createElement("img")
 	const audioLoopIcon  = document.createElement("img")
 	const bgdropdown     = document.createElement("lol-uikit-framed-dropdown")
+	const progressBar    = document.createElement("div")
+	const progress		 = document.createElement("div")
+
+	let audio = document.getElementById('bg-audio')
 	
 	container.classList.add("webm-bottom-buttons-container")
 	container2.classList.add("newbgchange-container")
+	progressBar.classList.add("progress-bar")
+	progress.classList.add("progress")
+
+	progress.style.width = `${(DataStore.get("Audio-currentTime") / audio.duration) * 100}%`
 	
 	pauseBg.id    = "pause-bg"
 	nextBg.id     = "next-bg"
@@ -440,6 +481,9 @@ function create_webm_buttons() {
 	let showcontainer = document.getElementsByClassName("rcp-fe-lol-home")[0]
 	    showcontainer.appendChild(container)
 		showcontainer.appendChild(container2)
+		showcontainer.appendChild(progressBar)
+
+	progressBar.append(progress)
 	
 	container.append(muteAudio, prevAudio, pauseAudio, nextAudio, audioLoop)
 
@@ -484,33 +528,75 @@ function create_webm_buttons() {
 			bgdropdown.appendChild(el)
 		}
 	}
+
+	audio.addEventListener('timeupdate', ()=> {
+		progress.style.width = `${(audio.currentTime / audio.duration) * 100}%`
+	})
 }
 
+/** Delete button after changing tab **/
 function Delbuttons() {
 	document.getElementsByClassName("webm-bottom-buttons-container")[0].remove()
 	document.getElementsByClassName("newbgchange-container")[0].remove()
+	document.getElementsByClassName("progress-bar")[0].remove()
+}
+
+/** Create video/audio DOM **/
+function loadWallpaperAndMusic() {
+	const video = document.createElement('video')
+	video.id       = 'elaina-bg'
+	video.autoplay = true
+	video.volume   = DataStore.get("wallpaper-volume")
+	video.muted    = DataStore.get("mute-audio")
+	video.currentTime = DataStore.get("Wallpaper-currentTime")
+	try { 
+		video.src = `${bgFolder}Wallpapers/${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]}` 
+		video.playbackRate = DataStore.get("Playback-speed")/100
+	}catch {}
+	video.addEventListener("error", ()=> {
+		video.load()
+		video.addEventListener("ended", () => video.load())
+		DataStore.set("video-2nd-loop", true)
+	})
+	if (DataStore.get("video-2nd-loop")) 
+		video.addEventListener("ended", () => video.load())
+	else video.loop = true
+		
+	const audio = document.createElement("audio")
+	audio.id       = 'bg-audio'
+	audio.autoplay = true
+	audio.src      = `${bgFolder}Audio/${DataStore.get("Audio-list")[DataStore.get('audio-index')]}`
+	audio.volume   = DataStore.get("audio-volume")
+	audio.muted    = DataStore.get("mute-audio")
+	audio.currentTime = DataStore.get("Audio-currentTime")
+	if (DataStore.get('audio-loop')) 
+		audio.addEventListener("ended", () => audio.load())
+	else audio.addEventListener("ended", nextSong)
+	audio.addEventListener("error", () => audio.load())
+
+	document.querySelector("body").prepend(video)
+	document.querySelector("body").prepend(audio)
+	elaina_play_pause()
+
+	window.setInterval(()=> {
+		if (audio.currentTime != DataStore.get("Audio-currentTime")) 
+			DataStore.set("Audio-currentTime", audio.currentTime)
+		if (video.currentTime != DataStore.get("Wallpaper-currentTime"))
+			DataStore.set("Wallpaper-currentTime", video.currentTime)
+	},3000)
 }
 
 
 //Add content to homepage
 let addHomepage = async (node) => {
-    let pagename, previous_page
-    let patcher_go_to_default_home_page = true
+    let pagename, previous_page, purchaseHistory
     pagename = node.getAttribute("data-screen-name")
 
     if (pagename == "rcp-fe-lol-home-main") {
 		if (!document.getElementsByClassName("webm-bottom-buttons-container").length) {
 			create_webm_buttons()
-			add_elaina_home_page()
-			add_elaina_home_navbar()
-			go_to_default_home_page()
 		}
-		let delnavtab = window.setInterval(()=> {
-			if (document.querySelector('lol-uikit-navigation-item[item-id="overview"]')) {
-				window.clearInterval(delnavtab)
-				applyHidetab()
-			}
-		},1000)
+		deleteNavbarTab()
 	}
 	else if (pagename != "rcp-fe-lol-navigation-screen" && pagename != "window-controls" && pagename != "rcp-fe-lol-home" && pagename != "social" && document.getElementsByClassName("webm-bottom-buttons-container").length) {
 		Delbuttons()
@@ -518,68 +604,33 @@ let addHomepage = async (node) => {
 	if (pagename == "rcp-fe-lol-uikit-full-page-modal-controller") {
 		return
 	}
-	if (pagename == "social") {
-		if (patcher_go_to_default_home_page){
-			go_to_default_home_page()
-			patcher_go_to_default_home_page = false
-		}
-	}
 	if (pagename == "rcp-fe-lol-store") {
 		let runtime = 0
-		let purchaseHistory = window.setInterval(() => {
+		purchaseHistory = window.setInterval(() => {
 			try {
 				runtime += 1
 				let storeIframe = document.querySelector('#rcp-fe-lol-store-iframe > iframe[referrerpolicy = "no-referrer-when-downgrade"]').contentWindow.document.querySelector("div.item-page-items-container-wrapper.purchase-history-page-content-wrapper")
-					storeIframe.style.background = "transparent"
+				storeIframe.style.background = "transparent"
+
 				let th = storeIframe.querySelectorAll("div > div > table > thead > tr > th")
 				for (let i = 0; i < th.length; i++) {
 					th[i].style.background = "transparent"
-				}
-				if (storeIframe.style.background == "transparent") {
-					window.clearInterval(purchaseHistory)
-					console.log(eConsole+"%c Cleared Background ("+`%c${runtime/10}%c)`,eCss,"color: #e4c2b3","color: #0070ff","color: #e4c2b3")
 				}
 			}
 			catch {}
 		},100)
 	}
+	else if (previous_page == "rcp-fe-lol-store") {
+		window.clearInterval(purchaseHistory)
+		console.log(eConsole+"%c Cleared Background ("+`%c${runtime/10}%c)`,eCss,"color: #e4c2b3","color: #0070ff","color: #e4c2b3")
+	}
     if (previous_page != pagename) {previous_page = pagename}
 }
 
 window.addEventListener("load",async ()=> {
-	// Make sure video and element doesn't load before wallpaper/audio list
+	//To make sure video and audio doesn't load before wallpaper/audio list loaded, so i add timeout for them
 	window.setTimeout(()=>{
-		const video = document.createElement('video')
-		video.id       = 'elaina-bg'
-		video.autoplay = true
-		video.volume   = DataStore.get("wallpaper-volume")
-		video.muted    = DataStore.get("mute-audio")
-		try { video.src = `${bgFolder}Wallpapers/${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]}` }catch {}
-		video.addEventListener("error", ()=> {
-			video.load()
-			video.addEventListener("ended", () => video.load())
-			DataStore.set("video-2nd-loop", true)
-			console.log(eConsole+"%c There's problem with wallpaper.", eCss,"")
-			Toast.error("There's problem with wallpaper.")
-		})
-		if (DataStore.get("video-2nd-loop")) 
-			video.addEventListener("ended", () => video.load())
-		else video.loop = true
-		
-		const audio = document.createElement("audio")
-		audio.id       = 'bg-audio'
-		audio.autoplay = true
-		audio.src      = `${bgFolder}Audio/${DataStore.get("Audio-list")[DataStore.get('audio-index')]}`
-		audio.volume   = DataStore.get("audio-volume")
-		audio.muted    = DataStore.get("mute-audio")
-		if (DataStore.get('audio-loop')) 
-			audio.addEventListener("ended", () => audio.load())
-		else audio.addEventListener("ended", nextSong)
-		audio.addEventListener("error", () => audio.load())
-
-		document.querySelector("body").prepend(video)
-		document.querySelector("body").prepend(audio)
-		elaina_play_pause()
+        loadWallpaperAndMusic()
 
 		utils.mutationObserverAddCallback(addHomepage, ["screen-root"])
 		utils.subscribe_endpoint('/lol-gameflow/v1/gameflow-phase', (message) => {
@@ -595,7 +646,7 @@ window.addEventListener("load",async ()=> {
 				audio_play_pause()
 			}
 		})
-	},2000)
+	},2500)
 })
 
 

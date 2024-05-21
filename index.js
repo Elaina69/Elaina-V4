@@ -29,21 +29,34 @@ const regex = {
 }
 
 const getThemeList = window.setInterval(async ()=>{
-	let originLists = await Promise.all([
-		PluginFS.ls("./src/Assets/Backgrounds/Wallpapers"),
-		PluginFS.ls("./src/Assets/Backgrounds/Audio"),
-		PluginFS.ls("./src/Assets/Fonts/Custom"),
-		PluginFS.ls("./src/Assets/Icon/Regalia-Banners"),
-	])
-	const [originWallpaperList, originAudioList, originFontList, originBannerList] = originLists;
+	let originLists
+	try {
+		originLists = await Promise.all([
+			Pengu.fs.ls("./src/Assets/Backgrounds/Wallpapers"),
+			Pengu.fs.ls("./src/Assets/Backgrounds/Audio"),
+			Pengu.fs.ls("./src/Assets/Fonts/Custom"),
+			Pengu.fs.ls("./src/Assets/Icon/Regalia-Banners"),
+		]);
+	}
+	catch {
+		console.warn(eConsole+`%c Can't find Pengu.fs, use PluginsFS instead`,eCss,"")
+		originLists = await Promise.all([
+			PluginFS.ls("./src/Assets/Backgrounds/Wallpapers"),
+			PluginFS.ls("./src/Assets/Backgrounds/Audio"),
+			PluginFS.ls("./src/Assets/Fonts/Custom"),
+			PluginFS.ls("./src/Assets/Icon/Regalia-Banners"),
+		])
+	}
 
+	const [originWallpaperList, originAudioList, originFontList, originBannerList] = originLists;
+	
 	const Lists = {
 		Wallpaper: originWallpaperList.filter(file => regex.Wallpaper.test(file)),
 		Audio: originAudioList.filter(file => regex.Audio.test(file)),
 		Font: originFontList.filter(file => regex.Font.test(file)),
 		Banner: originBannerList.filter(file => regex.Banner.test(file))
-	}
-
+	};
+	
 	DataStore.set("Audio-list", Lists.Audio)
 	DataStore.set("Font-list", Lists.Font)
 	DataStore.set("Banner-list", Lists.Banner)
@@ -105,8 +118,23 @@ import "./src/Theme/ThemePreSettingsTab.js"
 import "./src/CDN/Manual-Update.js"
 import "./src/Plugins/Custom-Status.js"
 import "./src/Configs/Custom-Status.txt?raw"
-try { (await (() => import(`https://elainatheme.xyz/index.js`))()).default }
-catch { console.warn(eConsole+`%c Failed to load backup datastore feature`,eCss,"") }
+
+async function checkingServer() {
+	let controller = new AbortController()
+	let timeoutId = setTimeout(() => controller.abort(), 3000)
+  
+	try {
+		clearTimeout(timeoutId)
+	  	await (await fetch('https://elainatheme.xyz/numberOfUsers', { signal: controller.signal })).json();
+		(await (() => import('https://elainatheme.xyz/index.js'))()).default
+	} 
+	catch (error) {
+	  	clearTimeout(timeoutId)
+		console.warn(eConsole+`%c Failed to load backup datastore feature`,eCss,"")
+		throw error
+	}
+}
+checkingServer()
 
 
 // Export Init
@@ -115,7 +143,6 @@ export function init(context) {
 	setHomePage(context)
 	transparentLobby(context)
 	Cdninit(context)
-	//themeList(context)
 }
 
 // Get this theme folder's name and export it
