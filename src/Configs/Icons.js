@@ -5,7 +5,19 @@ export default {
     "Static-logo"   : "Logo.png",
 
     "Avatar"        : "Avatar.gif",
+    // Not support yet
+    // "Avatar-Config" : {
+    //     "Right" : "0px",
+    //     "Top": "0px",
+    // },
+
     "Border"        : "spirit-of-ionia-crests-wild-rift.png",
+    // Not support yet
+    // "Border-Config" : {
+    //     "Right" : "0px",
+    //     "Top": "0px",
+    // },
+
     "Hover-card"    : "Hover-card-backdrop.jpg",
 
     "RP-icon"       : "ApprenticeWitch.png",

@@ -109,7 +109,7 @@ if (DataStore.get("new-gamesearch-queue")) {
 		element.shadowRoot.querySelector("div").style.cssText = `
 			border: 1px solid #8c8263; 
 			border-radius: 10px; 
-			margin-top: 9px
+			margin-top: 1px
 		`
 	})
 	observer.subscribeToElementCreation('.parties-status-card-body', (element) => {
@@ -134,6 +134,9 @@ if (DataStore.get("new-gamesearch-queue")) {
 	})
 	observer.subscribeToElementCreation('.parties-game-invite-heading-text', (element) => {
 		element.hidden = true
+	})
+	observer.subscribeToElementCreation('.parties-game-search-header', (element) => {
+		element.style.cssText = `height: 28px;`
 	})
 	observer.subscribeToElementCreation('.parties-game-search-divider', DisplayNone)
 	observer.subscribeToElementCreation('.parties-game-info-panel-bg-container', DisplayNone)

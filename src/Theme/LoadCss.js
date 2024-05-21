@@ -7,11 +7,12 @@ let bgFolder    = `${datapath}Assets/Backgrounds/`
 
 window.addEventListener("load",async ()=> {
 	let addonCssList = {
-		a: { key: "hide-vertical-lines", css: "Hide-vertical-lines.css", altCss: "fake.css" },
-		b: { key: "aram-only", css: "Aram-only.css", altCss: "fake.css" },
-		c: { key: "Hide-Champions-Splash-Art", css: "Hide-Champs-Splash-Art.css", altCss: "fake.css" },
+		a: { key: "hide-vertical-lines", css: "Hide-vertical-lines.css", altCss: "null.css" },
+		b: { key: "aram-only", css: "Aram-only.css", altCss: "null.css" },
+		c: { key: "Hide-Champions-Splash-Art", css: "Hide-Champs-Splash-Art.css", altCss: "null.css" },
 		d: { key: "Sidebar-Transparent", css: "Sidebar-Transparent.css", altCss: "Sidebar-Color.css" },
-		e: { key: "Animate-Loading", css: "Animate-Loading-Screen.css", altCss: "Static-Loading-Screen.css" }
+		e: { key: "Animate-Loading", css: "Animate-Loading-Screen.css", altCss: "Static-Loading-Screen.css" },
+		f: { key: "Custom-Navbar-Css", css: "Custom-Navbar-Css.css", altCss: "null.css" },
 	}
 	for (let prop in addonCssList) {
 		let { key, css, altCss } = addonCssList[prop]
@@ -20,8 +21,9 @@ window.addEventListener("load",async ()=> {
 			addonCssList[prop] = `@import url("${datapath}assets/Css/Addon-Css/${cssPath}");`
 		}
 	}
-	let {a,b,c,d,e} = addonCssList
-	utils.addStyle(a+b+c+d+e)
+	let {a,b,c,d,e,f} = addonCssList
+	utils.addStyle(a+b+c+d+e+f)
+
 	utils.addStyle(/*css*/`
 		@import url("${datapath}assets/Css/Elaina.css");
 		@font-face {font-family: 'Elaina'; src: url('${datapath}assets/Fonts/BeaufortforLOL-Bold.ttf')}
@@ -73,6 +75,7 @@ window.addEventListener("load",async ()=> {
 		})
 		utils.addStyle(a+b+c+d+e+f+g+h+i)
 	}
+	
 	if (DataStore.get("Custom-Font")) {
 		utils.addFont(`${datapath}assets/Fonts/Custom/${DataStore.get("CurrentFont")}`,"Custom-font","Custom")
 	}
