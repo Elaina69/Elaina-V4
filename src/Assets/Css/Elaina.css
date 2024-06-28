@@ -1171,11 +1171,7 @@ div[data-screen-name="rcp-fe-lol-navigation-screen"] {
     justify-content: center;
 }
 
-.currency-be {
-    margin-left: 10px !important;
-}
-
-#restoreAndDeleteData {
+#restoreAndDeleteData {	
 	display: flex !important;
 }
 
