@@ -36,70 +36,73 @@ let addFilter = async (node) => {
     pagename = node.getAttribute("data-screen-name")
 	console.log(eConsole+"%c "+pagename,eCss,"color: #e4c2b3")
 
-    if (pagename == "rcp-fe-lol-home-main") {
-		elaina_bg_elem.style.filter = filters["Homepage"]
+    try {
+		if (pagename == "rcp-fe-lol-home-main") {
+			elaina_bg_elem.style.filter = filters["Homepage"]
+		}
+		if (pagename == "rcp-fe-lol-yourshop") {
+			elaina_bg_elem.style.filter = filters["Yourshop"]
+		}
+		else if (previous_page == "rcp-fe-lol-yourshop" && brightness_modifiers.indexOf(pagename) == -1) {
+			elaina_bg_elem.style.filter = filters["Homepage"]
+		}
+		if (pagename == "rcp-fe-lol-champ-select") {
+			elaina_bg_elem.style.filter = filters["Champ-select"]
+		}
+		else if (previous_page == "rcp-fe-lol-champ-select" && brightness_modifiers.indexOf(pagename) == -1) {
+			elaina_bg_elem.style.filter = filters["Homepage"]
+		}
+		if (pagename == "rcp-fe-lol-clash-full") {
+			elaina_bg_elem.style.filter = filters["Clash"]
+		}
+		else if (previous_page == "rcp-fe-lol-clash-full" && brightness_modifiers.indexOf(pagename) == -1) {
+			elaina_bg_elem.style.filter = filters["Homepage"]
+		}
+		if (pagename == "rcp-fe-lol-loot") {
+			elaina_bg_elem.style.filter = filters["Loot"]
+		}
+		else if (previous_page == "rcp-fe-lol-loot" && brightness_modifiers.indexOf(pagename) == -1) {
+			elaina_bg_elem.style.filter = filters["Homepage"]
+		}
+		if (pagename == "rcp-fe-lol-store") {
+			elaina_bg_elem.style.filter = filters["Store"]
+		}
+		else if (previous_page == "rcp-fe-lol-store" && brightness_modifiers.indexOf(pagename) == -1) {
+			elaina_bg_elem.style.filter = filters["Homepage"]
+		}
+		if (pagename == "rcp-fe-lol-collections") {
+			elaina_bg_elem.style.filter = filters["Collections"]
+		}
+		else if (previous_page == "rcp-fe-lol-collections" && brightness_modifiers.indexOf(pagename) == -1) {
+			elaina_bg_elem.style.filter = filters["Homepage"]
+		}
+		if (pagename == "rcp-fe-lol-postgame") {
+			elaina_bg_elem.style.filter = filters["Postgame"]
+		}
+		else if (previous_page == "rcp-fe-lol-postgame" && brightness_modifiers.indexOf(pagename) == -1) {
+			elaina_bg_elem.style.filter = filters["Homepage"]
+		}
+		if (pagename == "rcp-fe-lol-profiles-main") {	
+			elaina_bg_elem.style.filter = filters["Profiles"]
+		}
+		else if (previous_page == "rcp-fe-lol-profiles-main" && brightness_modifiers.indexOf(pagename) == -1) {
+			elaina_bg_elem.style.filter = filters["Homepage"]
+		}
+		if (pagename == "rcp-fe-lol-parties") {
+			elaina_bg_elem.style.filter = filters["Parties"]
+		}
+		else if (previous_page == "rcp-fe-lol-parties" && brightness_modifiers.indexOf(pagename) == -1) {
+			elaina_bg_elem.style.filter = filters["Homepage"]
+		}
+		if (pagename == "rcp-fe-lol-tft") {
+			elaina_bg_elem.style.filter = filters["TFT"]
+		}
+		else if (previous_page == "rcp-fe-lol-tft" && brightness_modifiers.indexOf(pagename) == -1) {
+			elaina_bg_elem.style.filter = filters["Homepage"]
+		}
+		if (previous_page != pagename) {previous_page = pagename}
 	}
-	if (pagename == "rcp-fe-lol-yourshop") {
-		elaina_bg_elem.style.filter = filters["Yourshop"]
-	}
-	else if (previous_page == "rcp-fe-lol-yourshop" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = filters["Homepage"]
-	}
-	if (pagename == "rcp-fe-lol-champ-select") {
-		elaina_bg_elem.style.filter = filters["Champ-select"]
-	}
-	else if (previous_page == "rcp-fe-lol-champ-select" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = filters["Homepage"]
-	}
-	if (pagename == "rcp-fe-lol-clash-full") {
-		elaina_bg_elem.style.filter = filters["Clash"]
-	}
-	else if (previous_page == "rcp-fe-lol-clash-full" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = filters["Homepage"]
-	}
-	if (pagename == "rcp-fe-lol-loot") {
-		elaina_bg_elem.style.filter = filters["Loot"]
-	}
-	else if (previous_page == "rcp-fe-lol-loot" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = filters["Homepage"]
-	}
-	if (pagename == "rcp-fe-lol-store") {
-		elaina_bg_elem.style.filter = filters["Store"]
-	}
-	else if (previous_page == "rcp-fe-lol-store" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = filters["Homepage"]
-	}
-	if (pagename == "rcp-fe-lol-collections") {
-		elaina_bg_elem.style.filter = filters["Collections"]
-	}
-	else if (previous_page == "rcp-fe-lol-collections" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = filters["Homepage"]
-	}
-	if (pagename == "rcp-fe-lol-postgame") {
-		elaina_bg_elem.style.filter = filters["Postgame"]
-	}
-	else if (previous_page == "rcp-fe-lol-postgame" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = filters["Homepage"]
-	}
-	if (pagename == "rcp-fe-lol-profiles-main") {	
-		elaina_bg_elem.style.filter = filters["Profiles"]
-	}
-	else if (previous_page == "rcp-fe-lol-profiles-main" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = filters["Homepage"]
-	}
-	if (pagename == "rcp-fe-lol-parties") {
-		elaina_bg_elem.style.filter = filters["Parties"]
-	}
-	else if (previous_page == "rcp-fe-lol-parties" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = filters["Homepage"]
-	}
-	if (pagename == "rcp-fe-lol-tft") {
-		elaina_bg_elem.style.filter = filters["TFT"]
-	}
-	else if (previous_page == "rcp-fe-lol-tft" && brightness_modifiers.indexOf(pagename) == -1) {
-		elaina_bg_elem.style.filter = filters["Homepage"]
-	}
-    if (previous_page != pagename) {previous_page = pagename}
+	catch { console.log(eConsole+"%c Cannot set the filter",eCss,"")}
 }
 
 window.addEventListener("load",() => {
