@@ -32,6 +32,8 @@ if (DataStore.get("Elaina-Plugins")) {
 else if (!DataStore.get("Elaina-Plugins") || !DataStore.has("Elaina-Plugins")) {
 	//console.log(eConsole+`%c Finding backup file from cloud...`,eCss,"")
 	setDefaultData(datastore_list)
+	window.setTimeout(()=> {window.restartClient()}, 5000)
+
 
 	// window.setTimeout(() => {
 	// 	let restoreData = new Promise((resolve, reject) => {
@@ -64,7 +66,7 @@ else if (!DataStore.get("Elaina-Plugins") || !DataStore.has("Elaina-Plugins")) {
 //backup when ready to close client
 observer.subscribeToElementCreation(".riotclient-app-controls",()=>{
 	document.querySelector('div[action=close]').addEventListener("click", ()=>{
-		writeBackupData()
+		if (DataStore.get("backup-datastore")) writeBackupData()
 	})
 })
 
@@ -74,7 +76,7 @@ window.addEventListener("load",async ()=> {
     utils.subscribe_endpoint('/lol-gameflow/v1/gameflow-phase', (message) => {
 		let phase = JSON.parse(message["data"])[2]["data"]
 		if (phase == "GameStart" || phase == "InProgress") {
-			writeBackupData()
+			if (DataStore.get("backup-datastore")) writeBackupData()
 		}
 	})
 })
