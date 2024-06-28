@@ -116,7 +116,7 @@ export function setHomePage(context) {
                 enabled: true,
                 visibile: true,
                 priority: 1,
-                url: 'https://elainatheme.xyz/',
+                url: 'https://lolesports.com/',
             })
 
             return originalCreate.apply(this, [e, t, n])
