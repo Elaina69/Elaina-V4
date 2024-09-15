@@ -1,0 +1,18 @@
+[data-game-mode="CLASSIC"] {
+    display: none !important;
+}
+
+[data-game-mode="TFT"] {
+    display: none !important;
+}
+
+.quick-play-game-mode-text {
+    display: none !important;
+}
+
+.quick-play-button {
+    display: none !important;
+}
+div.parties-custom-game-subcategory-select > div[data-map-id="11"] {
+    display: none !important;
+}

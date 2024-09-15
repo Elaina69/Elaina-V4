@@ -1,0 +1,12 @@
+.sr-reroll {
+    background: none;
+    background-position-y: 0;
+    background-size: cover;
+    border: none;
+    cursor: pointer;
+    height: 32px;
+    outline: none;
+    padding: 0;
+    position: relative;
+    width: 38px;
+}

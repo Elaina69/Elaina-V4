@@ -1,0 +1,411 @@
+.blue-essence-button-container {
+    height: 100%;
+    margin-top: 10px;
+    position: relative;
+    width: 40px;
+}
+
+.blue-essence-button {
+    background: var(--BE_button);
+    background-size: contain;
+    cursor: pointer;
+    height: 23px;
+    margin-left: 16px;
+    margin-top: 16px;
+    width: 23px;
+}
+
+.blue-essence-button:hover {
+    background: var(--BE_hover);
+    background-size: contain;
+}
+
+.blue-essence-button:active {
+    background: var(--BE_active);
+    background-size: contain;
+}
+
+.refresh-button-container {
+    height: 100%;
+    margin-top: 10px;
+    position: relative;
+    width: 40px;
+}
+
+.refresh-button {
+    background: var(--rbutton);
+    background-size: contain;
+    cursor: pointer;
+    height: 23px;
+    margin-left: 16px;
+    margin-top: 16px;
+    width: 23px;
+}
+
+.refresh-button:hover {
+    background: var(--rhover);
+    background-size: contain;
+}
+
+.refresh-button:active {
+    background: var(--ractive);
+    background-size: contain;
+}
+
+.open-chests-button-container {
+    height: 100%;
+    margin-top: 10px;
+    position: relative;
+    width: 40px;
+}
+
+.open-chests-button {
+    background: var(--OC_button);
+    background-size: contain;
+    cursor: pointer;
+    height: 23px;
+    margin-left: 16px;
+    margin-top: 16px;
+    width: 23px;
+}
+
+.open-chests-button:hover {
+    background: var(--OC_hover);
+    background-size: contain;
+}
+
+.open-chests-button:active {
+    background: var(--OC_active);
+    background-size: contain;
+}
+
+.loot-context-menu .context-menu-header .title h5,
+.loot-context-menu .context-menu-item .action-name,
+.loot-context-menu .context-menu-item .essence-text {
+    font-family: var(--font-display);
+}
+
+.loot-context-menu .context-menu-header,
+.loot-context-menu .context-menu-item {
+    font-family: var(--font-body);
+}
+
+.loot-context-menu .context-menu-header,
+.loot-context-menu .context-menu-header .title h5,
+.loot-context-menu .context-menu-item,
+.loot-context-menu .context-menu-item .action-name,
+.loot-context-menu .context-menu-item .essence-text {
+    -webkit-user-select: none;
+}
+
+.loot-context-menu .context-menu-header,
+.loot-context-menu .context-menu-header .title h5,
+.loot-context-menu .context-menu-item,
+.loot-context-menu .context-menu-item .action-name,
+.loot-context-menu .context-menu-item .essence-text {
+    font-kerning: normal;
+    -webkit-font-feature-settings: "kern" 1;
+    -webkit-font-smoothing: antialiased;
+}
+
+.loot-context-menu .context-menu-header .title h5,
+.loot-context-menu .context-menu-item .action-name,
+.loot-context-menu .context-menu-item .essence-text {
+    text-transform: uppercase;
+}
+
+.loot-context-menu .context-menu-header .title h5:lang(ko-kr),
+.loot-context-menu .context-menu-item .action-name:lang(ko-kr),
+.loot-context-menu .context-menu-item .essence-text:lang(ko-kr),
+.loot-context-menu .context-menu-header .title h5:lang(ja-jp),
+.loot-context-menu .context-menu-item .action-name:lang(ja-jp),
+.loot-context-menu .context-menu-item .essence-text:lang(ja-jp),
+.loot-context-menu .context-menu-header .title h5:lang(tr-tr),
+.loot-context-menu .context-menu-item .action-name:lang(tr-tr),
+.loot-context-menu .context-menu-item .essence-text:lang(tr-tr),
+.loot-context-menu .context-menu-header .title h5:lang(el-gr),
+.loot-context-menu .context-menu-item .action-name:lang(el-gr),
+.loot-context-menu .context-menu-item .essence-text:lang(el-gr),
+.loot-context-menu .context-menu-header .title h5:lang(th-th),
+.loot-context-menu .context-menu-item .action-name:lang(th-th),
+.loot-context-menu .context-menu-item .essence-text:lang(th-th),
+.loot-context-menu .context-menu-header .title h5:lang(zh-tw),
+.loot-context-menu .context-menu-item .action-name:lang(zh-tw),
+.loot-context-menu .context-menu-item .essence-text:lang(zh-tw) {
+    text-transform: none;
+}
+
+.loot-context-menu .context-menu-item .action-name {
+    text-transform: none;
+}
+
+.loot-context-menu .context-menu-header .title h5,
+.loot-context-menu .context-menu-item .action-name,
+.loot-context-menu .context-menu-item .essence-text {
+    color: #f0e6d2;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18px;
+    letter-spacing: 0.075em;
+}
+
+.loot-context-menu .context-menu-header .title h5:lang(ar-ae),
+.loot-context-menu .context-menu-item .action-name:lang(ar-ae),
+.loot-context-menu .context-menu-item .essence-text:lang(ar-ae) {
+    letter-spacing: 0;
+}
+
+.loot-context-menu .context-menu-item .action-name {
+    letter-spacing: 0.0375em;
+}
+
+.loot-context-menu .context-menu-item .action-name:lang(ar-ae) {
+    letter-spacing: 0;
+}
+
+.loot-context-menu .context-menu-header,
+.loot-context-menu .context-menu-item {
+    color: #a09b8c;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 16px;
+    letter-spacing: 0.025em;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.loot-context-menu .context-menu-header:lang(ja-jp),
+.loot-context-menu .context-menu-item:lang(ja-jp) {
+    font-size: 13px;
+}
+
+.loot-context-menu .context-menu-header:lang(ar-ae),
+.loot-context-menu .context-menu-item:lang(ar-ae) {
+    letter-spacing: 0;
+}
+
+.loot-context-menu {
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    min-width: 127px;
+    z-index: 10;
+    box-sizing: border-box;
+    background-color: #010a13;
+    box-shadow: 0 0 1px #000, 0 0 1px #000;
+    border-width: 2px;
+    border-style: solid;
+    border-image: linear-gradient(to bottom, #463714, #785a28) 1;
+    /* context-menu-item */
+}
+
+.loot-context-menu:lang(ar-ae) {
+    direction: rtl;
+}
+
+.loot-context-menu .context-menu-header {
+    padding-left: 10px;
+    min-width: calc(100% - 10px);
+    width: -webkit-max-content;
+}
+
+.loot-context-menu .context-menu-header:lang(ar-ae) {
+    padding-left: 0px;
+    padding-right: 10px;
+}
+
+.loot-context-menu .context-menu-header .title {
+    display: inline-block;
+    padding: 10px 10px 2px 0;
+}
+
+.loot-context-menu .context-menu-header .title:lang(ar-ae) {
+    padding: 10px 0px 2px 10px;
+}
+
+.loot-context-menu .context-menu-header .title h5 {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.loot-context-menu .context-menu-header .redeemable-text {
+    display: inline-block;
+    float: right;
+    font-size: 13px;
+    color: #afaa9a;
+    border: #463714 2px solid;
+    padding: 6px 12px;
+    margin: -2px -2px 0 15px;
+    white-space: nowrap;
+}
+
+.loot-context-menu .context-menu-header .redeemable-text:lang(ar-ae) {
+    float: left;
+    margin: -2px 15px 0 -2px;
+}
+
+.loot-context-menu .context-menu-header .redeemable-text.REDEEMABLE,
+.loot-context-menu .context-menu-header .redeemable-text.REDEEMABLE_RENTAL {
+    background: linear-gradient(to bottom, #063d53 0%, #042c3d 100%);
+}
+
+.loot-context-menu .context-menu-header .redeemable-text.ALREADY_OWNED,
+.loot-context-menu .context-menu-header .redeemable-text.ALREADY_RENTED,
+.loot-context-menu .context-menu-header .redeemable-text.CHAMPION_NOT_OWNED,
+.loot-context-menu .context-menu-header .redeemable-text.NOT_REDEEMABLE,
+.loot-context-menu .context-menu-header .redeemable-text.NOT_REDEEMABLE_RENTAL,
+.loot-context-menu .context-menu-header .redeemable-text.NOT_UPGRADE {
+    background: linear-gradient(to bottom, #501010 0%, #3d0b0b 100%);
+}
+
+.loot-context-menu .context-menu-header .separator {
+    border: 0;
+    height: 1px;
+    background-color: #463714;
+    /* negate padding, extend to edges */
+    margin: 5px 0 0 -10px;
+}
+
+.loot-context-menu .context-menu-header .separator:lang(ar-ae) {
+    margin: 5px -10px 0 0;
+}
+
+.loot-context-menu .context-menu-item {
+    display: block;
+    outline: none;
+    min-width: 100%;
+    width: -webkit-max-content;
+    height: 40px;
+    line-height: 40px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 10px;
+    border: none;
+    background: none;
+    color: #cdbe91;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: ellipsis;
+    text-align: left;
+    position: relative;
+}
+
+.loot-context-menu .context-menu-item:lang(ar-ae) {
+    text-align: right;
+}
+
+.loot-context-menu .context-menu-item .has-submenu {
+    position: relative;
+    padding-right: 29px;
+}
+
+.loot-context-menu .context-menu-item .submenu-open {
+    /* 10 + 6 on left, 29 - 6 on right */
+    padding-left: 16px;
+    padding-right: 23px;
+}
+
+.loot-context-menu .context-menu-item div {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.loot-context-menu .context-menu-item .action-name {
+    color: #cdbe91;
+    line-height: 40px;
+}
+
+.loot-context-menu .context-menu-item .action-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    background-repeat: no-repeat;
+}
+
+.loot-context-menu .context-menu-item .action-icon:lang(ar-ae) {
+    direction: rtl;
+    margin-right: 0;
+    margin-left: 8px;
+}
+
+.loot-context-menu .context-menu-item .essence-icon {
+    position: relative;
+    height: 100%;
+    width: 12px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.loot-context-menu .context-menu-item .essence-icon img {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.loot-context-menu .context-menu-item .essence-icon img:lang(ar-ae) {
+    left: 0;
+}
+
+.loot-context-menu .context-menu-item .essence-container {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.loot-context-menu .context-menu-item .essence-text {
+    color: #a09b8c;
+    line-height: 40px;
+}
+
+.loot-context-menu .context-menu-item .negative-text {
+    color: #ff2345;
+}
+
+.loot-context-menu .context-menu-item .pull-right {
+    float: right;
+}
+
+.loot-context-menu .context-menu-item .pull-right:lang(ar-ae) {
+    float: left;
+    direction: ltr;
+}
+
+.loot-context-menu .context-menu-item .disabled-overlay {
+    display: none;
+}
+
+.loot-context-menu .context-menu-item.disabled .disabled-overlay {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #010a13;
+    opacity: 0.5;
+}
+
+.loot-context-menu .context-menu-item:not(.disabled):hover {
+    background: #1e2328;
+    color: #f0e6d2;
+    cursor: pointer;
+}
+
+.loot-context-menu .context-menu-item:not(.disabled):hover .action-name,
+.loot-context-menu .context-menu-item:not(.disabled):hover .essence-text {
+    color: #f0e6d2;
+}
+
+.loot-context-menu .context-menu-item:not(.disabled):hover .action-icon {
+    /* Offset background image to show other half (over state) */
+    background-position: 100% 0;
+}
+
+.loot-context-menu .context-menu-item:active {
+    color: #cdbe91;
+}
+
+.loot-context-menu:focus {
+    outline: none;
+}
