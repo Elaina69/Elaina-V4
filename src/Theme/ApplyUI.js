@@ -1,9 +1,9 @@
-import * as observer from "../Utilities/_observer.js"
-import filters from "../Configs/Filters.js"
-import icdata from "../Configs/Icons.js"
+import * as observer from "../utils/observer.js"
+import filters from "../config/filters.js"
+import icdata from "../config/icons.js"
 
 let datapath = new URL("..", import.meta.url).href
-let iconFolder  = `${datapath}Assets/Icon/`
+let iconFolder  = `${datapath}assets/icon/`
 
 //For observer
 function freezeProperties(object, properties) {
@@ -35,7 +35,7 @@ export function transparentLobby(context) {
 	})
 }
 
-observer.subscribeToElementCreation(".summoner-xp-radial", (element)=> {element.remove()})
+//observer.subscribeToElementCreation(".summoner-xp-radial", (element)=> {element.remove()})
 
 observer.subscribeToElementCreation("lol-uikit-parallax-background",(element)=> {
 	element.shadowRoot.querySelector(".parallax-layer-container").style.backgroundImage = ''
@@ -141,6 +141,14 @@ if (DataStore.get("new-gamesearch-queue")) {
 	observer.subscribeToElementCreation('.parties-game-search-divider', DisplayNone)
 	observer.subscribeToElementCreation('.parties-game-info-panel-bg-container', DisplayNone)
 	observer.subscribeToElementCreation('.parties-status-card-bg-container', DisplayNone)
+	observer.subscribeToElementCreation('lol-parties-game-info-panel', (element) => {
+		element.shadowRoot.querySelector("lol-parties-game-invites").shadowRoot.querySelector(".parties-game-info-panel-invites").style.cssText = `
+			border: 1px solid #8c8263; 
+			border-radius: 10px; 
+			margin-top: 1px
+		`
+		element.shadowRoot.querySelector('.parties-game-info-panel-bg-container').hidden = true
+	})
 }
 
 if (DataStore.get("settings-dialogs-transparent")) {
@@ -228,25 +236,25 @@ if (DataStore.get("Custom-Icon")) {
 			try{
 				let a = element.querySelector(`lol-regalia-hovercard-v2-element[summoner-id="${DataStore.get("Summoner-ID")}"]`).shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("lol-uikit-themed-level-ring-v2").shadowRoot.
 				querySelector("div")
-				a.style.backgroundImage = 'var(--Border)'
+				a.style.backgroundImage = "var(--Border)"
 				freezeProperties(a.style, ['backgroundImage'])
 			}catch{}
-		})
-		observer.subscribeToElementCreation("lol-regalia-identity-customizer-element",(element)=>{
-			let a = element.shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("lol-uikit-themed-level-ring-v2").shadowRoot.querySelector("div")
-			a.style.backgroundImage = 'var(--Border)'
-			freezeProperties(a.style, ['backgroundImage'])
 		})
 		observer.subscribeToElementCreation("lol-regalia-parties-v2-element",(element)=>{
 			if (element.getAttribute("summoner-id") == DataStore.get("Summoner-ID")) {
 				let a = element.shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("lol-uikit-themed-level-ring-v2").shadowRoot.querySelector("div")
-				a.style.backgroundImage = 'var(--Border)'
+				a.style.backgroundImage = "var(--Border)"
 				freezeProperties(a.style, ['backgroundImage'])
 			}
 		})
+		observer.subscribeToElementCreation("lol-regalia-identity-customizer-element",(element)=>{
+			let a = element.shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("lol-uikit-themed-level-ring-v2").shadowRoot.querySelector("div")
+			a.style.backgroundImage = "var(--Border)"
+			freezeProperties(a.style, ['backgroundImage'])
+		})
 		observer.subscribeToElementCreation('lol-regalia-profile-v2-element', (element) => {
 			let a = element.shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("lol-uikit-themed-level-ring-v2").shadowRoot.querySelector("div")
-			a.style.backgroundImage = 'var(--Border)'
+			a.style.backgroundImage = "var(--Border)"
 			freezeProperties(a.style, ['backgroundImage'])
 		})
 	}
@@ -295,8 +303,8 @@ if (DataStore.get("Custom-Icon")) {
 			function gameModeIcon_active(obj, name) {
 				try {
 					let a = document.querySelector(`${obj} lol-uikit-video-state[state='active'] lol-uikit-video`)
-					a.setAttribute("src", `${iconFolder}Gamemodes/${name}`)
-					a.querySelector("video").setAttribute("src", `${iconFolder}Gamemodes/${name}`)
+					a.setAttribute("src", `${iconFolder}gamemodes/${name}`)
+					a.querySelector("video").setAttribute("src", `${iconFolder}gamemodes/${name}`)
 				}catch{}
 			}
 			gameModeIcon_active("div[data-game-mode='CLASSIC']",icdata["classic_video"])

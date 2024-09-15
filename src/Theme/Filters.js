@@ -1,5 +1,5 @@
-import utils from "../Utilities/_utils.js"
-import filters from "../Configs/Filters.js"
+import utils from "../utils/utils.js"
+import filters from "../config/filters.js"
 
 let eConsole 	= "%c Elaina "
 let eCss 		= "color: #ffffff; background-color: #f77fbe"
