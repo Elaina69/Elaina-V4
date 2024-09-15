@@ -1,0 +1,15 @@
+div[data-screen-name="rcp-fe-lol-home"] .rcp-fe-lol-home-sub-nav {
+	margin-top: 10px;
+    padding-bottom: 10px;
+    background-color: #000000ad;
+    border-radius: 10px;
+    border: 2px solid var(--default-color, #cdbe91) !important;
+}
+
+div[data-screen-name="rcp-fe-lol-tft"] .tft-sub-nav-container {
+	padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    background-color: #000000ad !important;
+    border-radius: 10px !important;
+    border: 2px solid var(--default-color, #cdbe91) !important;
+}

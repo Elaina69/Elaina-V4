@@ -1,0 +1,13 @@
+.style-profile-ranked-crest-ranked > lol-regalia-emblem-element {
+    --regalia-emblem-unranked: var(--Rank-Icon) !important;
+    --regalia-emblem-iron: var(--Rank-Icon) !important;
+    --regalia-emblem-bronze: var(--Rank-Icon) !important;
+    --regalia-emblem-silver: var(--Rank-Icon) !important;
+    --regalia-emblem-gold: var(--Rank-Icon) !important;
+    --regalia-emblem-platinum: var(--Rank-Icon) !important;
+    --regalia-emblem-diamond: var(--Rank-Icon) !important;
+    --regalia-emblem-master: var(--Rank-Icon) !important;
+    --regalia-emblem-grandmaster: var(--Rank-Icon) !important;
+    --regalia-emblem-challenger: var(--Rank-Icon) !important;
+    --regalia-emblem-emerald: var(--Rank-Icon) !important;
+    }

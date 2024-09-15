@@ -1,0 +1,8 @@
+.lol-loading-screen-container .lol-loading-screen-lol-icon {
+	background: var(--ElainaStatic) !important;
+	background-repeat: no-repeat;
+	background-size: contain;
+	width: 240px !important;
+	height: 240px !important;
+	margin-top: 40px !important;
+}
