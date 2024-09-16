@@ -83,4 +83,11 @@ window.addEventListener("load",async ()=> {
 	if (DataStore.get("Custom-Cursor")) {
 		utils.CustomCursor(`url("${iconFolder}${icdata["Mouse-cursor"]}")`,`@import url("${datapath}assets/styles/components/cursor.css")`)
 	}
+	if (DataStore.get("change-nickname-color")) {
+		utils.addStyleWithID("nickname-color-css", /*css*/`
+			span.player-name__force-locale-text-direction {
+				color: ${DataStore.get("nickname-color")};
+			}
+		`)
+	}
 })
