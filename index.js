@@ -1,6 +1,6 @@
 /**
  * @name ElainaV4
- * @author Elaina
+ * @author Elaina Da Catto
  * @description Elaina theme for Pengu Loader
  * @link https://github.com/Elaina69
  * @Nyan Meow~~~
@@ -19,65 +19,39 @@ log('%cMeow ~~~', 'color: #e4c2b3');
 
 import "./src/services/backupAndRestoreDatastore.js";
 
-// File regexes for matching asset types
+// // Set new or restore Datastore file
+// try {
+//     log('Attempting to set or restore Datastore file');
+// } catch (err) {
+//     error('Error while setting or restoring Datastore file:', err);
+// }
+
+// Refresh backgrounds list
 const FILE_REGEX = {
-    Wallpaper: /\.(mp4|webm|mkv|mov|avi|wmv)$/i,
-    ImageWallpaper: /\.(png|jpg|jpeg|gif)$/i,
-    Audio: /\.(mp3|flac|ogg|wav|aac)$/i,
-    Font: /\.(ttf|otf)$/i,
-    Banner: /\.(png|jpg|jpeg|gif)$/i
+    Wallpaper: /\.(mp4|webm|mkv|mov|avi|wmv)$/,
+    ImageWallpaper: /\.(png|jpg|jpeg|gif)$/,
+    Audio: /\.(mp3|flac|ogg|wav|aac)$/,
+    Font: /\.(ttf|otf)$/,
+    Banner: /\.(png|jpg|jpeg|gif)$/,
 };
 
-// Get the theme's name dynamically
-export function getThemeName() {
-    const error = new Error();
-    const stackTrace = error.stack;
-    const scriptPath = stackTrace?.match(/(?:http|https):\/\/[^\s]+\.js/g)?.[0];
-    const match = scriptPath?.match(/\/([^/]+)\/index\.js$/);
-    return match ? match[1] : null;
-}
-
-// Base URL to assets
-const ASSETS_BASE_URL = `//plugins/${getThemeName()}/src/assets/`;
-
-// Fetch and parse the assets list from the assets-list.txt file
-const fetchAssetList = async () => {
-    try {
-        const response = await fetch(`${ASSETS_BASE_URL}assets-list.txt`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const text = await response.text();
-        return text.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
-    } catch (err) {
-        error('Failed to load assets list:', err);
-        return [];
-    }
+const ASSET_PATHS = {
+    Wallpaper: "./src/assets/backgrounds/wallpapers",
+    Audio: "./src/assets/backgrounds/audio",
+    Font: "./src/assets/fonts",
+    Banner: "./src/assets/icon/regalia-banners",
 };
 
-// Refresh backgrounds and store lists in DataStore
 const refreshBackgroundsList = async () => {
     try {
-        const assets = await fetchAssetList();
-
-        // For debugging
-        console.log('Assets:', assets);
-
-        const filteredLists = Object.keys(FILE_REGEX).reduce((acc, key) => {
-            acc[key] = assets
-                .filter(file => {
-                    if (!FILE_REGEX[key].test(file)) return false;
-                    if (key === 'Wallpaper' && !file.startsWith('backgrounds/wallpapers/')) return false;
-                    if (key === 'Audio' && !file.startsWith('backgrounds/audio/')) return false;
-                    // Add similar conditions for other asset types if needed
-                    return true;
-                })
-                .map(file => `${ASSETS_BASE_URL}${file}`); // Construct the full URL
+        const lists = await Promise.all(
+            Object.values(ASSET_PATHS).map(path => PluginFS.ls(path))
+        );
+        
+        const filteredLists = Object.keys(ASSET_PATHS).reduce((acc, key, index) => {
+            acc[key] = lists[index].filter(file => FILE_REGEX[key].test(file));
             return acc;
         }, {});
-
-        // For debugging
-        console.log('Filtered Lists:', filteredLists);
 
         Object.entries(filteredLists).forEach(([key, value]) => {
             DataStore.set(`${key}-list`, value);
@@ -91,8 +65,6 @@ const refreshBackgroundsList = async () => {
     }
 };
 
-
-// Refreshing the backgrounds list
 log('Refreshing backgrounds list');
 const backgroundListInterval = setInterval(async () => {
     await refreshBackgroundsList();
@@ -102,12 +74,22 @@ const backgroundListInterval = setInterval(async () => {
     }
 }, 1000);
 
+// import wallpaperFolder from "./src/assets/backgrounds/wallpapers?dir";
+
+// const wallpaperList = await wallpaperFolder.files()
+// for (let file of wallpaperList) {
+//     console.log('wallpaper: %s', file)
+// }
+   
+
 // Importing theme contents
 log('Importing theme contents');
+
 import { setHomePage } from "./src/theme/homepage.js";
 import { transparentLobby } from "./src/theme/applyUi.js";
 
-// CDN Import Helper
+// Import CDN modules
+let initLink
 const cdnImport = async (url, errorMsg) => {
     try {
         const res = await fetch(url);
@@ -117,18 +99,17 @@ const cdnImport = async (url, errorMsg) => {
             throw new Error();
         }
     } catch {
-        console.warn(`${CONSOLE_STYLE.prefix}%c ${errorMsg}`, CONSOLE_STYLE.css, "");
+        console.warn(`${eConsole}%c ${errorMsg}`, eCss, "");
         Toast.error(errorMsg);
     }
 };
 
-// Determine CDN link based on dev mode or first run
-let initLink;
 if (DataStore.get("Dev-mode")) {
     initLink = `//plugins/${getThemeName()}/elaina-theme-data/cdninit.js`;
     await cdnImport(`//plugins/${getThemeName()}/elaina-theme-data/index.js`, "Failed to load local data");
-} else {
-    const cdnVersion = DataStore.get("Elaina-First run")
+} 
+else {
+    let cdnVersion = DataStore.get("Elaina-First run")
         ? DataStore.get("Cdn-version")
         : "latest";
 
@@ -140,7 +121,7 @@ if (DataStore.get("Dev-mode")) {
     }
 }
 
-// Import additional theme modules
+// Import other modules
 const modulesToImport = [
     "./src/theme/applyUi.js",
     "./src/theme/homepage.js",
@@ -163,33 +144,32 @@ const modulesToImport = [
     "./src/plugins/inviteAllFriends.js",
     "./src/plugins/forceJungleLane.js"
 ];
+
 modulesToImport.forEach(module => import(module));
 
-// Load text files asynchronously
+//Load text files
 const loadTextFile = async (path) => {
     try {
-        const response = await fetch(path);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        const content = await PluginFS.read(path);
+        if (content === undefined) {
+            throw new Error(`File not found: ${path}`);
         }
-        const content = await response.text();
-        return content || null;
+        return content;
     } catch (err) {
         error(`Failed to load text file: ${path}`, err);
         return null;
     }
 };
 
-// Load custom text files
+// Load text files
 Promise.all([
-    loadTextFile(`${ASSETS_BASE_URL}../config/customStatus.txt`),
-    loadTextFile(`${ASSETS_BASE_URL}../config/pandoru.txt`)
+    loadTextFile("./src/config/customStatus.txt"),
+    loadTextFile("./src/config/pandoru.txt")
 ]).then(([customStatus, pandoru]) => {
     if (customStatus) DataStore.set("customStatus", customStatus);
     if (pandoru) DataStore.set("pandoru", pandoru);
 }).catch(err => error('Error loading text files:', err));
 
-// Check server availability
 const checkServerAvailability = async () => {
     log('Checking server availability');
     const controller = new AbortController();
@@ -199,22 +179,30 @@ const checkServerAvailability = async () => {
         const response = await fetch('https://elainatheme.xyz/numberOfUsers', { signal: controller.signal });
         const { count } = await response.json();
         log('Number of users:', count);
-        //If you need to import and execute a module from the server
         const { default: serverModule } = await import('https://elainatheme.xyz/index.js');
         //await serverModule();
     } catch (err) {
         clearTimeout(timeoutId);
-        error('Failed to check server availability:', err);
+        throw err;
     }
 };
 
 checkServerAvailability().catch(err => error('Failed to check server availability:', err));
 
 // Export Init
-let { Cdninit } = await import(initLink);
+let {Cdninit} = await import (initLink)
 export function init(context) {
     log('Initializing theme');
     setHomePage(context);
     transparentLobby(context);
     Cdninit(context);
+}
+
+// Get this theme folder's name and export it
+export function getThemeName() {
+    const error = new Error();
+    const stackTrace = error.stack;
+    const scriptPath = stackTrace?.match(/(?:http|https):\/\/[^\s]+\.js/g)?.[0];
+    const match = scriptPath?.match(/\/([^/]+)\/index\.js$/);
+    return match ? match[1] : null;
 }

@@ -1,6 +1,6 @@
 /**
  * @name ElainaV4
- * @author Elaina
+ * @author Elaina Da Catto
  * @description Elaina theme for Pengu Loader
  * @link https://github.com/Elaina69
  * @Nyan Meow~~~
@@ -18,23 +18,12 @@ const CONSOLE_STYLE = {
 const log = (message, ...args) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
 const error = (message, ...args) => console.error(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
 
-// Use import.meta.url to construct the base path
 let datapath = new URL("..", import.meta.url).href;
 const iconFolder = `${datapath}assets/icon/`;
 const bgFolder = `${datapath}assets/backgrounds/`;
-
 let thisVersion, CdnKey;
 
 DataStore.set("Font-folder", `${datapath}assets/fonts/`);
-
-// Extract the theme name from the URL
-const getThemeName = () => {
-    const urlParts = new URL(import.meta.url).pathname.split('/');
-    // Assuming the theme folder is the parent folder of 'src'
-    const themeNameIndex = urlParts.findIndex(part => part === 'src') - 1;
-    return urlParts[themeNameIndex];
-};
-
 DataStore.set("Plugin-folder-name", getThemeName());
 
 const defaultData = {
@@ -231,13 +220,13 @@ const toggleAudioLoop = () => {
 
 const loadBG = (BG) => {
     const elainaBg = document.getElementById("elaina-bg");
-    elainaBg.src = BG; 
+    elainaBg.src = `${bgFolder}wallpapers/${BG}`;
     elainaBg.playbackRate = DataStore.get("Playback-speed") / 100;
 };
 
 const loadSong = (song) => {
     const audio = document.getElementById("bg-audio");
-    audio.src = song; 
+    audio.src = `${bgFolder}audio/${song}`;
 };
 
 const nextWallpaper = () => {
@@ -302,20 +291,13 @@ const prevSong = () => {
     }
 };
 
-const changeSongName = () => {
-    const currentSong = DataStore.get("Audio-list")[DataStore.get('audio-index')];
-    const songNameText = document.querySelector(".audio-name-bar > p");
-    const songName = getFilenameWithoutExtension(currentSong);
+const changeSongName = ()=> {
+    let currentSong = DataStore.get("Audio-list")[DataStore.get('audio-index')]
+    let songNameText = document.querySelector(".audio-name-bar > p")
     DataStore.get('pause-audio') % 2 === 0 
-        ? songNameText.innerHTML = `Paused: <br/>${songName}`
-        : songNameText.innerHTML = `Now playing: <br/>${songName}`;
-};
-
-// Helper function to extract the filename without extension from a path
-const getFilenameWithoutExtension = (path) => {
-    const filename = path.substring(path.lastIndexOf('/') + 1);
-    return filename.substring(0, filename.lastIndexOf('.')) || filename;
-};
+        ? songNameText.innerHTML = `Paused: <br/>${currentSong}`
+        : songNameText.innerHTML = `Now playing: <br/>${currentSong}`
+}
 
 const createWebmButtons = () => {
     const container = document.createElement("div");
@@ -375,7 +357,6 @@ const createWebmButtons = () => {
     muteAudioIcon.classList.add("mute-audio-icon");
     audioLoopIcon.classList.add("audio-loop-icon");
 
-    // Set icons using the correct paths
     playPauseSetIconAudio(pauseAudioIcon);
     playPauseSetIcon(pauseBgIcon);
     muteSetIconAudio(muteAudioIcon);
@@ -386,11 +367,9 @@ const createWebmButtons = () => {
     nextAudioIcon.setAttribute("src", `${iconFolder}plugins-icons/next-audio.png`);
     prevAudioIcon.setAttribute("src", `${iconFolder}plugins-icons/prev-audio.png`);
 
-    const currentAudio = DataStore.get("Audio-list")[DataStore.get('audio-index')];
-    const audioNameText = getFilenameWithoutExtension(currentAudio);
     DataStore.get('pause-audio') % 2 === 0 
-        ? audioName.innerHTML = `Paused: <br/>${audioNameText}`
-        : audioName.innerHTML = `On playing: <br/>${audioNameText}`;
+        ? audioName.innerHTML = `Paused: <br/>${DataStore.get("Audio-list")[DataStore.get('audio-index')]}`
+        : audioName.innerHTML = `Now playing: <br/>${DataStore.get("Audio-list")[DataStore.get('audio-index')]}`
 
     // Music controls
     musicControlsMain.append(audioNameBar, musicControls);
@@ -416,15 +395,15 @@ const createWebmButtons = () => {
         DataStore.get("Wallpaper-list").forEach((opt, id) => {
             const el = document.createElement("lol-uikit-dropdown-option");
             el.setAttribute("slot", "lol-uikit-dropdown-option");
-            el.innerText = getFilenameWithoutExtension(opt); // Display only filename without extension
+            el.innerText = opt;
             el.onclick = () => {
                 const elainaBg = document.getElementById("elaina-bg");
                 elainaBg.classList.add("webm-hidden");
                 DataStore.set('wallpaper-index', id);
-                log(`Now playing %c${getFilenameWithoutExtension(opt)}`, 'color: #0070ff');
+                log(`Now playing %c${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]}`, 'color: #0070ff');
 
                 setTimeout(() => {
-                    loadBG(opt); // Use opt directly
+                    loadBG(DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]);
                     elainaPlayPause();
                     elainaBg.classList.remove("webm-hidden");
                 }, 500);
@@ -441,7 +420,7 @@ const createWebmButtons = () => {
     progressBar.append(progress);
     container.append(musicControlsMain, progressBar);
 
-    // Append container and wallpaper controls
+    // Append container and wallpaper controls separately to maintain original positions
     const showContainer = document.querySelector(".rcp-fe-lol-home");
     if (showContainer) {
         showContainer.append(container, wallpaperControls);
@@ -577,7 +556,6 @@ const createWebmButtons = () => {
 };
 
 
-
 const deleteButtons = () => {
     try {
         document.querySelector(".webm-bottom-buttons-container-hovered").remove();
@@ -597,12 +575,9 @@ const loadWallpaperAndMusic = () => {
     video.muted = DataStore.get("mute-audio");
     video.currentTime = DataStore.get("Wallpaper-currentTime");
     try {
-        const currentWallpaper = DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')];
-        video.src = currentWallpaper;
+        video.src = `${bgFolder}wallpapers/${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]}`;
         video.playbackRate = DataStore.get("Playback-speed") / 100;
-    } catch (e) {
-        console.error('Error setting wallpaper video source:', e);
-    }
+    } catch {}
     video.addEventListener("error", () => {
         video.load();
         video.addEventListener("ended", () => video.load());
@@ -617,8 +592,7 @@ const loadWallpaperAndMusic = () => {
     const audio = document.createElement("audio");
     audio.id = 'bg-audio';
     audio.autoplay = true;
-    const currentAudio = DataStore.get("Audio-list")[DataStore.get('audio-index')];
-    audio.src = currentAudio;
+    audio.src = `${bgFolder}audio/${DataStore.get("Audio-list")[DataStore.get('audio-index')]}`;
     audio.volume = DataStore.get("audio-volume");
     audio.muted = DataStore.get("mute-audio");
     audio.currentTime = DataStore.get("Audio-currentTime");
@@ -632,7 +606,6 @@ const loadWallpaperAndMusic = () => {
     document.body.prepend(video, audio);
     elainaPlayPause();
 };
-
 
 let previous_page = '';
 let runtime = 0;
@@ -765,9 +738,7 @@ const logDebuggingInfo = () => {
     const pauseAudio = DataStore.get('pause-audio') % 2 === 0 ? "color: #00ff44" : "color: red";
 
     if (DataStore.get("Continues_Audio")) {
-        const currentWallpaper = DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')];
-        const currentAudio = DataStore.get("Audio-list")[DataStore.get('audio-index')];
-        log(`Now playing %c${getFilenameWithoutExtension(currentWallpaper)} %cand %c${getFilenameWithoutExtension(currentAudio)}`, 'color: #0070ff', 'color: #e4c2b3', 'color: #0070ff');
+        log(`%cNow playing %c${DataStore.get("Wallpaper-list")[DataStore.get('wallpaper-index')]} %cand %c${DataStore.get("Audio-list")[DataStore.get('audio-index')]}`, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', 'color: #0070ff');
         log(`%ccurrent wallpaper status: pause: %c${DataStore.get('pause-wallpaper') % 2 === 0}%c, play/pause-time: %c${DataStore.get('pause-wallpaper')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %ctrue%c, volume: %c${DataStore.get("wallpaper-volume") * 100}%`, 'color: #e4c2b3', pauseWall, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', muteCss, 'color: #e4c2b3', 'color: #00ff44', 'color: #e4c2b3', 'color: #0070ff');
         log(`%ccurrent audio status: pause: %c${DataStore.get('pause-audio') % 2 === 0}%c, play/pause-time: %c${DataStore.get('pause-audio')}%c, mute: %c${DataStore.get("mute-audio")}%c, loop: %c${DataStore.get("audio-loop")}%c, volume: %c${DataStore.get("audio-volume") * 100}%`, 'color: #e4c2b3', pauseAudio, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', muteCss, 'color: #e4c2b3', loopWallCss, 'color: #e4c2b3', 'color: #0070ff');
     }
