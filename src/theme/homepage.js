@@ -579,8 +579,14 @@ const createWebmButtons = () => {
 
 
 const deleteButtons = () => {
-    document.querySelector(".webm-bottom-buttons-container").remove();
-    document.querySelector(".wallpaper-controls").remove();
+    try {
+        document.querySelector(".webm-bottom-buttons-container-hovered").remove();
+        document.querySelector(".wallpaper-controls").remove();
+    }
+    catch{
+        document.querySelector(".webm-bottom-buttons-container").remove();
+        document.querySelector(".wallpaper-controls").remove();
+    }
 };
 
 const loadWallpaperAndMusic = () => {
@@ -641,7 +647,7 @@ const addHomepage = async (node) => {
     const isOtherPage = !["rcp-fe-lol-navigation-screen", "window-controls", "rcp-fe-lol-home", "social"].includes(pagename);
 
     if (isHomePage) {
-        if (!document.querySelector(".webm-bottom-buttons-container")) {
+        if (!document.querySelector(".webm-bottom-buttons-container") && !document.querySelector(".webm-bottom-buttons-container-hovered")) {
             createWebmButtons();
             document.querySelector(".webm-bottom-buttons-container").setAttribute("class", "webm-bottom-buttons-container-hovered")
             window.setTimeout(()=> {document.querySelector(".webm-bottom-buttons-container-hovered").setAttribute("class", "webm-bottom-buttons-container")},2000)
