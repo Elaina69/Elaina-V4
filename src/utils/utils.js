@@ -21,6 +21,13 @@ function addStyle(style) {
     document.body.appendChild(styleElement);
 }
 
+function addStyleWithID(Id, style) {
+    const styleElement = document.createElement('style');
+    styleElement.id = Id
+    styleElement.appendChild(document.createTextNode(style));
+    document.body.appendChild(styleElement);
+}
+
 /**
  * Adds a font to the document
  * @param {string} folder - The font file path
@@ -154,7 +161,8 @@ const utils = {
     addStyle,
     addFont,
     CustomCursor,
-    getSummonerID
+    getSummonerID,
+    addStyleWithID
 };
 
 export default utils;
