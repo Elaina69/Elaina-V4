@@ -15,6 +15,34 @@
 }
 /*_________________________________________________________________________________________________________________________________*/
 
+.color-picker-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.color-picker-container input[type="color"] {
+    margin-right: 5px;
+}
+
+#add-color-button-container {
+    margin-top: 10px;
+}
+
+
+#gradient-colors-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#gradient-colors {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
 .volume-slider-container {
     position: absolute;
     bottom: 70px;
