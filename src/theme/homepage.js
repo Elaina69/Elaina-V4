@@ -21,7 +21,7 @@ const error = (message, ...args) => console.error(CONSOLE_STYLE.prefix + '%c ' +
 let datapath = new URL("..", import.meta.url).href;
 const iconFolder = `${datapath}assets/icon/`;
 const bgFolder = `${datapath}assets/backgrounds/`;
-let thisVersion, CdnKey;
+let CdnKey;
 
 DataStore.set("Font-folder", `${datapath}assets/fonts/`);
 DataStore.set("Plugin-folder-name", getThemeName());
@@ -32,7 +32,7 @@ const defaultData = {
     "wallpaper-index": 0,
     "audio-index": 0,
     "wallpaper-volume": 0.0,
-    "audio-volume": 0.3,
+    "audio-volume": 0.15,
     'mute-audio': false,
     "Playback-speed": 100,
     "Audio-currentTime": 0,
@@ -106,8 +106,7 @@ else {
 }
 
 if (CdnKey == LocalKey) {
-    //thisVersion = (await import("https://unpkg.com/elaina-theme-data@latest/src/update/version.js")).default;
-    DataStore.set("Theme-version", thisVersion);
+    DataStore.set("Theme-version", (await import("https://unpkg.com/elaina-theme-data@latest/src/update/version.js")).default);
     if (!DataStore.get("Change-CDN-version")) {
         const cdnVersion = await (await fetch('https://unpkg.com/elaina-theme-data@latest/package.json')).json();
         DataStore.set("Cdn-version", cdnVersion["version"]);
