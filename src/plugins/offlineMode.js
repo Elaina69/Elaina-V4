@@ -20,9 +20,14 @@ let switch_between_status = async () => {
 	let eConsole = "%c Elaina "
 	let eCss = "color: #ffffff; background-color: #f77fbe"
 	let status = get_status()
-	let availability = (status == "chat") ? "mobile" : (status == "mobile") ? "dnd" : (status == "dnd") ? "away" : (status == "away") ? "offline" : (status == "offline") ? "chat" : "chat"
+	let availability = (status == "chat") ? "mobile" 
+		: (status == "mobile") ? "dnd" 
+		: (status == "dnd") ? "away" 
+		: (status == "away") ? "offline" 
+		: (status == "offline") ? "chat" 
+		: "chat"
 
-	console.log(eConsole+"%c Changed status",eCss,"")
+	console.log(eConsole+"%c Changed status to "+availability,eCss,"")
 	await fetch("/lol-chat/v1/me", {
 		"headers": {
 			"content-type": "application/json",
@@ -58,14 +63,13 @@ let champSelectPatchStatus = async message => {
 let availabilityButtonMutationObserver = async (mutations) => {
 	let circle_status = document.querySelector(".availability-hitbox:not(.offline-mode-available), .availability-hitbox:not([onclick])")
 	let circle_status_custom = document.querySelectorAll(".availability-hitbox.offline-mode-available")
-	let custom_message_status = document.querySelector(".details .status-message.game-status")
 
 	if (circle_status) {
 		circle_status.classList.add("offline-mode-available");
 		circle_status.outerHTML = circle_status.outerHTML
 		document.querySelector(".availability-hitbox").setAttribute("onclick", "window.switch_between_status()")
 	}
-	if (custom_message_status && covert_status == "offline") {		
+	if (covert_status == "offline") {		
 		await patchStatus();
 	}
 	if (circle_status_custom.length > 1){

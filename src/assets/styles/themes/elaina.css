@@ -1340,6 +1340,19 @@ div[data-screen-name="rcp-fe-lol-navigation-screen"] {
 	margin-left: 15px;
 }
 
+#nickname-color-with-text {
+	display: flex;
+}
+
+#nickname-color-text {
+	margin-top: 6px !important;
+	margin-left: 15px;
+}
+
+#change-nickname-color-row {
+	margin-left: 25px !important;
+}
+
 /* Music Controls */
 .webm-bottom-buttons-container {
     display: flex;
