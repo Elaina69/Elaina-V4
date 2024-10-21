@@ -1,2 +1,3 @@
-elaina-theme-data/
-backup/
+dist/
+node_modules/
+.git/
