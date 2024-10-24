@@ -124,16 +124,22 @@ export default defineConfig((config) => ({
                 await cp(resolve(__dirname, 'src/src/assets'), outDir+"/assets", {
                     recursive: true,
                 });
-                await cp(resolve(__dirname, 'src/src/config'), outDir+"/configs", {
+                await cp(resolve(__dirname, 'src/src/config'), outDir+"/config", {
                     recursive: true,
                 });
+                try {
+                    await cp(resolve(__dirname, 'src/elaina-theme-data'), outDir+"/elaina-theme-data", {
+                        recursive: true,
+                    });
+                }
+                catch {}
 
                 // Uncomment code below if you want to copy dist/ to pengu plugins folder after building
                 // Copy output to pengu dir
-                // await emptyDir(pluginsDir);
-                // await cp(outDir, pluginsDir, {
-                //    recursive: true,
-                // });
+                await emptyDir(pluginsDir);
+                await cp(outDir, pluginsDir, {
+                   recursive: true,
+                });
                 
             }
         },

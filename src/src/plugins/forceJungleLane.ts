@@ -1,4 +1,4 @@
-async function forceJungle() {
+async function forceJungle(): Promise<void> {
     await fetch("/lol-champ-select/v1/session/my-selection", {
         "headers": {
             "content-type": "application/json",
@@ -8,7 +8,7 @@ async function forceJungle() {
     });
 }
 
-async function forceLane() {
+async function forceLane(): Promise<void> {
     await fetch("/lol-champ-select/v1/session/my-selection", {
         "headers": {
             "content-type": "application/json",
@@ -18,8 +18,8 @@ async function forceLane() {
     });
 }
 
-window.addEventListener("keydown", async (event)=>{
-    let key = event.key
-    if (event.altKey && key=="j") {forceJungle()}
-    if (event.altKey && key=="l") {forceLane()}
+window.addEventListener("keydown", async (event): Promise<void> => {
+    let key: string = event.key
+    if (event.altKey && key=="j") { await forceJungle() }
+    if (event.altKey && key=="l") { await forceLane() }
 })

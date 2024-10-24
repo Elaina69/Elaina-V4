@@ -1,3 +1,5 @@
+.git/
 dist/
 node_modules/
-.git/
+src/elaina-theme-data/
+src/elaina-theme-data-typescript/

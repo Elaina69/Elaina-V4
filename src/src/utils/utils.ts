@@ -8,20 +8,20 @@
 // State variables
 let pvp_net_id: any, summoner_id: any, phase: any;
 
-const routines: Array<any> = [];
-const mutationCallbacks: Array<any> = [];
+const routines: {callback: Function, target: string[]}[] = [];
+const mutationCallbacks: {callback: Function, target: string[]}[] = [];
 
 /**
  * Adds a CSS style to the document body
  * @param {string} style - The CSS style to add
  */
-function addStyle(style: any) {
+function addStyle(style: string) {
     const styleElement = document.createElement('style');
     styleElement.appendChild(document.createTextNode(style));
     document.body.appendChild(styleElement);
 }
 
-function addStyleWithID(Id: any, style: any) {
+function addStyleWithID(Id: string, style: string) {
     const styleElement = document.createElement('style');
     styleElement.id = Id
     styleElement.appendChild(document.createTextNode(style));
@@ -34,7 +34,7 @@ function addStyleWithID(Id: any, style: any) {
  * @param {string} font_id - The ID for the style element
  * @param {string} font_family - The font family name
  */
-function addFont(folder: any, font_id: any, font_family: any) {
+function addFont(folder: string, font_id: string, font_family: string) {
     const fontStyle = document.createElement('style');
     fontStyle.id = font_id;
     fontStyle.appendChild(document.createTextNode(
@@ -66,7 +66,7 @@ function CustomCursor(folder: string, css: string) {
  * Fetches the current summoner's ID
  * @returns {Promise<number>} The summoner ID
  */
-async function getSummonerID() {
+async function getSummonerID(): Promise<number> {
     const response = await fetch("/lol-summoner/v1/current-summoner");
     const data = await response.json();
     return JSON.parse(data.summonerId);
@@ -78,9 +78,9 @@ async function getSummonerID() {
  * @param {function} callback - The callback function
  */
 async function subscribe_endpoint(endpoint: string, callback: any) {
-    const getUri: any = document.querySelector('link[rel="riot:plugins:websocket"]')
-    const uri = getUri.href;
-    const ws: any = new WebSocket(uri, 'wamp');
+    const getUri: HTMLAnchorElement | null= document.querySelector('link[rel="riot:plugins:websocket"]')
+    const uri: any = getUri?.href;
+    const ws = new WebSocket(uri, 'wamp');
 
     ws.onopen = () => ws.send(JSON.stringify([5, 'OnJsonApiEvent' + endpoint.replace(/\//g, '_')]));
     ws.onmessage = callback;
@@ -90,7 +90,7 @@ async function subscribe_endpoint(endpoint: string, callback: any) {
  * Updates user PvP.net info
  * @param {MessageEvent} message - The WebSocket message event
  */
-const updateUserPvpNetInfos = async (message: any) => {
+const updateUserPvpNetInfos = async (message: MessageEvent) => {
     const data = JSON.parse(message.data)[2].data;
     if (data) {
         pvp_net_id = data.id;
@@ -102,7 +102,7 @@ const updateUserPvpNetInfos = async (message: any) => {
  * Updates the gameflow phase
  * @param {MessageEvent} message - The WebSocket message event
  */
-const updatePhaseCallback = async (message: any) => {
+const updatePhaseCallback = async (message: MessageEvent) => {
     phase = JSON.parse(message.data)[2].data;
 };
 
@@ -111,8 +111,8 @@ const updatePhaseCallback = async (message: any) => {
  * @param {function} callback - The callback function
  * @param {string} target - The list of class targets
  */
-function routineAddCallback(callback: any, target: any) {
-    routines.push({ callback, targets: target });
+function routineAddCallback(callback: Function, target: string[]) {
+    routines.push({ callback, target });
 }
 
 /**
@@ -120,8 +120,8 @@ function routineAddCallback(callback: any, target: any) {
  * @param {function} callback - The callback function
  * @param {string} target - The list of class targets
  */
-function mutationObserverAddCallback(callback: any, target: any) {
-    mutationCallbacks.push({ callback, targets: target });
+function mutationObserverAddCallback(callback: Function, target: string[]) {
+    mutationCallbacks.push({ callback, target });
 }
 
 // Initialize event listeners and observers
@@ -130,7 +130,7 @@ window.addEventListener('load', () => {
     subscribe_endpoint("/lol-chat/v1/me", updateUserPvpNetInfos);
     
     setInterval(() => {
-        routines.forEach((routine: any) => routine.callback());
+        routines.forEach((routine) => routine.callback());
     }, 1000);
 
     const observer = new MutationObserver((mutationsList: any) => {
@@ -139,7 +139,7 @@ window.addEventListener('load', () => {
                 if (addedNode.nodeType === Node.ELEMENT_NODE && addedNode.classList) {
                     for (const addedNodeClass of addedNode.classList) {
                         for (const obj of mutationCallbacks) {
-                            if (obj.targets.indexOf(addedNodeClass) !== -1 || obj.targets.indexOf("*") !== -1) {
+                            if (obj.target.indexOf(addedNodeClass) !== -1 || obj.target.indexOf("*") !== -1) {
                                 obj.callback(addedNode);
                             }
                         }

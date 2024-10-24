@@ -20,7 +20,8 @@ let nodeRemovedEvent = function (event: any) {
 }
 
 let addFilter = async (node: any) => {
-	let pagename: any, previous_page: any;
+	let pagename: string = ""
+	let previous_page: string = ""
 	let elainaBg: any = document.getElementById("elaina-bg");
 	let elainaStaticBg: any = document.getElementById("elaina-static-bg");
 

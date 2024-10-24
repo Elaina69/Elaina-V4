@@ -5,17 +5,17 @@
 
 import { getThemeName } from '../otherThings.ts'
 
-let icdata = (await import(`//plugins/${window.getThemeName()}/config/icons.js`)).default;
+let icdata: Object = (await import(`//plugins/${window.getThemeName()}/config/icons.js`)).default;
 
-let datapath = `//plugins/${window.getThemeName()}/`
+let datapath: string = `//plugins/${window.getThemeName()}/`
 
 function openConfigs() {window.openPluginsFolder(`${getThemeName()}/config`)}
 function openAssets() {window.openPluginsFolder(`${getThemeName()}/assets`)}
 
-async function createThemeMenu(root: any) {
+async function createThemeMenu(root: HTMLElement) {
 	//@ts-ignore
 	const { Component, jsx, render } = await import('//esm.run/nano-jsx')
-	const version = window.DataStore.get("Theme-version")
+	const version: string = window.DataStore.get("Theme-version")
 	
 	let l_reload_client = await getString('reload-client')
 	let l_open_assets = await getString('l.open_assets')
@@ -24,26 +24,26 @@ async function createThemeMenu(root: any) {
 	let l_open_settings = await getString('l.open_settings')
 
 	class LoaderMenu extends Component {
-		visible: any = false; frame: any = null; opener: any = null
+		visible: boolean = false; frame: HTMLElement | null = null; opener: HTMLElement | null = null
 		didMount() {
 			this.opener = document.querySelector('div[action=settings]')
-			this.opener.addEventListener('click', e => {
+			this.opener?.addEventListener('click', e => {
 				if (!this.visible) {
 					e.stopImmediatePropagation()
 					this.show(true)
 				}
 			})
 		}
-		show(on) {
+		show(on: boolean) {
 			this.visible = on
 			this.update()
 			if (this.visible) {
-				this.frame.shadowRoot.querySelector('lol-uikit-close-button')
+				this.frame?.shadowRoot?.querySelector('lol-uikit-close-button')
 					?.addEventListener('click', () => this.show(false))
 			}
 		}
 		showDefaultSettings() {
-			this.opener.click()
+			this.opener?.click()
 			this.show(false)
 		}
 		render() {
@@ -51,7 +51,7 @@ async function createThemeMenu(root: any) {
 				<div style="position: absolute; inset: 0px; z-index: 8500" hidden=${!this.visible || undefined}>
 					<lol-uikit-full-page-backdrop style="display: flex; align-items: center; justify-content: center; position: absolute; inset: 0px; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8) 93%);" />
 					<div class="dialog-confirm" style="display: flex; align-items: center; justify-content: center; position: absolute; inset: 0px">
-						<lol-uikit-dialog-frame ref=${el => (this.frame = el)} class="dialog-frame" orientation="bottom" close-button="false">
+						<lol-uikit-dialog-frame ref=${(el:HTMLElement | null) => (this.frame = el)} class="dialog-frame" orientation="bottom" close-button="false">
 							<div class="dialog-content">
 								<lol-uikit-content-block class="app-controls-exit-dialog" type="dialog-medium" style="position: relative; overflow: hidden">
 									<div style="position: absolute; top: 60px">
@@ -95,11 +95,11 @@ async function createThemeMenu(root: any) {
 }
 
 window.addEventListener("load",async ()=> {
-	const manager: any = () => document.getElementById('lol-uikit-layer-manager-wrapper')
+	const manager = () => document.getElementById('lol-uikit-layer-manager-wrapper')
 	const root    = document.createElement('div')
 	if (window.DataStore.get("Old-League-Loader-Settings")) {
 		while (!manager()) await new Promise(r => setTimeout(r, 300))
 		await createThemeMenu(root)
-		manager().prepend(root)
+		manager()?.prepend(root)
 	}
 })

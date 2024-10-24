@@ -25,7 +25,7 @@ const callbackStore = {
  * @param {Function} callback - The callback function.
  * @param {Object} callbackMap - The map to store the callback.
  */
-function addCallback(target: string, callback: any, callbackMap: any) {
+function addCallback(target: string, callback: Function, callbackMap: any): void {
   const key = target.startsWith('.') || target.startsWith('#')
     ? target.slice(1)
     : target;
@@ -41,7 +41,7 @@ function addCallback(target: string, callback: any, callbackMap: any) {
  * @param {string} target - The target selector.
  * @param {Function} callback - The callback function.
  */
-export function subscribeToElementCreation(target: string, callback: any) {
+export function subscribeToElementCreation(target: string, callback: Function): void {
   const type = target.startsWith('.') ? CALLBACK_TYPES.CLASS :
                target.startsWith('#') ? CALLBACK_TYPES.ID :
                CALLBACK_TYPES.TAG;
@@ -53,7 +53,7 @@ export function subscribeToElementCreation(target: string, callback: any) {
  * @param {string} target - The target selector.
  * @param {Function} callback - The callback function.
  */
-export function subscribeToElementDeletion(target: string, callback: any) {
+export function subscribeToElementDeletion(target: string, callback: Function): void {
   const type = target.startsWith('.') ? CALLBACK_TYPES.CLASS :
                target.startsWith('#') ? CALLBACK_TYPES.ID :
                CALLBACK_TYPES.TAG;
@@ -66,7 +66,7 @@ export function subscribeToElementDeletion(target: string, callback: any) {
  * @param {boolean} isCreation - Whether this is a creation event.
  * @param {Object} callbacks - The callback object to use.
  */
-export function handleElementMutation(element: any, isCreation: any, callbacks: any) {
+export function handleElementMutation(element: any, isCreation: boolean, callbacks: Object): void {
   if (!callbacks || typeof callbacks !== 'object') {
     console.error('Invalid callbacks object:', callbacks);
     return;
@@ -117,7 +117,7 @@ export function handleElementMutation(element: any, isCreation: any, callbacks: 
  * Callback function for the MutationObserver.
  * @param {MutationRecord[]} mutations - List of mutations.
  */
-function observerCallback(mutations) {
+function observerCallback(mutations: MutationRecord[]): void {
   mutations.forEach(mutation => {
     mutation.addedNodes.forEach(node => {
       if (node.nodeType === Node.ELEMENT_NODE) {

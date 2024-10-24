@@ -7,7 +7,7 @@ let datapath = `//plugins/${window.getThemeName()}/`
 let iconFolder  = `${datapath}assets/icon/`
 
 //For observer
-function freezeProperties(object: any, properties: any) {
+function freezeProperties(object: Object, properties: any[]) {
 	for (const type in object) {
 		if ((properties && properties.length && properties.includes(type)) || (!properties || !properties.length)) {
 			let value = object[type]
@@ -23,7 +23,7 @@ function freezeProperties(object: any, properties: any) {
 }
 
 export function transparentLobby(context: any) {
-	context.socket.observe('/lol-gameflow/v1/gameflow-phase',async (data: any) => {
+	context.socket.observe('/lol-gameflow/v1/gameflow-phase',async (data: Object) => {
 		if(data["data"]=="Matchmaking") {
 			let a: any = document.getElementsByClassName("placeholder-invited-container")
 			for (let i =0; i< a.length; i++) {
@@ -43,10 +43,10 @@ observer.subscribeToElementCreation("lol-uikit-parallax-background",(element: an
 })	
 
 if (window.DataStore.get("aram-only")) {
-	function removeNode(obj) {
-		try {document.querySelector(obj).remove()}catch{}
+	function removeNode(obj: string): void {
+		try {document.querySelector(obj)?.remove()}catch{}
 	}
- 	let interval
+ 	let interval: number
 
  	observer.subscribeToElementCreation(".parties-game-type-select-wrapper",(element: any)=>{
  		element.querySelector('div[data-game-mode=ARAM] div[class=parties-game-type-upper-half]').click()
@@ -102,7 +102,7 @@ if (window.DataStore.get("Runes-BG")) {
 }
 
 if (window.DataStore.get("new-gamesearch-queue")) {
-	function DisplayNone(element: any) {
+	function DisplayNone(element: HTMLElement) {
 		element.style.display = 'none'
 	}
 

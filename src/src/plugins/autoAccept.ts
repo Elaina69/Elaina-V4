@@ -1,21 +1,21 @@
 import utils from '../utils/utils.ts';
 
-let queue_accepted = false 
-let player_declined = false 
+let queue_accepted: boolean = false 
+let player_declined: boolean = false 
 
 function autoAcceptQueueButton(){
 	let element: any = document.getElementById("autoAcceptQueueButton")
-	if (element.attributes.selected != undefined) {
+	if (element?.attributes.selected != undefined) {
 		window.DataStore.set("auto_accept", false)
 		element.removeAttribute("selected")
 	}
 	else {
-		element.setAttribute("selected", "true")
+		element?.setAttribute("selected", "true")
 		window.DataStore.set("auto_accept", true)
 	}
 }
 
-function fetch_or_create_champselect_buttons_container() {
+function fetch_or_create_champselect_buttons_container(): Element | null {
 	if (document.querySelector(".cs-buttons-container")) {
 		return document.querySelector(".cs-buttons-container")
 	}
@@ -23,22 +23,22 @@ function fetch_or_create_champselect_buttons_container() {
 		const div = document.createElement("div")
 		div.className = "cs-buttons-container"
 
-		let nor: any = document.querySelector(".v2-footer-notifications.ember-view")
-		let tft: any = document.querySelector(".parties-footer-notifications.ember-view")
+		let nor: HTMLElement | null = document.querySelector(".v2-footer-notifications.ember-view")
+		let tft: HTMLElement | null = document.querySelector(".parties-footer-notifications.ember-view")
 
 		if (nor) {
-			nor.append(div)
+			nor?.append(div)
 			return div
 		}
 		else { 
-			tft.append(div)
+			tft?.append(div)
 			return div
 		}
 	}	
 }
 
 
-	let autoAcceptCallback = async message => {
+	let autoAcceptCallback = async (message: Object) => {
 		if (window.DataStore.get("auto_accept_button")) {
 			utils.phase = JSON.parse(message["data"])[2]["data"]
 			if (utils.phase == "ReadyCheck" && window.DataStore.get("auto_accept") && !queue_accepted) {
@@ -51,16 +51,16 @@ function fetch_or_create_champselect_buttons_container() {
 		}
 	}
 
-	let acceptMatchmaking = async () => {
+	let acceptMatchmaking = async (): Promise<void> => {
 		if (player_declined) return;
 		await fetch('/lol-matchmaking/v1/ready-check/accept', { method: 'POST' })
 	}
 
-	let autoAcceptMutationObserver = async () => {
+	let autoAcceptMutationObserver = async (): Promise<void> => {
 		if (document.querySelector(".v2-footer-notifications.ember-view") != null && document.getElementById("autoAcceptQueueButton") == null) {
-			let newOption: any = document.createElement("lol-uikit-radio-input-option")
-			let container: any = fetch_or_create_champselect_buttons_container()
-			let Option2: any   = document.createElement("div")
+			let newOption = document.createElement("lol-uikit-radio-input-option")
+			let container = fetch_or_create_champselect_buttons_container()
+			let Option2 = document.createElement("div")
 		
 			newOption.setAttribute("id", "autoAcceptQueueButton")
 			newOption.setAttribute("onclick", "window.autoAcceptQueueButton()")
@@ -72,7 +72,7 @@ function fetch_or_create_champselect_buttons_container() {
 			}
 			
 			if (window.DataStore.get("auto_accept_button")) {
-				container.append(newOption)
+				container?.append(newOption)
 				newOption.append(Option2)
 			}
 		}

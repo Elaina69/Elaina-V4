@@ -119,8 +119,9 @@ let requestMasteryScore = {
     }
 }
 
-async function request(method: any, endpoint: any, { headers = {}, body = {} } = {}) {
-    const requestOptions: any = {
+async function request(method: string, endpoint: string, { headers = {}, body = {} }: { headers?: Record<string, string>; body?: Record<string, any> } = {}
+): Promise<Response> {
+    const requestOptions: RequestInit = {
         method: method,
         headers: {
             ...headers,
@@ -134,14 +135,27 @@ async function request(method: any, endpoint: any, { headers = {}, body = {} } =
     return await fetch(endpoint, requestOptions)
 }
 
+interface BadgeChallenge {
+    id: number;
+}
 
-async function getPlayerPreferences() {
-    const endpoint = "/lol-challenges/v1/summary-player-data/local-player"
+interface Title {
+    itemId: number;
+}
+
+interface PlayerPreferences {
+    challengeIds: number[];
+    title?: string;
+    bannerAccent?: string;
+}
+
+async function getPlayerPreferences(): Promise<PlayerPreferences> {
+    const endpoint: string = "/lol-challenges/v1/summary-player-data/local-player"
     const response = await request("GET", endpoint)
-    const responseData = await response.json()
-    const playerPreferences: any = { challengeIds: [] }
+    const responseData: { topChallenges: BadgeChallenge[]; title: Title; bannerId?: string} = await response.json()
+    const playerPreferences: PlayerPreferences = { challengeIds: [] }
   
-    playerPreferences.challengeIds = responseData.topChallenges.map((badgeChallenge: any) => badgeChallenge.id)
+    playerPreferences.challengeIds = responseData.topChallenges.map((badgeChallenge) => badgeChallenge.id)
     if (responseData.title.itemId !== -1) { 
         playerPreferences.title = `${responseData.title.itemId}`
     }
@@ -151,7 +165,7 @@ async function getPlayerPreferences() {
     return playerPreferences
 }
   
-async function updatePlayerPreferences(playerPreferences) {
+async function updatePlayerPreferences(playerPreferences: PlayerPreferences): Promise<Response> {
     const endpoint = "/lol-challenges/v1/update-player-preferences"
     return await request("POST", endpoint, { body: playerPreferences })
 }
@@ -170,8 +184,8 @@ async function setupInvisibleBanner() {
     })
 }
   
-async function setupBadgesFunctions() {
-    const badgesContainer: any = document.querySelector("div > div.challenge-banner-token-container")
+async function setupBadgesFunctions(): Promise<void> {
+    const badgesContainer: HTMLElement | null = document.querySelector("div > div.challenge-banner-token-container")
     if (!badgesContainer || badgesContainer.hasAttribute("copy-badges-setup")) { return }
   
     badgesContainer.setAttribute("copy-badges-setup", "true")
@@ -202,7 +216,7 @@ async function setupBadgesFunctions() {
     })
 }
   
-async function onMutation() {
+async function onMutation(): Promise<void> {
     const toSetup = [
         //setupInvisibleBanner(),
         setupBadgesFunctions()
@@ -210,7 +224,7 @@ async function onMutation() {
     await Promise.all(toSetup)
 }
 
-function freezeProperties(object: any, properties: any) {
+function freezeProperties(object: Object, properties: string[]): void {
 	for (const type in object) {
 		if ((properties && properties.length && properties.includes(type)) || (!properties || !properties.length)) {
 			let value = object[type]
@@ -228,9 +242,9 @@ function freezeProperties(object: any, properties: any) {
 if (window.DataStore.get("Custom-profile-hover")) {
 
     // Change mastery score and challenge point when hover summoner card
-    observer.subscribeToElementCreation("#lol-uikit-tooltip-root",async (element: any)=>{
+    observer.subscribeToElementCreation("#lol-uikit-tooltip-root",async (element: HTMLElement)=>{
         try{
-            let checkID = element.querySelector(`lol-regalia-hovercard-v2-element`).getAttribute("summoner-id")
+            let checkID = element.querySelector(`lol-regalia-hovercard-v2-element`)?.getAttribute("summoner-id")
             if (checkID == window.DataStore.get("Summoner-ID")) {
                 let GetMStext: any = document.querySelector("#hover-card-header > div.hover-card-header-left > span.hover-card-mastery-score")
                 let MStext = GetMStext.innerText
@@ -239,8 +253,9 @@ if (window.DataStore.get("Custom-profile-hover")) {
                     await request("PUT","/lol-chat/v1/me",{body: requestMasteryScore})
                 }
                 let fix = window.setInterval(async ()=>{
-                    let CPtext = element.querySelector(".hover-card-challenge-crystal").innerText
-                    let checkCP = CPtext.includes(`${window.DataStore.get("Challenge-Points")}`)
+                    let getCPtext: HTMLElement | null = element.querySelector(".hover-card-challenge-crystal")
+                    let CPtext = getCPtext?.innerText
+                    let checkCP = CPtext?.includes(`${window.DataStore.get("Challenge-Points")}`)
                     if (!checkCP && window.DataStore.get("Custom-challenge-crystal")) {
                         await request("PUT","/lol-chat/v1/me",{body: requestChallengeCrystal})
                     }
@@ -253,12 +268,14 @@ if (window.DataStore.get("Custom-profile-hover")) {
     })
 
     if (window.DataStore.get("Custom-mastery-score")) {
-        observer.subscribeToElementCreation(".collection-totals",(element: any)=>{
-            let a = element.querySelector(".total-owned.total-count.ember-view")
-            a.innerText = `${window.DataStore.get("Mastery-Score")}`
-            freezeProperties(a,["innerText"])
+        observer.subscribeToElementCreation(".collection-totals",(element: HTMLElement)=>{
+            let a: HTMLElement | null = element.querySelector(".total-owned.total-count.ember-view")
+            if (a) {
+                a.innerText = `${window.DataStore.get("Mastery-Score")}`
+                freezeProperties(a,["innerText"])
+            }
         })
-        observer.subscribeToElementCreation(".style-profile-champion-mastery-score",(element: any)=>{
+        observer.subscribeToElementCreation(".style-profile-champion-mastery-score",(element: HTMLElement)=>{
             element.innerText = `${window.DataStore.get("Mastery-Score")}`
             freezeProperties(element,["innerText"])
         })
@@ -274,13 +291,13 @@ if (window.DataStore.get("Custom-profile-hover")) {
         if (window.DataStore.get("Custom-challenge-crystal")) {
             await request("PUT","/lol-chat/v1/me",{body: requestChallengeCrystal})
 
-            observer.subscribeToElementCreation(".crystal-wrapper",(element: any)=>{
-                let a = element.querySelector(".contents > div:nth-child(1)")
-                let b = element.querySelector(".total-points")
-
-                a.setAttribute("class", `crystal-image ${rank["Ranked Tier ID"][window.DataStore.get("Ranked Tier ID")]["Option"]}`)
-                b.innerText = `${window.DataStore.get("Challenge-Points")}`
-                element.querySelector(".level").innerText = rank["Ranked Tier ID"][window.DataStore.get("Ranked Tier ID")]["Option"].toLowerCase()
+            observer.subscribeToElementCreation(".crystal-wrapper",(element: HTMLElement)=>{
+                let a: HTMLElement | null = element.querySelector(".contents > div:nth-child(1)")
+                let b: HTMLElement | null = element.querySelector(".total-points")
+                let level: HTMLElement | null = element.querySelector(".level")
+                a?.setAttribute("class", `crystal-image ${rank["Ranked Tier ID"][window.DataStore.get("Ranked Tier ID")]["Option"]}`)
+                if (b) b.innerText = `${window.DataStore.get("Challenge-Points")}`
+                if (level) level.innerText = rank["Ranked Tier ID"][window.DataStore.get("Ranked Tier ID")]["Option"].toLowerCase()
             })
         }
     }, 10000)

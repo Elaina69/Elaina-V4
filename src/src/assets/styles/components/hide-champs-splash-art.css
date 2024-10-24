@@ -17,3 +17,13 @@
 .lol-uikit-background-switcher-image.none.transition {
 	display: none !important;
 }
+
+.position-assignment.top-right {
+	display: none !important;
+}
+
+/* .position-assignment.top-right.defocussed */
+
+.ring-splash-dashed, .ring-splash-outer, .ring-splash-inner, .ring-inner-mask, .expanded-ring-container, .dashed-ring-circle {
+    display: none !important;
+}

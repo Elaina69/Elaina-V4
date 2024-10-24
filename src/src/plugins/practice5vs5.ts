@@ -1,5 +1,5 @@
 import utils from '../utils/utils.ts'
-const addPrac5 = () => {
+const addPrac5 = (): void => {
     if (document.getElementById("prac-button")) {return}
     else {
         try{
@@ -7,7 +7,7 @@ const addPrac5 = () => {
             button.id = "prac-button"
             button.textContent = "5v5 Practice"
             button.style.marginRight = "10px"
-            button.onclick = async () => {
+            button.onclick = async (): Promise<void> => {
                 await fetch('/lol-lobby/v2/lobby', {
                     method: 'POST',
                     body: JSON.stringify(
@@ -16,11 +16,11 @@ const addPrac5 = () => {
                     headers: {'Content-Type': 'application/json'}
                 })
             }
-            let gameBar = document.querySelector(".parties-game-navs.ember-view")
+            let gameBar: HTMLElement | null = document.querySelector(".parties-game-navs.ember-view")
             gameBar?.insertBefore(button, gameBar.children[1])
         }catch{}
     }
 }
-window.addEventListener("load", ()=> {
+window.addEventListener("load", () => {
     if (!window.DataStore.get("aram-only")) {utils.routineAddCallback(addPrac5, ["rcp-fe-lol-parties"])}
 })

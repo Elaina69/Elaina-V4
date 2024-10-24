@@ -13,7 +13,7 @@ if (window.DataStore.get("Enable-Invite-Fr")) {
 
 
 
-    function routineAddCallback(callback: any, target: any) {
+    function routineAddCallback(callback: any, target: any[]): void {
         routines.push({ "callback": callback, "targets": target })
     }
 
@@ -24,8 +24,8 @@ if (window.DataStore.get("Enable-Invite-Fr")) {
             if (window.DataStore.get("grouplist").length != CurrentGroup || window.DataStore.get("friendslist").length != CurrentFriend) {
                 let friends: any[] = []
                 let groups: any[] = []
-                let a = await (await fetch('/lol-chat/v1/friends')).json()
-                let b = await (await fetch('/lol-chat/v1/friend-groups')).json()
+                let a: any[] = await (await fetch('/lol-chat/v1/friends')).json()
+                let b: any[] = await (await fetch('/lol-chat/v1/friend-groups')).json()
                 for (let i = 0; i < a.length; i++) {
                     friends.push({"summonerId": a[i]["summonerId"],"groupId": a[i]["groupId"],"availability": a[i]["availability"]})
                 }
@@ -41,14 +41,12 @@ if (window.DataStore.get("Enable-Invite-Fr")) {
         }catch{}
     },1000)
 
-    let addInviteAllButton = async () => {
+    let addInviteAllButton = async (): Promise<void> => {
         if (document.querySelector(".lobby-header-buttons-container") != null) {
-            let groupList = {"name":[],"id":[]}
+            let groupList: { name: string[]; id: string[] } = {"name":[],"id":[]}
 
             for(let i = 0; i < window.DataStore.get("grouplist").length ; i++) {
-                //@ts-ignore
                 groupList["id"].push(window.DataStore.get("grouplist")[i]["id"])
-                //@ts-ignore
                 groupList["name"].push(window.DataStore.get("grouplist")[i]["name"])
             }
 
@@ -60,9 +58,7 @@ if (window.DataStore.get("Enable-Invite-Fr")) {
             button.textContent = "Invite all"
             button.onclick = async () => {
                 let Invited = 0
-                let fakerun = new Promise(async () => { //uhh....
-                    setTimeout(() => {if (true) {}})
-                })
+                let fakerun = new Promise(() => {})
                 window.Toast.promise(fakerun, {
                     loading: 'Inviting all...',
                     success: "",

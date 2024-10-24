@@ -15,20 +15,20 @@ const CONSOLE_STYLE = {
     css: 'color: #ffffff; background-color: #f77fbe'
 };
 
-const log = (message: string, ...args: Array<string>) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
-const error = (message: string, ...args: Array<string>) => console.error(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+const error = (message: string, ...args: string[]) => console.error(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
 
-let datapath = `//plugins/${window.getThemeName()}/`
-const iconFolder = `${datapath}assets/icon/`;
-const bgFolder = `${datapath}assets/backgrounds/`;
-let CdnKey: any;
+let datapath: string = `//plugins/${window.getThemeName()}/`
+const iconFolder: string = `${datapath}assets/icon/`;
+const bgFolder: string = `${datapath}assets/backgrounds/`;
+let CdnKey: number;
 
 window.DataStore.set("Font-folder", `${datapath}assets/fonts/`);
 window.DataStore.set("Plugin-folder-name", window.getThemeName());
 
 const defaultData = {
-    "Wallpaper-list": ["elaina1.webm"],
-    "Audio-list": ["Laur - その花は世界を紡ぐ.flac"],
+    "Wallpaper-list": ["elaina1.webm", "elaina2.jpg"],
+    "Audio-list": ["Laur - その花は世界を紡ぐ.flac", "Laur - その花は世界を紡ぐ.flac"],
     "wallpaper-index": 0,
     "audio-index": 0,
     "wallpaper-volume": 0.0,
@@ -52,7 +52,7 @@ setDefaultData(defaultData);
 
 // Get Summoner ID
 window.setTimeout(async () => {
-    const summonerID = await utils.getSummonerID();
+    const summonerID: number = await utils.getSummonerID();
     window.DataStore.set("Summoner-ID", summonerID);
     log(`%cCurrent summonerID: %c${summonerID}`, 'color: #e4c2b3', 'color: #0070ff');
 }, 7000);
@@ -571,14 +571,9 @@ const createWebmButtons = () => {
 
 
 const deleteButtons = () => {
-    try {
-        document.querySelector(".webm-bottom-buttons-container-hovered")?.remove();
-        document.querySelector(".wallpaper-controls")?.remove();
-    }
-    catch{
-        document.querySelector(".webm-bottom-buttons-container")?.remove();
-        document.querySelector(".wallpaper-controls")?.remove();
-    }
+    document.querySelector(".webm-bottom-buttons-container-hovered")?.remove();
+    document.querySelector(".webm-bottom-buttons-container")?.remove();
+    document.querySelector(".wallpaper-controls")?.remove();
 };
 
 const loadWallpaperAndMusic = () => {
@@ -634,10 +629,9 @@ const addHomepage = async (node: any) => {
     if (!document.querySelector(".rcp-fe-lol-home")) return;
     
     const pagename = node.getAttribute("data-screen-name");
-    const isHomePage = pagename === "rcp-fe-lol-home-main";
     const isOtherPage = !["rcp-fe-lol-navigation-screen", "window-controls", "rcp-fe-lol-home", "social"].includes(pagename);
 
-    if (isHomePage) {
+    if (pagename === "rcp-fe-lol-home-main") {
         if (!document.querySelector(".webm-bottom-buttons-container") && !document.querySelector(".webm-bottom-buttons-container-hovered")) {
             createWebmButtons();
             document.querySelector(".webm-bottom-buttons-container")?.setAttribute("class", "webm-bottom-buttons-container-hovered")

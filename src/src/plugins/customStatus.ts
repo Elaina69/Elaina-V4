@@ -1,15 +1,15 @@
 //@ts-ignore
-import text from "../config/customStatus.txt?raw"
+let text = (await import('//plugins/elainav4/config/customStatus.txt?raw')).default
 
 if (window.DataStore.get("Custom-Status") && window.DataStore.get("Custom-profile-hover")) {
-    let time: any
+    let time: number
     let i = 0
     let statusMessage = JSON.stringify(text)
         statusMessage = statusMessage.replaceAll("\n", "\\n")
         statusMessage = statusMessage.replaceAll("\r", "\\r")
         statusMessage = statusMessage.replaceAll("\"", "")
 
-    let MultiStatus   = statusMessage.split("\\r\\n(end status)\\r\\n")
+    let MultiStatus = statusMessage.split("\\r\\n(end status)\\r\\n")
 
     if   (MultiStatus.length == 1) {time = 100000}
     else {time = window.DataStore.get("status-delay")}

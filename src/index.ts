@@ -11,8 +11,8 @@ const CONSOLE_STYLE = {
     css: 'color: #ffffff; background-color: #f77fbe'
 };
 
-const log = (message: string, ...args: Array<string>) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
-const error = (message: string, ...args: Array<string>) => console.error(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+const error = (message: string, ...args: string[]) => console.error(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
 
 log('By %cElaina Da Catto', 'color: #e4c2b3');
 log('%cMeow ~~~', 'color: #e4c2b3');
@@ -33,7 +33,7 @@ const ASSET_PATHS: {Wallpaper: string, Audio: string, Font: string, Banner: stri
     Banner: "./src/assets/icon/regalia-banners",
 };
 
-const refreshBackgroundsList = async () => {
+const refreshBackgroundsList = async (): Promise<void> => {
     try {
         const lists: Object = await Promise.all(
             Object.values(ASSET_PATHS).map((path: string) => window.PluginFS.ls(path))
@@ -73,8 +73,8 @@ import { setHomePage } from "./src/theme/homepage.ts";
 import { transparentLobby } from "./src/theme/applyUi.ts";
 
 // Import CDN modules
-let initLink: any
-const cdnImport = async (url: string, errorMsg: any) => {
+let initLink: string
+const cdnImport = async (url: string, errorMsg: any): Promise<void> => {
     try {
         const res = await fetch(url);
         if (res.status === 200) {
@@ -151,7 +151,7 @@ import "./src/plugins/forceJungleLane.ts"
 //     if (pandoru) window.DataStore.set("pandoru", pandoru);
 // }).catch(err => error('Error loading text files:', err));
 
-const checkServerAvailability = async () => {
+const checkServerAvailability = async (): Promise<void> => {
     log('Checking server availability');
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 3000);
@@ -162,16 +162,16 @@ const checkServerAvailability = async () => {
         log('Number of users:', count);
         const { default: serverModule } = await import('https://elainatheme.xyz/index.js');
         //await serverModule();
-    } catch (err) {
+    } catch (err: any) {
         clearTimeout(timeoutId);
         throw err;
     }
 };
 
-checkServerAvailability().catch(err => error('Failed to check server availability:', err));
+checkServerAvailability().catch((err: any) => error('Failed to check server availability:', err));
 
 // Export Init
-let {Cdninit} = await import (initLink)
+let {Cdninit} = await import(initLink)
 export function init(context: any) {
     log('Initializing theme');
     setHomePage(context);
@@ -180,7 +180,7 @@ export function init(context: any) {
 }
 
 // Get this theme folder's name and export it
-export function getThemeName() {
+export function getThemeName(): string | null {
     const error = new Error();
     const stackTrace = error.stack;
     const scriptPath = stackTrace?.match(/(?:http|https):\/\/[^\s]+\.js/g)?.[0];

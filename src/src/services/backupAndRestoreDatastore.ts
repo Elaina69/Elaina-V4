@@ -2,7 +2,7 @@ import { getThemeName } from "../otherThings.ts"
 import utils from "../utils/utils.ts"
 import * as observer from "../utils/observer.ts"
 
-let datastore_list = window.DataStore.get("Dev-mode")
+let datastore_list: Object = window.DataStore.get("Dev-mode")
 	? (await (() => import(`//plugins/${getThemeName()}/elaina-theme-data/src/config/datastoreDefault.js`))()).default
 	//@ts-ignore
 	: (await (() => import(`https://unpkg.com/elaina-theme-data@latest/src/config/datastoreDefault.js`))()).default

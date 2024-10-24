@@ -1,10 +1,10 @@
 import utils from "../utils/utils.ts"
 
-let icdata = (await import(`//plugins/${window.getThemeName()}/config/icons.js`)).default;
+let icdata: Object = (await import(`//plugins/${window.getThemeName()}/config/icons.js`)).default;
 
-let datapath = `//plugins/${window.getThemeName()}/`
-let iconFolder  = `${datapath}assets/icon/`
-let bgFolder    = `${datapath}assets/backgrounds/`
+let datapath: string = `//plugins/${window.getThemeName()}/`
+let iconFolder: string = `${datapath}assets/icon/`
+let bgFolder: string = `${datapath}assets/backgrounds/`
 
 window.addEventListener("load",async ()=> {
 	let cssImports = "";

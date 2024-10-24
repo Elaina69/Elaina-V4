@@ -1,7 +1,7 @@
 import LocalKey from "./updateKeyLocal.ts"
 import { getThemeName } from "../otherThings.ts"
 
-let CdnKey: any
+let CdnKey: number = 0
 let eConsole = "%c Elaina "
 let eCss = "color: #ffffff; background-color: #f77fbe"
 
@@ -24,7 +24,7 @@ if (!window.DataStore.get("prevent-manual-update")) {
 	if (LocalKey == CdnKey) window.DataStore.set(`Force-Update`, false)
 	else window.DataStore.set(`Force-Update`, true)
 
-	let checkVersion = new Promise((resolve: any, reject) => {
+	let checkVersion = new Promise((resolve: any, reject): void => {
 		setTimeout(() => {
 			if (LocalKey == CdnKey) {
 				resolve()

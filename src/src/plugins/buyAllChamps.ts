@@ -6,13 +6,13 @@ let ChampsP = (await import(`//plugins/${window.getThemeName()}/config/championP
 
 interface Champion {
     itemId: number;
-    ip: number;
+    ip: string;
     owned: boolean;
 }
 
 interface Summoner {
-    accountId: string;
-    [key: string]: any; // This is used for any additional fields that might exist in the summoner data.
+    accountId: string
+    [key: string]: any
 }
 
 interface StoreUrlResponse {
@@ -42,7 +42,7 @@ class Store {
             this.url = (await this.getStoreUrl()).url;
             this.token = (await this.getSummonerToken()).token;
             this.summoner = await this.getSummonerData();
-        } catch (error) {
+        } catch (error: any) {
             console.error("Failed to initialize Store:", error);
         }
     }
@@ -65,7 +65,7 @@ class Store {
         return this.request("POST", "/storefront/v3/purchase", requestBody);
     }
 
-    async getAvailableChampionsByCost(cost: number): Promise<Champion[]> {
+    async getAvailableChampionsByCost(cost: string): Promise<Champion[]> {
         const playerChampions = await this.getAvailableChampions();
         return playerChampions.catalog.filter(champion => !champion.owned && champion.ip === cost);
     }
@@ -109,9 +109,9 @@ class Store {
 const eConsole = "%c Elaina ";
 const eCss = "color: #ffffff; background-color: #f77fbe";
 
-async function buyChampions(store, price) {
+async function buyChampions(store: Store, price: string): Promise<void> {
     try {
-        let availableChampions;
+        let availableChampions: any;
         if (price === "All") {
             for (const priceObj of ChampsP.ChampsPrice) {
                 availableChampions = await store.getAvailableChampionsByCost(priceObj.Cost);
@@ -130,18 +130,18 @@ async function buyChampions(store, price) {
         if (!availableChampions || availableChampions.length === 0) {
             console.log(eConsole + "%c No champions available to buy", eCss, "");
         }
-    } catch (error) {
+    } catch (error: any) {
         console.error(eConsole + "%c Error buying champions:", eCss, "", error);
     }
 }
 
-function createBuyButton(store: any) {
-    const buttonId = "buy-champions-button";
+function createBuyButton(store: Store): HTMLElement {
+    const buttonId: string = "buy-champions-button";
     const buyChampionButton = document.createElement("lol-uikit-flat-button");
     buyChampionButton.id = buttonId;
     buyChampionButton.style.marginRight = "15px";
 
-    buyChampionButton.onclick = async () => {
+    buyChampionButton.onclick = async (): Promise<void> => {
         buyChampionButton.setAttribute("disabled", "true");
         try {
             await buyChampions(store, window.DataStore.get("ChampsPrice"));
@@ -153,7 +153,7 @@ function createBuyButton(store: any) {
     return buyChampionButton;
 }
 
-function updateButtonText(button) {
+function updateButtonText(button: HTMLElement): void {
     const price = window.DataStore.get("ChampsPrice");
     button.textContent = price === "All" ? "Buy All Champs" : `Buy ${price}BE Champs`;
 }

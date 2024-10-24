@@ -1,16 +1,16 @@
-async function exitClient(){
+async function exitClient(): Promise<void>{
     await fetch("/process-control/v1/process/quit",
         {method:"POST"}
     )
 }
 
-async function dodgeQueue(){
+async function dodgeQueue(): Promise<void>{
     await fetch('/lol-login/v1/session/invoke?destination=lcdsServiceProxy&method=call&args=["","teambuilder-draft","quitV2",""]',
         {body:'["","teambuilder-draft","quitV2",""]',method:"POST"}
     )
 }
 
-async function generateDodgeAndExitButton(t: any){
+async function generateDodgeAndExitButton(t: HTMLElement | null): Promise<void>{
     const e=document.createElement("div"),
           o=document.createElement("div")
     
@@ -27,7 +27,7 @@ async function generateDodgeAndExitButton(t: any){
         e.appendChild(d),
         o.appendChild(e),
 
-    t.parentNode.insertBefore(o,t)
+    t?.parentNode?.insertBefore(o,t)
 }
 
 import utils from '../utils/utils.ts';
@@ -35,12 +35,13 @@ import utils from '../utils/utils.ts';
 window.exitClient = exitClient,
 window.dodgeQueue = dodgeQueue;
 
-let addDodgeAndExitButtonObserver=t=>{
-    "ChampSelect"==utils.phase&&document.querySelector(".bottom-right-buttons")&&!document.querySelector(".dodge-button-container")&&generateDodgeAndExitButton(
-        document.querySelector(".bottom-right-buttons")
-    )
+let addDodgeAndExitButtonObserver = (): void => {
+    "ChampSelect" == utils.phase &&
+    document.querySelector(".bottom-right-buttons") &&
+    !document.querySelector(".dodge-button-container") &&
+    generateDodgeAndExitButton(document.querySelector(".bottom-right-buttons"))
 };
 
-window.addEventListener("load",()=>{
+window.addEventListener("load", () => {
     utils.routineAddCallback(addDodgeAndExitButtonObserver,["bottom-right-buttons"])
 });
