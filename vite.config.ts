@@ -1,9 +1,11 @@
-import { resolve, join } from 'node:path';
+import { resolve, join, basename } from 'node:path';
 import { existsSync } from 'node:fs';
 import { readFile, writeFile, cp, mkdir, rm } from 'node:fs/promises';
 import { defineConfig } from 'vite';
 import { transform } from 'esbuild';
 import mkcert from 'vite-plugin-mkcert';
+import fs from 'node:fs';
+import archiver from "archiver"
 
 import pkg from './package.json';
 const PENGU_PATH = pkg.config.penguPath;
@@ -121,12 +123,14 @@ export default defineConfig((config) => ({
 
                 await writeFile(indexJs, jsCode);
 
+                // Copy assets and config folder to dist
                 await cp(resolve(__dirname, 'src/src/assets'), outDir+"/assets", {
                     recursive: true,
                 });
                 await cp(resolve(__dirname, 'src/src/config'), outDir+"/config", {
                     recursive: true,
                 });
+                // Copy cdn folder if have
                 try {
                     await cp(resolve(__dirname, 'src/elaina-theme-data'), outDir+"/elaina-theme-data", {
                         recursive: true,
@@ -134,7 +138,29 @@ export default defineConfig((config) => ({
                 }
                 catch {}
 
-                // Uncomment code below if you want to copy dist/ to pengu plugins folder after building
+                // Zip plugins after complete
+                const output = fs.createWriteStream(outDir+"/ElainaV4.zip");
+                const archive = archiver('zip', {
+                    zlib: { level: 9 }
+                });
+
+                archive.on('error', (err) => {
+                    throw err;
+                });
+
+                output.on('close', () => {
+                    console.log(`${archive.pointer()} total bytes`);
+                    console.log('Zipping completed successfully!');
+                });
+
+                archive.pipe(output);
+
+                archive.directory(outDir+"/assets", { name: basename(outDir+"/assets") });
+                archive.directory(outDir+"/config", { name: basename(outDir+"/config") });
+                archive.file(outDir+"/index.js", { name: basename(outDir+"/index.js") });
+
+                archive.finalize();
+
                 // Copy output to pengu dir
                 await emptyDir(pluginsDir);
                 await cp(outDir, pluginsDir, {
