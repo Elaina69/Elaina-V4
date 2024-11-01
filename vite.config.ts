@@ -103,6 +103,7 @@ export default defineConfig((config) => ({
             enforce: 'post',
             async closeBundle() {
                 const indexJs = join(outDir, 'index.js');
+                let count = 0;
 
                 let jsCode = (await readFile(indexJs, 'utf-8'))
                     // Patch asset URLs
@@ -124,17 +125,30 @@ export default defineConfig((config) => ({
                 await writeFile(indexJs, jsCode);
 
                 // Copy assets and config folder to dist
+                let copy = setInterval(()=> {
+                    count += 100;
+                }, 100)
                 await cp(resolve(__dirname, 'src/src/assets'), outDir+"/assets", {
                     recursive: true,
                 });
                 await cp(resolve(__dirname, 'src/src/config'), outDir+"/config", {
                     recursive: true,
                 });
+                console.log(`Copying assets and configs folder to /dist completed! (%cin ${count/1000}s%c)`, "color: #f77fbe", "");
+                clearInterval(copy);
+                count = 0
+
                 // Copy cdn folder if have
+                copy = setInterval(()=> {
+                    count += 100;
+                }, 100)
                 try {
                     await cp(resolve(__dirname, 'src/elaina-theme-data'), outDir+"/elaina-theme-data", {
                         recursive: true,
                     });
+                    console.log(`Copying CDN folder to /dist completed! (%cin ${count/1000}s%c)`, "color: #f77fbe", "");
+                    clearInterval(copy);
+                    count = 0
                 }
                 catch {}
 
@@ -155,18 +169,23 @@ export default defineConfig((config) => ({
 
                 archive.pipe(output);
 
-                archive.directory(outDir+"/assets", { name: basename(outDir+"/assets") });
-                archive.directory(outDir+"/config", { name: basename(outDir+"/config") });
+                archive.directory(outDir+"/assets", "assets");
+                archive.directory(outDir+"/config", "config");
                 archive.file(outDir+"/index.js", { name: basename(outDir+"/index.js") });
 
                 archive.finalize();
 
                 // Copy output to pengu dir
+                copy = setInterval(()=> {
+                    count += 100;
+                }, 100)
                 await emptyDir(pluginsDir);
                 await cp(outDir, pluginsDir, {
                    recursive: true,
                 });
-                
+                console.log(`Copying /dist to Pengu dir completed! (%cin ${count/1000}s%c)`, "color: #f77fbe", "");
+                clearInterval(copy);
+                count = 0
             }
         },
     ]

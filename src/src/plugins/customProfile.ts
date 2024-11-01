@@ -1,5 +1,6 @@
 import utils from '../utils/utils.ts'
-import * as observer from "../utils/observer.ts"
+import * as upl from 'pengu-upl';
+
 let rank = {
     "Ranked Queue ID": [
         {
@@ -242,7 +243,7 @@ function freezeProperties(object: Object, properties: string[]): void {
 if (window.DataStore.get("Custom-profile-hover")) {
 
     // Change mastery score and challenge point when hover summoner card
-    observer.subscribeToElementCreation("#lol-uikit-tooltip-root",async (element: HTMLElement)=>{
+    upl.observer.subscribeToElementCreation("#lol-uikit-tooltip-root",async (element: any)=>{
         try{
             let checkID = element.querySelector(`lol-regalia-hovercard-v2-element`)?.getAttribute("summoner-id")
             if (checkID == window.DataStore.get("Summoner-ID")) {
@@ -268,14 +269,14 @@ if (window.DataStore.get("Custom-profile-hover")) {
     })
 
     if (window.DataStore.get("Custom-mastery-score")) {
-        observer.subscribeToElementCreation(".collection-totals",(element: HTMLElement)=>{
+        upl.observer.subscribeToElementCreation(".collection-totals",(element: any)=>{
             let a: HTMLElement | null = element.querySelector(".total-owned.total-count.ember-view")
             if (a) {
                 a.innerText = `${window.DataStore.get("Mastery-Score")}`
                 freezeProperties(a,["innerText"])
             }
         })
-        observer.subscribeToElementCreation(".style-profile-champion-mastery-score",(element: HTMLElement)=>{
+        upl.observer.subscribeToElementCreation(".style-profile-champion-mastery-score",(element: any)=>{
             element.innerText = `${window.DataStore.get("Mastery-Score")}`
             freezeProperties(element,["innerText"])
         })
@@ -291,7 +292,7 @@ if (window.DataStore.get("Custom-profile-hover")) {
         if (window.DataStore.get("Custom-challenge-crystal")) {
             await request("PUT","/lol-chat/v1/me",{body: requestChallengeCrystal})
 
-            observer.subscribeToElementCreation(".crystal-wrapper",(element: HTMLElement)=>{
+            upl.observer.subscribeToElementCreation(".crystal-wrapper",(element: any)=>{
                 let a: HTMLElement | null = element.querySelector(".contents > div:nth-child(1)")
                 let b: HTMLElement | null = element.querySelector(".total-points")
                 let level: HTMLElement | null = element.querySelector(".level")

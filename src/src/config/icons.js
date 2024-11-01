@@ -35,12 +35,15 @@ export default {
     "classic_def"  : "classic-default.png",
     "classic_act"  : "classic-active.png",
     "classic_video": "classic-video.webm",
+
     "aram_def"     : "aram-default.png",
     "aram_act"     : "aram-active.png",
     "aram_video"   : "aram-video.webm",
+
     "tft_def"      : "tft-default.png",
     "tft_act"      : "tft-active.png",
     "tft_video"    : "tft-video.webm",
+    
     "cherry_def"   : "cherry-default.png",
     "cherry_act"   : "cherry-active.png",
     "cherry_video" : "cherry-video.webm",

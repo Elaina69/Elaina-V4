@@ -143,10 +143,3 @@ const observerConfig = {
 // Create and start the MutationObserver
 const observerInstance = new MutationObserver(observerCallback);
 observerInstance.observe(document, observerConfig);
-
-// Export the public API
-window.observer = {
-  handleElementMutation,
-  subscribeToElementCreation,
-  subscribeToElementDeletion
-};

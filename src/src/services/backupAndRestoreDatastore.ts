@@ -1,6 +1,6 @@
 import { getThemeName } from "../otherThings.ts"
 import utils from "../utils/utils.ts"
-import * as observer from "../utils/observer.ts"
+import * as upl from 'pengu-upl';
 
 let datastore_list: Object = window.DataStore.get("Dev-mode")
 	? (await (() => import(`//plugins/${getThemeName()}/elaina-theme-data/src/config/datastoreDefault.js`))()).default
@@ -59,7 +59,7 @@ else if (!window.DataStore.get("Elaina-Plugins") || !window.DataStore.has("Elain
 
 
 //backup when ready to close client
-observer.subscribeToElementCreation(".riotclient-app-controls",()=>{
+upl.observer.subscribeToElementCreation(".riotclient-app-controls",()=>{
 	document.querySelector('div[action=close]')?.addEventListener("click", ()=>{
 		if (window.DataStore.get("backup-datastore")) writeBackupData()
 	})

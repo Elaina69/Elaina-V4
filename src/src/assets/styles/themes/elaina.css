@@ -1082,6 +1082,19 @@ div[data-screen-name="rcp-fe-lol-navigation-screen"] {
 }
 
 /* Theme Settings */
+.elaina-theme-settings-row {
+    margin-bottom: 15px;
+    clear: both;
+}
+
+.elaina-theme-settings-row::after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
 #Q-Delay {
 	display: flex;
 	margin-bottom: 0px !important;

@@ -60,7 +60,7 @@ let champSelectPatchStatus = async message => {
 	}
 }
 
-let availabilityButtonMutationObserver = async (mutations) => {
+let availabilityButtonMutationObserver = async () => {
 	let circle_status = document.querySelector(".availability-hitbox:not(.offline-mode-available), .availability-hitbox:not([onclick])")
 	let circle_status_custom = document.querySelectorAll(".availability-hitbox.offline-mode-available")
 
