@@ -20,6 +20,7 @@
         "vite-plugin-mkcert": "^1.16.0"
     },
     "dependencies": {
-        "archiver": "^7.0.1"
+        "archiver": "^7.0.1",
+        "pengu-upl": "^1.0.0"
     }
 }

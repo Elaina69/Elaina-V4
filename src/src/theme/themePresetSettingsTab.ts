@@ -96,7 +96,7 @@ async function createThemeMenu(root: HTMLElement) {
 
 window.addEventListener("load",async ()=> {
 	const manager = () => document.getElementById('lol-uikit-layer-manager-wrapper')
-	const root    = document.createElement('div')
+	const root = document.createElement('div')
 	if (window.DataStore.get("Old-League-Loader-Settings")) {
 		while (!manager()) await new Promise(r => setTimeout(r, 300))
 		await createThemeMenu(root)
