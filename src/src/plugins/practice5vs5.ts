@@ -19,6 +19,5 @@ if (!window.DataStore.get("aram-only")) {
             }
             element.insertBefore(button, element.children[1])
         }
-        
     })
 }
