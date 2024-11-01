@@ -1,5 +1,5 @@
 //@ts-ignore
-let text = (await import(`//plugins/${window.getThemeName()}/config/customStatus.txt?raw`)).default
+let text = (await import('//plugins/elainav4/config/customStatus.txt?raw')).default
 
 if (window.DataStore.get("Custom-Status") && window.DataStore.get("Custom-profile-hover")) {
     let time: number

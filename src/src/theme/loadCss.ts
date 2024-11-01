@@ -22,7 +22,7 @@ window.addEventListener("load",async ()=> {
 		let { key, css, altCss } = addonCssList[prop];
 		let cssPath = window.DataStore.get(key) ? css : altCss;
 		if (cssPath) {
-			cssImports += `@import url("${datapath}assets/styles/components/${cssPath}");\n`
+			cssImports += `@import url("${datapath}assets/styles/components/${cssPath}");\n`; // Cộng chuỗi CSS vào
 		}
 	}
 

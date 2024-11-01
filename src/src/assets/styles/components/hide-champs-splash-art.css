@@ -1,16 +1,16 @@
 .champion-select {
-	background: transparent !important;
+	background: transparent!important
 }
 
-.champion-select .champion-splash-background > .champ-select-bg {
+.champion-select .champion-splash-background .background-vignette-container.defocussed > .champ-select-bg {
 	opacity:0 !important;
 }
 
 .champ-select-bg-darken {
-	opacity:0.2 !important;
+	opacity:0.2!important
 }
 
-.background-vignette-container {
+.background-vignette-container.focussed.static.visible {
     display: none !important;
 }
 
@@ -18,9 +18,11 @@
 	display: none !important;
 }
 
-.position-assignment {
+.position-assignment.top-right {
 	display: none !important;
 }
+
+/* .position-assignment.top-right.defocussed */
 
 .ring-splash-dashed, .ring-splash-outer, .ring-splash-inner, .ring-inner-mask, .expanded-ring-container, .dashed-ring-circle {
     display: none !important;

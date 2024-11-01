@@ -18,14 +18,14 @@ const CONSOLE_STYLE = {
 const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
 const error = (message: string, ...args: string[]) => console.error(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
 
-const datapath: string = `//plugins/${window.getThemeName()}/`
+let datapath: string = `//plugins/${window.getThemeName()}/`
 const iconFolder: string = `${datapath}assets/icon/`;
 const bgFolder: string = `${datapath}assets/backgrounds/`;
+let CdnKey: number;
 
 window.DataStore.set("Font-folder", `${datapath}assets/fonts/`);
 window.DataStore.set("Plugin-folder-name", window.getThemeName());
 
-// Set default data
 const defaultData = {
     "Wallpaper-list": ["elaina1.webm", "elaina2.jpg"],
     "Audio-list": ["Laur - その花は世界を紡ぐ.flac", "Laur - その花は世界を紡ぐ.flac"],
@@ -57,34 +57,6 @@ window.setTimeout(async () => {
     log(`%cCurrent summonerID: %c${summonerID}`, 'color: #e4c2b3', 'color: #0070ff');
 }, 7000);
 
-// Check version
-let CdnKey: number;
-
-if (window.DataStore.get("Dev-mode")) {
-    CdnKey = (await import(`//plugins/${window.getThemeName()}/elaina-theme-data/src/update/updateKeyCdn.js`)).default;
-    log('%c%cRunning Elaina theme - %cDev version', '', 'color: #e4c2b3', 'color: red');
-} 
-else {
-    //@ts-ignore
-    CdnKey = (await import(`https://unpkg.com/elaina-theme-data@latest/src/update/updateKeyCdn.js`)).default;
-    log('%c%cRunning Elaina theme - %cStable version', '', 'color: #e4c2b3', 'color: #00ff44');
-}
-
-if (CdnKey === LocalKey) {
-    //@ts-ignore
-    const themeVersion = (await import("https://unpkg.com/elaina-theme-data@latest/src/update/version.js")).default;
-    window.DataStore.set("Theme-version", themeVersion);
-
-    if (!window.DataStore.get("Change-CDN-version")) {
-        const response = await fetch('https://unpkg.com/elaina-theme-data@latest/package.json');
-        const { version: cdnVersion } = await response.json();
-        window.DataStore.set("Cdn-version", cdnVersion);
-    }
-}
-log(`%cTheme build: %c${window.DataStore.get("Theme-version")}`, 'color: #e4c2b3', 'color: #00ff44');
-log(`%cCDN build  : %c${window.DataStore.get("Cdn-version")}`, 'color: #e4c2b3', 'color: #00ff44');
-
-// Create and set new page as Homepage
 export function setHomePage(context: any) {
     context.rcp.postInit('rcp-fe-lol-navigation', async (api: any) => {
         //@ts-ignore
@@ -119,8 +91,34 @@ export function setHomePage(context: any) {
     });
 }
 
-// Hide or show tab from homepage
-const hideAndShowTab = (data: any, obj: any, name: any) => {
+const setAudioLoopIcon = (elem: any = document.querySelector(".audio-loop-icon")) => {
+    const iconElement = elem;
+    if (!iconElement) return;
+    iconElement.setAttribute("src", `${iconFolder}plugins-icons/${window.DataStore.get("audio-loop") ? 'rotating-arrow' : 'unrotating-arrow'}.png`);
+};
+
+if (window.DataStore.get("Dev-mode")) {
+    CdnKey = (await import(`//plugins/${window.getThemeName()}/elaina-theme-data/src/update/updateKeyCdn.js`)).default;
+    log('%c%cRunning Elaina theme - %cDev version', '', 'color: #e4c2b3', 'color: red');
+} 
+else {
+    //@ts-ignore
+    CdnKey = (await import(`https://unpkg.com/elaina-theme-data@latest/src/update/updateKeyCdn.js`)).default;
+    log('%c%cRunning Elaina theme - %cStable version', '', 'color: #e4c2b3', 'color: #00ff44');
+}
+
+if (CdnKey == LocalKey) {
+    //@ts-ignore
+    window.DataStore.set("Theme-version", (await import("https://unpkg.com/elaina-theme-data@latest/src/update/version.js")).default);
+    if (!window.DataStore.get("Change-CDN-version")) {
+        const cdnVersion = await (await fetch('https://unpkg.com/elaina-theme-data@latest/package.json')).json();
+        window.DataStore.set("Cdn-version", cdnVersion["version"]);
+    }
+}
+log(`%cTheme build: %c${window.DataStore.get("Theme-version")}`, 'color: #e4c2b3', 'color: #00ff44');
+log(`%cCDN build  : %c${window.DataStore.get("Cdn-version")}`, 'color: #e4c2b3', 'color: #00ff44');
+
+const hideTab = (data: any, obj: any, name: any) => {
     if (data) {
         try {
             const element = document.querySelector(obj);
@@ -135,7 +133,10 @@ const hideAndShowTab = (data: any, obj: any, name: any) => {
             error(`Error hiding ${name} tab:`, error);
         }
     }
-    else {
+};
+
+const showTab = (data: any, obj: any, name: any) => {
+    if (data) {
         try {
             document.querySelector(obj).style.display = "block";
         } catch {
@@ -144,11 +145,18 @@ const hideAndShowTab = (data: any, obj: any, name: any) => {
     }
 };
 
-const applyHideAndShowtab = () => {
-    hideAndShowTab(window.DataStore.get("hide-overview"), 'lol-uikit-navigation-item[item-id="overview"]', "Overview");
-    hideAndShowTab(window.DataStore.get("hide-merch"), 'lol-uikit-navigation-item[item-id="merch"]', "Merch");
-    hideAndShowTab(window.DataStore.get("hide-patch-note"), 'lol-uikit-navigation-item[item-id="latest_patch_notes"]', "Patch note");
-    hideAndShowTab(window.DataStore.get("hide-esport"), 'lol-uikit-navigation-item[item-id="news"]', "Esport");
+const applyHidetab = () => {
+    hideTab(window.DataStore.get("hide-overview"), 'lol-uikit-navigation-item[item-id="overview"]', "Overview");
+    hideTab(window.DataStore.get("hide-merch"), 'lol-uikit-navigation-item[item-id="merch"]', "Merch");
+    hideTab(window.DataStore.get("hide-patch-note"), 'lol-uikit-navigation-item[item-id="latest_patch_notes"]', "Patch note");
+    hideTab(window.DataStore.get("hide-esport"), 'lol-uikit-navigation-item[item-id="news"]', "Esport");
+};
+
+const applyShowtab = () => {
+    showTab(!window.DataStore.get("hide-overview"), 'lol-uikit-navigation-item[item-id="overview"]', "Overview");
+    showTab(!window.DataStore.get("hide-merch"), 'lol-uikit-navigation-item[item-id="merch"]', "Merch");
+    showTab(!window.DataStore.get("hide-patch-note"), 'lol-uikit-navigation-item[item-id="latest_patch_notes"]', "Patch note");
+    showTab(!window.DataStore.get("hide-esport"), 'lol-uikit-navigation-item[item-id="news"]', "Esport");
 };
 
 const deleteNavbarTab = () => {
@@ -156,13 +164,11 @@ const deleteNavbarTab = () => {
         const overviewTab = document.querySelector('lol-uikit-navigation-item[item-id="overview"]');
         if (overviewTab) {
             window.clearInterval(intervalId);
-            applyHideAndShowtab()
+            applyHidetab();
         }
     }, 1000);
 };
 
-// Create wallpaper/audio controller button
-// For wallpaper
 const elainaPlayPause = () => {
     const elainaBgElem: any = document.getElementById("elaina-bg");
     window.DataStore.get('pause-wallpaper') % 2 === 0 ? elainaBgElem.pause() : elainaBgElem.play();
@@ -174,12 +180,57 @@ const playPauseSetIcon = (elem: any = document.querySelector(".pause-bg-icon")) 
     pauseBgIcon.setAttribute("src", `${iconFolder}plugins-icons/${window.DataStore.get('pause-wallpaper') % 2 === 0 ? 'play_button' : 'pause_button'}.png`);
 };
 
+const audioPlayPause = () => {
+    const audio: any = document.getElementById("bg-audio");
+    window.DataStore.get('pause-audio') % 2 === 0 ? audio.pause() : audio.play();
+    changeSongName()
+};
+
+const playPauseSetIconAudio = (elem: any = document.querySelector(".pause-audio-icon")) => {
+    const pauseAudioIcon = elem;
+    if (!pauseAudioIcon) return;
+    pauseAudioIcon.setAttribute("src", `${iconFolder}plugins-icons/${window.DataStore.get('pause-audio') % 2 === 0 ? 'play_button' : 'pause_button'}.png`);
+};
+
+const audioMute = () => {
+    const audio: any = document.getElementById("bg-audio");
+    const wallpaperAudio: any = document.getElementById("elaina-bg");
+    const isMuted = window.DataStore.get("mute-audio");
+    wallpaperAudio.muted = isMuted;
+    audio.muted = isMuted;
+    log(`%caudio and wallpaper mute: %c${isMuted}`, '', isMuted ? 'color: #00ff44' : 'color: red');
+};
+
+const muteSetIconAudio = (elem: any = document.querySelector(".mute-audio-icon")) => {
+    const muteAudioIcon = elem;
+    if (!muteAudioIcon) return;
+    muteAudioIcon.setAttribute("src", `${iconFolder}plugins-icons/${window.DataStore.get("mute-audio") ? 'mute' : 'audio'}.png`);
+};
+
+const toggleAudioLoop = () => {
+    const audio: any = document.getElementById("bg-audio");
+    if (window.DataStore.get('audio-loop')) {
+        audio.removeEventListener("ended", nextSong);
+        audio.addEventListener("ended", () => {
+            audio.pause();
+            audio.load();
+        });
+    } else {
+        audio.addEventListener("ended", nextSong);
+    }
+};
+
 const loadBG = (BG: string) => {
     const elainaBg: any = document.getElementById("elaina-bg");
     const elainaStaticBg: any = document.getElementById("elaina-static-bg");
     elainaBg.src = `${bgFolder}wallpapers/${BG}`;
     elainaStaticBg.src = `${bgFolder}wallpapers/${BG}`;
     elainaBg.playbackRate = window.DataStore.get("Playback-speed") / 100;
+};
+
+const loadSong = (song) => {
+    const audio: any = document.getElementById("bg-audio");
+    audio.src = `${bgFolder}audio/${song}`;
 };
 
 const nextWallpaper = () => {
@@ -222,58 +273,6 @@ const prevWallpaper = () => {
     }, 500);
 };
 
-// For audio
-const audioPlayPause = () => {
-    const audio: any = document.getElementById("bg-audio");
-    window.DataStore.get('pause-audio') % 2 === 0 ? audio.pause() : audio.play();
-    changeSongName()
-};
-
-const playPauseSetIconAudio = (elem: any = document.querySelector(".pause-audio-icon")) => {
-    const pauseAudioIcon = elem;
-    if (!pauseAudioIcon) return;
-    pauseAudioIcon.setAttribute("src", `${iconFolder}plugins-icons/${window.DataStore.get('pause-audio') % 2 === 0 ? 'play_button' : 'pause_button'}.png`);
-};
-
-const audioMute = () => {
-    const audio: any = document.getElementById("bg-audio");
-    const wallpaperAudio: any = document.getElementById("elaina-bg");
-    const isMuted = window.DataStore.get("mute-audio");
-    wallpaperAudio.muted = isMuted;
-    audio.muted = isMuted;
-    log(`%caudio and wallpaper mute: %c${isMuted}`, '', isMuted ? 'color: #00ff44' : 'color: red');
-};
-
-const muteSetIconAudio = (elem: any = document.querySelector(".mute-audio-icon")) => {
-    const muteAudioIcon = elem;
-    if (!muteAudioIcon) return;
-    muteAudioIcon.setAttribute("src", `${iconFolder}plugins-icons/${window.DataStore.get("mute-audio") ? 'mute' : 'audio'}.png`);
-};
-
-const setAudioLoopIcon = (elem: any = document.querySelector(".audio-loop-icon")) => {
-    const iconElement = elem;
-    if (!iconElement) return;
-    iconElement.setAttribute("src", `${iconFolder}plugins-icons/${window.DataStore.get("audio-loop") ? 'rotating-arrow' : 'unrotating-arrow'}.png`);
-};
-
-const toggleAudioLoop = () => {
-    const audio: any = document.getElementById("bg-audio");
-    if (window.DataStore.get('audio-loop')) {
-        audio.removeEventListener("ended", nextSong);
-        audio.addEventListener("ended", () => {
-            audio.pause();
-            audio.load();
-        });
-    } else {
-        audio.addEventListener("ended", nextSong);
-    }
-};
-
-const loadSong = (song) => {
-    const audio: any = document.getElementById("bg-audio");
-    audio.src = `${bgFolder}audio/${song}`;
-};
-
 const nextSong = () => {
     if (window.DataStore.get("Continues_Audio")) {
         window.DataStore.set('audio-index', window.DataStore.get('audio-index') + 1);
@@ -310,93 +309,77 @@ const changeSongName = ()=> {
         : songNameText.innerHTML = `Now playing: <br/>${currentSong}`
 }
 
-// Create controllers
-const createElementWithClass = (tag, className) => {
-    const element = document.createElement(tag);
-    if (className) element.classList.add(className);
-    return element;
-};
-
-const createElementWithId = (tag, id) => {
-    const element = document.createElement(tag);
-    if (id) element.id = id;
-    return element;
-};
-
-const createIcon = (className, src) => {
-    const icon = createElementWithClass("img", className);
-    if (src) icon.setAttribute("src", src);
-    return icon;
-};
-
 const createWebmButtons = () => {
-    const container = createElementWithClass("div", "webm-bottom-buttons-container");
+    const container = document.createElement("div");
+    const musicControlsMain = document.createElement("div");
+    const musicControls = document.createElement("div");
+    const wallpaperControls = document.createElement("div");
+    const pauseBg = document.createElement("div");
+    const nextBg = document.createElement("div");
+    const prevBg = document.createElement("div");
+    const pauseAudio = document.createElement("div");
+    const nextAudio = document.createElement("div");
+    const prevAudio = document.createElement("div");
+    const muteAudio = document.createElement("div");
+    const audioLoop = document.createElement("div");
+    const progressBar = document.createElement("div");
+    const progress = document.createElement("div");
+    const audioNameBar = document.createElement("div");
+    const pauseBgIcon = document.createElement("img");
+    const nextBgIcon = document.createElement("img");
+    const prevBgIcon = document.createElement("img");
+    const pauseAudioIcon = document.createElement("img");
+    const nextAudioIcon = document.createElement("img");
+    const prevAudioIcon = document.createElement("img");
+    const muteAudioIcon = document.createElement("img");
+    const audioLoopIcon = document.createElement("img");
+    const bgDropdown: any = document.createElement("lol-uikit-framed-dropdown");
+    const audio: any = document.getElementById('bg-audio');
+    const audioName = document.createElement("p");
 
-    // Create music controller
-    const musicControlsMain = createElementWithClass("div", "music-controls-main");
-    const musicControls = createElementWithClass("div", "music-controls");
+    container.classList.add("webm-bottom-buttons-container");
+    musicControlsMain.classList.add("music-controls-main");
+    musicControls.classList.add("music-controls");
+    wallpaperControls.classList.add("wallpaper-controls");
+    progressBar.classList.add("progress-bar");
+    progress.classList.add("progress-status");
+    audioNameBar.classList.add("audio-name-bar");
 
-    const pauseAudio = createElementWithId("div", "pause-audio");
-    const nextAudio = createElementWithId("div", "next-audio");
-    const prevAudio = createElementWithId("div", "prev-audio");
-    const muteAudio = createElementWithId("div", "mute-audio");
-    const audioLoop = createElementWithId("div", "audio-loop");
+    progress.style.width = audio && audio.duration ? `${(audio.currentTime / audio.duration) * 100 + 1}%` : '0%';
 
-    const pauseAudioIcon = createIcon("pause-audio-icon", `${iconFolder}plugins-icons/pause-audio.png`);
-    const nextAudioIcon = createIcon("next-audio-icon", `${iconFolder}plugins-icons/next-audio.png`);
-    const prevAudioIcon = createIcon("prev-audio-icon", `${iconFolder}plugins-icons/prev-audio.png`);
-    const muteAudioIcon = createIcon("mute-audio-icon", `${iconFolder}plugins-icons/mute-audio.png`);
-    const audioLoopIcon = createIcon("audio-loop-icon", `${iconFolder}plugins-icons/audio-loop.png`);
+    pauseBg.id = "pause-bg";
+    nextBg.id = "next-bg";
+    prevBg.id = "prev-bg";
+    pauseAudio.id = "pause-audio";
+    nextAudio.id = "next-audio";
+    prevAudio.id = "prev-audio";
+    muteAudio.id = "mute-audio";
+    audioLoop.id = "audio-loop";
+    bgDropdown.id = "bgdropdown";
+    audioName.id = "audio-name";
 
-    // Create wallpaper controller
-    const wallpaperControls = createElementWithClass("div", "wallpaper-controls");
+    pauseBgIcon.classList.add("pause-bg-icon");
+    nextBgIcon.classList.add("next-bg-icon");
+    prevBgIcon.classList.add("prev-bg-icon");
+    pauseAudioIcon.classList.add("pause-audio-icon");
+    nextAudioIcon.classList.add("next-audio-icon");
+    prevAudioIcon.classList.add("prev-audio-icon");
+    muteAudioIcon.classList.add("mute-audio-icon");
+    audioLoopIcon.classList.add("audio-loop-icon");
 
-    const pauseBg = createElementWithId("div", "pause-bg");
-    const nextBg = createElementWithId("div", "next-bg");
-    const prevBg = createElementWithId("div", "prev-bg");
-
-    const pauseBgIcon = createIcon("pause-bg-icon", `${iconFolder}plugins-icons/pause-bg.png`);
-    const nextBgIcon = createIcon("next-bg-icon", `${iconFolder}plugins-icons/next_button.png`);
-    const prevBgIcon = createIcon("prev-bg-icon", `${iconFolder}plugins-icons/prev_button.png`);
-    
-    const bgDropdown = createElementWithId("lol-uikit-framed-dropdown", "bgdropdown");
-    
-    
-    // Create audio progress bar
-    const progressBar = createElementWithClass("div", "progress-bar");
-    const progress = createElementWithClass("div", "progress-status");
-    const audioNameBar = createElementWithClass("div", "audio-name-bar");
-    const audioName = createElementWithId("p", "audio-name");
-
-    // Create volume slider container
-    const volumeSliderContainer = createElementWithClass("div", "volume-slider-container");
-    const volumeSlider = createElementWithClass("input", "volume-slider");
-
-    volumeSlider.type = "range";
-    volumeSlider.min = "0";
-    volumeSlider.max = "100";
-    volumeSlider.value = window.DataStore.get("audio-volume") * 100;
-    volumeSlider.classList.add("volume-slider");
-
-    const muteUnmuteButton = createElementWithClass("div", "mute-unmute-button");
-    const muteUnmuteIcon = createIcon("mute-unmute-icon", `${iconFolder}plugins-icons/${window.DataStore.get("mute-audio") ? 'mute' : 'audio'}.png`);
-
-    // Set icon wallpaper/audio controller button
     playPauseSetIconAudio(pauseAudioIcon);
     playPauseSetIcon(pauseBgIcon);
     muteSetIconAudio(muteAudioIcon);
     setAudioLoopIcon(audioLoopIcon);
 
-    // Set current audio name to progress bar
+    nextBgIcon.setAttribute("src", `${iconFolder}plugins-icons/next_button.png`);
+    prevBgIcon.setAttribute("src", `${iconFolder}plugins-icons/prev_button.png`);
+    nextAudioIcon.setAttribute("src", `${iconFolder}plugins-icons/next-audio.png`);
+    prevAudioIcon.setAttribute("src", `${iconFolder}plugins-icons/prev-audio.png`);
+
     window.DataStore.get('pause-audio') % 2 === 0 
         ? audioName.innerHTML = `Paused: <br/>${window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]}`
         : audioName.innerHTML = `Now playing: <br/>${window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]}`
-
-    // Append volume slider container
-    muteUnmuteButton.appendChild(muteUnmuteIcon);
-    volumeSliderContainer.appendChild(volumeSlider);
-    volumeSliderContainer.appendChild(muteUnmuteButton);
-    musicControlsMain.appendChild(volumeSliderContainer);
 
     // Music controls
     musicControlsMain.append(audioNameBar, musicControls);
@@ -459,6 +442,30 @@ const createWebmButtons = () => {
         console.error("Could not find the container '.rcp-fe-lol-home' to append controls.");
     }
 
+    // Create volume slider container
+    const volumeSliderContainer = document.createElement("div");
+    const volumeSlider: any = document.createElement("input");
+    const muteUnmuteButton = document.createElement("div");
+    const muteUnmuteIcon = document.createElement("img");
+
+    volumeSliderContainer.classList.add("volume-slider-container");
+    volumeSlider.type = "range";
+    volumeSlider.min = "0";
+    volumeSlider.max = "100";
+    volumeSlider.value = window.DataStore.get("audio-volume") * 100;
+    volumeSlider.classList.add("volume-slider");
+
+    muteUnmuteButton.classList.add("mute-unmute-button");
+    muteUnmuteIcon.classList.add("mute-unmute-icon");
+    muteUnmuteIcon.setAttribute("src", `${iconFolder}plugins-icons/${window.DataStore.get("mute-audio") ? 'mute' : 'audio'}.png`);
+
+    muteUnmuteButton.appendChild(muteUnmuteIcon);
+    volumeSliderContainer.appendChild(volumeSlider);
+    volumeSliderContainer.appendChild(muteUnmuteButton);
+
+    // Append volume slider container
+    musicControlsMain.appendChild(volumeSliderContainer);
+
     // Handle volume slider input
     volumeSlider.addEventListener('input', () => {
         const volumeValue = volumeSlider.value / 100;
@@ -513,10 +520,7 @@ const createWebmButtons = () => {
     });
 
     // Update progress bar
-    const audio: any = document.getElementById('bg-audio');
-
     if (audio) {
-        progress.style.width = audio && audio.duration ? `${(audio.currentTime / audio.duration) * 100 + 1}%` : '0%';
         audio.addEventListener('timeupdate', () => {
             progress.style.width = audio.duration ? `${(audio.currentTime / audio.duration) * 100 + 1}%` : '0%';
         });
@@ -565,62 +569,54 @@ const createWebmButtons = () => {
     });
 };
 
-// Delete controllers
+
 const deleteButtons = () => {
     document.querySelector(".webm-bottom-buttons-container-hovered")?.remove();
     document.querySelector(".webm-bottom-buttons-container")?.remove();
     document.querySelector(".wallpaper-controls")?.remove();
 };
 
-// Add Wallpaper and Audio to client
 const loadWallpaperAndMusic = () => {
-    // create wallpaper
     const video = document.createElement('video');
-
     video.id = 'elaina-bg';
     video.autoplay = true;
     video.volume = window.DataStore.get("wallpaper-volume");
     video.muted = window.DataStore.get("mute-audio");
     video.currentTime = window.DataStore.get("Wallpaper-currentTime");
-    video.src = `${bgFolder}wallpapers/${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`;
-    video.playbackRate = window.DataStore.get("Playback-speed") / 100;
-
+    try {
+        video.src = `${bgFolder}wallpapers/${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`;
+        video.playbackRate = window.DataStore.get("Playback-speed") / 100;
+    } catch {}
     video.addEventListener("error", () => {
         video.load();
         video.addEventListener("ended", () => video.load());
         window.DataStore.set("video-2nd-loop", true);
     });
-
     if (window.DataStore.get("video-2nd-loop")) {
         video.addEventListener("ended", () => video.load());
-    } 
-    else video.loop = true;
+    } else {
+        video.loop = true;
+    }
 
-    // create image wallpaper
     const imgWallpaper = document.createElement('img');
-
     imgWallpaper.id = 'elaina-static-bg';
     imgWallpaper.src = `${bgFolder}wallpapers/${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`;
 
-    // create audio
     const audio = document.createElement("audio");
-
     audio.id = 'bg-audio';
     audio.autoplay = true;
     audio.src = `${bgFolder}audio/${window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]}`;
     audio.volume = window.DataStore.get("audio-volume");
     audio.muted = window.DataStore.get("mute-audio");
     audio.currentTime = window.DataStore.get("Audio-currentTime");
-
     if (window.DataStore.get('audio-loop')) {
         audio.addEventListener("ended", () => audio.load());
-    } 
-    else audio.addEventListener("ended", nextSong);
-    
+    } else {
+        audio.addEventListener("ended", nextSong);
+    }
     audio.addEventListener("error", () => audio.load());
 
     document.body.prepend(imgWallpaper, video, audio);
-
     elainaPlayPause();
 };
 
@@ -664,6 +660,7 @@ const addHomepage = async (node: any) => {
                 }]]
             ])
         };
+
         const modifyStoreIframe = () => {
             const storeIframe: any = document.querySelector('#rcp-fe-lol-store-iframe > iframe[referrerpolicy="no-referrer-when-downgrade"]');
             if (storeIframe && storeIframe.contentWindow) {
@@ -765,4 +762,5 @@ logDebuggingInfo();
 
 window.del_webm_buttons = deleteButtons;
 window.create_webm_buttons = createWebmButtons;
-window.applyHideAndShowtab = applyHideAndShowtab;
+window.applyHidetab = applyHidetab;
+window.applyShowtab = applyShowtab;

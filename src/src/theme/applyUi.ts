@@ -1,4 +1,4 @@
-import * as upl from 'pengu-upl'
+import * as observer from "../utils/observer.ts"
 
 let filters = (await import(`//plugins/${window.getThemeName()}/config/filters.js`)).default;
 let icdata = (await import(`//plugins/${window.getThemeName()}/config/icons.js`)).default;
@@ -6,6 +6,7 @@ let icdata = (await import(`//plugins/${window.getThemeName()}/config/icons.js`)
 let datapath = `//plugins/${window.getThemeName()}/`
 let iconFolder  = `${datapath}assets/icon/`
 
+//For observer
 function freezeProperties(object: Object, properties: any[]) {
 	for (const type in object) {
 		if ((properties && properties.length && properties.includes(type)) || (!properties || !properties.length)) {
@@ -35,18 +36,19 @@ export function transparentLobby(context: any) {
 	})
 }
 
-//upl.observer.subscribeToElementCreation(".summoner-xp-radial", (element: any)=> {element.remove()})
+//observer.subscribeToElementCreation(".summoner-xp-radial", (element: any)=> {element.remove()})
 
-upl.observer.subscribeToElementCreation(".parallax-layer-container",(element: any) => element.style.backgroundImage = '' )
+observer.subscribeToElementCreation("lol-uikit-parallax-background",(element: any)=> {
+	element.shadowRoot.querySelector(".parallax-layer-container").style.backgroundImage = ''
+})	
 
 if (window.DataStore.get("aram-only")) {
 	function removeNode(obj: string): void {
-		try { document.querySelector(obj)?.remove() }
-		catch{ console.log(`Can not remove ${obj}`)}
+		try {document.querySelector(obj)?.remove()}catch{}
 	}
  	let interval: number
 
- 	upl.observer.subscribeToElementCreation(".parties-game-type-select-wrapper",(element: any)=>{
+ 	observer.subscribeToElementCreation(".parties-game-type-select-wrapper",(element: any)=>{
  		element.querySelector('div[data-game-mode=ARAM] div[class=parties-game-type-upper-half]').click()
 			
 		removeNode("div[data-game-mode='CLASSIC']")
@@ -55,11 +57,11 @@ if (window.DataStore.get("aram-only")) {
 		removeNode("lol-uikit-navigation-item[data-category='Training']")
 		removeNode("div[data-game-mode='CHERRY']")
 	})
-	upl.observer.subscribeToElementCreation('div[data-map-id="12"] > div',(element: any)=>{
-		element.click()
+	observer.subscribeToElementCreation(".parties-custom-game-subcategory-select",(element: any)=>{
 		removeNode('div[data-map-id="11"]')
+		element.querySelector('div[data-map-id="12"] > div').click()
 	})
-	upl.observer.subscribeToElementCreation(".custom-game-list-body",(element: any)=>{
+	observer.subscribeToElementCreation(".custom-game-list-body",(element: any)=>{
 		interval = window.setInterval(()=> {
 			let list = element.querySelectorAll("lol-uikit-scrollable > tbody > tr")
 			for (let i=0;i< list.length;i++) {
@@ -69,27 +71,25 @@ if (window.DataStore.get("aram-only")) {
 			}
 		},100)
 	})
-	upl.observer.subscribeToElementDeletion(".custom-game-list-body", () => {
+	observer.subscribeToElementDeletion(".custom-game-list-body",(element: any)=>{
 		window.clearInterval(interval)
 	})
 }
 
 if (window.DataStore.get("Custom-Rank-Name")) {
-	upl.observer.subscribeToElementCreation(".style-profile-ranked-component.ember-view .style-profile-emblem-header-title", (element: any) => 
-		element.innerHTML = window.DataStore.get("Rank-line1") 
-	)
-	upl.observer.subscribeToElementCreation(".style-profile-emblem-subheader-ranked > div", (element: any) => 
-		element.innerHTML = window.DataStore.get("Rank-line2") 
-	)
+	observer.subscribeToElementCreation(".style-profile-emblems-container", (element: any)=>{
+		element.querySelector(".style-profile-ranked-component.ember-view .style-profile-emblem-header-title").innerHTML = window.DataStore.get("Rank-line1")
+		element.querySelector(".style-profile-emblem-subheader-ranked > div").innerHTML = window.DataStore.get("Rank-line2")
+	})
 }
 
 if (window.DataStore.get("Runes-BG")) {
 	let style = (element: any) => {element.remove()}
-	upl.observer.subscribeToElementCreation('.aux', style)
-	upl.observer.subscribeToElementCreation('#splash', style)
-	upl.observer.subscribeToElementCreation('#construct', style)
-	upl.observer.subscribeToElementCreation('#keystone', style)
-	upl.observer.subscribeToElementCreation('.perks-construct-minspec', (element: any) => {
+	observer.subscribeToElementCreation('.aux', style)
+	observer.subscribeToElementCreation('#splash', style)
+	observer.subscribeToElementCreation('#construct', style)
+	observer.subscribeToElementCreation('#keystone', style)
+	observer.subscribeToElementCreation('.perks-construct-minspec', (element: any) => {
 		window.setInterval(()=>{
 			element.style.cssText = `
 				top: 0px; 
@@ -102,59 +102,59 @@ if (window.DataStore.get("Runes-BG")) {
 }
 
 if (window.DataStore.get("new-gamesearch-queue")) {
-	const DisplayNone: any = (element: HTMLElement) => {
+	function DisplayNone(element: HTMLElement) {
 		element.style.display = 'none'
 	}
 
-	upl.observer.subscribeToElementCreation('.parties-game-info-panel-bg-container', (element: any) => 
-		element.hidden = true
-	)
-
-	// lol-parties-game-search
-	upl.observer.subscribeToElementCreation('.parties-game-search-status', (element: any) => 
-		element.style.cssText = `
+	observer.subscribeToElementCreation('lol-parties-game-search', (element: any) => {
+		element.shadowRoot.querySelector("div").style.cssText = `
 			border: 1px solid #8c8263; 
 			border-radius: 10px; 
 			margin-top: 1px
 		`
-	)
-	upl.observer.subscribeToElementCreation('.parties-game-search-header', (element: any) => 
-		element.style.cssText = `height: 28px;`
-	)
-	upl.observer.subscribeToElementCreation('.parties-game-search-divider', DisplayNone)
-
-	// lol-parties-status-card
-	upl.observer.subscribeToElementCreation('.parties-status-card-bg-container', DisplayNone)
-	upl.observer.subscribeToElementCreation('.parties-status-card', (element: any) => 
-		element.style.background = 'transparent'
-	)
-	upl.observer.subscribeToElementCreation('.parties-status-card-header', (element: any) => 
-		element.style.cssText = `
-			visibility: hidden;
-			height: 14px;
-		`
-	)
-	upl.observer.subscribeToElementCreation('.parties-status-card-body', (element: any) => 
+	})
+	observer.subscribeToElementCreation('.parties-status-card-body', (element: any) => {
 		element.style.cssText = `
 			margin-top: -23px; 
 			padding: 10px 5px 10px 10px; 
 			border: 1px solid #8c8263; 
 			border-radius: 10px
 		`
-	)
-	upl.observer.subscribeToElementCreation('.parties-status-card-map', (element: any) => 
+	})
+	observer.subscribeToElementCreation('.parties-status-card-header', (element: any) => {
+		element.style.cssText = `
+			visibility: hidden;
+			height: 14px;
+		`
+	})
+	observer.subscribeToElementCreation('.parties-status-card-map', (element: any) => {
 		element.style.margin = '-3px 10px 0 0'
-	)
-	
-	// lol-parties-game-invites
-	upl.observer.subscribeToElementCreation('.parties-game-invite-heading-text', (element: any) => {
+	})
+	observer.subscribeToElementCreation('.parties-status-card', (element: any) => {
+		element.style.background = 'transparent'
+	})
+	observer.subscribeToElementCreation('.parties-game-invite-heading-text', (element: any) => {
 		element.hidden = true
+	})
+	observer.subscribeToElementCreation('.parties-game-search-header', (element: any) => {
+		element.style.cssText = `height: 28px;`
+	})
+	observer.subscribeToElementCreation('.parties-game-search-divider', DisplayNone)
+	observer.subscribeToElementCreation('.parties-game-info-panel-bg-container', DisplayNone)
+	observer.subscribeToElementCreation('.parties-status-card-bg-container', DisplayNone)
+	observer.subscribeToElementCreation('lol-parties-game-info-panel', (element: any) => {
+		// element.shadowRoot.querySelector("lol-parties-game-invites").shadowRoot.querySelector(".parties-game-info-panel-invites").style.cssText = `
+		// 	border: 1px solid #8c8263; 
+		// 	border-radius: 10px; 
+		// 	margin-top: 1px
+		// `
+		element.shadowRoot.querySelector('.parties-game-info-panel-bg-container').hidden = true
 	})
 }
 
 if (window.DataStore.get("settings-dialogs-transparent")) {
 	let style = "var(--Settings-and-Dialog-frame-color)"
-	upl.observer.subscribeToElementCreation("lol-uikit-full-page-backdrop",(element: any)=>{
+	observer.subscribeToElementCreation("lol-uikit-full-page-backdrop",(element: any)=>{
 		try{
 			let a = element.querySelector("lol-uikit-dialog-frame").shadowRoot.querySelector("div")
 			a.style.background = style
@@ -188,8 +188,8 @@ if (window.DataStore.get("settings-dialogs-transparent")) {
 }
 
 if (window.DataStore.get("Custom-Icon")) {
-	upl.observer.subscribeToElementCreation("lol-uikit-flyout-frame",(element: any)=>{
-		function tickerCss(defaults: Object) {
+	observer.subscribeToElementCreation("lol-uikit-flyout-frame",(element: any)=>{
+		function tickerCss(defaults: any) {
 			Object.entries(defaults).forEach(([key, value]) => {
 				element.shadowRoot.querySelector(key).style.cssText = value
 			});
@@ -204,51 +204,56 @@ if (window.DataStore.get("Custom-Icon")) {
 		)
 	})
 	if (window.DataStore.get("Custom-Avatar")) {
-		upl.observer.subscribeToElementCreation(".hover-card-info-container",(element: any)=>{
+		observer.subscribeToElementCreation(".hover-card-info-container",(element: any)=>{
 			element.style.background = "#1a1c21"
 		})
-		upl.observer.subscribeToElementCreation(`lol-regalia-hovercard-v2-element[summoner-id="${window.DataStore.get("Summoner-ID")}"]`,(element: any)=>{
+		observer.subscribeToElementCreation("#lol-uikit-tooltip-root",(element: any)=>{
+			try{
+				let a = element.querySelector(`lol-regalia-hovercard-v2-element[summoner-id="${window.DataStore.get("Summoner-ID")}"]`).shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector(".lol-regalia-summoner-icon")
+				a.style.backgroundImage = "var(--Avatar)"
+				freezeProperties(a.style, ['backgroundImage'])
+			}catch{}
+		})
+		observer.subscribeToElementCreation("lol-regalia-identity-customizer-element",(element: any)=>{
 			let a = element.shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector(".lol-regalia-summoner-icon")
 			a.style.backgroundImage = "var(--Avatar)"
 			freezeProperties(a.style, ['backgroundImage'])
 		})
-		upl.observer.subscribeToElementCreation("lol-regalia-identity-customizer-element",(element: any)=>{
-			let a = element.shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector(".lol-regalia-summoner-icon")
-			a.style.backgroundImage = "var(--Avatar)"
-			freezeProperties(a.style, ['backgroundImage'])
-		})
-		upl.observer.subscribeToElementCreation("lol-regalia-parties-v2-element",(element: any)=>{
+		observer.subscribeToElementCreation("lol-regalia-parties-v2-element",(element: any)=>{
 			if (element.getAttribute("summoner-id") == window.DataStore.get("Summoner-ID")) {
 				let a = element.shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector(".lol-regalia-summoner-icon")
 				a.style.backgroundImage = "var(--Avatar)"
 				freezeProperties(a.style, ['backgroundImage'])
 			}
 		})
-		upl.observer.subscribeToElementCreation('lol-regalia-profile-v2-element', (element: any) => {
+		observer.subscribeToElementCreation('lol-regalia-profile-v2-element', (element: any) => {
 			let a = element.shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector(".lol-regalia-summoner-icon")
 			a.style.backgroundImage = 'var(--Avatar)'
 			freezeProperties(a.style, ['backgroundImage'])
 		})
 	}
 	if (window.DataStore.get("Custom-Border")) {
-		upl.observer.subscribeToElementCreation(`lol-regalia-hovercard-v2-element[summoner-id="${window.DataStore.get("Summoner-ID")}"]`,(element: any)=>{
-			let a = element.shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("lol-uikit-themed-level-ring-v2").shadowRoot.querySelector("div")
-			a.style.backgroundImage = "var(--Border)"
-			freezeProperties(a.style, ['backgroundImage'])
+		observer.subscribeToElementCreation("#lol-uikit-tooltip-root",(element: any)=>{
+			try{
+				let a = element.querySelector(`lol-regalia-hovercard-v2-element[summoner-id="${window.DataStore.get("Summoner-ID")}"]`).shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("lol-uikit-themed-level-ring-v2").shadowRoot.
+				querySelector("div")
+				a.style.backgroundImage = "var(--Border)"
+				freezeProperties(a.style, ['backgroundImage'])
+			}catch{}
 		})
-		upl.observer.subscribeToElementCreation("lol-regalia-parties-v2-element",(element: any)=>{
+		observer.subscribeToElementCreation("lol-regalia-parties-v2-element",(element: any)=>{
 			if (element.getAttribute("summoner-id") == window.DataStore.get("Summoner-ID")) {
 				let a = element.shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("lol-uikit-themed-level-ring-v2").shadowRoot.querySelector("div")
 				a.style.backgroundImage = "var(--Border)"
 				freezeProperties(a.style, ['backgroundImage'])
 			}
 		})
-		upl.observer.subscribeToElementCreation("lol-regalia-identity-customizer-element",(element: any)=>{
+		observer.subscribeToElementCreation("lol-regalia-identity-customizer-element",(element: any)=>{
 			let a = element.shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("lol-uikit-themed-level-ring-v2").shadowRoot.querySelector("div")
 			a.style.backgroundImage = "var(--Border)"
 			freezeProperties(a.style, ['backgroundImage'])
 		})
-		upl.observer.subscribeToElementCreation('lol-regalia-profile-v2-element', (element: any) => {
+		observer.subscribeToElementCreation('lol-regalia-profile-v2-element', (element: any) => {
 			let a = element.shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("lol-uikit-themed-level-ring-v2").shadowRoot.querySelector("div")
 			a.style.backgroundImage = "var(--Border)"
 			freezeProperties(a.style, ['backgroundImage'])
@@ -256,26 +261,24 @@ if (window.DataStore.get("Custom-Icon")) {
 	}
 	if (window.DataStore.get("Custom-Regalia-Banner")) {
 		let banner = `${iconFolder}Regalia-Banners/`
-		let bannerInterval: number
-
-		upl.observer.subscribeToElementCreation(".lobby-banner.local > lol-regalia-parties-v2-element",(element: any)=>{
-			let a = element.shadowRoot.querySelector("lol-regalia-banner-v2-element").shadowRoot.querySelector("uikit-state-machine > div:nth-child(2) > img")
-			bannerInterval = window.setInterval(() => {
+		let bannerInterval: any
+		observer.subscribeToElementCreation("lol-regalia-parties-v2-element",(element: any)=>{
+			let a: any = document.querySelector(".lobby-banner.local > lol-regalia-parties-v2-element")?.shadowRoot?.querySelector("lol-regalia-banner-v2-element")?.shadowRoot?.querySelector("uikit-state-machine > div:nth-child(2) > img")
+			bannerInterval = window.setInterval(()=>{
 				if (a.src != banner+window.DataStore.get("CurrentBanner")){
 					a.src = banner+window.DataStore.get("CurrentBanner")
 				}
-				else { window.clearInterval(bannerInterval) }
 			},1000)
 		})
-		upl.observer.subscribeToElementDeletion("lol-regalia-parties-v2-element",() => {
+		observer.subscribeToElementDeletion("lol-regalia-parties-v2-element",(element: any)=>{
 			window.clearInterval(bannerInterval)
 		})
-		upl.observer.subscribeToElementCreation("lol-regalia-identity-customizer-element",(element: any)=>{
+		observer.subscribeToElementCreation("lol-regalia-identity-customizer-element",(element: any)=>{
 			let a = element.shadowRoot.querySelector("lol-regalia-banner-v2-element").shadowRoot.querySelector("uikit-state-machine > div:nth-child(2) > img")
 			a.src = banner+window.DataStore.get("CurrentBanner")
 			freezeProperties(a,["src"])
 		})
-		upl.observer.subscribeToElementCreation("lol-regalia-profile-v2-element",(element: any)=>{
+		observer.subscribeToElementCreation("lol-regalia-profile-v2-element",(element: any)=>{
 			let a = element.shadowRoot.querySelector("lol-regalia-banner-v2-element").shadowRoot.querySelector("uikit-state-machine > div:nth-child(2) > img")
 			bannerInterval = window.setInterval(()=>{
 				if (a.src != banner+window.DataStore.get("CurrentBanner")){
@@ -283,24 +286,28 @@ if (window.DataStore.get("Custom-Icon")) {
 				}
 			},1000)
 		})
-		upl.observer.subscribeToElementDeletion("lol-regalia-profile-v2-element",(element: any)=>{
+		observer.subscribeToElementDeletion("lol-regalia-profile-v2-element",(element: any)=>{
 			window.clearInterval(bannerInterval)
 		})
 	}
 	if (window.DataStore.get("Custom-Hover-card-backdrop")) {
-		upl.observer.subscribeToElementCreation("#lol-uikit-tooltip-root",(element: any)=>{
-			if (element.querySelector("lol-regalia-hovercard-v2-element").getAttribute("summoner-id") == window.DataStore.get("Summoner-ID")) {
-				let hoverCard: any = document.querySelector("#hover-card-backdrop")
-				hoverCard.style.backgroundImage = "var(--Hover-card-backdrop)"
-			}
+		observer.subscribeToElementCreation("#lol-uikit-tooltip-root",(element: any)=>{
+			try {
+				if (element.querySelector("lol-regalia-hovercard-v2-element").getAttribute("summoner-id") == window.DataStore.get("Summoner-ID")) {
+					let hoverCard: any = document.querySelector("#hover-card-backdrop")
+					hoverCard.style.backgroundImage = "var(--Hover-card-backdrop)"
+				}
+			}catch{}
 		})
 	}
 	if (window.DataStore.get('Custom-Gamemode-Icon')) {
-		upl.observer.subscribeToElementCreation("lol-uikit-video-group",(element: any)=>{
+		observer.subscribeToElementCreation("lol-uikit-video-group",(element: any)=>{
 			function gameModeIcon_active(obj: any, name: any) {
-				let a: any = document.querySelector(`${obj} lol-uikit-video-state[state='active'] lol-uikit-video`)
-				a.setAttribute("src", `${iconFolder}gamemodes/${name}`)
-				a.querySelector("video").setAttribute("src", `${iconFolder}gamemodes/${name}`)
+				try {
+					let a: any = document.querySelector(`${obj} lol-uikit-video-state[state='active'] lol-uikit-video`)
+					a.setAttribute("src", `${iconFolder}gamemodes/${name}`)
+					a.querySelector("video").setAttribute("src", `${iconFolder}gamemodes/${name}`)
+				}catch{}
 			}
 			gameModeIcon_active("div[data-game-mode='CLASSIC']",icdata["classic_video"])
 			gameModeIcon_active("div[data-game-mode='TFT']", icdata["tft_video"])
@@ -311,4 +318,4 @@ if (window.DataStore.get("Custom-Icon")) {
 		})
 	}
 }
-//upl.observer.subscribeToElementCreation("",(element: any)=>{})
+//observer.subscribeToElementCreation("",(element: any)=>{})

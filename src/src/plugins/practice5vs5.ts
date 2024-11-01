@@ -1,9 +1,8 @@
-import * as upl from 'pengu-upl'
-
-if (!window.DataStore.get("aram-only")) {
-    upl.observer.subscribeToElementCreation(".parties-game-navs.ember-view", (element: any)=> {
-        if (document.getElementById("prac-button")) return
-        else {
+import utils from '../utils/utils.ts'
+const addPrac5 = (): void => {
+    if (document.getElementById("prac-button")) {return}
+    else {
+        try{
             let button = document.createElement("lol-uikit-flat-button")
             button.id = "prac-button"
             button.textContent = "5v5 Practice"
@@ -17,8 +16,11 @@ if (!window.DataStore.get("aram-only")) {
                     headers: {'Content-Type': 'application/json'}
                 })
             }
-            element.insertBefore(button, element.children[1])
-        }
-        
-    })
+            let gameBar: HTMLElement | null = document.querySelector(".parties-game-navs.ember-view")
+            gameBar?.insertBefore(button, gameBar.children[1])
+        }catch{}
+    }
 }
+window.addEventListener("load", () => {
+    if (!window.DataStore.get("aram-only")) {utils.routineAddCallback(addPrac5, ["rcp-fe-lol-parties"])}
+})

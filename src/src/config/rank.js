@@ -1,4 +1,4 @@
-// Open settings.js and custom-profile.ts if update this file
+// Open settings.js and custom-profile.js if update this file
 
 let rank = {
     "Ranked Queue ID": [

@@ -98,6 +98,12 @@ declare interface Window {
         version: string
         build: string
     };
+
+    observer: {
+        handleElementMutation: (element: any, isCreation: any, callbacks: any) => void;
+        subscribeToElementCreation: (target: string, callback: any) => void;
+        subscribeToElementDeletion: (target: string, callback: any) => void;
+    }
   
     openDevTools: () => void;
     openPluginsFolder: (subdir?: string) => void;
@@ -108,7 +114,8 @@ declare interface Window {
     autoAcceptQueueButton: () => void;
     del_webm_buttons: () => void;
     create_webm_buttons: () => void;
-    applyHideAndShowtab: () => void;
+    applyHidetab: () => void;
+    applyShowtab: () => void;
     exitClient: () => void;
     dodgeQueue: () => void;
     switch_between_status: () => void;

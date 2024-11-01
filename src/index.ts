@@ -33,41 +33,44 @@ const ASSET_PATHS: {Wallpaper: string, Audio: string, Font: string, Banner: stri
     Banner: "./src/assets/icon/regalia-banners",
 };
 
-// const refreshBackgroundsList = async (): Promise<void> => {
-//     try {
-//         const lists: Object = await Promise.all(
-//             Object.values(ASSET_PATHS).map((path: string) => window.PluginFS.ls(path))
-//         );
+const refreshBackgroundsList = async (): Promise<void> => {
+    try {
+        const lists: Object = await Promise.all(
+            Object.values(ASSET_PATHS).map((path: string) => window.PluginFS.ls(path))
+        );
         
-//         const filteredLists: Object = Object.keys(ASSET_PATHS).reduce((acc: Object, key: string, index: number) => {
-//             acc[key] = lists[index].filter((file: any) => FILE_REGEX[key].test(file));
-//             return acc;
-//         }, {});
+        const filteredLists: Object = Object.keys(ASSET_PATHS).reduce((acc: Object, key: string, index: number) => {
+            acc[key] = lists[index].filter((file: any) => FILE_REGEX[key].test(file));
+            return acc;
+        }, {});
 
-//         Object.entries(filteredLists).forEach(([key, value]) => {
-//             window.DataStore.set(`${key}-list`, value);
-//         });
+        Object.entries(filteredLists).forEach(([key, value]) => {
+            window.DataStore.set(`${key}-list`, value);
+        });
 
-//         window.DataStore.set("video-2nd-loop", false);
-//         log('Updated DataStore with lists');
-//     } catch (err: any) {
-//         error('Error refreshing backgrounds list:', err);
-//         window.DataStore.set("manual-add-background", true);
-//     }
-// };
+        window.DataStore.set("video-2nd-loop", false);
+        log('Updated DataStore with lists');
+    } catch (err: any) {
+        error('Error refreshing backgrounds list:', err);
+        window.DataStore.set("manual-add-background", true);
+    }
+};
 
-// log('Refreshing backgrounds list');
+log('Refreshing backgrounds list');
 
-// const backgroundListInterval = setInterval(async () => {
-//     await refreshBackgroundsList();
-//     if (document.getElementById("elaina-bg")) {
-//         clearInterval(backgroundListInterval);
-//         log('Stopped reloading list');
-//     }
-// }, 1000);
+const backgroundListInterval = setInterval(async () => {
+    await refreshBackgroundsList();
+    if (document.getElementById("elaina-bg")) {
+        clearInterval(backgroundListInterval);
+        log('Stopped reloading list');
+    }
+}, 1000);
 
 // Importing theme contents
 log('Importing theme contents');
+
+import { setHomePage } from "./src/theme/homepage.ts";
+import { transparentLobby } from "./src/theme/applyUi.ts";
 
 // Import CDN modules
 let initLink: string
@@ -101,11 +104,8 @@ else {
         window.DataStore.set("Elaina-First run", true);
     }
 }
-const { Cdninit } = await import(initLink)
 
 // Import other modules
-import { setHomePage } from "./src/theme/homepage.ts";
-import { transparentLobby } from "./src/theme/applyUi.ts";
 import "./src/theme/applyUi.ts"
 import "./src/theme/homepage.ts"
 import "./src/theme/filters.ts"
@@ -114,6 +114,7 @@ import "./src/theme/themePresetSettingsTab.ts"
 import "./src/updates/manualUpdate.ts"
 import "./src/plugins/customStatus.ts"
 import "./src/plugins/autoAccept.ts"
+import "./src/plugins/buyAllChamps.ts"
 import "./src/plugins/customBeRp.ts"
 import "./src/plugins/customProfile.ts"
 import "./src/plugins/dodgeButton.ts"
@@ -126,25 +127,51 @@ import "./src/plugins/debug.ts"
 import "./src/plugins/inviteAllFriends.ts"
 import "./src/plugins/forceJungleLane.ts"
 
-// Check server
+
+//Load text files
+// const loadTextFile = async (path: string) => {
+//     try {
+//         const content = await window.PluginFS.read(path);
+//         if (content === undefined) {
+//             throw new Error(`File not found: ${path}`);
+//         }
+//         return content;
+//     } catch (err: any) {
+//         error(`Failed to load text file: ${path}`, err);
+//         return null;
+//     }
+// };
+
+// // Load text files
+// Promise.all([
+//     loadTextFile("./src/config/customStatus.txt"),
+//     loadTextFile("./src/config/pandoru.txt")
+// ]).then(([customStatus, pandoru]) => {
+//     if (customStatus) window.DataStore.set("customStatus", customStatus);
+//     if (pandoru) window.DataStore.set("pandoru", pandoru);
+// }).catch(err => error('Error loading text files:', err));
+
 const checkServerAvailability = async (): Promise<void> => {
     log('Checking server availability');
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 2000);
+    const timeoutId = setTimeout(() => controller.abort(), 3000);
 
     try {
         const response = await fetch('https://elainatheme.xyz/numberOfUsers', { signal: controller.signal });
         const { count } = await response.json();
         log('Number of users:', count);
         const { default: serverModule } = await import('https://elainatheme.xyz/index.js');
+        //await serverModule();
     } catch (err: any) {
         clearTimeout(timeoutId);
         throw err;
     }
 };
+
 checkServerAvailability().catch((err: any) => error('Failed to check server availability:', err));
 
 // Export Init
+let {Cdninit} = await import(initLink)
 export function init(context: any) {
     log('Initializing theme');
     setHomePage(context);
