@@ -1,35 +1,35 @@
 export default {
     //______________________________________________________________________________//
 
-    "Animation-logo": "elainafly.gif",
+    "Animation-logo": "animation-logo.gif",
     "Static-logo"   : "logo.png",
 
     "Avatar"        : "avatar.gif",
 
-    "Border"        : "spirit-of-ionia-crests-wild-rift.png",
+    "Border"        : "border.png",
 
-    "Hover-card"     : "hover-card-backdrop.jpg",
+    "Hover-card"    : "hover-card-backdrop.jpg",
 
-    "RP-icon"        : "apprenticewitch.png",
-    "BE-icon"        : "elainastare.png",
+    "RP-icon"       : "rp-icon.png",
+    "BE-icon"       : "be-icon.png",
 
-    "Rank-icon"      : "rank.png",
-    "Honor"          : "emblem_5.png",
-    "Trophy"         : "trophy_empty.png",
-    "Class-banner"   : "clash.png",
+    "Rank-icon"     : "rank.png",
+    "Honor"         : "honor.png",
+    "Trophy"        : "trophy.png",
+    "Class-banner"  : "clash.png",
 
-    "Ticker"         : "ticker.png",
+    "Ticker"        : "ticker.png",
     
-    "Mouse-cursor"   : "elainaded.png",
+    "Mouse-cursor"  : "mouse-cursor.png",
 
-    "LL_Settings"    : "ll-settings.jpg",
+    "LL_Settings"   : "ll-settings.jpg",
 
     //Runes
-    "Precision"  :  "8000.jpg",
-    "Domination" :  "8100.jpg",
-    "Sorcery"    :  "8200.jpg",
-    "Resolve"    :  "8400.jpg",
-    "Inspiration":  "8300.jpg",
+    "Precision"  :  "precision.jpg",
+    "Domination" :  "domination.jpg",
+    "Sorcery"    :  "sorcery.jpg",
+    "Resolve"    :  "resolve.jpg",
+    "Inspiration":  "inspiration.jpg",
 
     //Gamemodes
     "classic_def"  : "classic-default.png",

@@ -2,6 +2,13 @@ import { getThemeName } from "../otherThings.ts"
 import utils from "../utils/utils.ts"
 import * as upl from 'pengu-upl';
 
+const CONSOLE_STYLE = {
+    prefix: '%c Elaina ',
+    css: 'color: #ffffff; background-color: #f77fbe'
+};
+
+const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+
 let datastore_list: Object = window.DataStore.get("Dev-mode")
 	? (await (() => import(`//plugins/${getThemeName()}/elaina-theme-data/src/config/datastoreDefault.js`))()).default
 	//@ts-ignore
@@ -12,11 +19,11 @@ function setDefaultData(list: Object, restore: Boolean = false) {
 	Object.entries(list).forEach(([key, value]) => {
 	  	if (!window.DataStore.has(key)) {
 			window.DataStore.set(key, value);
-			console.log(`${key} data restored`)
+			log(`${key} data restored`)
 	  	}
 		else if (window.DataStore.has(key) && restore) {
 			window.DataStore.set(key, value);
-			console.log(`${key} data restored`)
+			log(`${key} data restored`)
 	  	}
 	});
 }

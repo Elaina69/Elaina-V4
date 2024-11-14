@@ -1,25 +1,31 @@
 import LocalKey from "./updateKeyLocal.ts"
 import { getThemeName } from "../otherThings.ts"
 
-let CdnKey: number = 0
-let eConsole = "%c Elaina "
-let eCss = "color: #ffffff; background-color: #f77fbe"
+const CONSOLE_STYLE = {
+    prefix: '%c Elaina ',
+    css: 'color: #ffffff; background-color: #f77fbe'
+};
 
-console.log(eConsole+`%c Checking theme version...`, eCss,"color: #e4c2b3")
+const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+const warn = (message: string, ...args: string[]) => console.warn(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+
+let CdnKey: number = 0
+
+log(`%cChecking theme version...`, "color: #e4c2b3")
 
 const fileLocation = window.DataStore.get("Dev-mode")
-  	? `//plugins/${getThemeName()}/elaina-theme-data/src/update/updateKeyCdn.js`
-  	: `https://unpkg.com/elaina-theme-data@latest/src/update/updateKeyCdn.js`;
+  	? `//plugins/${getThemeName()}/elaina-theme-data/src/update/update.js`
+  	: `https://unpkg.com/elaina-theme-data@latest/src/update/update.js`;
 
 try {
   	const res = await fetch(fileLocation);
   	if (res.ok) {
-    	CdnKey = (await import(fileLocation)).default;
+    	CdnKey = (await import(fileLocation)).default.key;
 	} 
-	else console.warn(`${eConsole}%c File doesn't exist`, eCss, "");
+	else warn(`File doesn't exist`);
 } 
 catch (err: any) {
-  	console.warn(`${eConsole}%c Error loading file`, eCss, err);
+  	warn(`Error loading file`, err);
 }
 
 if (!window.DataStore.get("prevent-manual-update")) {
@@ -32,11 +38,11 @@ if (!window.DataStore.get("prevent-manual-update")) {
 		setTimeout(() => {
 			if (checkKey) {
 				resolve()
-				console.log(eConsole+`%c Latest release now`, eCss,"color: #e4c2b3")
+				log(`%cLatest release now`, "color: #e4c2b3")
 			}
 			else {
 				reject()
-				console.log(eConsole+`%c New theme manual update available`, eCss,"color: #e4c2b3")
+				log(`%cNew theme manual update available`, "color: #e4c2b3")
 			}
 		},2000)
 	})
@@ -47,4 +53,4 @@ if (!window.DataStore.get("prevent-manual-update")) {
 		error: 'New theme manual update available'
 	})
 }
-else console.log(eConsole+`%c Manual update disabled`, eCss,"color: #e4c2b3")
+else log(`%c Manual update disabled`, "color: #e4c2b3")

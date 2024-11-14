@@ -76,7 +76,6 @@ upl.observer.subscribeToElementCreation(".v2-lobby-root-component.ember-view .v2
 	}
 
 	if (element && !document.getElementById("autoAcceptQueueButton")) {
-		console.log("true")
 		if (window.DataStore.get("auto_accept_button")) {
 			container?.append(newOption)
 			newOption.append(Option2)

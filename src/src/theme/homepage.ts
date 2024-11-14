@@ -17,6 +17,7 @@ const CONSOLE_STYLE = {
 
 const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
 const error = (message: string, ...args: string[]) => console.error(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+const warn = (message: string, ...args: string[]) => console.warn(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
 
 const datapath: string = `//plugins/${window.getThemeName()}/`
 const iconFolder: string = `${datapath}assets/icon/`;
@@ -61,18 +62,18 @@ window.setTimeout(async () => {
 let CdnKey: number;
 
 if (window.DataStore.get("Dev-mode")) {
-    CdnKey = (await import(`//plugins/${window.getThemeName()}/elaina-theme-data/src/update/updateKeyCdn.js`)).default;
-    log('%c%cRunning Elaina theme - %cDev version', '', 'color: #e4c2b3', 'color: red');
+    CdnKey = (await import(`//plugins/${window.getThemeName()}/elaina-theme-data/src/update/update.js`)).default.key;
+    log('%cRunning Elaina theme - %cDev version', 'color: #e4c2b3', 'color: red');
 } 
 else {
     //@ts-ignore
-    CdnKey = (await import(`https://unpkg.com/elaina-theme-data@latest/src/update/updateKeyCdn.js`)).default;
-    log('%c%cRunning Elaina theme - %cStable version', '', 'color: #e4c2b3', 'color: #00ff44');
+    CdnKey = (await import(`https://unpkg.com/elaina-theme-data@latest/src/update/update.js`)).default.key;
+    log('%cRunning Elaina theme - %cStable version', 'color: #e4c2b3', 'color: #00ff44');
 }
 
 if (CdnKey === LocalKey) {
     //@ts-ignore
-    const themeVersion = (await import("https://unpkg.com/elaina-theme-data@latest/src/update/version.js")).default;
+    const themeVersion = (await import("https://unpkg.com/elaina-theme-data@latest/src/update/update.js")).default.version;
     window.DataStore.set("Theme-version", themeVersion);
 
     if (!window.DataStore.get("Change-CDN-version")) {
@@ -101,7 +102,7 @@ export function setHomePage(context: any) {
                 enabled: true,
                 visibile: true,
                 priority: 1,
-                url: 'https://elainatheme.xyz/',
+                url: 'https://elainatheme.xyz/blankpage',
             });
 
             return originalCreate.apply(this, [e, t, n]);
@@ -129,7 +130,7 @@ const hideAndShowTab = (data: any, obj: any, name: any) => {
                 element.offsetHeight;
                 log(`${name} tab deleted`);
             } else {
-                error(`Element not found for ${name}`);
+                warn(`Element not found for ${name}`);
             }
         } catch (error: any) {
             error(`Error hiding ${name} tab:`, error);
@@ -456,7 +457,7 @@ const createWebmButtons = () => {
     if (showContainer) {
         showContainer.append(container, wallpaperControls);
     } else {
-        console.error("Could not find the container '.rcp-fe-lol-home' to append controls.");
+        error("Could not find the container '.rcp-fe-lol-home' to append controls.");
     }
 
     // Handle volume slider input
@@ -627,7 +628,7 @@ const loadWallpaperAndMusic = () => {
 let previous_page = '';
 let runtime = 0;
 
-let debounceTimer;
+let debounceTimer: any;
 
 const addHomepage = async (node: any) => {
     if (!document.querySelector(".rcp-fe-lol-home")) return;
@@ -674,9 +675,9 @@ const addHomepage = async (node: any) => {
                         header.style.background = "transparent";
                     });
                     runtime++;
-                    console.log(`Store iframe modified (${runtime} times)`);
-                } catch (mutationError) {
-                    console.error("Error in handleElementMutation:", mutationError);
+                    log(`Store iframe modified (${runtime} times)`);
+                } catch (mutationError: any) {
+                    error("Error in handleElementMutation:", mutationError);
                 }
             }
         };
@@ -713,7 +714,7 @@ const addHomepage = async (node: any) => {
         clearTimeout(debounceTimer);
     }
 
-    log("%c%cCleared Background (" + `%c${runtime}%c)`, '', "color: #e4c2b3", "color: #0070ff", "color: #e4c2b3");
+    log("%cCleared Background (" + `%c${runtime}%c)`, "color: #e4c2b3", "color: #0070ff", "color: #e4c2b3");
 
     if (previous_page !== pagename) previous_page = pagename;
 };

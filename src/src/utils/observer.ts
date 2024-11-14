@@ -20,47 +20,6 @@ const callbackStore = {
 };
 
 /**
- * Adds a callback to the appropriate callback map.
- * @param {string} target - The target selector.
- * @param {Function} callback - The callback function.
- * @param {Object} callbackMap - The map to store the callback.
- */
-function addCallback(target: string, callback: Function, callbackMap: any): void {
-  const key = target.startsWith('.') || target.startsWith('#')
-    ? target.slice(1)
-    : target;
-  
-  if (!callbackMap.has(key)) {
-    callbackMap.set(key, []);
-  }
-  callbackMap.get(key).push(callback);
-}
-
-/**
- * Subscribes to element creation events.
- * @param {string} target - The target selector.
- * @param {Function} callback - The callback function.
- */
-export function subscribeToElementCreation(target: string, callback: Function): void {
-  const type = target.startsWith('.') ? CALLBACK_TYPES.CLASS :
-               target.startsWith('#') ? CALLBACK_TYPES.ID :
-               CALLBACK_TYPES.TAG;
-  addCallback(target, callback, callbackStore.creation[type]);
-}
-
-/**
- * Subscribes to element deletion events.
- * @param {string} target - The target selector.
- * @param {Function} callback - The callback function.
- */
-export function subscribeToElementDeletion(target: string, callback: Function): void {
-  const type = target.startsWith('.') ? CALLBACK_TYPES.CLASS :
-               target.startsWith('#') ? CALLBACK_TYPES.ID :
-               CALLBACK_TYPES.TAG;
-  addCallback(target, callback, callbackStore.deletion[type]);
-}
-
-/**
  * Handles element mutations.
  * @param {Element} element - The mutated element.
  * @param {boolean} isCreation - Whether this is a creation event.

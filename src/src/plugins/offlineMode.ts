@@ -1,5 +1,12 @@
 import utils from '../utils/utils.ts'
 
+const CONSOLE_STYLE = {
+    prefix: '%c Elaina ',
+    css: 'color: #ffffff; background-color: #f77fbe'
+};
+
+const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+
 let covert_status = "chat";
 
 function get_status() {
@@ -17,8 +24,6 @@ function get_status() {
 }
 
 let switch_between_status = async () => {
-	let eConsole = "%c Elaina "
-	let eCss = "color: #ffffff; background-color: #f77fbe"
 	let status = get_status()
 	let availability = (status == "chat") ? "mobile" 
 		: (status == "mobile") ? "dnd" 
@@ -27,7 +32,7 @@ let switch_between_status = async () => {
 		: (status == "offline") ? "chat" 
 		: "chat"
 
-	console.log(eConsole+"%c Changed status to "+availability,eCss,"")
+	log(`Changed status to ${availability}`)
 	await fetch("/lol-chat/v1/me", {
 		"headers": {
 			"content-type": "application/json",

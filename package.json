@@ -9,7 +9,6 @@
         "penguPath": "I:\\Riot Games\\pengu-loader"
     },
     "scripts": {
-        "dev": "vite",
         "build": "tsc && vite build"
     },
     "devDependencies": {

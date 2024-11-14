@@ -1,0 +1,1 @@
+YOU MUST have atleast 1 wallpaper file inside this folder to make sure theme run correctly.

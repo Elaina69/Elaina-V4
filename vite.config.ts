@@ -153,6 +153,9 @@ export default defineConfig((config) => ({
                 catch {}
 
                 // Zip plugins after complete
+                copy = setInterval(()=> {
+                    count += 100;
+                }, 100)
                 const output = fs.createWriteStream(outDir+"/ElainaV4.zip");
                 const archive = archiver('zip', {
                     zlib: { level: 9 }
@@ -164,7 +167,6 @@ export default defineConfig((config) => ({
 
                 output.on('close', () => {
                     console.log(`${archive.pointer()} total bytes`);
-                    console.log('Zipping completed successfully!');
                 });
 
                 archive.pipe(output);
@@ -173,19 +175,16 @@ export default defineConfig((config) => ({
                 archive.directory(outDir+"/config", "config");
                 archive.file(outDir+"/index.js", { name: basename(outDir+"/index.js") });
 
-                archive.finalize();
+                await archive.finalize();
+                console.log(`Zipping completed successfully! (in ${count/1000}s)`);
+                clearInterval(copy);
+                count = 0
 
                 // Copy output to pengu dir
-                copy = setInterval(()=> {
-                    count += 100;
-                }, 100)
                 await emptyDir(pluginsDir);
                 await cp(outDir, pluginsDir, {
                    recursive: true,
                 });
-                console.log(`Copying /dist to Pengu dir completed! (%cin ${count/1000}s%c)`, "color: #f77fbe", "");
-                clearInterval(copy);
-                count = 0
             }
         },
     ]

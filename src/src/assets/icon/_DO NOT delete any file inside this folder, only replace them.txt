@@ -1,0 +1,2 @@
+DO NOT delete any file inside this folder, only replace them.
+If you want to change file with different name, open configs folder.

@@ -1,9 +1,13 @@
 import utils from "../utils/utils.ts"
 
-let filters = (await import(`//plugins/${window.getThemeName()}/config/filters.js`)).default;
+const CONSOLE_STYLE = {
+    prefix: '%c Elaina ',
+    css: 'color: #ffffff; background-color: #f77fbe'
+};
 
-let eConsole 	= "%c Elaina "
-let eCss 		= "color: #ffffff; background-color: #f77fbe"
+const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+
+let filters = (await import(`//plugins/${window.getThemeName()}/config/filters.js`)).default;
 
 let nodeRemovedEvent = function (event: any) {
 	if (event.target.classList && event.target.classList.contains("lol-loading-screen-container")) {
@@ -22,8 +26,8 @@ let nodeRemovedEvent = function (event: any) {
 let addFilter = async (node: any) => {
 	let pagename: string = ""
 	let previous_page: string = ""
-	let elainaBg: any = document.getElementById("elaina-bg");
-	let elainaStaticBg: any = document.getElementById("elaina-static-bg");
+	let elainaBg: HTMLElement | null = document.getElementById("elaina-bg");
+	let elainaStaticBg: HTMLElement | null = document.getElementById("elaina-static-bg");
 
 	const filtersMap = {
 		"rcp-fe-lol-yourshop": "Yourshop",
@@ -56,9 +60,9 @@ let addFilter = async (node: any) => {
 	];
 
 	pagename = node.getAttribute("data-screen-name");
-	console.log(`${eConsole}%c ${pagename}`, eCss, "color: #e4c2b3");
+	log(`%c${pagename}`, "color: #e4c2b3");
 
-	try {
+	if (elainaBg && elainaStaticBg) {
 		if (filtersMap[pagename]) {
 			elainaBg.style.filter = filters[filtersMap[pagename]];
 			elainaStaticBg.style.filter = filters[filtersMap[pagename]];
@@ -67,14 +71,11 @@ let addFilter = async (node: any) => {
 			elainaBg.style.filter = filters["Homepage"];
 			elainaStaticBg.style.filter = filters["Homepage"];
 		}
-
 		if (previous_page !== pagename) {
 			previous_page = pagename;
 		}
-	} 
-	catch {
-		console.log(`${eConsole}%c Cannot set the filter`, eCss, "");
 	}
+	else { log(`Cannot set the filter`) }
 }
 
 window.addEventListener("load",() => {

@@ -1,5 +1,13 @@
 import * as upl from 'pengu-upl'
 
+const CONSOLE_STYLE = {
+    prefix: '%c Elaina ',
+    css: 'color: #ffffff; background-color: #f77fbe'
+};
+
+const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+const warn = (message: string, ...args: string[]) => console.warn(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+
 let filters = (await import(`//plugins/${window.getThemeName()}/config/filters.js`)).default;
 let icdata = (await import(`//plugins/${window.getThemeName()}/config/icons.js`)).default;
 
@@ -42,7 +50,7 @@ upl.observer.subscribeToElementCreation(".parallax-layer-container",(element: an
 if (window.DataStore.get("aram-only")) {
 	function removeNode(obj: string): void {
 		try { document.querySelector(obj)?.remove() }
-		catch{ console.log(`Can not remove ${obj}`)}
+		catch{ log(`Can not remove ${obj}`)}
 	}
  	let interval: number
 
@@ -289,18 +297,26 @@ if (window.DataStore.get("Custom-Icon")) {
 	}
 	if (window.DataStore.get("Custom-Hover-card-backdrop")) {
 		upl.observer.subscribeToElementCreation("#lol-uikit-tooltip-root",(element: any)=>{
-			if (element.querySelector("lol-regalia-hovercard-v2-element").getAttribute("summoner-id") == window.DataStore.get("Summoner-ID")) {
-				let hoverCard: any = document.querySelector("#hover-card-backdrop")
-				hoverCard.style.backgroundImage = "var(--Hover-card-backdrop)"
+			try {
+				if (element.querySelector("lol-regalia-hovercard-v2-element").getAttribute("summoner-id") == window.DataStore.get("Summoner-ID")) {
+					let hoverCard: any = document.querySelector("#hover-card-backdrop")
+					hoverCard.style.backgroundImage = "var(--Hover-card-backdrop)"
+				}
 			}
+			catch { log("Can't change hover card backdrop.") }
 		})
 	}
 	if (window.DataStore.get('Custom-Gamemode-Icon')) {
 		upl.observer.subscribeToElementCreation("lol-uikit-video-group",(element: any)=>{
 			function gameModeIcon_active(obj: any, name: any) {
-				let a: any = document.querySelector(`${obj} lol-uikit-video-state[state='active'] lol-uikit-video`)
-				a.setAttribute("src", `${iconFolder}gamemodes/${name}`)
-				a.querySelector("video").setAttribute("src", `${iconFolder}gamemodes/${name}`)
+				try {
+					let a: any = document.querySelector(`${obj} lol-uikit-video-state[state='active'] lol-uikit-video`)
+					a.setAttribute("src", `${iconFolder}gamemodes/${name}`)
+					a.querySelector("video").setAttribute("src", `${iconFolder}gamemodes/${name}`)
+				}
+				catch { 
+					//warn("Can't find the target") 
+				}
 			}
 			gameModeIcon_active("div[data-game-mode='CLASSIC']",icdata["classic_video"])
 			gameModeIcon_active("div[data-game-mode='TFT']", icdata["tft_video"])

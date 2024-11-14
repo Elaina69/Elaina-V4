@@ -1,8 +1,14 @@
-let datapath = `//plugins/${window.getThemeName()}/`
-
 import utils from '../utils/utils.ts'
-let eConsole = "%c Elaina "
-let eCss = "color: #ffffff; background-color: #f77fbe"
+
+const CONSOLE_STYLE = {
+    prefix: '%c Elaina ',
+    css: 'color: #ffffff; background-color: #f77fbe'
+};
+
+const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+const error = (message: string, ...args: string[]) => console.error(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+
+let datapath = `//plugins/${window.getThemeName()}/`
 
 if (window.DataStore.get("loot-helper")) {
     function AddElement(parent: any, tag: any, params: any[] = [], classes:any[] = [], content: any = null) {
@@ -88,7 +94,7 @@ if (window.DataStore.get("loot-helper")) {
                 });
             })
             .catch(error => {
-                console.error(error);
+                error(error);
             });
     
         return loot;
@@ -458,7 +464,7 @@ if (window.DataStore.get("loot-helper")) {
         let create = window.setInterval(async () => {
             if (document.querySelector(".loot-category-information")) {
                 window.clearInterval(create)
-                console.log(eConsole+"%c Loot helper loaded",eCss,"color: #e4c2b3")
+                log("%cLoot helper loaded", "color: #e4c2b3")
             }
             CreateRefreshButton();
             CreateOpenChestsButton();
