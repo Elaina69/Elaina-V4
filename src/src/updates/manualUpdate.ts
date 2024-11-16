@@ -1,5 +1,5 @@
 import LocalKey from "./updateKeyLocal.ts"
-import { getThemeName } from "../otherThings.ts"
+import { getThemeName, cdnImport } from "../otherThings.ts"
 
 const CONSOLE_STYLE = {
     prefix: '%c Elaina ',
@@ -15,18 +15,9 @@ log(`%cChecking theme version...`, "color: #e4c2b3")
 
 const fileLocation = window.DataStore.get("Dev-mode")
   	? `//plugins/${getThemeName()}/elaina-theme-data/src/update/update.js`
-  	: `https://unpkg.com/elaina-theme-data@latest/src/update/update.js`;
+  	: `https://cdn.jsdelivr.net/npm/elaina-theme-data@latest/src/update/update.js`;
 
-try {
-  	const res = await fetch(fileLocation);
-  	if (res.ok) {
-    	CdnKey = (await import(fileLocation)).default.key;
-	} 
-	else warn(`File doesn't exist`);
-} 
-catch (err: any) {
-  	warn(`Error loading file`, err);
-}
+CdnKey = (await cdnImport(fileLocation, "Can't load cdn key")).default.key;
 
 if (!window.DataStore.get("prevent-manual-update")) {
 	let checkKey: boolean = (LocalKey == CdnKey)

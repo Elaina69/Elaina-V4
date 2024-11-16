@@ -12,6 +12,7 @@ const CONSOLE_STYLE = {
 };
 
 const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+const warn = (message: string, ...args: string[]) => console.warn(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
 const error = (message: string, ...args: string[]) => console.error(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
 
 log('By %cElaina Da Catto', 'color: #e4c2b3');
@@ -71,19 +72,6 @@ log('Importing theme contents');
 
 // Import CDN modules
 let initLink: string
-const cdnImport = async (url: string, errorMsg: any): Promise<void> => {
-    try {
-        const res = await fetch(url);
-        if (res.status === 200) {
-            await import(url);
-        } else {
-            throw new Error();
-        }
-    } catch {
-        log(errorMsg);
-        window.Toast.error(errorMsg);
-    }
-};
 
 if (window.DataStore.get("Dev-mode")) {
     initLink = `//plugins/${getThemeName()}/elaina-theme-data/cdninit.js`;
@@ -94,14 +82,15 @@ else {
         ? window.DataStore.get("Cdn-version")
         : "latest";
 
-    initLink = `https://unpkg.com/elaina-theme-data@${cdnVersion}/cdninit.js`;
-    await cdnImport(`https://unpkg.com/elaina-theme-data@${cdnVersion}/index.js`, "Failed to load CDN data");
+    initLink = `https://cdn.jsdelivr.net/npm/elaina-theme-data@${cdnVersion}/cdninit.js`;
+    await cdnImport(`https://cdn.jsdelivr.net/npm/elaina-theme-data@${cdnVersion}/index.js`, "Failed to load CDN data");
 
     if (!window.DataStore.get("Elaina-First run")) {
         window.DataStore.set("Elaina-First run", true);
     }
 }
-const { Cdninit } = await import(initLink)
+
+const { Cdninit } = await cdnImport(initLink, "Failed to load Init data")
 
 // Import other modules
 import { setHomePage } from "./src/theme/homepage.ts";
@@ -128,7 +117,7 @@ import "./src/plugins/forceJungleLane.ts"
 
 // Check server
 const checkServerAvailability = async (): Promise<void> => {
-    log('Checking server availability');
+    log('Checking backup server availability');
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 2000);
 
@@ -142,7 +131,7 @@ const checkServerAvailability = async (): Promise<void> => {
         throw err;
     }
 };
-checkServerAvailability().catch((err: any) => error('Failed to check server availability:', err));
+checkServerAvailability().catch((err: any) => error('Failed to check backup server availability:', err));
 
 // Export Init
 export function init(context: any) {
@@ -152,6 +141,25 @@ export function init(context: any) {
     Cdninit(context);
 }
 
+export async function cdnImport(url: string, errorMsg: any): Promise<any> {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+    try {
+        const res = await fetch(url, { signal: controller.signal });
+        if (res.status === 200) {
+            const serverModule = await import(url);
+            return serverModule
+        } else {
+            throw new Error();
+        }
+    } catch {
+        clearTimeout(timeoutId);
+        error(errorMsg);
+        window.Toast.error(errorMsg);
+    }
+};
+
 // Get this theme folder's name and export it
 export function getThemeName(): string | null {
     const error = new Error();
@@ -160,3 +168,8 @@ export function getThemeName(): string | null {
     const match = scriptPath?.match(/\/([^/]+)\/index\.js$/);
     return match ? match[1] : null;
 }
+
+// Export theme log globally
+window.log = log
+window.warn = warn
+window.error = error

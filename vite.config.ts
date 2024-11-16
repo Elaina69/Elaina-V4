@@ -35,8 +35,8 @@ export default defineConfig((config) => ({
     },
     build: {
         target: 'esnext',
-        minify: true,
-        cssMinify: true,
+        minify: false,
+        cssMinify: false,
         rollupOptions: {
             output: {
                 format: 'esm',
@@ -64,22 +64,22 @@ export default defineConfig((config) => ({
     publicDir: false,
     plugins: [
         mkcert(),
-        {
-            // Because vite doesn't allow minifying of ESM, we have to do it manually
-            name: 'minify',
-            apply: 'build',
-            enforce: 'post',
-            renderChunk: {
-                order: 'post',
-                async handler(code, chunk, _) {
-                    if (chunk.fileName.endsWith('.js')) {
-                        return await transform(code, { minify: true, treeShaking: true });
-                    }
+        // {
+        //     // Because vite doesn't allow minifying of ESM, we have to do it manually
+        //     name: 'minify',
+        //     apply: 'build',
+        //     enforce: 'post',
+        //     renderChunk: {
+        //         order: 'post',
+        //         async handler(code, chunk, _) {
+        //             if (chunk.fileName.endsWith('.js')) {
+        //                 return await transform(code, { minify: true, treeShaking: true });
+        //             }
 
-                    return code;
-                }
-            }
-        },
+        //             return code;
+        //         }
+        //     }
+        // },
         {
             name: 'pengu-serve',
             apply: 'serve',

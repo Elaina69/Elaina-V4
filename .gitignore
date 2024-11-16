@@ -2,5 +2,4 @@
 dist/
 node_modules/
 src/elaina-theme-data/
-src/elaina-theme-data-typescript/
 ElainaV4-typescript.code-workspace

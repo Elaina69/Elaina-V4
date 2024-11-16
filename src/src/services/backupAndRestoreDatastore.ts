@@ -1,4 +1,4 @@
-import { getThemeName } from "../otherThings.ts"
+import { getThemeName, cdnImport } from "../otherThings.ts"
 import utils from "../utils/utils.ts"
 import * as upl from 'pengu-upl';
 
@@ -7,13 +7,34 @@ const CONSOLE_STYLE = {
     css: 'color: #ffffff; background-color: #f77fbe'
 };
 
-const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args)
+const error = (message: string, ...args: string[]) => console.error(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+
+async function importData(url: string): Promise<any> {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+    try {
+        const res = await fetch(url, { signal: controller.signal });
+        if (res.status === 200) {
+            const serverModule = await import(url);
+            return serverModule
+        } 
+		else {
+            throw new Error();
+        }
+    } catch {
+		let errorMsg = "Can't load default datastore from local"
+        clearTimeout(timeoutId);
+        error(errorMsg);
+        window.Toast.error(errorMsg);
+    }
+};
 
 let datastore_list: Object = window.DataStore.get("Dev-mode")
-	? (await (() => import(`//plugins/${getThemeName()}/elaina-theme-data/src/config/datastoreDefault.js`))()).default
+	? (await importData(`//plugins/${getThemeName()}/elaina-theme-data/src/config/datastoreDefault.js`)).default
 	//@ts-ignore
-	: (await (() => import(`https://unpkg.com/elaina-theme-data@latest/src/config/datastoreDefault.js`))()).default
-
+	: (await importData(`https://cdn.jsdelivr.net/npm/elaina-theme-data@latest/src/config/datastoreDefault.js`)).default
 
 function setDefaultData(list: Object, restore: Boolean = false) {
 	Object.entries(list).forEach(([key, value]) => {

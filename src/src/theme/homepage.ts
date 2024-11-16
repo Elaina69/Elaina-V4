@@ -6,9 +6,10 @@
  * @Nyan Meow~~~
  */
 
+import { cdnImport } from "../otherThings.ts"
 import LocalKey from "../updates/updateKeyLocal.ts";
 import utils from '../utils/utils.ts';
-import { handleElementMutation } from '../utils/observer.ts';
+import { handleElementMutation } from '../utils/observer.ts'
 
 const CONSOLE_STYLE = {
     prefix: '%c Elaina ',
@@ -62,22 +63,22 @@ window.setTimeout(async () => {
 let CdnKey: number;
 
 if (window.DataStore.get("Dev-mode")) {
-    CdnKey = (await import(`//plugins/${window.getThemeName()}/elaina-theme-data/src/update/update.js`)).default.key;
+    CdnKey = (await cdnImport(`//plugins/${window.getThemeName()}/elaina-theme-data/src/update/update.js`, "Can't load cdn key")).default.key;
     log('%cRunning Elaina theme - %cDev version', 'color: #e4c2b3', 'color: red');
 } 
 else {
     //@ts-ignore
-    CdnKey = (await import(`https://unpkg.com/elaina-theme-data@latest/src/update/update.js`)).default.key;
+    CdnKey = (await cdnImport(`https://cdn.jsdelivr.net/npm/elaina-theme-data@latest/src/update/update.js`, "Can't load cdn key")).default.key;
     log('%cRunning Elaina theme - %cStable version', 'color: #e4c2b3', 'color: #00ff44');
 }
 
 if (CdnKey === LocalKey) {
     //@ts-ignore
-    const themeVersion = (await import("https://unpkg.com/elaina-theme-data@latest/src/update/update.js")).default.version;
+    const themeVersion = (await cdnImport("https://cdn.jsdelivr.net/npm/elaina-theme-data@latest/src/update/update.js")).default.version;
     window.DataStore.set("Theme-version", themeVersion);
 
     if (!window.DataStore.get("Change-CDN-version")) {
-        const response = await fetch('https://unpkg.com/elaina-theme-data@latest/package.json');
+        const response = await fetch('https://cdn.jsdelivr.net/npm/elaina-theme-data@latest/package.json');
         const { version: cdnVersion } = await response.json();
         window.DataStore.set("Cdn-version", cdnVersion);
     }
@@ -305,10 +306,13 @@ const prevSong = () => {
 
 const changeSongName = ()=> {
     let currentSong = window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]
-    let songNameText: any = document.querySelector(".audio-name-bar > p")
-    window.DataStore.get('pause-audio') % 2 === 0 
-        ? songNameText.innerHTML = `Paused: <br/>${currentSong}`
-        : songNameText.innerHTML = `Now playing: <br/>${currentSong}`
+    let songNameText: Element | null = document.querySelector(".audio-name-bar > p")
+    if (songNameText) {
+        if (window.DataStore.get('pause-audio') % 2 === 0) {
+            songNameText.innerHTML = `Paused: <br/>${currentSong}`
+        }
+        else songNameText.innerHTML = `Now playing: <br/>${currentSong}`
+    }
 }
 
 // Create controllers
@@ -726,8 +730,9 @@ window.addEventListener("load", async () => {
             loadWallpaperAndMusic();
             createWebmButtons();
             utils.mutationObserverAddCallback(addHomepage, ["screen-root"]);
-            utils.subscribe_endpoint('/lol-gameflow/v1/gameflow-phase', (message) => {
+            utils.subscribe_endpoint('/lol-gameflow/v1/gameflow-phase', (message: any) => {
                 const phase = JSON.parse(message["data"])[2]["data"];
+                log(phase)
                 if (phase === "GameStart" || phase === "InProgress") {
                     if (window.DataStore.get("turnoff-audio-ingame")) {
                         let elainaBg: any = document.getElementById("elaina-bg")

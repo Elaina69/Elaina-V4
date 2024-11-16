@@ -105,6 +105,7 @@ declare interface Window {
     restartClient: () => void;
     getScriptPath: () => string | undefined;
     getThemeName: () => void;
+    cdnImport:(url: string, errorMsg: any) => Promise<any>;
     autoAcceptQueueButton: () => void;
     del_webm_buttons: () => void;
     create_webm_buttons: () => void;
@@ -112,7 +113,10 @@ declare interface Window {
     exitClient: () => void;
     dodgeQueue: () => void;
     switch_between_status: () => void;
-
+    log: (message: string, ...args: string[]) => void;
+    warn: (message: string, ...args: string[]) => void;
+    error: (message: string, ...args: string[]) => void;
+    
     storeObserver: any;
     __llver: string;
 }
