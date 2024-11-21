@@ -68,17 +68,17 @@ if (window.DataStore.get("Dev-mode")) {
 } 
 else {
     //@ts-ignore
-    CdnKey = (await cdnImport(`https://cdn.jsdelivr.net/npm/elaina-theme-data@latest/src/update/update.js`, "Can't load cdn key")).default.key;
+    CdnKey = (await cdnImport(`https://cdn.jsdelivr.net/npm/elaina-theme-data/src/update/update.js`, "Can't load cdn key")).default.key;
     log('%cRunning Elaina theme - %cStable version', 'color: #e4c2b3', 'color: #00ff44');
 }
 
 if (CdnKey === LocalKey) {
     //@ts-ignore
-    const themeVersion = (await cdnImport("https://cdn.jsdelivr.net/npm/elaina-theme-data@latest/src/update/update.js")).default.version;
+    const themeVersion = (await cdnImport("https://cdn.jsdelivr.net/npm/elaina-theme-data/src/update/update.js")).default.version;
     window.DataStore.set("Theme-version", themeVersion);
 
     if (!window.DataStore.get("Change-CDN-version")) {
-        const response = await fetch('https://cdn.jsdelivr.net/npm/elaina-theme-data@latest/package.json');
+        const response = await fetch('https://cdn.jsdelivr.net/npm/elaina-theme-data/package.json');
         const { version: cdnVersion } = await response.json();
         window.DataStore.set("Cdn-version", cdnVersion);
     }

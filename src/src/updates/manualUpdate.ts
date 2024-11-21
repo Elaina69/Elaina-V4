@@ -15,7 +15,7 @@ log(`%cChecking theme version...`, "color: #e4c2b3")
 
 const fileLocation = window.DataStore.get("Dev-mode")
   	? `//plugins/${getThemeName()}/elaina-theme-data/src/update/update.js`
-  	: `https://cdn.jsdelivr.net/npm/elaina-theme-data@latest/src/update/update.js`;
+  	: `https://cdn.jsdelivr.net/npm/elaina-theme-data/src/update/update.js`;
 
 CdnKey = (await cdnImport(fileLocation, "Can't load cdn key")).default.key;
 

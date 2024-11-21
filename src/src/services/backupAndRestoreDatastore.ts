@@ -32,7 +32,7 @@ async function importData(url: string): Promise<any> {
 let datastore_list: Object = window.DataStore.get("Dev-mode")
 	? (await importData(`//plugins/${getThemeName()}/elaina-theme-data/src/config/datastoreDefault.js`))
 	//@ts-ignore
-	: (await importData(`https://cdn.jsdelivr.net/npm/elaina-theme-data@latest/src/config/datastoreDefault.js`))
+	: (await importData(`https://cdn.jsdelivr.net/npm/elaina-theme-data/src/config/datastoreDefault.js`))
 
 function setDefaultData(list: Object, restore: Boolean = false) {
 	Object.entries(list).forEach(([key, value]) => {

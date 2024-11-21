@@ -78,16 +78,8 @@ if (window.DataStore.get("Dev-mode")) {
     await cdnImport(`//plugins/${getThemeName()}/elaina-theme-data/index.js`, "Failed to load local data");
 } 
 else {
-    let cdnVersion = window.DataStore.get("Elaina-First run")
-        ? window.DataStore.get("Cdn-version")
-        : "latest";
-
-    initLink = `https://cdn.jsdelivr.net/npm/elaina-theme-data@${cdnVersion}/cdninit.js`;
-    await cdnImport(`https://cdn.jsdelivr.net/npm/elaina-theme-data@${cdnVersion}/index.js`, "Failed to load CDN data");
-
-    if (!window.DataStore.get("Elaina-First run")) {
-        window.DataStore.set("Elaina-First run", true);
-    }
+    initLink = `https://cdn.jsdelivr.net/npm/elaina-theme-data/cdninit.js`;
+    await cdnImport(`https://cdn.jsdelivr.net/npm/elaina-theme-data/index.js`, "Failed to load CDN data");
 }
 
 const { Cdninit } = await cdnImport(initLink, "Failed to load Init data")
