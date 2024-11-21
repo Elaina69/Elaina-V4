@@ -52,142 +52,6 @@ const setDefaultData = (list: Object) => {
 
 setDefaultData(defaultData);
 
-// Convert the counter-based state to boolean
-interface MediaState {
-    isPlaying: boolean;
-    isMuted: boolean;
-}
-
-// Separate states for video and audio
-const videoState: MediaState = {
-    isPlaying: true,
-    isMuted: window.DataStore.get("mute-audio")
-};
-
-const audioState: MediaState = {
-    isPlaying: true,
-    isMuted: window.DataStore.get("mute-audio")
-};
-
-// video play/pause functions
-const playVideo = () => {
-    const video = document.getElementById("elaina-bg") as HTMLVideoElement;
-    if (!video) return;
-    
-    try {
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-            playPromise
-                .then(() => {
-                    videoState.isPlaying = true;
-                    updateVideoIcon(true);
-                })
-                .catch(error => {
-                    log("Video play prevented:", error);
-                    videoState.isPlaying = false;
-                    updateVideoIcon(false);
-                });
-        }
-    } catch (e) {
-        error("Video playback error:", e as string);
-        videoState.isPlaying = false;
-        updateVideoIcon(false);
-    }
-};
-
-const pauseVideo = () => {
-    const video = document.getElementById("elaina-bg") as HTMLVideoElement;
-    if (!video) return;
-    
-    video.pause();
-    videoState.isPlaying = false;
-    updateVideoIcon(false);
-};
-
-// audio play/pause functions
-const playAudio = () => {
-    const audio = document.getElementById("bg-audio") as HTMLAudioElement;
-    if (!audio) return;
-    
-    try {
-        const playPromise = audio.play();
-        if (playPromise !== undefined) {
-            playPromise
-                .then(() => {
-                    audioState.isPlaying = true;
-                    updateAudioIcon(true);
-                    updateSongName(true);
-                })
-                .catch(error => {
-                    log("Audio play prevented:", error);
-                    audioState.isPlaying = false;
-                    updateAudioIcon(false);
-                    updateSongName(false);
-                });
-        }
-    } catch (e) {
-        error("Audio playback error:", e as string);
-        audioState.isPlaying = false;
-        updateAudioIcon(false);
-        updateSongName(false);
-    }
-};
-
-const updateMuteIcon = (isMuted: boolean) => {
-    const muteIcon = document.querySelector(".mute-audio-icon") as HTMLImageElement;
-    if (!muteIcon) return;
-    
-    muteIcon.setAttribute("src", `${iconFolder}plugins-icons/${isMuted ? 'mute' : 'audio'}.png`);
-};
-
-const pauseAudio = () => {
-    const audio = document.getElementById("bg-audio") as HTMLAudioElement;
-    if (!audio) return;
-    
-    audio.pause();
-    audioState.isPlaying = false;
-    updateAudioIcon(false);
-    updateSongName(false);
-};
-
-// Toggle functions if still needed
-const toggleVideo = () => {
-    videoState.isPlaying ? pauseVideo() : playVideo();
-};
-
-const toggleAudio = () => {
-    audioState.isPlaying ? pauseAudio() : playAudio();
-};
-
-// Update UI functions
-const updateVideoIcon = (isPlaying: boolean) => {
-    const icon = document.querySelector(".pause-bg-icon") as HTMLImageElement;
-    if (!icon) return;
-    
-    icon.setAttribute(
-        "src", 
-        `${iconFolder}plugins-icons/${isPlaying ? 'pause_button' : 'play_button'}.png`
-    );
-};
-
-const updateAudioIcon = (isPlaying: boolean) => {
-    const icon = document.querySelector(".pause-audio-icon") as HTMLImageElement;
-    if (!icon) return;
-    
-    icon.setAttribute(
-        "src", 
-        `${iconFolder}plugins-icons/${isPlaying ? 'pause_button' : 'play_button'}.png`
-    );
-};
-
-const updateSongName = (isPlaying: boolean) => {
-    const songNameText = document.querySelector(".audio-name-bar > p");
-    if (!songNameText) return;
-    
-    const currentSong = window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')];
-    songNameText.innerHTML = `${isPlaying ? 'Now playing' : 'Paused'}: <br/>${currentSong}`;
-};
-
 // Get Summoner ID
 window.setTimeout(async () => {
     const summonerID: number = await utils.getSummonerID();
@@ -407,11 +271,8 @@ const toggleAudioLoop = () => {
     }
 };
 
-
-
-const loadSong = (song: string) => {
-    const audio = document.getElementById("bg-audio") as HTMLAudioElement;
-    if (!audio) return;
+const loadSong = (song) => {
+    const audio: any = document.getElementById("bg-audio");
     audio.src = `${bgFolder}audio/${song}`;
 };
 
@@ -706,7 +567,7 @@ const createWebmButtons = () => {
         if (event.target.closest('#prev-bg')) {
             prevWallpaper();
         }
-    }) as EventListener;
+    });
 };
 
 // Delete controllers
@@ -716,254 +577,83 @@ const deleteButtons = () => {
     document.querySelector(".wallpaper-controls")?.remove();
 };
 
-const setupEventListeners = () => {
-    const container = document.querySelector(".webm-bottom-buttons-container");
-    if (container) {
-        container.addEventListener('click', ((event: Event) => {
-            const mouseEvent = event as MouseEvent;
-            const target = mouseEvent.target as HTMLElement;
-
-            
-            // Audio Play/Pause
-            if (target.closest('#pause-audio')) {
-                toggleAudio();
-            }
-
-            // Next Audio Track
-            if (target.closest('#next-audio')) {
-                if (window.DataStore.get("Continues_Audio")) {
-                    window.DataStore.set('audio-index', window.DataStore.get('audio-index') + 1);
-                    if (window.DataStore.get('audio-index') > window.DataStore.get("Audio-list").length - 1) {
-                        window.DataStore.set('audio-index', 0);
-                    }
-                    loadSong(window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]);
-                    if (audioState.isPlaying) {
-                        playAudio();
-                    }
-                    updateSongName(audioState.isPlaying);
-                    log(`Now playing %c${window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]}`, 'color: #0070ff');
-                }
-            }
-
-            // Previous Audio Track
-            if (target.closest('#prev-audio')) {
-                if (window.DataStore.get("Continues_Audio")) {
-                    window.DataStore.set('audio-index', window.DataStore.get('audio-index') - 1);
-                    if (window.DataStore.get('audio-index') < 0) {
-                        window.DataStore.set('audio-index', window.DataStore.get("Audio-list").length - 1);
-                    }
-                    loadSong(window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]);
-                    if (audioState.isPlaying) {
-                        playAudio();
-                    }
-                    updateSongName(audioState.isPlaying);
-                    log(`Now playing %c${window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]}`, 'color: #0070ff');
-                }
-            }
-
-            // Audio Loop Toggle
-            if (target.closest('#audio-loop')) {
-                const newLoopState = !window.DataStore.get("audio-loop");
-                window.DataStore.set("audio-loop", newLoopState);
-                
-                const audio = document.getElementById("bg-audio") as HTMLAudioElement;
-                if (audio) {
-                    if (newLoopState) {
-                        audio.removeEventListener("ended", nextSong);
-                        audio.addEventListener("ended", () => {
-                            audio.currentTime = 0;
-                            playAudio();
-                        });
-                    } else {
-                        audio.addEventListener("ended", nextSong);
-                    }
-                }
-                
-                // Update loop icon
-                const loopIcon = document.querySelector(".audio-loop-icon") as HTMLImageElement;
-                if (loopIcon) {
-                    loopIcon.setAttribute("src", 
-                        `${iconFolder}plugins-icons/${newLoopState ? 'rotating-arrow' : 'unrotating-arrow'}.png`
-                    );
-                }
-            }
-        }) as EventListener);
-
-        // Volume slider events
-        const volumeSlider = container.querySelector(".volume-slider") as HTMLInputElement;
-        if (volumeSlider) {
-            volumeSlider.addEventListener('input', () => {
-                const volumeValue = parseFloat(volumeSlider.value) / 100;
-                window.DataStore.set("audio-volume", volumeValue);
-                
-                const audio = document.getElementById("bg-audio") as HTMLAudioElement;
-                if (audio) {
-                    audio.volume = volumeValue;
-                }
-
-                if (volumeValue === 0) {
-                    window.DataStore.set("mute-audio", true);
-                    audioState.isMuted = true;
-                    updateMuteIcon(true);
-                } else {
-                    window.DataStore.set("mute-audio", false);
-                    audioState.isMuted = false;
-                    updateMuteIcon(false);
-                }
-            });
-        }
-    }
-
-    // Wallpaper Controls Events
-    const wallpaperControls = document.querySelector(".wallpaper-controls");
-    if (wallpaperControls) {
-        wallpaperControls.addEventListener('click', ((event: Event) => {
-            const mouseEvent = event as MouseEvent;
-            const target = mouseEvent.target as HTMLElement;
-            
-            // Video Play/Pause
-            if (target.closest('#pause-bg')) {
-                toggleVideo();
-            }
-
-            // Next Wallpaper
-            if (target.closest('#next-bg')) {
-                window.DataStore.set("NextBg_Count", window.DataStore.get("NextBg_Count") + 1);
-                
-                const video = document.getElementById("elaina-bg") as HTMLVideoElement;
-                const staticBg = document.getElementById("elaina-static-bg") as HTMLImageElement;
-                
-                if (video && staticBg) {
-                    video.classList.add("webm-hidden");
-                    staticBg.classList.add("webm-hidden");
-
-                    window.DataStore.set('wallpaper-index', window.DataStore.get('wallpaper-index') + 1);
-                    if (window.DataStore.get('wallpaper-index') > window.DataStore.get("Wallpaper-list").length - 1) {
-                        window.DataStore.set('wallpaper-index', 0);
-                    }
-
-                    log(`Now playing %c${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`, 'color: #0070ff');
-
-                    setTimeout(() => {
-                        loadBG(window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]);
-                        if (videoState.isPlaying) {
-                            playVideo();
-                        }
-                        video.classList.remove("webm-hidden");
-                        staticBg.classList.remove("webm-hidden");
-                    }, 500);
-                }
-
-                // Easter egg check
-                if (window.DataStore.get("NextBg_Count") >= 69 && window.DataStore.get("NSFW-Content")) {
-                    window.open("https://elainatheme.xyz/elaina_nsfw/easteregg1", "_blank");
-                    window.DataStore.set("NextBg_Count", 0);
-                }
-            }
-
-            // Previous Wallpaper
-            if (target.closest('#prev-bg')) {
-                const video = document.getElementById("elaina-bg") as HTMLVideoElement;
-                const staticBg = document.getElementById("elaina-static-bg") as HTMLImageElement;
-                
-                if (video && staticBg) {
-                    video.classList.add("webm-hidden");
-                    staticBg.classList.add("webm-hidden");
-
-                    window.DataStore.set('wallpaper-index', window.DataStore.get('wallpaper-index') - 1);
-                    if (window.DataStore.get('wallpaper-index') < 0) {
-                        window.DataStore.set('wallpaper-index', window.DataStore.get("Wallpaper-list").length - 1);
-                    }
-
-                    log(`Now playing %c${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`, 'color: #0070ff');
-
-                    setTimeout(() => {
-                        loadBG(window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]);
-                        if (videoState.isPlaying) {
-                            playVideo();
-                        }
-                        video.classList.remove("webm-hidden");
-                        staticBg.classList.remove("webm-hidden");
-                    }, 500);
-                }
-            }
-        }) as EventListener);
-    }
-
-    // Document-level click handler for volume slider visibility
-    document.addEventListener('click', ((event: Event) => {
-        const mouseEvent = event as MouseEvent;
-        const target = mouseEvent.target as HTMLElement;
-        const muteAudio = document.querySelector('#mute-audio');
-        const volumeSliderContainer = document.querySelector('.volume-slider-container') as HTMLDivElement;
-        
-        if (volumeSliderContainer) {
-            if (target.closest('#mute-audio')) {
-                volumeSliderContainer.style.display = 
-                    volumeSliderContainer.style.display === 'flex' ? 'none' : 'flex';
-            } else if (!target.closest('.volume-slider-container')) {
-                volumeSliderContainer.style.display = 'none';
-            }
-        }
-    }) as EventListener);
-};
-
 // Add Wallpaper and Audio to client
-const loadWallpaperAndMusic = async () => {
-    // Create wallpaper video
+const addWallpaperAndMusic = () => {
+    // create wallpaper
     const video = document.createElement('video');
     video.id = 'elaina-bg';
-    // Initialize with muted state to improve autoplay chances
-    video.muted = window.DataStore.get("mute-audio");
-    video.volume = window.DataStore.get("wallpaper-volume");
-    video.currentTime = window.DataStore.get("Wallpaper-currentTime");
-    video.src = `${bgFolder}wallpapers/${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`;
-    video.playbackRate = window.DataStore.get("Playback-speed") / 100;
 
-    // Set up video error handling
-    video.addEventListener("error", () => {
-        video.load();
-        video.addEventListener("ended", () => video.load());
-        window.DataStore.set("video-2nd-loop", true);
-    });
-
-    // Handle video looping behavior
-    if (window.DataStore.get("video-2nd-loop")) {
-        video.addEventListener("ended", () => video.load());
-    } else {
-        video.loop = true;
-    }
-
-    // Create static background image
+    // create image wallpaper
     const imgWallpaper = document.createElement('img');
     imgWallpaper.id = 'elaina-static-bg';
-    imgWallpaper.src = `${bgFolder}wallpapers/${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`;
-
-    // Create audio element
+    
+    // create audio
     const audio = document.createElement("audio");
     audio.id = 'bg-audio';
-    audio.src = `${bgFolder}audio/${window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]}`;
-    audio.volume = window.DataStore.get("audio-volume");
-    audio.muted = window.DataStore.get("mute-audio");
-    audio.currentTime = window.DataStore.get("Audio-currentTime");
 
-    // Set up audio loop behavior
-    if (window.DataStore.get('audio-loop')) {
-        audio.addEventListener("ended", () => audio.load());
-    } else {
-        audio.addEventListener("ended", nextSong);
-    }
-
-    // Handle audio errors
-    audio.addEventListener("error", () => audio.load());
-
-    // Add elements to DOM
     document.body.prepend(imgWallpaper, video, audio);
-
-    // Initial play attempts
-    if (videoState.isPlaying) playVideo();
-    if (audioState.isPlaying) playAudio();
 };
+
+function loadWallpaperAndMusic() {
+    const initializeUI = () => {
+        if (document.querySelector(".rcp-fe-lol-home")) {
+            log("Load wallpaper and audio")
+            const video: any = document.getElementById("elaina-bg")
+            video.autoplay = true;
+            video.volume = window.DataStore.get("wallpaper-volume");
+            video.muted = window.DataStore.get("mute-audio");
+            video.currentTime = window.DataStore.get("Wallpaper-currentTime");
+            video.src = `${bgFolder}wallpapers/${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`;
+            video.playbackRate = window.DataStore.get("Playback-speed") / 100;
+
+            video.addEventListener("error", () => {
+                video.load();
+                video.addEventListener("ended", () => video.load());
+                window.DataStore.set("video-2nd-loop", true);
+            });
+
+            if (window.DataStore.get("video-2nd-loop")) {
+                video.addEventListener("ended", () => video.load());
+            } 
+            else video.loop = true;
+
+            const imgWallpaper: any = document.getElementById("elaina-static-bg")
+            imgWallpaper.src = `${bgFolder}wallpapers/${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`;
+
+            const audio: any = document.getElementById("bg-audio")
+            audio.autoplay = true;
+            audio.src = `${bgFolder}audio/${window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]}`;
+            audio.volume = window.DataStore.get("audio-volume");
+            audio.muted = window.DataStore.get("mute-audio");
+            audio.currentTime = window.DataStore.get("Audio-currentTime");
+
+            if (window.DataStore.get('audio-loop')) {
+                audio.addEventListener("ended", () => audio.load());
+            } 
+            else audio.addEventListener("ended", nextSong);
+            
+            audio.addEventListener("error", () => audio.load());
+
+            utils.subscribe_endpoint('/lol-gameflow/v1/gameflow-phase', (message: any) => {
+                const phase = JSON.parse(message["data"])[2]["data"];
+                log(phase)
+                if (phase === "GameStart" || phase === "InProgress") {
+                    if (window.DataStore.get("turnoff-audio-ingame")) {
+                        video.pause();
+                        audio.pause();
+                    }
+                } else {
+                    elainaPlayPause();
+                    audioPlayPause();
+                }
+            });
+            deleteNavbarTab();
+            clearInterval(initializationInterval);
+        }
+    };
+
+    const initializationInterval = setInterval(initializeUI, 2000);
+}
 
 let previous_page = '';
 let runtime = 0;
@@ -976,8 +666,11 @@ const addHomepage = async (node: any) => {
     const pagename = node.getAttribute("data-screen-name");
     const isOtherPage = !["rcp-fe-lol-navigation-screen", "window-controls", "rcp-fe-lol-home", "social"].includes(pagename);
 
+    if (pagename === "rcp-fe-lol-navigation-screen") loadWallpaperAndMusic()
+
     if (pagename === "rcp-fe-lol-home-main") {
         if (!document.querySelector(".webm-bottom-buttons-container") && !document.querySelector(".webm-bottom-buttons-container-hovered")) {
+            deleteButtons();
             createWebmButtons();
             document.querySelector(".webm-bottom-buttons-container")?.setAttribute("class", "webm-bottom-buttons-container-hovered")
             window.setTimeout(()=> {document.querySelector(".webm-bottom-buttons-container-hovered")?.setAttribute("class", "webm-bottom-buttons-container")},2000)
@@ -1046,7 +739,8 @@ const addHomepage = async (node: any) => {
         observer.observe(document.body, config);
 
         window.storeObserver = observer;
-    } else if (previous_page === "rcp-fe-lol-store") {
+    } 
+    else if (previous_page === "rcp-fe-lol-store") {
         if (window.storeObserver) {
             window.storeObserver.disconnect();
             window.storeObserver = null;
@@ -1061,33 +755,10 @@ const addHomepage = async (node: any) => {
 
 
 window.addEventListener("load", async () => {
-    const initializeUI = () => {
-        if (document.querySelector(".rcp-fe-lol-home")) {
-            loadWallpaperAndMusic();
-            createWebmButtons();
-            setupEventListeners();
-            utils.mutationObserverAddCallback(addHomepage, ["screen-root"]);
-            utils.subscribe_endpoint('/lol-gameflow/v1/gameflow-phase', (message: any) => {
-                const phase = JSON.parse(message["data"])[2]["data"];
-                log(phase)
-                if (phase === "GameStart" || phase === "InProgress") {
-                    if (window.DataStore.get("turnoff-audio-ingame")) {
-                        let elainaBg: any = document.getElementById("elaina-bg")
-                        elainaBg.pause();
-                        let Audio: any = document.getElementById("bg-audio")
-                        Audio.pause();
-                    }
-                } else {
-                    elainaPlayPause();
-                    audioPlayPause();
-                }
-            });
-            deleteNavbarTab();
-            clearInterval(initializationInterval);
-        }
-    };
+    log("Add wallpaper and audio")
+    addWallpaperAndMusic()
 
-    const initializationInterval = setInterval(initializeUI, 1000);
+    utils.mutationObserverAddCallback(addHomepage, ["screen-root"]);
 });
 
 

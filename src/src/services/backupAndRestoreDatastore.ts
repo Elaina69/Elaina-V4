@@ -17,12 +17,10 @@ async function importData(url: string): Promise<any> {
     try {
         const res = await fetch(url, { signal: controller.signal });
         if (res.status === 200) {
-            const serverModule = await import(url);
-            return serverModule
+			let Data = await import(url)
+            return Data.default
         } 
-		else {
-            throw new Error();
-        }
+		else throw new Error();
     } catch {
 		let errorMsg = "Can't load default datastore from local"
         clearTimeout(timeoutId);
@@ -32,9 +30,9 @@ async function importData(url: string): Promise<any> {
 };
 
 let datastore_list: Object = window.DataStore.get("Dev-mode")
-	? (await importData(`//plugins/${getThemeName()}/elaina-theme-data/src/config/datastoreDefault.js`)).default
+	? (await importData(`//plugins/${getThemeName()}/elaina-theme-data/src/config/datastoreDefault.js`))
 	//@ts-ignore
-	: (await importData(`https://cdn.jsdelivr.net/npm/elaina-theme-data@latest/src/config/datastoreDefault.js`)).default
+	: (await importData(`https://cdn.jsdelivr.net/npm/elaina-theme-data@latest/src/config/datastoreDefault.js`))
 
 function setDefaultData(list: Object, restore: Boolean = false) {
 	Object.entries(list).forEach(([key, value]) => {
@@ -50,7 +48,7 @@ function setDefaultData(list: Object, restore: Boolean = false) {
 }
 
 if (window.DataStore.get("Elaina-Plugins")) {
-	setDefaultData(datastore_list, false)
+	setDefaultData(datastore_list)
 }
 else if (!window.DataStore.get("Elaina-Plugins") || !window.DataStore.has("Elaina-Plugins")) {
 	//console.log(eConsole+`%c Finding backup file from cloud...`,eCss,"")
