@@ -1,26 +1,30 @@
-if (window.DataStore.get("Enable-Invite-Fr")) {
-    let routines: any[] = []
+import * as upl from "pengu-upl"
 
-    if (!window.DataStore.has("frGroupName")) {
-        window.DataStore.set("frGroupName", 0)
+const CONSOLE_STYLE = {
+    prefix: '%c Elaina ',
+    css: 'color: #ffffff; background-color: #f77fbe'
+};
+
+const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+
+export class InviteAllFriends {
+    setDefaultFriendsListData = () => {
+        if (!window.DataStore.has("frGroupName")) {
+            window.DataStore.set("frGroupName", 0)
+        }
+        if (!window.DataStore.has("grouplist")) {
+            window.DataStore.set("grouplist", [])
+        }
+        if (!window.DataStore.has("friendslist")) {
+            window.DataStore.set("friendslist", [])
+        }
     }
-    if (!window.DataStore.has("grouplist")) {
-        window.DataStore.set("grouplist", [])
-    }
-    if (!window.DataStore.has("friendslist")) {
-        window.DataStore.set("friendslist", [])
-    }
 
-
-
-    function routineAddCallback(callback: any, target: any[]): void {
-        routines.push({ "callback": callback, "targets": target })
-    }
-
-    window.setInterval(async ()=> {
+    refreshFriendsList = async () => {
         try {
             let CurrentGroup = document.querySelector("div.lol-social-lower-pane-container .roster-block")?.querySelectorAll("lol-social-roster-group").length
             let CurrentFriend = document.querySelector("div.lol-social-lower-pane-container .roster-block")?.querySelectorAll("lol-social-roster-member").length
+
             if (window.DataStore.get("grouplist").length != CurrentGroup || window.DataStore.get("friendslist").length != CurrentFriend) {
                 let friends: any[] = []
                 let groups: any[] = []
@@ -34,14 +38,18 @@ if (window.DataStore.get("Enable-Invite-Fr")) {
                 }
                 window.DataStore.set("friendslist", friends)
                 window.DataStore.set("grouplist", groups)
-            
+                
+                // delete invite all button if exist and create new one
                 document.getElementById("inviteAllDiv")?.remove()
-                addInviteAllButton()
-            }
-        }catch{}
-    },1000)
+                this.addInviteAllButton()
 
-    let addInviteAllButton = async (): Promise<void> => {
+                log("Friends list refreshed.")
+            }
+        }
+        catch{}
+    }
+
+    addInviteAllButton = async (): Promise<void> => {
         if (document.querySelector(".lobby-header-buttons-container") != null) {
             let groupList: { name: string[]; id: string[] } = {"name":[],"id":[]}
 
@@ -113,12 +121,20 @@ if (window.DataStore.get("Enable-Invite-Fr")) {
         }
     }
 
-    window.addEventListener('load', () => {
-        window.setInterval(() => {
-            routines.forEach((routine: any) => {
-                routine.callback()
-            })
-        }, 1000)
-        routineAddCallback(addInviteAllButton, ["v2-header-component.ember-view"])
-    })
+    main = () => {
+        this.setDefaultFriendsListData()
+        let refreshList: any
+
+        upl.observer.subscribeToElementCreation(".v2-header-component.ember-view", (element: any) => {
+            this.addInviteAllButton()
+
+            refreshList = window.setInterval(()=> {
+                this.refreshFriendsList()
+            }, 1000)
+        })
+
+        upl.observer.subscribeToElementDeletion(".v2-header-component.ember-view", (element: any) => {
+            clearInterval(refreshList)
+        })
+    }
 }

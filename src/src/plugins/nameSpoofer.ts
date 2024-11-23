@@ -1,6 +1,3 @@
-const spoof = window.DataStore.get("Name-Spoofer");
-const Name = window.DataStore.get("Spoof-name");
-
 const SELECTORS = `
     .banner-summoner-name,
     .chat-gnt,
@@ -37,50 +34,49 @@ const SELECTORS = `
     .create-panel-game-name
 `;
 
-function updateNames(root = document) {
-    if (!spoof) return;
+export class NameSpoofer {
+    updateNames(root = document) {
+        const Name = window.DataStore.get("Spoof-name");
+        const spoof = window.DataStore.get("Name-Spoofer");
+        
+        if (!spoof) return;
+        
+        const elements = root.querySelectorAll(SELECTORS);
+        elements.forEach((element: any) => {
+            if (element.textContent !== Name) {
+                element.textContent = Name;
+            }
+        });
     
-    const elements = root.querySelectorAll(SELECTORS);
-    elements.forEach((element: any) => {
-        if (element.textContent !== Name) {
-            element.textContent = Name;
-        }
-    });
-
-    const systemMessages = root.querySelectorAll(".system-message");
-    systemMessages.forEach((sysMessage) => {
-        if (sysMessage.textContent !== "🐱‍👤") {
-            sysMessage.textContent = "🐱‍👤";
-        }
-    });
-}
-
-function observeChanges(target) {
-    new MutationObserver(() => updateNames(target)).observe(target, {
-        childList: true,
-        subtree: true,
-    });
-}
-
-function initNameSpoofer() {
-    if (!spoof) return;
-
-    const manager = document.getElementById("rcp-fe-viewport-root");
-    if (manager) {
-        observeChanges(manager);
+        const systemMessages = root.querySelectorAll(".system-message");
+        systemMessages.forEach((sysMessage) => {
+            if (sysMessage.textContent !== "🐱‍👤") {
+                sysMessage.textContent = "🐱‍👤";
+            }
+        });
+    }
+    
+    observeChanges(target: any) {
+        new MutationObserver(() => this.updateNames(target)).observe(target, {
+            childList: true,
+            subtree: true,
+        });
     }
 
-    const myMessageBox: any = document.getElementById("embedded-messages-frame");
-    if (myMessageBox && myMessageBox.contentDocument) {
-        observeChanges(myMessageBox.contentDocument);
+    main = () => {
+        const manager = document.getElementById("rcp-fe-viewport-root");
+        
+        if (manager) {
+            this.observeChanges(manager);
+        }
+    
+        const myMessageBox: any = document.getElementById("embedded-messages-frame");
+        if (myMessageBox && myMessageBox.contentDocument) {
+            this.observeChanges(myMessageBox.contentDocument);
+        }
+    
+        // Initial update
+        // Periodically check for new elements (consider removing if performance is an issue)
+        setInterval(this.updateNames, 100);
     }
-
-    // Initial update
-    updateNames();
 }
-
-// Run the initialization when the window loads
-window.addEventListener("load", initNameSpoofer);
-
-// Periodically check for new elements (consider removing if performance is an issue)
-setInterval(updateNames, 100);

@@ -14,6 +14,7 @@ let icdata = (await import(`//plugins/${window.getThemeName()}/config/icons.js`)
 let datapath = `//plugins/${window.getThemeName()}/`
 let iconFolder  = `${datapath}assets/icon/`
 
+
 function freezeProperties(object: Object, properties: any[]) {
 	for (const type in object) {
 		if ((properties && properties.length && properties.includes(type)) || (!properties || !properties.length)) {
@@ -47,171 +48,197 @@ export function transparentLobby(context: any) {
 
 upl.observer.subscribeToElementCreation(".parallax-layer-container",(element: any) => element.style.backgroundImage = '' )
 
-if (window.DataStore.get("aram-only")) {
-	function removeNode(obj: string): void {
+class AramOnlyMode {
+	removeNode(obj: string): void {
 		try { document.querySelector(obj)?.remove() }
 		catch{ log(`Can not remove ${obj}`)}
 	}
- 	let interval: number
 
- 	upl.observer.subscribeToElementCreation(".parties-game-type-select-wrapper",(element: any)=>{
- 		element.querySelector('div[data-game-mode=ARAM] div[class=parties-game-type-upper-half]').click()
-			
-		removeNode("div[data-game-mode='CLASSIC']")
-		removeNode("div[data-game-mode='TFT']")
-		removeNode("lol-uikit-navigation-item[data-category='VersusAi']")
-		removeNode("lol-uikit-navigation-item[data-category='Training']")
-		removeNode("div[data-game-mode='CHERRY']")
-	})
-	upl.observer.subscribeToElementCreation('div[data-map-id="12"] > div',(element: any)=>{
-		element.click()
-		removeNode('div[data-map-id="11"]')
-	})
-	upl.observer.subscribeToElementCreation(".custom-game-list-body",(element: any)=>{
-		interval = window.setInterval(()=> {
-			let list = element.querySelectorAll("lol-uikit-scrollable > tbody > tr")
-			for (let i=0;i< list.length;i++) {
-				if (list[i].querySelector("td.custom-game-list-table-body-map").innerText == "Summoner's Rift") {
-					list[i].remove()
+	removeOtherGamemode = () => {
+		upl.observer.subscribeToElementCreation(".parties-game-type-select-wrapper",(element: any)=>{
+			element.querySelector('div[data-game-mode=ARAM] div[class=parties-game-type-upper-half]').click()
+			   
+		   this.removeNode("div[data-game-mode='CLASSIC']")
+		   this.removeNode("div[data-game-mode='TFT']")
+		   this.removeNode("lol-uikit-navigation-item[data-category='VersusAi']")
+		   this.removeNode("lol-uikit-navigation-item[data-category='Training']")
+		   this.removeNode("div[data-game-mode='CHERRY']")
+	   })
+	   upl.observer.subscribeToElementCreation('div[data-map-id="12"] > div',(element: any)=>{
+		   element.click()
+		   this.removeNode('div[data-map-id="11"]')
+	   })
+	}
+
+	removeOtherCustomGamemode = () => {
+		let interval: number
+
+		upl.observer.subscribeToElementCreation(".custom-game-list-body",(element: any)=>{
+			interval = window.setInterval(()=> {
+				let list = element.querySelectorAll("lol-uikit-scrollable > tbody > tr")
+				for (let i=0;i< list.length;i++) {
+					if (list[i].querySelector("td.custom-game-list-table-body-map").innerText == "Summoner's Rift") {
+						list[i].remove()
+					}
 				}
-			}
-		},100)
-	})
-	upl.observer.subscribeToElementDeletion(".custom-game-list-body", () => {
-		window.clearInterval(interval)
-	})
+			},100)
+		})
+		upl.observer.subscribeToElementDeletion(".custom-game-list-body", () => {
+			window.clearInterval(interval)
+		})
+	}
 }
 
-if (window.DataStore.get("Custom-Rank-Name")) {
-	upl.observer.subscribeToElementCreation(".style-profile-ranked-component.ember-view .style-profile-emblem-header-title", (element: any) => 
-		element.innerHTML = window.DataStore.get("Rank-line1") 
-	)
-	upl.observer.subscribeToElementCreation(".style-profile-emblem-subheader-ranked > div", (element: any) => 
-		element.innerHTML = window.DataStore.get("Rank-line2") 
-	)
+class CustomProfileRankName {
+	changeRankLine1 = () => {
+		upl.observer.subscribeToElementCreation(".style-profile-ranked-component.ember-view .style-profile-emblem-header-title", (element: any) => 
+			element.innerHTML = window.DataStore.get("Rank-line1") 
+		)
+	}
+	changeRankLine2 = () => {
+		upl.observer.subscribeToElementCreation(".style-profile-emblem-subheader-ranked > div", (element: any) => 
+			element.innerHTML = window.DataStore.get("Rank-line2") 
+		)
+	}
 }
 
-if (window.DataStore.get("Runes-BG")) {
-	let style = (element: any) => {element.remove()}
-	upl.observer.subscribeToElementCreation('.aux', style)
-	upl.observer.subscribeToElementCreation('#splash', style)
-	upl.observer.subscribeToElementCreation('#construct', style)
-	upl.observer.subscribeToElementCreation('#keystone', style)
-	upl.observer.subscribeToElementCreation('.perks-construct-minspec', (element: any) => {
-		window.setInterval(()=>{
-			element.style.cssText = `
-				top: 0px; 
-				left: 0px; 
-				filter: ${filters["Runes"]}; 
-				background-image: var(--pri${element.getAttribute('primary')})
-			`
-		},100)
-	})
+class CustomRunesBackground {
+	removeOtherImage = () => {
+		let remove = (element: any) => {element.remove()}
+		upl.observer.subscribeToElementCreation('.aux', remove)
+		upl.observer.subscribeToElementCreation('#splash', remove)
+		upl.observer.subscribeToElementCreation('#construct', remove)
+		upl.observer.subscribeToElementCreation('#keystone', remove)
+	}
+
+	changeRunesBackground = () => {
+		upl.observer.subscribeToElementCreation('.perks-construct-minspec', (element: any) => {
+			window.setInterval(()=>{
+				element.style.cssText = `
+					top: 0px; 
+					left: 0px; 
+					filter: ${filters["Runes"]}; 
+					background-image: var(--pri${element.getAttribute('primary')})
+				`
+			},100)
+		})
+	}
 }
 
-if (window.DataStore.get("new-gamesearch-queue")) {
-	const DisplayNone: any = (element: HTMLElement) => {
+class NewGamesearchQueue {
+	DisplayNone: any = (element: HTMLElement) => {
 		element.style.display = 'none'
 	}
 
-	upl.observer.subscribeToElementCreation('.parties-game-info-panel-bg-container', (element: any) => 
-		element.hidden = true
-	)
-
-	// lol-parties-game-search
-	upl.observer.subscribeToElementCreation('.parties-game-search-status', (element: any) => 
-		element.style.cssText = `
-			border: 1px solid #8c8263; 
-			border-radius: 10px; 
-			margin-top: 1px
-		`
-	)
-	upl.observer.subscribeToElementCreation('.parties-game-search-header', (element: any) => 
-		element.style.cssText = `height: 28px;`
-	)
-	upl.observer.subscribeToElementCreation('.parties-game-search-divider', DisplayNone)
-
-	// lol-parties-status-card
-	upl.observer.subscribeToElementCreation('.parties-status-card-bg-container', DisplayNone)
-	upl.observer.subscribeToElementCreation('.parties-status-card', (element: any) => 
-		element.style.background = 'transparent'
-	)
-	upl.observer.subscribeToElementCreation('.parties-status-card-header', (element: any) => 
-		element.style.cssText = `
-			visibility: hidden;
-			height: 14px;
-		`
-	)
-	upl.observer.subscribeToElementCreation('.parties-status-card-body', (element: any) => 
-		element.style.cssText = `
-			margin-top: -23px; 
-			padding: 10px 5px 10px 10px; 
-			border: 1px solid #8c8263; 
-			border-radius: 10px
-		`
-	)
-	upl.observer.subscribeToElementCreation('.parties-status-card-map', (element: any) => 
-		element.style.margin = '-3px 10px 0 0'
-	)
-	
-	// lol-parties-game-invites
-	upl.observer.subscribeToElementCreation('.parties-game-invite-heading-text', (element: any) => {
-		element.hidden = true
-	})
-}
-
-if (window.DataStore.get("settings-dialogs-transparent")) {
-	let style = "var(--Settings-and-Dialog-frame-color)"
-	upl.observer.subscribeToElementCreation("lol-uikit-full-page-backdrop",(element: any)=>{
-		try{
-			let a = element.querySelector("lol-uikit-dialog-frame").shadowRoot.querySelector("div")
-			a.style.background = style
-			freezeProperties(a.style,["background"])
-		}catch{}
-		try{
-			let b = element.querySelector("lol-uikit-dialog-frame > div")
-			b.style.background = style
-			freezeProperties(b.style,["background"])
-		}catch{}
-		try{
-			let c = element.querySelector("lol-regalia-identity-customizer-element").shadowRoot.querySelector("lol-regalia-banner-v2-element")
-			c.remove()
-		}catch{}
-		try{
-			let obj: any = document.querySelector('.lol-settings-container')
-			let a = obj.shadowRoot.querySelector("div")
-			obj.style.background = style
-			a.style.background = style
-			freezeProperties(obj.style,["background"])
-			freezeProperties(a.style,["background"])
-		}catch{}
-		try{
-			let a: any = document.getElementsByClassName("dialog-frame")
-			for(let i = 0; i< a.length; i++) {
-				let b = a[i].shadowRoot.querySelector("div")
-				b.style.background = style
-			}
-		}catch{}
-	})
-}
-
-if (window.DataStore.get("Custom-Icon")) {
-	upl.observer.subscribeToElementCreation("lol-uikit-flyout-frame",(element: any)=>{
-		function tickerCss(defaults: Object) {
-			Object.entries(defaults).forEach(([key, value]) => {
-				element.shadowRoot.querySelector(key).style.cssText = value
-			});
-		}
-		tickerCss(
-			{
-				".border": "display: none;",
-				".sub-border": "display: none;",
-				".caret": "display: none;",
-				".lol-uikit-flyout-frame": "background-color: black; border-radius: 10px;"
-			}
+	restyleGamesearchCard = () => {
+		upl.observer.subscribeToElementCreation('.parties-game-info-panel-bg-container', (element: any) => 
+			element.hidden = true
 		)
-	})
-	if (window.DataStore.get("Custom-Avatar")) {
+	
+		// lol-parties-game-search
+		upl.observer.subscribeToElementCreation('.parties-game-search-status', (element: any) => 
+			element.style.cssText = `
+				border: 1px solid #8c8263; 
+				border-radius: 10px; 
+				margin-top: 1px
+			`
+		)
+		upl.observer.subscribeToElementCreation('.parties-game-search-header', (element: any) => 
+			element.style.cssText = `height: 28px;`
+		)
+		upl.observer.subscribeToElementCreation('.parties-game-search-divider', this.DisplayNone)
+	
+		// lol-parties-status-card
+		upl.observer.subscribeToElementCreation('.parties-status-card-bg-container', this.DisplayNone)
+		upl.observer.subscribeToElementCreation('.parties-status-card', (element: any) => 
+			element.style.background = 'transparent'
+		)
+		upl.observer.subscribeToElementCreation('.parties-status-card-header', (element: any) => 
+			element.style.cssText = `
+				visibility: hidden;
+				height: 14px;
+			`
+		)
+		upl.observer.subscribeToElementCreation('.parties-status-card-body', (element: any) => 
+			element.style.cssText = `
+				margin-top: -23px; 
+				padding: 10px 5px 10px 10px; 
+				border: 1px solid #8c8263; 
+				border-radius: 10px
+			`
+		)
+		upl.observer.subscribeToElementCreation('.parties-status-card-map', (element: any) => 
+			element.style.margin = '-3px 10px 0 0'
+		)
+		
+		// lol-parties-game-invites
+		upl.observer.subscribeToElementCreation('.parties-game-invite-heading-text', (element: any) => {
+			element.hidden = true
+		})
+	}
+}
+
+class TransparentSettingsDialogs {
+	applyStyle = () => {
+		let style = "var(--Settings-and-Dialog-frame-color)"
+		upl.observer.subscribeToElementCreation("lol-uikit-full-page-backdrop",(element: any)=>{
+			// Dialogs
+			try{
+				let a = element.querySelector("lol-uikit-dialog-frame").shadowRoot.querySelector("div")
+				a.style.background = style
+				freezeProperties(a.style,["background"])
+			}catch{}
+			try{
+				let b = element.querySelector("lol-uikit-dialog-frame > div")
+				b.style.background = style
+				freezeProperties(b.style,["background"])
+			}catch{}
+			try{
+				let a: any = document.getElementsByClassName("dialog-frame")
+				for(let i = 0; i< a.length; i++) {
+					let b = a[i].shadowRoot.querySelector("div")
+					b.style.background = style
+				}
+			}catch{}
+			try{
+				let c = element.querySelector("lol-regalia-identity-customizer-element").shadowRoot.querySelector("lol-regalia-banner-v2-element")
+				c.remove()
+			}catch{}
+
+			// Settings
+			try{
+				let obj: any = document.querySelector('.lol-settings-container')
+				let a = obj.shadowRoot.querySelector("div")
+				obj.style.background = style
+				a.style.background = style
+				freezeProperties(obj.style,["background"])
+				freezeProperties(a.style,["background"])
+			}catch{}
+			
+		})
+	}
+}
+
+class CustomIcon {
+	tickerIcon = () => {
+		upl.observer.subscribeToElementCreation("lol-uikit-flyout-frame",(element: any)=>{
+			function tickerCss(defaults: Object) {
+				Object.entries(defaults).forEach(([key, value]) => {
+					element.shadowRoot.querySelector(key).style.cssText = value
+				});
+			}
+			tickerCss(
+				{
+					".border": "display: none;",
+					".sub-border": "display: none;",
+					".caret": "display: none;",
+					".lol-uikit-flyout-frame": "background-color: black; border-radius: 10px;"
+				}
+			)
+		})
+	}
+
+	avatar = () => {
 		upl.observer.subscribeToElementCreation(".hover-card-info-container",(element: any)=>{
 			element.style.background = "#1a1c21"
 		})
@@ -238,7 +265,8 @@ if (window.DataStore.get("Custom-Icon")) {
 			freezeProperties(a.style, ['backgroundImage'])
 		})
 	}
-	if (window.DataStore.get("Custom-Border")) {
+
+	border = () => {
 		upl.observer.subscribeToElementCreation(`lol-regalia-hovercard-v2-element[summoner-id="${window.DataStore.get("Summoner-ID")}"]`,(element: any)=>{
 			let a = element.shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("lol-uikit-themed-level-ring-v2").shadowRoot.querySelector("div")
 			a.style.backgroundImage = "var(--Border)"
@@ -262,7 +290,8 @@ if (window.DataStore.get("Custom-Icon")) {
 			freezeProperties(a.style, ['backgroundImage'])
 		})
 	}
-	if (window.DataStore.get("Custom-Regalia-Banner")) {
+
+	regaliaBanner = () => {
 		let banner = `${iconFolder}Regalia-Banners/`
 		let bannerInterval: number
 
@@ -295,7 +324,8 @@ if (window.DataStore.get("Custom-Icon")) {
 			window.clearInterval(bannerInterval)
 		})
 	}
-	if (window.DataStore.get("Custom-Hover-card-backdrop")) {
+
+	hoverCardbackdrop = () => {
 		upl.observer.subscribeToElementCreation("#lol-uikit-tooltip-root",(element: any)=>{
 			try {
 				if (element.querySelector("lol-regalia-hovercard-v2-element").getAttribute("summoner-id") == window.DataStore.get("Summoner-ID")) {
@@ -303,28 +333,78 @@ if (window.DataStore.get("Custom-Icon")) {
 					hoverCard.style.backgroundImage = "var(--Hover-card-backdrop)"
 				}
 			}
-			catch { log("Can't change hover card backdrop.") }
+			catch { warn("Can't change hover card backdrop.") }
 		})
 	}
-	if (window.DataStore.get('Custom-Gamemode-Icon')) {
+
+	gameModeIcon_active(obj: any, name: any) {
+		try {
+			let a: any = document.querySelector(`${obj} lol-uikit-video-state[state='active'] lol-uikit-video`)
+			a.setAttribute("src", `${iconFolder}gamemodes/${name}`)
+			a.querySelector("video").setAttribute("src", `${iconFolder}gamemodes/${name}`)
+		}
+		catch { 
+			//warn("Can't find the target") 
+		}
+	}
+
+	gamemodeIcon = () => {
 		upl.observer.subscribeToElementCreation("lol-uikit-video-group",(element: any)=>{
-			function gameModeIcon_active(obj: any, name: any) {
-				try {
-					let a: any = document.querySelector(`${obj} lol-uikit-video-state[state='active'] lol-uikit-video`)
-					a.setAttribute("src", `${iconFolder}gamemodes/${name}`)
-					a.querySelector("video").setAttribute("src", `${iconFolder}gamemodes/${name}`)
-				}
-				catch { 
-					//warn("Can't find the target") 
-				}
-			}
-			gameModeIcon_active("div[data-game-mode='CLASSIC']",icdata["classic_video"])
-			gameModeIcon_active("div[data-game-mode='TFT']", icdata["tft_video"])
-			gameModeIcon_active("div[data-game-mode='ARAM']", icdata["aram_video"])
-			gameModeIcon_active("div[data-game-mode='CHERRY']",icdata["cherry_video"])
-			gameModeIcon_active('div[data-map-id="11"]',icdata["classic_video"])
-			gameModeIcon_active('div[data-map-id="12"]',icdata["aram_video"])
+			this.gameModeIcon_active("div[data-game-mode='CLASSIC']",icdata["classic_video"])
+			this.gameModeIcon_active("div[data-game-mode='TFT']", icdata["tft_video"])
+			this.gameModeIcon_active("div[data-game-mode='ARAM']", icdata["aram_video"])
+			this.gameModeIcon_active("div[data-game-mode='CHERRY']",icdata["cherry_video"])
+			this.gameModeIcon_active('div[data-map-id="11"]',icdata["classic_video"])
+			this.gameModeIcon_active('div[data-map-id="12"]',icdata["aram_video"])
 		})
 	}
 }
 //upl.observer.subscribeToElementCreation("",(element: any)=>{})
+
+export class ApplyUI {
+	main = () => {
+		if (window.DataStore.get("aram-only")) {
+			const aramOnlyMode = new AramOnlyMode()
+
+			aramOnlyMode.removeOtherGamemode()
+			aramOnlyMode.removeOtherCustomGamemode()
+		}
+		
+		if (window.DataStore.get("Custom-Rank-Name")) {
+			const customProfileRankName = new CustomProfileRankName()
+
+			customProfileRankName.changeRankLine1()
+			customProfileRankName.changeRankLine2()
+		}
+
+		if (window.DataStore.get("Runes-BG")) {
+			const customRunesBackground = new CustomRunesBackground()
+
+			customRunesBackground.removeOtherImage()
+			customRunesBackground.changeRunesBackground()
+		}
+
+		if (window.DataStore.get("new-gamesearch-queue")) {
+			const newGamesearchQueue = new NewGamesearchQueue()
+
+			newGamesearchQueue.restyleGamesearchCard()
+		}
+
+		if (window.DataStore.get("settings-dialogs-transparent")) {
+			const transparentSettingsDialogs = new TransparentSettingsDialogs()
+
+			transparentSettingsDialogs.applyStyle()
+		}
+
+		if (window.DataStore.get("Custom-Icon")) {
+			const customIcon = new CustomIcon()
+	
+			customIcon.tickerIcon()
+			if (window.DataStore.get("Custom-Avatar")) customIcon.avatar()
+			if (window.DataStore.get("Custom-Border")) customIcon.border()
+			if (window.DataStore.get("Custom-Regalia-Banner")) customIcon.regaliaBanner()
+			if (window.DataStore.get("Custom-Hover-card-backdrop")) customIcon.hoverCardbackdrop()
+			if (window.DataStore.get('Custom-Gamemode-Icon')) customIcon.gamemodeIcon()
+		}
+	}
+}

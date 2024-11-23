@@ -5,7 +5,6 @@
  * @link https://github.com/Elaina69
  * @Nyan Meow~~~
  */
-
 const CONSOLE_STYLE = {
     prefix: '%c Elaina ',
     css: 'color: #ffffff; background-color: #f77fbe'
@@ -18,21 +17,62 @@ const error = (message: string, ...args: string[]) => console.error(CONSOLE_STYL
 log('By %cElaina Da Catto', 'color: #e4c2b3');
 log('%cMeow ~~~', 'color: #e4c2b3');
 
-import "./src/services/backupAndRestoreDatastore.ts";
+// Get this theme folder's name and export it
+export function getThemeName(): string | null {
+    const error = new Error();
+    const stackTrace = error.stack;
+    const scriptPath = stackTrace?.match(/(?:http|https):\/\/[^\s]+\.js/g)?.[0];
+    const match = scriptPath?.match(/\/([^/]+)\/index\.js$/);
+    return match ? match[1] : null;
+}
 
-const FILE_REGEX: {Wallpaper: RegExp, Audio: RegExp, Font: RegExp, Banner: RegExp} = {
-    Wallpaper: /\.(png|jpg|jpeg|gif|bmp|webp|ico|mp4|webm|mkv|mov|avi|wmv|3gp|m4v)$/,
-    Audio: /\.(mp3|flac|ogg|wav|aac)$/,
-    Font: /\.(ttf|otf|woff|woff2)$/,
-    Banner: /\.(png|jpg|jpeg|gif|bmp|webp|ico)$/,
-};
+// Importing theme contents
+log('Importing theme contents');
 
-const ASSET_PATHS: {Wallpaper: string, Audio: string, Font: string, Banner: string} = {
-    Wallpaper: "./src/assets/backgrounds/wallpapers",
-    Audio: "./src/assets/backgrounds/audio",
-    Font: "./src/assets/fonts",
-    Banner: "./src/assets/icon/regalia-banners",
-};
+// Import server-side backup/restore data service
+import './src/services/backupAndRestoreDatastore';
+
+// Import modules
+import { Cdninit } from './src/theme/Cdninit.ts';
+import { CheckServerAvailability } from './src/services/checkServer.ts';
+import { CheckUpdate } from "./src/updates/checkUpdate.ts"
+import { createHomePageTab, HomePage } from "./src/theme/homepage.ts";
+import { transparentLobby, ApplyUI } from "./src/theme/applyUi.ts";
+import { Filters } from "./src/theme/filters.ts"
+import { LoadCss } from "./src/theme/loadCss.ts"
+import { ThemePresetSettings } from "./src/theme/themePresetSettingsTab.ts"
+
+// Import plugins
+import { CustomStatus } from "./src/plugins/customStatus.ts"
+import { AutoAccept } from "./src/plugins/autoAccept.ts"
+import { CustomBeRp } from "./src/plugins/customBeRp.ts"
+import { CustomProfile } from "./src/plugins/customProfile.ts"
+import { DodgeButton } from "./src/plugins/dodgeButton.ts"
+import { LootHelper } from "./src/plugins/lootHelper.ts"
+import { NameSpoofer } from "./src/plugins/nameSpoofer.ts"
+import { OfflineMode } from "./src/plugins/offlineMode.ts"
+import { Practice5vs5 } from "./src/plugins/practice5vs5.ts"
+import { InviteAllFriends } from "./src/plugins/inviteAllFriends.ts"
+
+// Import other plugins
+import { ForceJungLane } from "./src/plugins/forceJungleLane.ts"
+import "./src/plugins/hideFriendlist.js"
+import "./src/plugins/debug.ts"
+
+// Refresh theme's wallpaper list
+// const FILE_REGEX: {Wallpaper: RegExp, Audio: RegExp, Font: RegExp, Banner: RegExp} = {
+//     Wallpaper: /\.(png|jpg|jpeg|gif|bmp|webp|ico|mp4|webm|mkv|mov|avi|wmv|3gp|m4v)$/,
+//     Audio: /\.(mp3|flac|ogg|wav|aac)$/,
+//     Font: /\.(ttf|otf|woff|woff2)$/,
+//     Banner: /\.(png|jpg|jpeg|gif|bmp|webp|ico)$/,
+// };
+
+// const ASSET_PATHS: {Wallpaper: string, Audio: string, Font: string, Banner: string} = {
+//     Wallpaper: "./src/assets/backgrounds/wallpapers",
+//     Audio: "./src/assets/backgrounds/audio",
+//     Font: "./src/assets/fonts",
+//     Banner: "./src/assets/icon/regalia-banners",
+// };
 
 // const refreshBackgroundsList = async (): Promise<void> => {
 //     try {
@@ -67,98 +107,105 @@ const ASSET_PATHS: {Wallpaper: string, Audio: string, Font: string, Banner: stri
 //     }
 // }, 1000);
 
-// Importing theme contents
-log('Importing theme contents');
+class ElainaTheme {
+    init(context: any) {
+        log('Initializing theme');
+    
+        createHomePageTab(context);
+        transparentLobby(context);
+        Cdninit(context);
+    }
 
-// Import CDN modules
-let initLink: string
+    main() {
+        // Check theme server
+        const checkServerAvailability = new CheckServerAvailability()
+        checkServerAvailability.main()
 
-if (window.DataStore.get("Dev-mode")) {
-    initLink = `//plugins/${getThemeName()}/elaina-theme-data/cdninit.js`;
-    await cdnImport(`//plugins/${getThemeName()}/elaina-theme-data/index.js`, "Failed to load local data");
-} 
-else {
-    initLink = `https://cdn.jsdelivr.net/npm/elaina-theme-data/cdninit.js`;
-    await cdnImport(`https://cdn.jsdelivr.net/npm/elaina-theme-data/index.js`, "Failed to load CDN data");
+        // Check theme's version and available update
+        const checkUpdate = new CheckUpdate()
+        checkUpdate.main()
+
+        // Add homepage
+        const homePage = new HomePage()
+        homePage.main()
+
+        // Apply theme UI
+        const applyUI = new ApplyUI()
+        applyUI.main()
+
+        // Add filter for wallpaper
+        const filters = new Filters()
+        filters.main()
+
+        // Add theme's Css
+        const loadCss = new LoadCss()
+        loadCss.main()
+
+        // Add theme's pre-settings
+        const themePresetSettings = new ThemePresetSettings()
+        themePresetSettings.main()
+
+        // Load plugins
+        // Custom BE, RP
+        const customBeRp = new CustomBeRp()
+        if (window.DataStore.get("Custom_RP")) customBeRp.RP()
+        if (window.DataStore.get("Custom_BE")) customBeRp.BE()
+
+        // Auto Accept
+        const autoAccept = new AutoAccept()
+        autoAccept.main(window.DataStore.get("auto_accept_button"))
+
+        // Custom status
+        const customStatus = new CustomStatus()
+        if (window.DataStore.get("Custom-Status") && window.DataStore.get("Custom-profile-hover")) customStatus.main()
+
+        // Custom profile
+        const customProfile = new CustomProfile()
+        customProfile.customBagde()
+        if (window.DataStore.get("Custom-profile-hover")) {
+            if (window.DataStore.get("Custom-mastery-score")) customProfile.customMasteryScore()
+            if (window.DataStore.get("Custom-challenge-crystal")) customProfile.customChallengeCrystal()
+            if (window.DataStore.get("Custom-rank")) customProfile.customRank()
+        }
+
+        // Add dodge button
+        const dodgeButton = new DodgeButton()
+        dodgeButton.main()
+
+        // Force jungle or lane
+        const forceJungleLane = new ForceJungLane()
+        forceJungleLane.main()
+
+        // Add invite all friends buttons
+        const inviteAllFriends = new InviteAllFriends()
+        if (window.DataStore.get("Enable-Invite-Fr")) inviteAllFriends.main()
+
+        // Add loot helper
+        const lootHelper = new LootHelper()
+        if (window.DataStore.get("loot-helper")) lootHelper.main()
+
+        // Spoof name
+        const nameSpoofer = new NameSpoofer()
+        nameSpoofer.main()
+
+        // Add practice 5vs5 room button
+        const practice5vs5 = new Practice5vs5()
+        if (!window.DataStore.get("aram-only")) practice5vs5.main()
+
+        // Offline mode
+        const offlineMode = new OfflineMode()
+        offlineMode.main()
+    }
 }
 
-const { Cdninit } = await cdnImport(initLink, "Failed to load Init data")
-
-// Import other modules
-import { setHomePage } from "./src/theme/homepage.ts";
-import { transparentLobby } from "./src/theme/applyUi.ts";
-import "./src/theme/applyUi.ts"
-import "./src/theme/homepage.ts"
-import "./src/theme/filters.ts"
-import "./src/theme/loadCss.ts"
-import "./src/theme/themePresetSettingsTab.ts"
-import "./src/updates/manualUpdate.ts"
-import "./src/plugins/customStatus.ts"
-import "./src/plugins/autoAccept.ts"
-import "./src/plugins/customBeRp.ts"
-import "./src/plugins/customProfile.ts"
-import "./src/plugins/dodgeButton.ts"
-import "./src/plugins/hideFriendlist.js"
-import "./src/plugins/lootHelper.ts"
-import "./src/plugins/nameSpoofer.ts"
-import "./src/plugins/offlineMode.ts"
-import "./src/plugins/practice5vs5.ts"
-import "./src/plugins/debug.ts"
-import "./src/plugins/inviteAllFriends.ts"
-import "./src/plugins/forceJungleLane.ts"
-
-// Check server
-const checkServerAvailability = async (): Promise<void> => {
-    log('Checking backup server availability');
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 2000);
-
-    try {
-        const response = await fetch('https://elainatheme.xyz/numberOfUsers', { signal: controller.signal });
-        const { count } = await response.json();
-        log('Number of users:', count);
-        const { default: serverModule } = await import('https://elainatheme.xyz/index.js');
-    } catch (err: any) {
-        clearTimeout(timeoutId);
-        throw err;
-    }
-};
-checkServerAvailability().catch((err: any) => error('Failed to check backup server availability:', err));
+const elainaTheme = new ElainaTheme()
+window.addEventListener("load", () => {
+    elainaTheme.main()
+})
 
 // Export Init
 export function init(context: any) {
-    log('Initializing theme');
-    setHomePage(context);
-    transparentLobby(context);
-    Cdninit(context);
-}
-
-export async function cdnImport(url: string, errorMsg: any): Promise<any> {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 2000);
-
-    try {
-        const res = await fetch(url, { signal: controller.signal });
-        if (res.status === 200) {
-            const serverModule = await import(url);
-            return serverModule
-        } else {
-            throw new Error();
-        }
-    } catch {
-        clearTimeout(timeoutId);
-        error(errorMsg);
-        window.Toast.error(errorMsg);
-    }
-};
-
-// Get this theme folder's name and export it
-export function getThemeName(): string | null {
-    const error = new Error();
-    const stackTrace = error.stack;
-    const scriptPath = stackTrace?.match(/(?:http|https):\/\/[^\s]+\.js/g)?.[0];
-    const match = scriptPath?.match(/\/([^/]+)\/index\.js$/);
-    return match ? match[1] : null;
+    elainaTheme.init(context)
 }
 
 // Export theme log globally
