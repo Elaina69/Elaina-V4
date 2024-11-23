@@ -1,6 +1,6 @@
 // Open settings.js and custom-profile.ts if update this file
 
-let rank = {
+export default rank = {
     "Ranked Queue ID": [
         {
             "id" : 0, 
@@ -116,5 +116,3 @@ let rank = {
         }
     ]
 }
-
-export default rank
