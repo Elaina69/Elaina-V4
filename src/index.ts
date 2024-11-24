@@ -53,10 +53,10 @@ import { NameSpoofer } from "./src/plugins/nameSpoofer.ts"
 import { OfflineMode } from "./src/plugins/offlineMode.ts"
 import { Practice5vs5 } from "./src/plugins/practice5vs5.ts"
 import { InviteAllFriends } from "./src/plugins/inviteAllFriends.ts"
+import { HideFriendList } from './src/plugins/hideFriendlist.ts';
 
 // Import other plugins
 import { ForceJungLane } from "./src/plugins/forceJungleLane.ts"
-import "./src/plugins/hideFriendlist.js"
 import "./src/plugins/debug.ts"
 
 // Refresh theme's wallpaper list
@@ -195,6 +195,10 @@ class ElainaTheme {
         // Offline mode
         const offlineMode = new OfflineMode()
         offlineMode.main()
+
+        // Add hide friendslist button
+        const hideFriendslist = new HideFriendList()
+        hideFriendslist.main()
     }
 }
 

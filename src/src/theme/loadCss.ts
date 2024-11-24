@@ -7,36 +7,6 @@ let iconFolder: string = `${datapath}assets/icon/`
 let bgFolder: string = `${datapath}assets/backgrounds/`
 
 class AddCss {
-	mainThemeCss = () => {
-		utils.addStyle(/*css*/`
-			@import url("${datapath}assets/styles/themes/elaina.css");
-			@font-face {font-family: 'Elaina'; src: url('${datapath}assets/fonts/beaufortforlol-bold.ttf')}
-		`)
-	}
-
-	componentsCss = () => {
-		let cssImports = "";
-		let addonCssList = {
-			a: { key: "hide-vertical-lines", css: "hide-vertical-lines.css", altCss: "null.css" },
-			b: { key: "aram-only", css: "aram-only.css", altCss: "null.css" },
-			c: { key: "hide-champions-splash-art", css: "hide-champs-splash-art.css", altCss: "null.css" },
-			d: { key: "sidebar-transparent", css: "sidebar-transparent.css", altCss: "sidebar-color.css" },
-			e: { key: "animate-loading", css: "animate-loading-screen.css", altCss: "static-loading-screen.css" },
-			f: { key: "custom-navbar-css", css: "customNavbar.css", altCss: "null.css" },
-			g: { key: "lobby-transparent-filter", css: "lobby-transparent-filter.css", altCss: "null.css"}
-		}
-
-		for (let prop in addonCssList) {
-			let { key, css, altCss } = addonCssList[prop];
-			let cssPath = window.DataStore.get(key) ? css : altCss;
-			if (cssPath) {
-				cssImports += `@import url("${datapath}assets/styles/components/${cssPath}");\n`
-			}
-		}
-
-		utils.addStyle(cssImports)
-	}
-
 	cssVar = () => {
 		utils.addStyle(/*css*/`
 			:root {
@@ -69,28 +39,116 @@ class AddCss {
 		`)
 	}
 
-	iconCss = () => {
-		let cssList = {
-			'Custom-Avatar': 'avatar.css',
-			'Custom-RP-Icon': 'riotpoint.css',
-			'Custom-BE-Icon': 'blueessence.css',
-			'Custom-Rank-Icon': 'rank.css',
-			'Custom-Emblem': 'emblem.css',
-			'Custom-Clash-banner': 'clashbanner.css',
-			'Custom-Ticker': 'ticker.css',
-			'Custom-Trophy': 'trophy.css',
-			'Custom-Gamemode-Icon': "gamemodes.css"
-		};
-		
-		let cssImports = Object.entries(cssList).map(([key, value]) => {
-			if (window.DataStore.get(key)) {
-				return `@import url("${datapath}assets/styles/components/${value}");`;
-			}
-			return '';
-		}).join('');
-		
-		utils.addStyle(cssImports);
+	mainThemeCss = () => {
+		utils.addStyle(
+			`@import url("${datapath}assets/styles/themes/elaina.css");\n` + 
+			`@font-face {\n\tfont-family: 'Elaina';\n\tsrc: url('${datapath}assets/fonts/beaufortforlol-bold.ttf')\n}`
+		)
 	}
+
+	componentsCss = () => {
+		let cssImports = "";
+		let addonCssList = {
+			"componentsCss": [
+				{
+					key: "hide-vertical-lines",
+					css: "hide-vertical-lines.css",
+					altCss: "null.css"
+				},
+				{
+					key: "aram-only",
+					css: "aram-only.css",
+					altCss: "null.css"
+				},
+				{
+					key: "hide-champions-splash-art",
+					css: "hide-champs-splash-art.css",
+					altCss: "null.css"
+				},
+				{
+					key: "sidebar-transparent",
+					css: "sidebar-transparent.css",
+					altCss: "sidebar-color.css"
+				},
+				{
+					key: "animate-loading",
+					css: "animate-loading-screen.css",
+					altCss: "static-loading-screen.css"
+				},
+				{
+					key: "custom-navbar-css",
+					css: "customNavbar.css",
+					altCss: "null.css"
+				},
+				{
+					key: "lobby-transparent-filter",
+					css: "lobby-transparent-filter.css",
+					altCss: "null.css"
+				},
+			],
+	
+			"iconCss": [
+				{
+					key: 'Custom-Avatar',
+					css: 'avatar.css',
+					altCss: "null.css"
+				},
+				{
+					key: 'Custom-RP-Icon',
+					css: 'riotpoint.css',
+					altCss: "null.css"
+				},
+				{
+					key: 'Custom-Clash-banner',
+					css: 'clashbanner.css',
+					altCss: "null.css"
+				},
+				{
+					key: 'Custom-BE-Icon',
+					css: 'blueessence.css',
+					altCss: "null.css"
+				},
+				{
+					key: 'Custom-Rank-Icon',
+					css: 'rank.css',
+					altCss: "null.css"
+				},
+				{
+					key: 'Custom-Emblem',
+					css: 'emblem.css',
+					altCss: "null.css"
+				},
+				{
+					key: 'Custom-Ticker',
+					css: 'ticker.css',
+					altCss: "null.css"
+				},
+				{
+					key: 'Custom-Trophy',
+					css: 'trophy.css',
+					altCss: "null.css"
+				},
+				{
+					key: 'Custom-Gamemode-Icon',
+					css: "gamemodes.css",
+					altCss: "null.css"
+				}
+			]
+		};
+	
+		for (const groupKey in addonCssList) {
+			addonCssList[groupKey].forEach(({ key, css, altCss }) => {
+				let cssPath = window.DataStore.get(key) ? css : altCss;
+
+				if ((cssPath && groupKey == "iconCss" && window.DataStore.get("Custom-Icon"))
+				||  (cssPath && groupKey == "componentsCss")) {
+					cssImports += `@import url("${datapath}assets/styles/components/${cssPath}");\n`;
+				}
+			});
+		}
+	
+		utils.addStyle(cssImports);
+	};
 
 	customFont = () => {
 		utils.addFont(`${datapath}assets/fonts/${window.DataStore.get("CurrentFont")}`,"Custom-font","Custom")
@@ -117,8 +175,6 @@ export class LoadCss {
 		addCss.componentsCss()
 		addCss.cssVar()
 
-		if (window.DataStore.get("Custom-Icon")) addCss.iconCss()
-		
 		if (window.DataStore.get("Custom-Font")) addCss.customFont()
 		if (window.DataStore.get("Custom-Cursor")) addCss.customCursor()
 		if (window.DataStore.get("change-nickname-color")) addCss.customNicknameColor()
