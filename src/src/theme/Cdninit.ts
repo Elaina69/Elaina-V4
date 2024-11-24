@@ -38,5 +38,12 @@ else {
     await cdnImport(`https://cdn.jsdelivr.net/npm/elaina-theme-data/index.js`, "Failed to load CDN data");
 }
 
-const { Cdninit } = await cdnImport(initLink, "Failed to load Init data");
+
+const { Cdninit } = await cdnImport(initLink, "Failed to load Init data")
+    .then( res => { return res ? res : {} })
+    .catch( err => { 
+        error("Failed to destructure init property", err)
+        window.restartClient()
+    });
+
 export { Cdninit }
