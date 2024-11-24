@@ -106,10 +106,11 @@ declare interface Window {
     getScriptPath: () => string | undefined;
     getThemeName: () => void;
     cdnImport:(url: string, errorMsg: any) => Promise<any>;
-    autoAcceptQueueButton: () => void;
+    autoAcceptQueueButtonSelect: () => void;
     del_webm_buttons: () => void;
     create_webm_buttons: () => void;
     applyHideAndShowtab: () => void;
+    applyHideAndShowTFTtab: () => void;
     exitClient: () => void;
     dodgeQueue: () => void;
     switch_between_status: () => void;
