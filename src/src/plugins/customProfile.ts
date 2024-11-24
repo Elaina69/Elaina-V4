@@ -1,104 +1,105 @@
 import utils from '../utils/utils.ts'
 import * as upl from 'pengu-upl';
+import rank from "../config/rank.js"
 
-let rank = {
-    "Ranked Queue ID": [
-        {
-            "id" : 0, 
-            "Option": "RANKED_SOLO_5x5",
-        },
-        {
-            "id" : 1, 
-            "Option": "RANKED_FLEX_SR",
-        },
-        {
-            "id" : 2, 
-            "Option": "RANKED_FLEX_TT", 
-        },
-        {
-            "id" : 3, 
-            "Option": "RANKED_TFT",
-        },
-        {
-            "id" : 4, 
-            "Option": "RANKED_TFT_TURBO",
-        },
-        {
-            "id" : 5,  
-            "Option": "RANKED_TFT_DOUBLE_UP",
-        },
-        {
-            "id" : 6,  
-            "Option": "RANKED_TFT_PAIRS",
-        },
-        {
-            "id" : 7, 
-            "Option": "CHERRY"
-        }
-    ],
+// let rank = {
+//     "Ranked Queue ID": [
+//         {
+//             "id" : 0, 
+//             "Option": "RANKED_SOLO_5x5",
+//         },
+//         {
+//             "id" : 1, 
+//             "Option": "RANKED_FLEX_SR",
+//         },
+//         {
+//             "id" : 2, 
+//             "Option": "RANKED_FLEX_TT", 
+//         },
+//         {
+//             "id" : 3, 
+//             "Option": "RANKED_TFT",
+//         },
+//         {
+//             "id" : 4, 
+//             "Option": "RANKED_TFT_TURBO",
+//         },
+//         {
+//             "id" : 5,  
+//             "Option": "RANKED_TFT_DOUBLE_UP",
+//         },
+//         {
+//             "id" : 6,  
+//             "Option": "RANKED_TFT_PAIRS",
+//         },
+//         {
+//             "id" : 7, 
+//             "Option": "CHERRY"
+//         }
+//     ],
 
-    "Ranked Tier ID": [
-        {
-            "id" : 0, 
-            "Option": "IRON",
-        },
-        {
-            "id" : 1, 
-            "Option": "BRONZE",
-        },
-        {
-            "id" : 2, 
-            "Option": "SILVER",
-        },
-        {
-            "id" : 3, 
-            "Option": "GOLD",
-        },
-        {
-            "id" : 4, 
-            "Option": "PLATINUM",
-        },
-        {
-            "id" : 5, 
-            "Option": "DIAMOND",
-        },
-        {
-            "id" : 6,
-            "Option": "EMERALD",
-        },
-        {
-            "id" : 7, 
-            "Option": "MASTER",
-        },
-        {
-            "id" : 8, 
-            "Option": "GRANDMASTER",
-        },
-        {
-            "id" : 9, 
-            "Option": "CHALLENGER"
-        }
-    ],
+//     "Ranked Tier ID": [
+//         {
+//             "id" : 0, 
+//             "Option": "IRON",
+//         },
+//         {
+//             "id" : 1, 
+//             "Option": "BRONZE",
+//         },
+//         {
+//             "id" : 2, 
+//             "Option": "SILVER",
+//         },
+//         {
+//             "id" : 3, 
+//             "Option": "GOLD",
+//         },
+//         {
+//             "id" : 4, 
+//             "Option": "PLATINUM",
+//         },
+//         {
+//             "id" : 5, 
+//             "Option": "DIAMOND",
+//         },
+//         {
+//             "id" : 6,
+//             "Option": "EMERALD",
+//         },
+//         {
+//             "id" : 7, 
+//             "Option": "MASTER",
+//         },
+//         {
+//             "id" : 8, 
+//             "Option": "GRANDMASTER",
+//         },
+//         {
+//             "id" : 9, 
+//             "Option": "CHALLENGER"
+//         }
+//     ],
 
-    "Ranked Division ID": [
-        {
-            "id" : 0, 
-            "name": "I"
-        },
-        {
-            "id" : 1, 
-            "name": "II"
-        },
-        {
-            "id" : 2, 
-            "name": "III"
-        },
-        {
-            "id" : 3, 
-            "name": "IV"
-        }
-    ]
-}
+//     "Ranked Division ID": [
+//         {
+//             "id" : 0, 
+//             "name": "I"
+//         },
+//         {
+//             "id" : 1, 
+//             "name": "II"
+//         },
+//         {
+//             "id" : 2, 
+//             "name": "III"
+//         },
+//         {
+//             "id" : 3, 
+//             "name": "IV"
+//         }
+//     ]
+// }
 
 interface BadgeChallenge {
     id: number;
