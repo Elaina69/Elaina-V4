@@ -99,28 +99,29 @@ declare interface Window {
         build: string
     };
   
-    openDevTools: () => void;
-    openPluginsFolder: (subdir?: string) => void;
-    reloadClient: () => void;
-    restartClient: () => void;
-    getScriptPath: () => string | undefined;
-    getThemeName: () => void;
-    cdnImport:(url: string, errorMsg: any) => Promise<any>;
-    autoAcceptQueueButtonSelect: () => void;
-    del_webm_buttons: () => void;
-    create_webm_buttons: () => void;
-    applyHideAndShowtab: () => void;
-    applyHideAndShowTFTtab: () => void;
-    exitClient: () => void;
-    dodgeQueue: () => void;
-    switch_between_status: () => void;
-    log: (message: string, ...args: string[]) => void;
-    warn: (message: string, ...args: string[]) => void;
-    error: (message: string, ...args: string[]) => void;
+    openDevTools                : () => void;
+    openPluginsFolder           : (subdir?: string) => void;
+    reloadClient                : () => void;
+    restartClient               : () => void;
+    getScriptPath               : () => string | undefined;
+    getThemeName                : () => void;
+    cdnImport                   : (url: string, errorMsg: any) => Promise<any>;
+    autoAcceptQueueButtonSelect : () => void;
+    del_webm_buttons            : () => void;
+    create_webm_buttons         : () => void;
+    applyHideAndShowtab         : () => void;
+    applyHideAndShowTFTtab      : () => void;
+    exitClient                  : () => void;
+    dodgeQueue                  : () => void;
+    switch_between_status       : () => void;
+    log                         : (message: string, ...args: string[]) => void;
+    warn                        : (message: string, ...args: string[]) => void;
+    error                       : (message: string, ...args: string[]) => void;
+    setAudio                    : () => void;
     
-    storeObserver: any;
-    __llver: string;
+    storeObserver               : any;
+    __llver                     : string;
 }
 
-declare function getString(param: string): Promise<string>;
-declare function writeBackupData(): void;
+declare function getString(param: string)   : Promise<string>;
+declare function writeBackupData()          : void;

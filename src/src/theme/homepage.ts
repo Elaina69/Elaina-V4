@@ -383,6 +383,8 @@ class MainController {
     
     createMainController = () => {
         const container = this.createElementWithClass("div", "webm-bottom-buttons-container");
+
+        if (window.DataStore.get("Disable-Theme-Audio")) container.style.display = "none"
     
         // Create music controller
         const musicControlsMain = this.createElementWithClass("div", "music-controls-main");
@@ -618,63 +620,85 @@ const mainController = new MainController()
 //Add and load wallpaper/audio
 class WallpaperAndAudio {
     // Add Wallpaper and Audio to client
-    addWallpaperAndMusic = () => {
+    addWallpaperElement = () => {
         // create wallpaper
         const video = document.createElement('video');
         video.id = 'elaina-bg';
 
+        document.body.prepend(video);
+    }
+
+    addImageWallpaperElement = () => {
         // create image wallpaper
         const imgWallpaper = document.createElement('img');
         imgWallpaper.id = 'elaina-static-bg';
-        
+
+        document.body.prepend(imgWallpaper);
+    }
+
+    addAudioElement = () => {
         // create audio
         const audio = document.createElement("audio");
         audio.id = 'bg-audio';
 
-        document.body.prepend(imgWallpaper, video, audio);
-    };
+        document.body.prepend(audio);
+    }
+
+    setWallpaperElement = () => {
+        const video: any = document.getElementById("elaina-bg")
+        video.autoplay = true;
+        video.volume = window.DataStore.get("wallpaper-volume");
+        video.muted = window.DataStore.get("mute-audio");
+        video.currentTime = window.DataStore.get("Wallpaper-currentTime");
+        video.src = `${bgFolder}wallpapers/${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`;
+        video.playbackRate = window.DataStore.get("Playback-speed") / 100;
+        video.loop = true;
+
+        video.addEventListener("error", () => {
+            video.load();
+            video.addEventListener("ended", () => video.load());
+        });
+    }
+
+    setImageWallpaperElement = () => {
+        const imgWallpaper: any = document.getElementById("elaina-static-bg")
+        imgWallpaper.src = `${bgFolder}wallpapers/${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`;
+    }
+
+    setAudioElement = () => {
+        if (!window.DataStore.get("Disable-Theme-Audio")) {
+            const audio: any = document.getElementById("bg-audio")
+            audio.autoplay = true;
+            audio.src = `${bgFolder}audio/${window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]}`;
+            audio.volume = window.DataStore.get("audio-volume");
+            audio.muted = window.DataStore.get("mute-audio");
+            audio.currentTime = window.DataStore.get("Audio-currentTime");
+
+            if (window.DataStore.get('audio-loop')) {
+                audio.addEventListener("ended", () => audio.load());
+            } 
+            else audio.addEventListener("ended", audioController.nextSong);
+            
+            audio.addEventListener("error", () => audio.load());
+        }
+    }
 
     loadWallpaperAndMusic() {
         const initializeUI = () => {
             if (document.querySelector(".rcp-fe-lol-home")) {
                 log("Load wallpaper and audio")
-                const video: any = document.getElementById("elaina-bg")
-                video.autoplay = true;
-                video.volume = window.DataStore.get("wallpaper-volume");
-                video.muted = window.DataStore.get("mute-audio");
-                video.currentTime = window.DataStore.get("Wallpaper-currentTime");
-                video.src = `${bgFolder}wallpapers/${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`;
-                video.playbackRate = window.DataStore.get("Playback-speed") / 100;
-                video.loop = true;
 
-                video.addEventListener("error", () => {
-                    video.load();
-                    video.addEventListener("ended", () => video.load());
-                });
-                
-
-                const imgWallpaper: any = document.getElementById("elaina-static-bg")
-                imgWallpaper.src = `${bgFolder}wallpapers/${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`;
-
-                const audio: any = document.getElementById("bg-audio")
-                audio.autoplay = true;
-                audio.src = `${bgFolder}audio/${window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]}`;
-                audio.volume = window.DataStore.get("audio-volume");
-                audio.muted = window.DataStore.get("mute-audio");
-                audio.currentTime = window.DataStore.get("Audio-currentTime");
-
-                if (window.DataStore.get('audio-loop')) {
-                    audio.addEventListener("ended", () => audio.load());
-                } 
-                else audio.addEventListener("ended", audioController.nextSong);
-                
-                audio.addEventListener("error", () => audio.load());
+                this.setWallpaperElement()
+                this.setImageWallpaperElement()
+                this.setAudioElement()
 
                 utils.subscribe_endpoint('/lol-gameflow/v1/gameflow-phase', (message: any) => {
                     const phase = JSON.parse(message["data"])[2]["data"];
                     log(phase)
                     if (phase === "GameStart" || phase === "InProgress") {
                         if (window.DataStore.get("turnoff-audio-ingame")) {
+                            const video: any = document.getElementById("elaina-bg")
+                            const audio: any = document.getElementById("bg-audio")
                             video.pause();
                             audio.pause();
                         }
@@ -802,7 +826,9 @@ const addHomePage = new AddHomePage()
 export class HomePage {
     main = () => {
         log("Add wallpaper and audio")
-        wallpaperAndAudio.addWallpaperAndMusic()
+        wallpaperAndAudio.addWallpaperElement()
+        wallpaperAndAudio.addImageWallpaperElement()
+        wallpaperAndAudio.addAudioElement()
 
         utils.mutationObserverAddCallback(addHomePage.pageListenner, ["screen-root"]);
     }
@@ -812,3 +838,4 @@ window.del_webm_buttons = mainController.deleteController
 window.create_webm_buttons = mainController.createMainController
 window.applyHideAndShowtab = changeHomePageTabs.applyHideAndShowtab
 window.applyHideAndShowTFTtab = changeHomePageTabs.applyHideAndShowTFTtab
+window.setAudio = wallpaperAndAudio.setAudioElement
