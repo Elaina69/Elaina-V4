@@ -1,5 +1,7 @@
+import { getThemeName } from "../otherThings"
+
 //@ts-ignore
-let text = (await import(`//plugins/${window.getThemeName()}/config/customStatus.txt?raw`)).default
+let text = (await import(`//plugins/${getThemeName()}/config/customStatus.txt?raw`)).default
 
 export class CustomStatus {
     main = () => {

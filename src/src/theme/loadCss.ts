@@ -1,8 +1,9 @@
 import utils from "../utils/utils.ts"
+import { getThemeName } from "../otherThings"
 
-let icdata: Object = (await import(`//plugins/${window.getThemeName()}/config/icons.js`)).default;
+let icdata: Object = (await import(`//plugins/${getThemeName()}/config/icons.js`)).default;
 
-let datapath: string = `//plugins/${window.getThemeName()}/`
+let datapath: string = `//plugins/${getThemeName()}/`
 let iconFolder: string = `${datapath}assets/icon/`
 let bgFolder: string = `${datapath}assets/backgrounds/`
 

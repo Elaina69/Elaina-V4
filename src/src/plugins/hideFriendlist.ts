@@ -1,6 +1,22 @@
 import * as upl from "pengu-upl"
+import utils from "../utils/utils"
 
 export class HideFriendList {
+    freezeProperties(object: Object, properties: string[]): void {
+        for (const type in object) {
+            if ((properties && properties.length && properties.includes(type)) || (!properties || !properties.length)) {
+                let value = object[type]
+                try {
+                    Object.defineProperty(object, type, {
+                        configurable: false,
+                        get: () => value,
+                        set: (v) => v,
+                    })
+                }catch {}
+            }
+        }
+    }
+
     buttonShowHideFriendlist = (hide: boolean) => {
         let button = document.querySelector(".hideFriendslist > img")
 
@@ -58,21 +74,28 @@ export class HideFriendList {
     }
 
     showHideFriendslist = (hide: boolean) => {
-        const friendList: any = document.querySelector(".list-content > .roster-block");
-        const sideBar: any = document.querySelector(".rcp-fe-viewport-sidebar");
-        const isTransparent = window.DataStore.get("sidebar-transparent");
-    
-        if (!friendList || !sideBar) return;
-    
-        friendList.style.display = hide ? "none" : "flex";
-    
-        if (!isTransparent) {
-            const bgColor = hide 
-                ? "var(--social-sidebar-bg-color-friendslist-hide)" 
-                : "var(--social-sidebar-bg-color)";
-            sideBar.style.cssText = `background: ${bgColor} !important`;
+        let friendList: any = document.querySelector(".list-content > .roster-block")
+        let sideBar: any = document.querySelector(".rcp-fe-viewport-sidebar")
+
+        if (!hide) {
+            friendList.style.display = "flex"
+            if (!window.DataStore.get("sidebar-transparent")) {
+                try {
+                    document.querySelector("#sideBarColor-hideFriendslist")?.remove()
+                } catch {}
+                utils.addStyleWithID("sideBarColor-hideFriendslist", `.rcp-fe-viewport-sidebar {\n\tbackground: var(--social-sidebar-bg-color) !important\n}`)
+            }
         }
-    };
+        else {
+            friendList.style.display = "none"
+            if (!window.DataStore.get("sidebar-transparent")) {
+                try {
+                    document.querySelector("#sideBarColor-hideFriendslist")?.remove()
+                } catch {}
+                utils.addStyleWithID("sideBarColor-hideFriendslist", `.rcp-fe-viewport-sidebar {\n\tbackground: var(--social-sidebar-bg-color-friendslist-hide) !important\n}`)
+            }
+        }
+    }
 
     main = () => {
         upl.observer.subscribeToElementCreation(".actions-bar > .buttons", (element: any) => {

@@ -1,17 +1,11 @@
 import * as upl from 'pengu-upl'
+import { getThemeName } from "../otherThings"
+import { log, warn } from '../utils/themeLog';
 
-const CONSOLE_STYLE = {
-    prefix: '%c Elaina ',
-    css: 'color: #ffffff; background-color: #f77fbe'
-};
+let filters = (await import(`//plugins/${getThemeName()}/config/filters.js`)).default;
+let icdata = (await import(`//plugins/${getThemeName()}/config/icons.js`)).default;
 
-const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
-const warn = (message: string, ...args: string[]) => console.warn(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
-
-let filters = (await import(`//plugins/${window.getThemeName()}/config/filters.js`)).default;
-let icdata = (await import(`//plugins/${window.getThemeName()}/config/icons.js`)).default;
-
-let datapath = `//plugins/${window.getThemeName()}/`
+let datapath = `//plugins/${getThemeName()}/`
 let iconFolder  = `${datapath}assets/icon/`
 
 

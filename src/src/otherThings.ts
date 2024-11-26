@@ -1,6 +1,14 @@
-import { getThemeName } from "../index.ts"
 import { cdnImport } from "./theme/Cdninit.ts"
-export { getThemeName }
+
+// Get this theme folder's name and export it
+export function getThemeName(): string | null {
+    const error = new Error();
+    const stackTrace = error.stack;
+    const scriptPath = stackTrace?.match(/(?:http|https):\/\/[^\s]+\.js/g)?.[0];
+    const match = scriptPath?.match(/\/([^/]+)\/index\.js$/);
+    return match ? match[1] : null;
+}
+
 export { cdnImport }
 
 window.getThemeName = getThemeName

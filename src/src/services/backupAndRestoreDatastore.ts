@@ -1,40 +1,28 @@
-import { getThemeName, cdnImport } from "../otherThings.ts"
+import { getThemeName } from "../otherThings.ts"
 import utils from "../utils/utils.ts"
 import * as upl from 'pengu-upl';
-
-const CONSOLE_STYLE = {
-    prefix: '%c Elaina ',
-    css: 'color: #ffffff; background-color: #f77fbe'
-};
-
-const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args)
-const error = (message: string, ...args: string[]) => console.error(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
-
-async function importData(url: string): Promise<any> {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 2000);
-
-    try {
-        const res = await fetch(url, { signal: controller.signal });
-        if (res.status === 200) {
-			let Data = await import(url)
-            return Data.default
-        } 
-		else throw new Error();
-    } catch {
-		let errorMsg = "Can't load default datastore from local"
-        clearTimeout(timeoutId);
-        error(errorMsg);
-        window.Toast.error(errorMsg);
-    }
-};
-
-let datastore_list: Object = window.DataStore.get("Dev-mode")
-	? (await importData(`//plugins/${getThemeName()}/elaina-theme-data/src/config/datastoreDefault.js`))
-	//@ts-ignore
-	: (await importData(`https://cdn.jsdelivr.net/npm/elaina-theme-data/src/config/datastoreDefault.js`))
+import { log, error } from '../utils/themeLog';
 
 export class BackupRestoreData {
+	async importData(url: string): Promise<any> {
+		const controller = new AbortController();
+		const timeoutId = setTimeout(() => controller.abort(), 2000);
+	
+		try {
+			const res = await fetch(url, { signal: controller.signal });
+			if (res.status === 200) {
+				let Data = await import(url)
+				return Data.default
+			} 
+			else throw new Error();
+		} catch {
+			let errorMsg = "Can't load default datastore from local"
+			clearTimeout(timeoutId);
+			error(errorMsg);
+			window.Toast.error(errorMsg);
+		}
+	};
+
 	setDefaultData(list: Object, restore: Boolean = false) {
 		Object.entries(list).forEach(([key, value]) => {
 			  if (!window.DataStore.has(key)) {
@@ -68,7 +56,12 @@ export class BackupRestoreData {
 		})
 	}
 
-	restore = () => {
+	restore = async () => {
+		let datastore_list: Object = window.DataStore.get("Dev-mode")
+			? (await this.importData(`//plugins/${getThemeName()}/elaina-theme-data/src/config/datastoreDefault.js`))
+			//@ts-ignore
+			: (await this.importData(`https://cdn.jsdelivr.net/npm/elaina-theme-data/src/config/datastoreDefault.js`))
+
 		if (window.DataStore.get("Elaina-Plugins")) {
 			this.setDefaultData(datastore_list)
 		}
@@ -108,8 +101,12 @@ export class BackupRestoreData {
 }
 
 const backupRestoreData = new BackupRestoreData()
-// Restore Datastore file if no theme's data
-backupRestoreData.restore()
 
-// Backup datastore
-backupRestoreData.backup()
+try {
+	// Restore Datastore file if no theme's data
+	await backupRestoreData.restore()
+
+	// Backup datastore
+	backupRestoreData.backup()
+}
+catch { error("Can not restore datastore") }

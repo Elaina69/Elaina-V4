@@ -1,14 +1,9 @@
 import utils from "../utils/utils.ts"
 import { cdnImport } from "../otherThings.ts"
+import { getThemeName } from "../otherThings"
+import { log } from "../utils/themeLog.ts";
 
-const CONSOLE_STYLE = {
-    prefix: '%c Elaina ',
-    css: 'color: #ffffff; background-color: #f77fbe'
-};
-
-const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
-
-let filtersData = (await cdnImport(`//plugins/${window.getThemeName()}/config/filters.js`, "Can't import filters data")).default;
+let filtersData = (await cdnImport(`//plugins/${getThemeName()}/config/filters.js`, "Can't import filters data")).default;
 
 let nodeRemovedEvent = function (event: any) {
 	if (event.target.classList && event.target.classList.contains("lol-loading-screen-container")) {

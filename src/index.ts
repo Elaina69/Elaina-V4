@@ -5,26 +5,10 @@
  * @link https://github.com/Elaina69
  * @Nyan Meow~~~
  */
-const CONSOLE_STYLE = {
-    prefix: '%c Elaina ',
-    css: 'color: #ffffff; background-color: #f77fbe'
-};
-
-const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
-const warn = (message: string, ...args: string[]) => console.warn(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
-const error = (message: string, ...args: string[]) => console.error(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+import { log } from './src/utils/themeLog.ts';
 
 log('By %cElaina Da Catto', 'color: #e4c2b3');
 log('%cMeow ~~~', 'color: #e4c2b3');
-
-// Get this theme folder's name and export it
-export function getThemeName(): string | null {
-    const error = new Error();
-    const stackTrace = error.stack;
-    const scriptPath = stackTrace?.match(/(?:http|https):\/\/[^\s]+\.js/g)?.[0];
-    const match = scriptPath?.match(/\/([^/]+)\/index\.js$/);
-    return match ? match[1] : null;
-}
 
 // Importing theme contents
 log('Importing theme contents');
@@ -211,8 +195,3 @@ window.addEventListener("load", () => {
 export function init(context: any) {
     elainaTheme.init(context)
 }
-
-// Export theme log globally
-window.log = log
-window.warn = warn
-window.error = error

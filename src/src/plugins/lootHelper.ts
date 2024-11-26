@@ -1,14 +1,9 @@
 import utils from '../utils/utils.ts'
 import * as upl from "pengu-upl"
+import { getThemeName } from "../otherThings"
+import { log } from '../utils/themeLog.ts'
 
-const CONSOLE_STYLE = {
-    prefix: '%c Elaina ',
-    css: 'color: #ffffff; background-color: #f77fbe'
-};
-
-const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
-
-let datapath = `//plugins/${window.getThemeName()}/`
+let datapath = `//plugins/${getThemeName()}/`
 
 function AddElement(parent: any, tag: any, params: any[] = [], classes:any[] = [], content: any = null) {
     let element = document.createElement(tag);

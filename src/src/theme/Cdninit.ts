@@ -1,11 +1,5 @@
 import { getThemeName } from "../otherThings";
-
-const CONSOLE_STYLE = {
-    prefix: '%c Elaina ',
-    css: 'color: #ffffff; background-color: #f77fbe'
-};
-
-const error = (message: string, ...args: string[]) => console.error(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+import { error } from "../utils/themeLog.ts";
 
 let initLink: string
 

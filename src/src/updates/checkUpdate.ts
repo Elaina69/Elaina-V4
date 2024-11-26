@@ -1,13 +1,6 @@
 import LocalKey from "./updateKeyLocal.ts"
 import { getThemeName, cdnImport } from "../otherThings.ts"
-
-const CONSOLE_STYLE = {
-    prefix: '%c Elaina ',
-    css: 'color: #ffffff; background-color: #f77fbe'
-};
-
-const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
-const warn = (message: string, ...args: string[]) => console.warn(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+import { log, warn } from "../utils/themeLog.ts"
 
 let CdnKey: number = 0
 

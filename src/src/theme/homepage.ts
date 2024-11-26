@@ -7,26 +7,19 @@
  */
 
 import { cdnImport } from "../otherThings.ts"
-import LocalKey from "../updates/updateKeyLocal.ts";
-import utils from '../utils/utils.ts';
+import { getThemeName } from "../otherThings"
+import { log, warn, error } from "../utils/themeLog.ts";
 import { handleElementMutation } from '../utils/observer.ts'
 import * as upl from 'pengu-upl';
+import utils from '../utils/utils.ts';
+import LocalKey from "../updates/updateKeyLocal.ts";
 
-const CONSOLE_STYLE = {
-    prefix: '%c Elaina ',
-    css: 'color: #ffffff; background-color: #f77fbe'
-};
-
-const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
-const error = (message: string, ...args: string[]) => console.error(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
-const warn = (message: string, ...args: string[]) => console.warn(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
-
-const datapath: string = `//plugins/${window.getThemeName()}/`
+const datapath: string = `//plugins/${getThemeName()}/`
 const iconFolder: string = `${datapath}assets/icon/`;
 const bgFolder: string = `${datapath}assets/backgrounds/`;
 
 window.DataStore.set("Font-folder", `${datapath}assets/fonts/`);
-window.DataStore.set("Plugin-folder-name", window.getThemeName());
+window.DataStore.set("Plugin-folder-name", getThemeName());
 
 let previous_page = '';
 let runtime = 0;
@@ -81,7 +74,7 @@ window.setTimeout(async () => {
 // Check version
 let CdnKey: number;
 let cdnUrl = "https://cdn.jsdelivr.net/npm/elaina-theme-data"
-let localUrl = `//plugins/${window.getThemeName()}/elaina-theme-data`
+let localUrl = `//plugins/${getThemeName()}/elaina-theme-data`
 
 if (window.DataStore.get("Dev-mode")) {
     CdnKey = (await cdnImport(`${localUrl}/src/update/update.js`, "Can't load cdn key")).default.key;
@@ -652,17 +645,13 @@ class WallpaperAndAudio {
                 video.currentTime = window.DataStore.get("Wallpaper-currentTime");
                 video.src = `${bgFolder}wallpapers/${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`;
                 video.playbackRate = window.DataStore.get("Playback-speed") / 100;
+                video.loop = true;
 
                 video.addEventListener("error", () => {
                     video.load();
                     video.addEventListener("ended", () => video.load());
-                    window.DataStore.set("video-2nd-loop", true);
                 });
-
-                if (window.DataStore.get("video-2nd-loop")) {
-                    video.addEventListener("ended", () => video.load());
-                } 
-                else video.loop = true;
+                
 
                 const imgWallpaper: any = document.getElementById("elaina-static-bg")
                 imgWallpaper.src = `${bgFolder}wallpapers/${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`;

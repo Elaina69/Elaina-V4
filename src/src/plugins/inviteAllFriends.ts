@@ -1,11 +1,5 @@
 import * as upl from "pengu-upl"
-
-const CONSOLE_STYLE = {
-    prefix: '%c Elaina ',
-    css: 'color: #ffffff; background-color: #f77fbe'
-};
-
-const log = (message: string, ...args: string[]) => console.log(CONSOLE_STYLE.prefix + '%c ' + message, CONSOLE_STYLE.css, '', ...args);
+import { log } from "../utils/themeLog";
 
 export class InviteAllFriends {
     setDefaultFriendsListData = () => {

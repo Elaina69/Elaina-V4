@@ -10,7 +10,7 @@
 	--font-body: 'Custom', 'LoL Body', 'Elaina', Arial, 'Helvetica Neue', Helvetica, sans-serif !important; 
 
 	--social-sidebar-bg-color: linear-gradient(rgb(6 6 6), rgb(0 0 0 / 25%));
-	--social-sidebar-bg-color-friendslist-hide: linear-gradient(rgb(6 6 6) 5%, rgb(0 0 0 / 25%) 16%, rgb(0 0 0 /0%) 0%)
+	--social-sidebar-bg-color-friendslist-hide: transparent;
 
 	--Settings-and-Dialog-frame-color: rgb(0 0 0 / 15%);
 }
