@@ -1,3 +1,7 @@
+Visitors (Since 2024/11/26)
+
+![Moe-counter][1]
+
 ## Table of Contents
  - [About](#elaina-v4)
  - [Features](#features)
@@ -10,19 +14,10 @@ Elaina theme for Pengu Loader
 > Special thanks:
 >  - Developers       : Me (ofc), [teiseire117](https://github.com/teisseire117)
 >  - Supporters       : [teiseire117](https://github.com/teisseire117), [Nomi-san](https://github.com/nomi-san), [controlado](https://github.com/controlado), [Sarah Engel](https://github.com/PrincessAkira), [Yurichtofen](https://github.com/Yurichtofen), [Legnatbird](https://github.com/Legnatbird), [Dmitry Nemykin](https://github.com/DmitryFisk)
->  - Theme Optimizers : [Yurichtofen](https://github.com/Yurichtofen)
+>  - Theme Optimizers : [Yurichtofen](https://github.com/Yurichtofen), [Kubi](https://github.com/Ku-Tadao)
 >  - Translators      : 
 >    + English : (A lot)
 >    + Vietnamese : Me ._.
->    + Japanese   : [Google translate](https://translate.google.com/)
->    + Polish     : [Yurichtofen](https://github.com/Yurichtofen)
->    + Russian    : [Flirip](https://github.com/Flirip)
->    + Spanish    : [Legnatbird](https://github.com/Legnatbird)
->    + Chinese    : []()
->    + Korean     : []()
-
-
- - Highest Wallpaper resolution (For strong device only): [Download](https://drive.google.com/drive/folders/1wvNF18fM9QkzE-a0aBDvJQjB36lWcFbU?usp=sharing)
 
 ## Features
  - Customizable icon, wallpaper and background music
@@ -32,7 +27,7 @@ Elaina theme for Pengu Loader
 > You can help me add more languages by joining [Pengu discord server](https://chat.pengu.lol/)
 
 ## Required: 
- - [Pengu Loader v1.0.6 or later](https://github.com/PenguLoader/PenguLoader/releases)
+ - [Pengu Loader v1.1.0 or later](https://github.com/PenguLoader/PenguLoader/releases)
  - A good-enough PC/Laptop
 
 > Minimum: Windows 10/11, Intel Core I5 2400 // 8gb ram // NVIDIA GT630
@@ -41,3 +36,5 @@ Elaina theme for Pengu Loader
  
 ## Installation:
  - Read our [wiki](https://github.com/Elaina69/Elaina-V4/wiki) pages
+
+[1]: https://count.chiya.dev/get/@Elaina-V4.github 
