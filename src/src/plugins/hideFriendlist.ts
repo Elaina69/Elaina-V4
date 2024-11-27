@@ -1,5 +1,6 @@
 import * as upl from "pengu-upl"
 import utils from "../utils/utils"
+import { getThemeName } from "../otherThings"
 
 export class HideFriendList {
     freezeProperties(object: Object, properties: string[]): void {
@@ -21,9 +22,9 @@ export class HideFriendList {
         let button = document.querySelector(".hideFriendslist > img")
 
         if (!hide) {
-            button?.setAttribute("src", "//plugins/elainav4/assets/icon/plugins-icons/visible.png")
+            button?.setAttribute("src", `//plugins/${getThemeName()}/assets/icon/plugins-icons/visible.png`)
         }
-        else button?.setAttribute("src", "//plugins/elainav4/assets/icon/plugins-icons/hide.png")
+        else button?.setAttribute("src", `//plugins/${getThemeName()}/assets/icon/plugins-icons/hide.png`)
     }
 
     createButton = () => {
