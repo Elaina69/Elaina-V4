@@ -1,4 +1,4 @@
-Visitors (Since 2024/11/26)
+Visitors (Since 2023/02/01)
 
 ![Moe-counter][1]
 
