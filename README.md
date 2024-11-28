@@ -37,4 +37,4 @@ Elaina theme for Pengu Loader
 ## Installation:
  - Read our [wiki](https://github.com/Elaina69/Elaina-V4/wiki) pages
 
-[1]: https://count.chiya.dev/get/@Elaina-V4.github 
+[1]: https://count.getloli.com/@Elainav4?name=Elainav4&theme=gelbooru-h&padding=7&offset=0&align=center&scale=1&pixelated=1&darkmode=auto
