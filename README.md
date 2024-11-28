@@ -37,4 +37,14 @@ Elaina theme for Pengu Loader
 ## Installation:
  - Read our [wiki](https://github.com/Elaina69/Elaina-V4/wiki) pages
 
+## Star History
+
+<a href="https://star-history.com/?repos=journey-ad/Moe-Counter&type=Date#Elaina69/Elaina-V4&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Elaina69/Elaina-V4&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Elaina69/Elaina-V4&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Elaina69/Elaina-V4&type=Date" />
+ </picture>
+</a>
+
 [1]: https://count.getloli.com/@Elainav4?name=Elainav4&theme=gelbooru-h&padding=7&offset=0&align=center&scale=1&pixelated=1&darkmode=auto
