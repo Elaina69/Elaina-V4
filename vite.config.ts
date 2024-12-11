@@ -127,7 +127,42 @@ export default defineConfig((config) => ({
             
                 // Add author comment block
                 const Author = `/**\n* @name ElainaV4\n* @author Elaina Da Catto\n* @description Elaina theme for Pengu Loader\n* @link https://github.com/Elaina69\n* @Nyan Meow~~~\n*/`;
-            
+                const importDir = ""
+/*
+`
+import wallpaper from "./assets/backgrounds/wallpapers?dir"
+import audio from "./assets/backgrounds/audio?dir"
+import font from "./assets/fonts?dir"
+import banner from "./assets/icon/regalia-banners?dir"
+
+const refreshList = async () => {
+    const FILE_REGEX = {
+        Wallpaper: /\.(png|jpg|jpeg|gif|bmp|webp|ico|mp4|webm|mkv|mov|avi|wmv|3gp|m4v)$/,
+        Audio: /\.(mp3|flac|ogg|wav|aac)$/,
+        Font: /\.(ttf|otf|woff|woff2)$/,
+        Banner: /\.(png|jpg|jpeg|gif|bmp|webp|ico)$/,
+    };
+
+    const dataLists = {
+        Wallpaper: await wallpaper.files(),
+        Audio: await audio.files(),
+        Banner: await banner.files(),
+        Font: await font.files(),
+    };
+
+    const filteredLists = Object.keys(FILE_REGEX).reduce((acc, key) => {
+        acc[key] = dataLists[key].filter(file => FILE_REGEX[key].test(file));
+        return acc;
+    }, {});
+
+    Object.entries(filteredLists).forEach(([key, list]) => {
+        window.DataStore.set(\`\${key}-list\`, list);
+    });
+}
+
+await refreshList()
+`
+*/
                 async function prependCommentToFile(filePath, commentBlock) {
                     try {
                         if (!existsSync(filePath)) {
@@ -138,12 +173,13 @@ export default defineConfig((config) => ({
                         const data = await readFile(filePath, 'utf-8');
                         const updatedContent = `${commentBlock.trim()}\n\n${data}`;
                         await writeFile(filePath, updatedContent, 'utf-8');
-                        console.log(chalk.green('✔ Author name added successfully!'));
+                        //console.log(chalk.green('✔ Author name added successfully!'));
                     } catch (err) {
                         console.error(chalk.red('Error while processing the file:'), err);
                     }
                 }
             
+                await prependCommentToFile(indexJs, importDir);
                 await prependCommentToFile(indexJs, Author);
             
                 // Copy assets and config folders
