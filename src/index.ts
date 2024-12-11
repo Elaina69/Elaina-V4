@@ -43,54 +43,6 @@ import { HideFriendList } from './src/plugins/hideFriendlist.ts';
 import { ForceJungLane } from "./src/plugins/forceJungleLane.ts"
 import "./src/plugins/debug.ts"
 
-// Refresh theme's wallpaper list
-// const FILE_REGEX: {Wallpaper: RegExp, Audio: RegExp, Font: RegExp, Banner: RegExp} = {
-//     Wallpaper: /\.(png|jpg|jpeg|gif|bmp|webp|ico|mp4|webm|mkv|mov|avi|wmv|3gp|m4v)$/,
-//     Audio: /\.(mp3|flac|ogg|wav|aac)$/,
-//     Font: /\.(ttf|otf|woff|woff2)$/,
-//     Banner: /\.(png|jpg|jpeg|gif|bmp|webp|ico)$/,
-// };
-
-// const ASSET_PATHS: {Wallpaper: string, Audio: string, Font: string, Banner: string} = {
-//     Wallpaper: "./src/assets/backgrounds/wallpapers",
-//     Audio: "./src/assets/backgrounds/audio",
-//     Font: "./src/assets/fonts",
-//     Banner: "./src/assets/icon/regalia-banners",
-// };
-
-// const refreshBackgroundsList = async (): Promise<void> => {
-//     try {
-//         const lists: Object = await Promise.all(
-//             Object.values(ASSET_PATHS).map((path: string) => window.PluginFS.ls(path))
-//         );
-        
-//         const filteredLists: Object = Object.keys(ASSET_PATHS).reduce((acc: Object, key: string, index: number) => {
-//             acc[key] = lists[index].filter((file: any) => FILE_REGEX[key].test(file));
-//             return acc;
-//         }, {});
-
-//         Object.entries(filteredLists).forEach(([key, value]) => {
-//             window.DataStore.set(`${key}-list`, value);
-//         });
-
-//         window.DataStore.set("video-2nd-loop", false);
-//         log('Updated DataStore with lists');
-//     } catch (err: any) {
-//         error('Error refreshing backgrounds list:', err);
-//         window.DataStore.set("manual-add-background", true);
-//     }
-// };
-
-// log('Refreshing backgrounds list');
-
-// const backgroundListInterval = setInterval(async () => {
-//     await refreshBackgroundsList();
-//     if (document.getElementById("elaina-bg")) {
-//         clearInterval(backgroundListInterval);
-//         log('Stopped reloading list');
-//     }
-// }, 1000);
-
 class ElainaTheme {
     init(context: any) {
         log('Initializing theme');
