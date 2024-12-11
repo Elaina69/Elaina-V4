@@ -24,6 +24,8 @@ window.DataStore.set("Plugin-folder-name", getThemeName());
 let previous_page = '';
 let runtime = 0;
 
+let addedBackgrounds = false
+
 let debounceTimer: any;
 
 const mutationConfig = {
@@ -213,7 +215,7 @@ class WallpaperController {
         elainaBg.playbackRate = window.DataStore.get("Playback-speed") / 100;
     };
 
-    changeBG = (BG: string) => {
+    changeBG = async (BG: string) => {
         const elainaBg: any = document.getElementById("elaina-bg");
         const elainaStaticBg: any = document.getElementById("elaina-static-bg");
 
@@ -225,9 +227,12 @@ class WallpaperController {
             elainaBg.classList.remove("webm-hidden");
             elainaStaticBg.classList.remove("webm-hidden");
         }, 500);
+
+        // @ts-ignore
+        await refreshList()
     }
     
-    nextWallpaper = () => {
+    nextWallpaper = async() => {
         const elainaBg: any = document.getElementById("elaina-bg");
         elainaBg.classList.add("webm-hidden");
         const elainaStaticBg: any = document.getElementById("elaina-static-bg");
@@ -238,10 +243,10 @@ class WallpaperController {
             window.DataStore.set('wallpaper-index', 0);
         }
     
-        this.changeBG(window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]);
+        await this.changeBG(window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]);
     };
     
-    prevWallpaper = () => {
+    prevWallpaper = async() => {
         const elainaBg: any = document.getElementById("elaina-bg");
         elainaBg.classList.add("webm-hidden");
         const elainaStaticBg: any = document.getElementById("elaina-static-bg");
@@ -252,7 +257,7 @@ class WallpaperController {
             window.DataStore.set('wallpaper-index', window.DataStore.get("Wallpaper-list").length - 1);
         }
     
-        this.changeBG(window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]);
+        await this.changeBG(window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]);
     };
 }
 
@@ -311,32 +316,35 @@ class AudioController {
         audio.src = `${bgFolder}audio/${song}`;
     };
 
-    updateAudio = (song) => {
+    updateAudio = async (song) => {
         this.loadSong(song);
         this.audioPlayPause();
         this.changeSongName();
         log(`Now playing %c${song}`, 'color: #0070ff');
+
+        // @ts-ignore
+        await refreshList()
     }
     
-    nextSong = () => {
+    nextSong = async () => {
         if (window.DataStore.get("Continues_Audio")) {
             window.DataStore.set('audio-index', window.DataStore.get('audio-index') + 1);
     
             if (window.DataStore.get('audio-index') > window.DataStore.get("Audio-list").length - 1) {
                 window.DataStore.set('audio-index', 0);
             }
-            this.updateAudio(window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]);
+            await this.updateAudio(window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]);
         }
     };
     
-    prevSong = () => {
+    prevSong = async () => {
         if (window.DataStore.get("Continues_Audio")) {
             window.DataStore.set('audio-index', window.DataStore.get('audio-index') - 1);
     
             if (window.DataStore.get('audio-index') < 0) {
                 window.DataStore.set('audio-index', window.DataStore.get("Audio-list").length - 1);
             }
-            this.updateAudio(window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]);
+            await this.updateAudio(window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]);
         }
     };
     
@@ -468,7 +476,8 @@ class MainController {
             wallpaperControls.append(prevBg, pauseBg, nextBg);
             nextBg.append(nextBgIcon);
             prevBg.append(prevBgIcon);
-        } else {
+        } 
+        else {
             const newBgChange = document.createElement("div");
             newBgChange.id = "newbgchange";
             newBgChange.append(bgDropdown);
@@ -478,7 +487,7 @@ class MainController {
                 const el = document.createElement("lol-uikit-dropdown-option");
                 el.setAttribute("slot", "lol-uikit-dropdown-option");
                 el.innerText = opt;
-                el.onclick = () => {
+                el.onclick = async () => {
                     const elainaBg: any = document.getElementById("elaina-bg");
                     elainaBg.classList.add("webm-hidden");
                     const elainaStaticBg: any = document.getElementById("elaina-static-bg");
@@ -486,7 +495,7 @@ class MainController {
     
                     window.DataStore.set('wallpaper-index', id);
                     
-                    wallpaperController.changeBG(window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')])
+                    await wallpaperController.changeBG(window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')])
                 };
                 if (window.DataStore.get('wallpaper-index') === id) {
                     el.setAttribute("selected", "true");
@@ -572,7 +581,7 @@ class MainController {
         }
     
         // Event delegation for dynamically created elements
-        container.addEventListener('click', (event: any) => {
+        container.addEventListener('click',async (event: any) => {
             if (event.target.closest('#pause-audio')) {
                 window.DataStore.set('pause-audio', window.DataStore.get('pause-audio') + 1);
                 audioController.audioPlayPause();
@@ -580,11 +589,11 @@ class MainController {
                 audioController.changeSongName();
             }
             if (event.target.closest('#next-audio')) {
-                audioController.nextSong();
+                await audioController.nextSong();
                 audioController.changeSongName();
             }
             if (event.target.closest('#prev-audio')) {
-                audioController.prevSong();
+                await audioController.prevSong();
                 audioController.changeSongName();
             }
             if (event.target.closest('#audio-loop')) {
@@ -645,6 +654,10 @@ class WallpaperAndAudio {
     }
 
     setWallpaperElement = () => {
+        if (window.DataStore.get('wallpaper-index') > window.DataStore.get("Wallpaper-list").length - 1) {
+            window.DataStore.set('wallpaper-index', 0);
+        }
+
         const video: any = document.getElementById("elaina-bg")
         video.autoplay = true;
         video.volume = window.DataStore.get("wallpaper-volume");
@@ -653,6 +666,10 @@ class WallpaperAndAudio {
         video.src = `${bgFolder}wallpapers/${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`;
         video.playbackRate = window.DataStore.get("Playback-speed") / 100;
         video.loop = true;
+
+        video.addEventListener('timeupdate', () => {
+            window.DataStore.set("Wallpaper-currentTime", video.currentTime)
+        });
 
         video.addEventListener("error", () => {
             video.load();
@@ -667,6 +684,10 @@ class WallpaperAndAudio {
 
     setAudioElement = () => {
         if (!window.DataStore.get("Disable-Theme-Audio")) {
+            if (window.DataStore.get('audio-index') > window.DataStore.get("Audio-list").length - 1) {
+                window.DataStore.set('audio-index', 0);
+            }
+
             const audio: any = document.getElementById("bg-audio")
             audio.autoplay = true;
             audio.src = `${bgFolder}audio/${window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]}`;
@@ -674,10 +695,17 @@ class WallpaperAndAudio {
             audio.muted = window.DataStore.get("mute-audio");
             audio.currentTime = window.DataStore.get("Audio-currentTime");
 
+            audio.addEventListener('timeupdate', () => {
+                window.DataStore.set("Audio-currentTime", audio.currentTime)
+            });
+
             if (window.DataStore.get('audio-loop')) {
                 audio.addEventListener("ended", () => audio.load());
             } 
-            else audio.addEventListener("ended", audioController.nextSong);
+            else audio.addEventListener("ended", () => {
+                audioController.nextSong()
+                audioController.changeSongName()
+            });
             
             audio.addEventListener("error", () => audio.load());
         }
@@ -760,7 +788,8 @@ class AddHomePage {
         const pagename = node.getAttribute("data-screen-name");
         const isOtherPage = !["rcp-fe-lol-navigation-screen", "window-controls", "rcp-fe-lol-home", "social"].includes(pagename);
     
-        if (pagename === "rcp-fe-lol-navigation-screen") {
+        if (pagename === "window-controls" && !addedBackgrounds) {
+            addedBackgrounds = true
             wallpaperAndAudio.loadWallpaperAndMusic()
             wallpaperAndAudio.logDebuggingInfo()
 
