@@ -56,7 +56,7 @@ export class BackupRestoreData {
 		})
 	}
 
-	restore = async () => {
+	restore = async (force: boolean = false) => {
 		let datastore_list: Object = window.DataStore.get("Dev-mode")
 			? (await this.importData(`//plugins/${getThemeName()}/elaina-theme-data/src/config/datastoreDefault.js`))
 			//@ts-ignore
@@ -65,48 +65,34 @@ export class BackupRestoreData {
 		if (window.DataStore.get("Elaina-Plugins")) {
 			this.setDefaultData(datastore_list)
 		}
-		else if (!window.DataStore.get("Elaina-Plugins") || !window.DataStore.has("Elaina-Plugins")) {
-			//console.log(eConsole+`%c Finding backup file from cloud...`,eCss,"")
-			this.setDefaultData(datastore_list)
-			window.setTimeout(()=> {window.restartClient()}, 5000)
-		
-		
-			// window.setTimeout(() => {
-			// 	let restoreData = new Promise((resolve, reject) => {
-			// 		setTimeout(async () => {
-			// 			resolve()
-			// 			try { 
-			// 				let summonerID = await utils.getSummonerID()
-			// 				let cloud = await readBackup(summonerID, "datastore.json")
-			// 				if (cloud.success) {
-			// 					console.log(eConsole+`%c Found datastore file from cloud, ready to restore it`,eCss,"")
-			// 					setDefaultData(JSON.parse(cloud.content), true)
-			// 					window.setTimeout(()=>window.restartClient())
-			// 				}
-			// 			}
-			// 			catch { 
-			// 				console.log(eConsole+`%c Datastore file not found, use default theme's settings instead`,eCss,"")
-			// 			}
-			// 		},5000)
-			// 	})
-				
-			// 	Toast.promise(restoreData, {
-			// 		loading: 'Restoring Datastore...',
-			// 		success: 'Restore complete!',
-			// 		error: ''
-			// 	})
-			// },15000)
+		else if (!window.DataStore.get("Elaina-Plugins") || !window.DataStore.has("Elaina-Plugins") || force) {
+			let restoreData = new Promise((resolve: any, reject) => {
+				this.setDefaultData(datastore_list)
+				setTimeout(async () => {
+					resolve()
+					window.restartClient()
+				},5000)
+			})
+			
+			window.Toast.promise(restoreData, {
+				loading: 'Restoring Datastore...',
+				success: 'Restore complete!',
+				error: ''
+			})
 		}
 	}
 }
 
 const backupRestoreData = new BackupRestoreData()
+const restoreDefaultDataStore = backupRestoreData.restore
 
 try {
 	// Restore Datastore file if no theme's data
-	await backupRestoreData.restore()
+	await restoreDefaultDataStore()
 
 	// Backup datastore
 	backupRestoreData.backup()
 }
 catch { error("Can not restore datastore") }
+
+window.restoreDefaultDataStore = restoreDefaultDataStore

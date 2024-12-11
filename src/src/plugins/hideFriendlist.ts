@@ -80,6 +80,7 @@ export class HideFriendList {
 
         if (!hide) {
             friendList.style.display = "flex"
+            this.centerViewport(hide)
             if (!window.DataStore.get("sidebar-transparent")) {
                 try {
                     document.querySelector("#sideBarColor-hideFriendslist")?.remove()
@@ -89,12 +90,79 @@ export class HideFriendList {
         }
         else {
             friendList.style.display = "none"
+            this.centerViewport(hide)
             if (!window.DataStore.get("sidebar-transparent")) {
                 try {
                     document.querySelector("#sideBarColor-hideFriendslist")?.remove()
                 } catch {}
                 utils.addStyleWithID("sideBarColor-hideFriendslist", `.rcp-fe-viewport-sidebar {\n\tbackground: var(--social-sidebar-bg-color-friendslist-hide) !important\n}`)
             }
+        }
+    }
+
+    centerViewport = (hide: boolean) => {
+        if (!hide) {
+            try {
+                document.querySelector("#centerViewport")?.remove();
+            } catch {}
+            utils.addStyleWithID("centerViewport", `
+                .parties-game-type-select-wrapper.ember-view { 
+                    left: 0px ;
+                } 
+                .parties-custom-game-setup.ember-view { 
+                    position: relative; left: 0px ;
+                } 
+                .custom-game-list.ember-view { 
+                    position: relative; 
+                    left: 0px ;
+                }
+                .parties-lower-section { 
+                    position: relative; 
+                    left: 0px ;
+                }
+                .v2-footer-component.ember-view { 
+                    left: 0px;
+                }
+                .invite-info-panel-container {
+                    display: flex !important;
+                }
+                .arrow-footer.ember-view > div { 
+                    position: relative; 
+                    left: 0px;
+                }
+            `)
+        } 
+        else {
+            try {
+                document.querySelector("#centerViewport")?.remove();
+            } catch {}
+            utils.addStyleWithID("centerViewport", `
+                .parties-game-type-select-wrapper.ember-view { 
+                    left: 113px;
+                } 
+                .v2-footer-component.ember-view { 
+                    left: 113px;
+                } 
+                .parties-custom-game-setup.ember-view { 
+                    position: relative; 
+                    left: 113px ;
+                } 
+                .custom-game-list.ember-view { 
+                    position: relative; 
+                    left: 113px ;
+                }
+                .parties-lower-section { 
+                    position: relative; 
+                    left: 113px ;
+                }
+                .arrow-footer.ember-view > div { 
+                    position: relative; 
+                    left: 113px;
+                }
+                .invite-info-panel-container {
+                    display: none !important;
+                }
+            `)
         }
     }
 

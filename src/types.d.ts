@@ -117,11 +117,12 @@ declare interface Window {
     log                         : (message: string, ...args: string[]) => void;
     warn                        : (message: string, ...args: string[]) => void;
     error                       : (message: string, ...args: string[]) => void;
-    setAudio                    : () => void;
+    setAudio                    : () => void;   
+    restoreDefaultDataStore     : () => Promise<void>; 
     
     storeObserver               : any;
     __llver                     : string;
-}
+};
 
 declare function getString(param: string)   : Promise<string>;
 declare function writeBackupData()          : void;
