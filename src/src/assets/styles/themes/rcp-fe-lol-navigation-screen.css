@@ -1,0 +1,16 @@
+div[data-screen-name="rcp-fe-lol-navigation-screen"] {
+    border-top: 1.8px solid #785a28 !important;
+}
+
+.rcp-fe-lol-navigation.main-nav-bar {
+	height: 76px !important;
+}
+
+.navigation-root-component.ember-view {
+	background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 24%))!important;
+	height: 77px !important;	
+}
+/* LoR advertise */
+.deep-links-promo {
+	display: none !important;
+}

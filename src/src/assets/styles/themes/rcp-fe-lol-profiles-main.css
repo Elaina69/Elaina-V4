@@ -1,0 +1,15 @@
+.rcp-fe-lol-profiles-main > .component-factory-application > .ember-view > .style-profile-backdrop-component.ember-view > .style-profile-backdrop-container > .style-profile-masked-image {
+	display: none !important;
+}
+
+.style-profile-ranked-reference-modal-button {
+	display: none !important;
+}
+
+.style-profile-honor-component.ember-view > .style-profile-emblem-wrapper  > .style-profile-emblem-header > .style-profile-emblem-header-subtitle {
+	display: none !important;
+}
+
+.style-profile-emblem-subheader-ranked > div {
+	color: #cdbe91 !important;
+}

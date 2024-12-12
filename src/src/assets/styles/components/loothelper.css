@@ -1,5 +1,4 @@
 .blue-essence-button-container {
-    height: 100%;
     margin-top: 10px;
     position: relative;
     width: 40px;
@@ -26,7 +25,6 @@
 }
 
 .refresh-button-container {
-    height: 100%;
     margin-top: 10px;
     position: relative;
     width: 40px;
@@ -53,7 +51,6 @@
 }
 
 .open-chests-button-container {
-    height: 100%;
     margin-top: 10px;
     position: relative;
     width: 40px;

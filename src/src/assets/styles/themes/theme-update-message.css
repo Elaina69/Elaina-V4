@@ -1,0 +1,109 @@
+.noticediv {
+	display: flex;
+    top: 87px;
+    right: 9px;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #cdbe91;
+    border-radius: 50%;
+	cursor: pointer;
+	background: #000000;
+}
+
+.noticediv:hover {
+	filter: brightness(1.3) hue-rotate(263deg) saturate(0.4) !important;
+}
+
+.notice {
+	width: 27px;
+    height: 27px;
+    margin: 5px 0px 0px 7px;
+}
+.messdiv {
+	display: flex;
+    bottom: 285px;
+    right: 362px;
+    position: absolute;
+    height: 85px;
+    width: 325px;
+    border: 2px solid transparent;
+    border-image: linear-gradient(to top, #695625 0%, #a9852d 23%, #b88d35 93%, #c8aa6e 100%) 1;
+	background: rgb(0 0 0 / 64%);
+}
+
+.message {
+	color: rgb(205, 190, 145);
+	bottom: 317px;
+    right: 364px;
+    width: 325px;
+    position: absolute;
+    text-align: center;
+    font-size: 17px;
+	font-family: var(--font-family, var(--font-display));
+}
+
+.downdiv {
+	display: flex;
+    bottom: 285px;
+    right: 477px;
+    width: 100px;
+    height: 33px;
+    position: absolute;
+    border-width: 2px;
+    border-style: solid;
+    border-color: transparent;
+    border-image: linear-gradient(to top, rgb(105, 86, 37) 0%, rgb(169, 133, 45) 23%, rgb(184, 141, 53) 93%, rgb(200, 170, 110) 100%) 1 / 1 / 0 stretch;
+    box-sizing: border-box;
+	background: #1e2328;
+}
+
+.downdiv:hover {
+	filter: brightness(1.3) hue-rotate(263deg) saturate(0.4) !important;
+}
+
+.download {
+    bottom: -3px;
+    width: 97px;
+    height: 26px;
+    color: rgb(205, 190, 145);
+    font-size: 14px;
+    font-family: var(--font-family, var(--font-display));
+    font-weight: bold;
+    letter-spacing: 1px;
+    position: absolute;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+	margin-top: 10px;
+}
+
+.closediv {
+	display: flex;
+    bottom: 360px;
+    right: 345px;
+    position: absolute;
+	border: 3px solid #cdbe91;
+	border-radius: 50%;
+	width: 25px;
+    height: 25px;
+    background: #1e282d;
+	cursor: pointer;
+}
+
+.closediv:hover {
+	filter: brightness(1.3) hue-rotate(263deg) saturate(0.4) !important;
+}
+
+.closenotice {
+    bottom: 2px;
+    right: 3px;
+    position: absolute;
+	width: 20px;
+	cursor: pointer;
+}
+
+.Elaina-Update {
+	text-align: left;
+	overflow-wrap: break-word;
+}

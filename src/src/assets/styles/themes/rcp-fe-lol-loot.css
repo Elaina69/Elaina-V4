@@ -1,0 +1,31 @@
+.loot-backdrop {
+	height: 720px !important;
+}
+
+.loot-inventory.ember-view {
+	height: 520px !important;
+}
+
+.loot-recipe-help-container {
+	z-index: -1 !important;
+}
+
+.loot-recipe-help-container .recipe-help-button {
+	display: none !important;
+}
+
+.loot-inventory .loot-action-tabs-container {
+	height: auto !important;
+}
+
+.loot-backdrop.background-static {
+	background: none !important;
+}
+
+.moon-skin-backdrop {
+	background: none !important;
+}
+
+.mythic-shop-backdrop {
+	background: none !important;
+}

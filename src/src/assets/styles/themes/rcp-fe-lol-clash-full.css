@@ -1,0 +1,7 @@
+.clash-aram-intro-modal {
+	display: none !important;
+}
+
+.clash-tab-team-background, .clash-tab-bracket-background, .tournament-scouting, .clash-missed-lockin-modal, .clash-root-background-landing, .clash-root-background {
+	background-image: none !important;
+}
