@@ -1,0 +1,320 @@
+:root {
+	--Settings-and-Dialog-frame-color: rgb(0 0 0 / 15%);
+}
+
+.elaina-theme-settings-row {
+    margin-bottom: 15px;
+    clear: both;
+}
+
+.elaina-theme-settings-row::after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+#Q-Delay {
+	display: flex;
+	margin-bottom: 0px !important;
+}
+
+#Create-Delay {
+	margin-right: 15px;
+	margin-bottom: 0px !important;
+}
+
+#Find-Delay {
+	margin-bottom: 0px !important;
+}
+
+#Custom-Curency {
+	display: flex;
+	margin-bottom: 0px !important;
+}
+
+#custom-rp {
+	margin-right: 15px;
+	margin-bottom: 0px !important;
+}
+
+#custom-be {
+	margin-bottom: 0px !important;
+}
+
+#Info {
+	display: flex;
+}
+
+#Info-div {
+	margin-right: 15px;
+	width: 318.81px;
+}
+
+.settings-logo {
+	width: 115px;
+}
+
+.theme-settings-logo {
+	width: 115px;
+}
+
+.plugins-settings-logo {
+	width: 115px;
+	cursor: pointer;
+}
+
+.reload {
+	display: block !important;
+	width: 138.375px;
+}
+
+#j1_4 {
+	margin-bottom: 17px;
+}
+
+#autobanpick {
+	margin-bottom: 17px;
+}
+
+#loothelp {
+	margin-bottom: 17px;
+}
+
+#rdskin {
+	margin-bottom: 17px;
+}
+
+#pandoru {
+	margin-bottom: 17px;
+}
+
+.ready-check-map-background.ember-view {
+    display: none !important;
+}
+
+#Custom-icon-list {
+	margin-left: 25px !important;
+}
+
+#customprf {
+	margin-left: 25px !important;
+}
+
+.donate {
+	width: 60px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.friend-header {
+	display: block !important;
+	margin-left: 11px !important;
+	padding: 0px !important;
+	font-size: 12px !important;
+	line-height: 13px !important;
+}
+
+#dev-div {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+	text-align: center;
+}
+
+.dev_ava {
+    width: 125px;
+    border-radius: 50%;
+    border: 5px solid #ff8787;
+}
+
+#dev-avatar {
+	display: flex;
+	margin-right: 15px;
+}
+
+#first_line {
+	font-size: 18px;
+    color: #cdbe91;
+    font-weight: 600;
+}
+
+#first_line_lyfhael {
+	font-size: 18px;
+    color: #5ed5e8;
+    font-weight: 600;
+}
+
+#first_line_elaina {
+	font-size: 18px;
+    color: #f9a8a8;
+    font-weight: 600;
+}
+
+#first_line_kubi {
+	font-size: 18px;
+    color: #cbc3e3;
+    font-weight: 600;
+}
+
+#Contributors-row {
+	display: flex;
+}
+
+#contributors {
+	font-size: 16px;
+    color: #cdbe91;
+    font-weight: 600;
+}
+
+#Contrib {
+	width: 220px;
+    display: flex;
+    border: 2px solid #cdbe91;
+    height: 60px;
+    border-radius: 10px;
+    margin-right: 15px;
+}
+
+.contributor-img {
+	width: 50px;
+    height: 50px;
+    padding: 5px 5px 5px 5px;
+    border: 0px;
+    border-radius: 10px;
+}
+
+#contributor-name {
+	font-size: 15px;
+    font-weight: 600;
+    margin-top: 11px !important;
+    color: #cdbe91;
+    margin-bottom: 3px !important;
+}
+
+#Donation {
+	text-align: center;
+}
+
+#Donation-row {
+    display: flex;
+    justify-content: center;
+}
+
+#restoreAndDeleteData {	
+	display: flex !important;
+}
+
+.delete-data-button {
+	margin-left: 100px !important;
+	visibility: hidden;
+}
+
+.restore-data-button {
+	margin-left: 25px !important;
+	visibility: hidden;
+}
+
+#changePlaybackRow {
+	display: flex !important;
+}
+
+.Playback-speed {
+	margin-bottom: 0px !important;
+}
+
+#playback-percent {
+	margin-left: 10px !important;
+    font-size: 20px !important;
+    margin-top: 9px !important;
+	margin-bottom: 0px !important;
+}
+
+.playback_refresh_button {
+    margin-left: 36px !important;
+}
+
+.ManualRestore {
+	margin-left: 25px !important;
+}
+
+.ManualBackup {
+	margin-left: 25px !important;
+}
+
+#downloadBackup {
+	display: none !important;
+}
+
+#RestoreRow {
+	display: flex !important;
+}
+
+#restoreFileInfo {
+	margin-left: 25px !important;
+}
+
+#background-settings {
+	margin-left: 25px !important;
+}
+
+.open-background-folder {
+	margin-bottom: 25px !important;
+}
+
+#add-background-manually-row {
+	margin-left: 25px !important;
+}
+
+#manual-wallpaper, #manual-audio, #manual-banner, #manual-font {
+	display: flex;
+}
+
+.manual-wallpaper-name, .manual-audio-name, .manual-banner-name, .manual-font-name {
+	margin-bottom: 0px !important;
+}
+
+.add-background, .delete-background {
+	margin-left: 15px;
+}
+
+#nickname-color-with-text {
+	display: flex;
+}
+
+#nickname-color-text {
+	margin-top: 6px !important;
+	margin-left: 15px;
+}
+
+#change-nickname-color-row {
+	margin-left: 25px !important;
+}
+
+.color-picker-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.color-picker-container input[type="color"] {
+    margin-right: 5px;
+}
+
+#add-color-button-container {
+    margin-top: 10px;
+}
+
+#gradient-colors-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#gradient-colors {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}

@@ -1,0 +1,15 @@
+.postgame-champion-background {
+	display: none !important;
+}
+
+.postgame-background-image {
+	display: none !important;
+}
+
+.postgame-champion-background-wrapper {
+	background: transparent !important;
+}
+
+.postgame-champion-background-mask {
+	background: transparent !important;
+}

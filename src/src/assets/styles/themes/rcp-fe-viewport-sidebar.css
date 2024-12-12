@@ -1,0 +1,62 @@
+:root {
+	--social-sidebar-bg-color: linear-gradient(rgb(6 6 6), rgb(0 0 0 / 25%));
+	--social-sidebar-bg-color-friendslist-hide: transparent;
+}
+
+lol-social-avatar[ref='iconElement'], .lol-social-identity.ember-view > .details {
+	z-index: 1 !important;
+}
+
+lol-social-roster-member .offline .member-name {
+	color:#9a9696!important
+}
+
+.lol-social-sidebar.ember-view {
+	background: transparent!important
+}
+
+.availability-icon {
+	position: relative!important;
+}
+
+.availability-icon.chat {
+	background: #09a646 !important;
+}
+
+.summoner-level {
+	color:#ffe8a5!important
+}
+
+.filled.xp-ring {
+	background: linear-gradient(rgb(255 236 236), rgb(87 103 105 / 48%)) !important;
+}
+
+.alpha-tag {
+	color:#ffffffc9!important;
+}
+
+.alpha-version-panel {
+	background: linear-gradient(rgba(0, 0, 0, 0), rgba(38, 78, 52, 0))!important;
+	border-top: thin solid #1e282d00 !important;
+}
+
+.friend-requests {
+	background:rgb(66, 63, 53)!important
+}
+
+.social-identity-block > .name {
+	margin-left: 4px !important;
+}
+
+.social-identity-block > .lower-details, .social-identity-block > .lower-details > lol-social-availability-hitbox {
+	margin-left: 2px !important;
+}
+
+.identity-icon.social-avatar-hit {
+	margin-right: 7px !important;
+}
+
+/* VNG age rating */
+.vng-age-rating.ember-view {
+	display: none !important;
+}

@@ -1,0 +1,35 @@
+.rcp-fe-lol-event-hub-application {
+	background-image: none !important;
+}
+
+.event-shop-progression {
+	background: none !important;
+	box-shadow: none !important;
+}
+
+.eh-page-header {
+	background: none !important;
+	border-bottom: none !important;
+	margin: 10px !important;
+}
+
+.eh-page-header-token-balance {
+	border-radius: 10px;
+    border: 2px solid var(--default-color, #cdbe91) !important;
+	background: #000000a6;
+	padding: 10px;
+    width: 160px;
+}
+
+.event-shop-category-nav-bar {
+	background: none !important;
+    border: 0px !important;
+}
+
+.event-shop-progression-fallback, .event-shop-progression-info, .event-shop-progression-track {
+	background: #010a1366 !important;
+}
+
+.event-shop-offer-card {
+	background-color: #010a1373 !important;
+}

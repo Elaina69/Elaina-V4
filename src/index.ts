@@ -84,8 +84,12 @@ class ElainaTheme {
         // Load plugins
         // Custom BE, RP
         const customBeRp = new CustomBeRp()
-        if (window.DataStore.get("Custom_RP")) customBeRp.RP()
-        if (window.DataStore.get("Custom_BE")) customBeRp.BE()
+        if (window.DataStore.get("Custom_RP")) {
+            window.setInterval(() => { customBeRp.RP() }
+        ), 300}
+        if (window.DataStore.get("Custom_BE")) {
+            window.setInterval(() => { customBeRp.BE() }
+        ), 300}
 
         // Auto Accept
         const autoAccept = new AutoAccept()

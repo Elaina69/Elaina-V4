@@ -1,0 +1,53 @@
+.lobby-header-overlay {
+	background: unset!important
+}
+
+.parties-invite-dropzone {
+	bottom: -40px !important;
+}
+
+.parties-game-search-info {
+	color:#000000!important
+}
+
+.parties-game-search-elapsed {
+	color: white!important;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black !important;
+}
+
+.parties-background.ember-view .lol-uikit-background-switcher-image {
+    display: none !important;
+}
+
+.v2-parties-invite-info-panel {
+	background: transparent !important;
+}
+
+.parties-invite-info-panel.ember-view {
+	background: transparent !important;
+}
+
+.parties-background {
+	background: linear-gradient(to bottom, rgb(255 255 255 / 26%) 0%, rgba(0,0,0,0) 50%, rgb(90 27 62 / 20%) 100%) !important;
+}
+
+.parties-game-section.use-animation > .parties-game-info-panel-bg-container > video {
+	filter: saturate(0.5) brightness(1) invert(1) hue-rotate(27deg) !important;
+}
+
+.parties-status-card-bg-container video {
+	filter: saturate(0.5) brightness(1) invert(1) hue-rotate(27deg) !important;
+}
+
+.parties-status-member-icons > .parties-status-member-joined {
+	filter: grayscale(1) saturate(0) brightness(0.5) !important;
+}
+
+:host .parties-status-card.open {
+	filter: hue-rotate(240deg) !important;
+}
+/* Auto accept button */
+.cs-buttons-container {
+    display: flex;
+    gap: 3em;
+}

@@ -16,7 +16,7 @@ export class CheckUpdate {
 	main = () => {
 		if (!window.DataStore.get("prevent-manual-update")) {
 			window.addEventListener("load", ()=> {
-				let checkKey: boolean = (LocalKey == CdnKey)
+				let checkKey: boolean = (LocalKey >= CdnKey)
 		
 				if (checkKey) window.DataStore.set(`Force-Update`, false)
 				else window.DataStore.set(`Force-Update`, true)
