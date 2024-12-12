@@ -37,7 +37,7 @@ export class Filters {
 			"rcp-fe-lol-loot": "Loot",
 			"rcp-fe-lol-clash-full": "Clash",
 			"rcp-fe-lol-postgame": "Postgame",
-			"rcp-fe-lol-event-shop": "EventShop",
+			"rcp-fe-lol-event-hub": "EventShop",
 			"rcp-fe-lol-tft": "TFT"
 		};
 	
@@ -52,7 +52,7 @@ export class Filters {
 			"rcp-fe-lol-loot", 
 			"rcp-fe-lol-clash-full",
 			"rcp-fe-lol-postgame", 
-			"rcp-fe-lol-event-shop", 
+			"rcp-fe-lol-event-hub", 
 			"rcp-fe-lol-tft"
 		];
 	
