@@ -16,9 +16,9 @@ export async function cdnImport(url: string, errorMsg: any): Promise<any> {
             throw new Error();
         }
     } 
-    catch {
+    catch (err: any) {
         clearTimeout(timeoutId);
-        error(errorMsg);
+        error(errorMsg, err);
         window.Toast.error(errorMsg);
     }
 };

