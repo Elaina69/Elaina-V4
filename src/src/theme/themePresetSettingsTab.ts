@@ -4,6 +4,7 @@
  */
 
 import { getThemeName } from '../otherThings.ts'
+import { Component, jsx, render } from "nano-jsx"
 
 let icdata: Object = (await import(`//plugins/${window.getThemeName()}/config/icons.js`)).default;
 
@@ -14,8 +15,6 @@ function openAssets() {window.openPluginsFolder(`${getThemeName()}/assets`)}
 
 export class ThemePresetSettings {
 	createThemeMenu = async (root: HTMLElement) =>  {
-		//@ts-ignore
-		const { Component, jsx, render } = await import('//esm.run/nano-jsx')
 		const version: string = window.DataStore.get("Theme-version")
 		
 		let l_reload_client = await getString('reload-client')
