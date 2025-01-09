@@ -9,7 +9,6 @@
 import { cdnImport } from "../otherThings.ts"
 import { getThemeName } from "../otherThings"
 import { log, warn, error } from "../utils/themeLog.ts";
-import { handleElementMutation } from '../utils/observer.ts'
 import * as upl from 'pengu-upl';
 import utils from '../utils/utils.ts';
 import LocalKey from "../updates/updateKeyLocal.ts";
@@ -21,25 +20,9 @@ const bgFolder: string = `${datapath}assets/backgrounds/`;
 window.DataStore.set("Font-folder", `${datapath}assets/fonts/`);
 window.DataStore.set("Plugin-folder-name", getThemeName());
 
-let previous_page = '';
-let runtime = 0;
-
 let addedBackgrounds = false
-
-let debounceTimer: any;
-
-const mutationConfig = {
-    id: new Map(),
-    tag: new Map(),
-    class: new Map([
-        ['item-page-items-container-wrapper', [(elem) => {
-            elem.style.background = "transparent";
-        }]],
-        ['purchase-history-page-content-wrapper', [(elem) => {
-            elem.style.background = "transparent";
-        }]]
-    ])
-};
+let navbarContentList: any[] = [];
+let haveNewContent = 0
 
 // Set default data
 const defaultData = {
@@ -78,20 +61,27 @@ let CdnKey: number;
 let cdnUrl = "https://cdn.jsdelivr.net/npm/elaina-theme-data"
 let localUrl = `//plugins/${getThemeName()}/elaina-theme-data`
 
-if (window.DataStore.get("Dev-mode")) {
-    CdnKey = (await cdnImport(`${localUrl}/src/update/update.js`, "Can't load cdn key")).default.key;
-    log('%cRunning Elaina theme - %cDev version', 'color: #e4c2b3', 'color: red');
-} 
-else {
-    //@ts-ignore
-    CdnKey = (await cdnImport(`${cdnUrl}/src/update/update.js`, "Can't load cdn key")).default.key;
-    log('%cRunning Elaina theme - %cStable version', 'color: #e4c2b3', 'color: #00ff44');
+try {
+    if (window.DataStore.get("Dev-mode")) {
+        CdnKey = (await cdnImport(`${localUrl}/src/update/update.js`, "Can't load cdn key")).default.key;
+        log('%cRunning Elaina theme - %cDev version', 'color: #e4c2b3', 'color: red');
+    } 
+    else {
+        CdnKey = (await cdnImport(`${cdnUrl}/src/update/update.js`, "Can't load cdn key")).default.key;
+        log('%cRunning Elaina theme - %cStable version', 'color: #e4c2b3', 'color: #00ff44');
+    }
+}
+catch {
+    CdnKey = LocalKey
+    log('%cRunning Elaina theme - %cChecking version error', 'color: #e4c2b3', 'color: #00ff44');
 }
 
 if (CdnKey === LocalKey) {
-    //@ts-ignore
-    const themeVersion = (await cdnImport(`${cdnUrl}/src/update/update.js`)).default.version;
-    window.DataStore.set("Theme-version", themeVersion);
+    try {
+        const themeVersion = (await cdnImport(`${cdnUrl}/src/update/update.js`, "Can't get theme version")).default.version;
+        window.DataStore.set("Theme-version", themeVersion);
+    }
+    catch { error("Can't get theme version") }
 
     if (!window.DataStore.get(`Change-CDN-version`)) {
         const response = await fetch(`${cdnUrl}/package.json`);
@@ -108,33 +98,58 @@ export function createHomePageTab(context: any) {
         //@ts-ignore
         window.__RCP_NAV_API = api;
 
-        const originalCreate = api._apiHome.navigationManager.createSubNavigationFromJSON;
-        api._apiHome.navigationManager.createSubNavigationFromJSON = async function (e, t, n) {
-            console.dir(n);
+        try {
+            const originalCreate = api._apiHome.navigationManager.createSubNavigationFromJSON;
+            api._apiHome.navigationManager.createSubNavigationFromJSON = async function (e, t, n) {
+                console.dir(n);
 
-            n.push({
-                id: 'elaina-home',
-                displayName: await getString("home"),
-                isPlugin: false,
-                enabled: true,
-                visibile: true,
-                priority: 1,
-                url: 'https://elainatheme.xyz/blankpage',
-            });
+                n.push({
+                    id: 'elaina-home',
+                    displayName: await getString("home"),
+                    isPlugin: false,
+                    enabled: true,
+                    visibile: true,
+                    priority: 1,
+                    url: 'https://elainatheme.xyz/blankpage',
+                });
 
-            return originalCreate.apply(this, [e, t, n]);
-        };
+                return originalCreate.apply(this, [e, t, n]);
+            };
+        }
+        catch {
+            error("Failed to create homepage, maybe you're in pbe version")
+        }
     });
 
     context.rcp.postInit("rcp-fe-lol-navigation", async (api) => {
-        const navigationManager = api._apiHome.navigationManager;
-        api._apiHome.navigationManager = new Proxy(navigationManager, {
-            set(target, property, value) {
-                target[property] = (property === "firstNavItemId") ? 'elaina-home' : value;
-                return true;
-            }
-        });
+        try {
+            const navigationManager = api._apiHome.navigationManager;
+            api._apiHome.navigationManager = new Proxy(navigationManager, {
+                set(target, property, value) {
+                    target[property] = (property === "firstNavItemId") ? 'elaina-home' : value;
+                    return true;
+                }
+            });
+        }
+        catch {
+            error("Failed to create homepage, maybe you're in pbe version")
+        }
     });
+}
+
+function freezeProperties(object: Object, properties: any[]) {
+	for (const type in object) {
+		if ((properties && properties.length && properties.includes(type)) || (!properties || !properties.length)) {
+			let value = object[type]
+			try {
+				Object.defineProperty(object, type, {
+					configurable: false,
+					get: () => value,
+					set: (v) => v,
+				})
+			}catch {}
+		}
+	}
 }
 
 class ChangeHomePageTabs {
@@ -228,6 +243,8 @@ class WallpaperController {
             elainaStaticBg.classList.remove("webm-hidden");
         }, 500);
 
+        this.wallpaperSlider(BG)
+
         // @ts-ignore
         await refreshList()
     }
@@ -259,6 +276,26 @@ class WallpaperController {
     
         await this.changeBG(window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]);
     };
+
+    checkBGType = (wallpaper: string) => {
+        const imageRegex = /\.(jpg|jpeg|png|gif|bmp|webp|ico)$/i;
+        const videoRegex = /\.(mp4|webm|mkv|mov|avi|wmv|3gp|m4v)$/i;
+
+        if (imageRegex.test(wallpaper)) {
+            return 0
+        } 
+        else if (videoRegex.test(wallpaper)) {
+            return 1
+        }
+    }
+
+    wallpaperSlider = (wallpaper: string) => {
+        if (window.DataStore.get("wallpaper-slider") && this.checkBGType(wallpaper) == 0) {
+            window.setTimeout(()=> {
+                this.nextWallpaper()
+            }, window.DataStore.get("wallpaper-change-slide-time"))
+        }
+    }
 }
 
 const wallpaperController = new WallpaperController()
@@ -511,9 +548,14 @@ class MainController {
     
         // Append container and wallpaper controls separately to maintain original positions
         const showContainer = document.querySelector(".rcp-fe-lol-home");
+        const showContainerNew = document.querySelector("#activity-center");
         if (showContainer) {
             showContainer.append(container, wallpaperControls);
-        } else {
+        } 
+        else if (showContainerNew) {
+            showContainerNew.append(container, wallpaperControls);
+        } 
+        else {
             error("Could not find the container '.rcp-fe-lol-home' to append controls.");
         }
     
@@ -621,10 +663,273 @@ class MainController {
                 wallpaperController.prevWallpaper();
             }
         });
+
+        // change wallpaper/audio controller if hide homepage navbar
+        if (window.DataStore.get("hide-homepage-navbar")) {
+            container.style.left = "20px"
+            wallpaperControls.style.left = "20px"
+        }
+        else {
+            container.style.left = "230px"
+            wallpaperControls.style.left = "230px"
+        }
     };
 }
-
 const mainController = new MainController()
+
+// Create hide navbar button
+class HideNavbarButton {
+    checkNewContent = () => {
+        let navbarContent = document.querySelectorAll<HTMLElement>(".activity-center__tab_content");
+
+        navbarContent.forEach((element) => {
+            const labelElement = element.querySelector<HTMLElement>(".activity-center__tab_label_display");
+            if (labelElement && labelElement.innerText) {
+                navbarContentList.push(labelElement.innerText);
+            }
+        });
+
+        let set = new Set(window.DataStore.get("navbar-content")); 
+        let set2 = new Set(navbarContentList); 
+
+        for (const element of navbarContentList) {
+            if (!set.has(element)) {
+                haveNewContent++;
+            }
+        }
+        for (const element of window.DataStore.get("navbar-content")) {
+            if (!set.has(element)) {
+                haveNewContent++;
+            }
+        }
+    }
+
+    createHideButton = () => {
+        const hideButton = document.createElement("div")
+        const hideButtonIcon = document.createElement("img")
+        const navbar = document.querySelector(".activity-center__tabs_container")
+        const newContent = document.createElement("div")
+
+        hideButton.setAttribute("class", "hide-navbar-button")
+        hideButtonIcon.setAttribute("class", "hide-navbar-button-icon")
+        newContent.setAttribute("class", "navbar-have-new-content")
+
+        if(navbar) {
+            navbar.appendChild(hideButton)
+            hideButton.append(hideButtonIcon)
+            hideButton.append(newContent)
+        }
+
+        if (haveNewContent > 0) {
+            newContent.style.display = "block"
+        }
+        
+        hideButton.addEventListener("click", () => {
+            if (window.DataStore.get("hide-homepage-navbar")) {
+                window.DataStore.set("hide-homepage-navbar", false)
+            }
+            else {
+                window.DataStore.set("hide-homepage-navbar", true)
+            }
+            this.hideShowNavBar()
+            this.changeHomePageStyle()
+            window.DataStore.set("navbar-content", navbarContentList)
+            newContent.style.display = "none"
+        })
+    }
+
+    hideShowNavBar = () => {
+        const nav: any = document.querySelector(".activity-center__tabs_scrollable")
+        const navFooter: any = document.querySelector(".activity-center__tabs_footer")
+        const navDivider: any = document.querySelector(".activity-center__tabs_section-divider")
+        const hideButton: any = document.querySelector(".hide-navbar-button")
+        const hideButtonIcon: any = document.querySelector(".hide-navbar-button-icon")
+
+        try {
+            if (window.DataStore.get("hide-homepage-navbar")) {
+                nav.style.cssText = `transform: translateX(-212px);`
+                navFooter.style.cssText = `transform: translateX(-212px);`
+                navDivider.style.cssText = `transform: translateX(-212px);`
+                hideButton.style.cssText = `transform: translateX(0px);`
+                hideButtonIcon.setAttribute("src", `${iconFolder}plugins-icons/next_button.png`);
+            }
+            else {
+                nav.style.cssText = `transform: translateX(0px);`
+                navFooter.style.cssText = `transform: translateX(0px);`
+                navDivider.style.cssText = `transform: translateX(0px);`
+                hideButton.style.cssText = `transform: translateX(212px);`
+                hideButtonIcon.setAttribute("src", `${iconFolder}plugins-icons/prev_button.png`);
+            }
+        }
+        catch (err: any) { error("Get error while changing style for navbar:", err)}
+    }
+
+    changeHomePageStyle = () => {
+        const wallpaperController: any = document.querySelector(".wallpaper-controls")
+        const audioController: any = document.querySelector(".webm-bottom-buttons-container")
+        const activityCenter: any = document.querySelector(".activity-center-ready > main")
+        
+        if (window.DataStore.get("hide-homepage-navbar")) {
+            if (activityCenter) activityCenter.style.cssText = `opacity: 0;`
+            if (wallpaperController) wallpaperController.style.cssText = `transform: translateX(0px);`
+            if (audioController) audioController.style.cssText = `transform: translateX(0px);`
+        }
+        else {
+            if (activityCenter) activityCenter.style.cssText = `opacity: 1;`
+            if (wallpaperController) wallpaperController.style.cssText = `transform: translateX(212px);`
+            if (audioController) audioController.style.cssText = `transform: translateX(212px);`
+        }
+    }
+
+    addHideButton = () => {
+        if (document.querySelector(".hide-navbar-button")) return
+
+        // just make sure
+        try {
+            let button: any = document.getElementsByClassName("hide-navbar-button")
+            if (button.length > 1) {
+                for (let i = 0; i < button.length; i++) {
+                    button[i].remove()
+                }
+            }
+        } catch {}
+
+        upl.observer.subscribeToElementCreation(".activity-center__tabs_container", (element: any) => {
+            this.checkNewContent()
+            this.createHideButton()
+            this.hideShowNavBar()
+            this.changeHomePageStyle()
+        })
+
+        upl.observer.subscribeToElementCreation(".activity-center-default-activity", (element: any) => {
+            this.changeHomePageStyle()
+        })
+    }
+}
+const hideNavbarButton = new HideNavbarButton()
+
+// Create hide navbar button
+class HideTopNavbarButton {
+    createHideButton = () => {
+        const hideButton = document.createElement("div")
+        const hideButtonIcon = document.createElement("img")
+        const topNavbar = document.querySelector(".right-nav-menu")
+
+        hideButton.setAttribute("class", "hide-top-navbar")
+        hideButtonIcon.setAttribute("class", "hide-top-navbar-icon")
+
+        if(topNavbar) {
+            topNavbar.prepend(hideButton)
+            hideButton.append(hideButtonIcon)
+        }
+
+        this.changeButtonIcon(window.DataStore.get("hide-top-navbar"))
+
+        hideButton.addEventListener("click", () => {
+            if (window.DataStore.get("hide-top-navbar")) {
+                window.DataStore.set("hide-top-navbar", false)
+            }
+            else {
+                window.DataStore.set("hide-top-navbar", true)
+            }
+            this.hideShowTopNavBar()
+        })
+    }
+
+    changeButtonIcon = (isHidden: boolean) => {
+        const hideButtonIcon: any = document.querySelector(".hide-top-navbar-icon")
+        if (isHidden) {
+            hideButtonIcon.setAttribute("src", `${iconFolder}plugins-icons/prev_button.png`);
+        }
+        else {
+            hideButtonIcon.setAttribute("src", `${iconFolder}plugins-icons/next_button.png`);
+        }
+    }
+
+    hideShowTopNavBar = () => {
+        const navItem: any = document.querySelectorAll(".right-nav-menu > .main-navigation-menu-item")
+        const verticalRule: any = document.querySelectorAll(".right-nav-vertical-rule")
+        const walletBadge: any = document.querySelector(".wallet-and-badges")
+        const hideButton: any = document.querySelector(".hide-top-navbar")
+
+        try {
+            let isHidden = window.DataStore.get("hide-top-navbar")
+            if (isHidden) {
+                let nav: any = document.querySelector(".right-nav-menu")
+                let navWidth = nav.offsetWidth
+
+                hideButton.style.cssText = `transform: translateX(${navWidth-40}px);`
+                for (let i = 0; i < navItem.length; i++) {
+                    navItem[i].style.cssText = `
+                        transform: translateX(${navWidth-40}px);
+                        opacity: 0;
+                        pointer-events: none;
+                    `
+                    freezeProperties(navItem[i].style, ["transform"])
+                }
+                for (let i = 0; i < verticalRule.length; i++) {
+                    verticalRule[i].style.cssText = `
+                        transform: translateX(${navWidth-40}px);
+                        opacity: 0;
+                        pointer-events: none;
+                    `
+                    freezeProperties(verticalRule[i].style, ["transform"])
+                }
+                walletBadge.style.cssText = `
+                    transform: translateX(${navWidth-40}px);
+                    opacity: 0;
+                    pointer-events: none;
+                `
+            }
+            else {
+                hideButton.style.cssText = `transform: translateX(0px);`
+                for (let i = 0; i < navItem.length; i++) {
+                    navItem[i].style.cssText = `
+                        transform: translateX(0px);
+                        opacity: 1;
+                        pointer-events: auto;
+                    `
+                }
+                for (let i = 0; i < verticalRule.length; i++) {
+                    verticalRule[i].style.cssText = `
+                        transform: translateX(0px);
+                        opacity: 1;
+                        pointer-events: auto;
+                    `
+                }
+                walletBadge.style.cssText = `
+                    transform: translateX(0px);
+                    opacity: 1;
+                    pointer-events: auto;
+                `
+            }
+            this.changeButtonIcon(isHidden)
+        }
+        catch { log("Can't find top navigation bar")}
+    }
+
+    addHideButton = () => {
+        upl.observer.subscribeToElementCreation(".right-nav-menu > .main-navigation-menu-item", (element: any) => {
+            if (document.querySelector(".hide-top-navbar")) return
+
+            // just make sure
+            try {
+                let button: any = document.getElementsByClassName("hide-top-navbar")
+                if (button.length > 1) {
+                    for (let i = 0; i < button.length; i++) {
+                        button[i].remove()
+                    }
+                }
+            } catch {}
+
+            this.createHideButton()
+            window.setTimeout(()=> {
+                this.hideShowTopNavBar()
+            }, 2000)
+        })
+    }
+}
+const hideTopNavbarButton = new HideTopNavbarButton()
 
 //Add and load wallpaper/audio
 class WallpaperAndAudio {
@@ -665,21 +970,26 @@ class WallpaperAndAudio {
         video.currentTime = window.DataStore.get("Wallpaper-currentTime");
         video.src = `${bgFolder}wallpapers/${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`;
         video.playbackRate = window.DataStore.get("Playback-speed") / 100;
-        video.loop = true;
+        
 
         video.addEventListener('timeupdate', () => {
             window.DataStore.set("Wallpaper-currentTime", video.currentTime)
         });
-
-        video.addEventListener("error", () => {
-            video.load();
-            video.addEventListener("ended", () => video.load());
-        });
+        
+        if (window.DataStore.get("wallpaper-slider")) {
+            video.loop = false
+            video.addEventListener("ended", () => {
+                wallpaperController.nextWallpaper();
+            });
+        }
+        else video.loop = true;
     }
 
     setImageWallpaperElement = () => {
         const imgWallpaper: any = document.getElementById("elaina-static-bg")
         imgWallpaper.src = `${bgFolder}wallpapers/${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`;
+
+        wallpaperController.wallpaperSlider(window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')])
     }
 
     setAudioElement = () => {
@@ -713,7 +1023,7 @@ class WallpaperAndAudio {
 
     loadWallpaperAndMusic() {
         const initializeUI = () => {
-            if (document.querySelector(".rcp-fe-lol-home")) {
+            if (document.querySelector(".rcp-fe-lol-home") || document.querySelector(".rcp-fe-lol-activity-center")) {
                 log("Load wallpaper and audio")
 
                 this.setWallpaperElement()
@@ -748,10 +1058,11 @@ class WallpaperAndAudio {
         const muteCss = window.DataStore.get("mute-audio") ? "color: #00ff44" : "color: red";
         const pauseWall = window.DataStore.get('pause-wallpaper') % 2 === 0 ? "color: #00ff44" : "color: red";
         const pauseAudio = window.DataStore.get('pause-audio') % 2 === 0 ? "color: #00ff44" : "color: red";
+        const elainaBg: any = document.getElementById("elaina-bg");
     
         if (window.DataStore.get("Continues_Audio")) {
             log(`%cNow playing %c${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]} %cand %c${window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]}`, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', 'color: #0070ff');
-            log(`%ccurrent wallpaper status: pause: %c${window.DataStore.get('pause-wallpaper') % 2 === 0}%c, play/pause-time: %c${window.DataStore.get('pause-wallpaper')}%c, mute: %c${window.DataStore.get("mute-audio")}%c, loop: %ctrue%c, volume: %c${window.DataStore.get("wallpaper-volume") * 100}%`, 'color: #e4c2b3', pauseWall, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', muteCss, 'color: #e4c2b3', 'color: #00ff44', 'color: #e4c2b3', 'color: #0070ff');
+            log(`%ccurrent wallpaper status: pause: %c${window.DataStore.get('pause-wallpaper') % 2 === 0}%c, play/pause-time: %c${window.DataStore.get('pause-wallpaper')}%c, mute: %c${window.DataStore.get("mute-audio")}%c, loop: %c${elainaBg.loop}%c, volume: %c${window.DataStore.get("wallpaper-volume") * 100}%`, 'color: #e4c2b3', pauseWall, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', muteCss, 'color: #e4c2b3', 'color: #00ff44', 'color: #e4c2b3', 'color: #0070ff');
             log(`%ccurrent audio status: pause: %c${window.DataStore.get('pause-audio') % 2 === 0}%c, play/pause-time: %c${window.DataStore.get('pause-audio')}%c, mute: %c${window.DataStore.get("mute-audio")}%c, loop: %c${window.DataStore.get("audio-loop")}%c, volume: %c${window.DataStore.get("audio-volume") * 100}%`, 'color: #e4c2b3', pauseAudio, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', muteCss, 'color: #e4c2b3', loopWallCss, 'color: #e4c2b3', 'color: #0070ff');
         }
     };
@@ -760,93 +1071,36 @@ class WallpaperAndAudio {
 const wallpaperAndAudio = new WallpaperAndAudio()
 
 class AddHomePage {
-    modifyStoreIframe = () => {
-        const storeIframe: any = document.querySelector('#rcp-fe-lol-store-iframe > iframe[referrerpolicy="no-referrer-when-downgrade"]');
-        if (storeIframe && storeIframe.contentWindow) {
-            try {
-                handleElementMutation(storeIframe.contentWindow.document.body, true, mutationConfig);
-                const th = storeIframe.contentWindow.document.querySelectorAll("div > div > table > thead > tr > th");
-                th.forEach(header => {
-                    header.style.background = "transparent";
-                });
-                runtime++;
-                log(`Store iframe modified (${runtime} times)`);
-            } catch (mutationError: any) {
-                error("Error in handleElementMutation:", mutationError);
-            }
-        }
-    };
-
-    debouncedModifyStoreIframe = () => {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(this.modifyStoreIframe, 500); 
-    };
-
-    pageListenner = async (node: any) => {
-        if (!document.querySelector(".rcp-fe-lol-home")) return;
-        
+    pageListenner = async (node: any) => {      
         const pagename = node.getAttribute("data-screen-name");
-        const isOtherPage = !["rcp-fe-lol-navigation-screen", "window-controls", "rcp-fe-lol-home", "social"].includes(pagename);
+        const isOtherPage = !["rcp-fe-lol-navigation-screen", "window-controls", "social", "rcp-fe-lol-activity-center-main"].includes(pagename);
     
-        if (pagename === "window-controls" && !addedBackgrounds) {
-            addedBackgrounds = true
-            wallpaperAndAudio.loadWallpaperAndMusic()
-            wallpaperAndAudio.logDebuggingInfo()
+        if (pagename === "rcp-fe-lol-home-main" || pagename === "window-controls" || pagename === "rcp-fe-lol-activity-center-main") {
+            if (!addedBackgrounds) {
+                addedBackgrounds = true
+                wallpaperAndAudio.loadWallpaperAndMusic()
+                wallpaperAndAudio.logDebuggingInfo()
 
-            upl.observer.subscribeToElementCreation(".tft-sub-nav-container span", (element: any) => {
-                changeHomePageTabs.deleteNavbarTab();
-            })
-        }
-    
-        if (pagename === "rcp-fe-lol-home-main") {
+                upl.observer.subscribeToElementCreation(".tft-sub-nav-container span", (element: any) => {
+                    changeHomePageTabs.deleteNavbarTab();
+                })
+            }
+
             if (!document.querySelector(".webm-bottom-buttons-container") && !document.querySelector(".webm-bottom-buttons-container-hovered")) {
                 mainController.deleteController();
                 mainController.createMainController();
                 document.querySelector(".webm-bottom-buttons-container")?.setAttribute("class", "webm-bottom-buttons-container-hovered")
                 window.setTimeout(()=> {document.querySelector(".webm-bottom-buttons-container-hovered")?.setAttribute("class", "webm-bottom-buttons-container")},2000)
+
+                hideNavbarButton.hideShowNavBar();
+                hideNavbarButton.changeHomePageStyle()
             }
+
             changeHomePageTabs.deleteNavbarTab();
-        } else if (isOtherPage && document.querySelector(".webm-bottom-buttons-container")) {
+        }
+        else if (isOtherPage && document.querySelector(".webm-bottom-buttons-container") && pagename != "rcp-fe-lol-info-hub") {
             mainController.deleteController();
         }
-    
-        if (pagename === "rcp-fe-lol-uikit-full-page-modal-controller") {
-            return;
-        }
-    
-        if (pagename === "rcp-fe-lol-store") {
-            runtime = 0;
-            this.modifyStoreIframe();
-    
-            const observer = new MutationObserver((mutations) => {
-                if (mutations.some(mutation => 
-                    mutation.type === 'childList' && 
-                    Array.from(mutation.addedNodes).some((node: any) => 
-                        node.nodeType === Node.ELEMENT_NODE && 
-                        (node.classList.contains('item-page-items-container-wrapper') || 
-                         node.classList.contains('purchase-history-page-content-wrapper'))
-                    )
-                )) {
-                    this.debouncedModifyStoreIframe();
-                }
-            });
-    
-            const config = { childList: true, subtree: true };
-            observer.observe(document.body, config);
-    
-            window.storeObserver = observer;
-        } 
-        else if (previous_page === "rcp-fe-lol-store") {
-            if (window.storeObserver) {
-                window.storeObserver.disconnect();
-                window.storeObserver = null;
-            }
-            clearTimeout(debounceTimer);
-        }
-    
-        log("%cCleared Background (" + `%c${runtime}%c)`, "color: #e4c2b3", "color: #0070ff", "color: #e4c2b3");
-    
-        if (previous_page !== pagename) previous_page = pagename;
     };
 }
 
@@ -860,6 +1114,8 @@ export class HomePage {
         wallpaperAndAudio.addAudioElement()
 
         utils.mutationObserverAddCallback(addHomePage.pageListenner, ["screen-root"]);
+        hideNavbarButton.addHideButton()
+        hideTopNavbarButton.addHideButton()
     }
 }
 

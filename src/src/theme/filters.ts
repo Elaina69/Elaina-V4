@@ -29,6 +29,7 @@ export class Filters {
 		const filtersDataMap = {
 			"rcp-fe-lol-yourshop": "Yourshop",
 			"rcp-fe-lol-home-main": "Homepage",
+			"rcp-fe-lol-activity-center-main": "Homepage",
 			"rcp-fe-lol-champ-select": "Champ-select",
 			"rcp-fe-lol-store": "Store",
 			"rcp-fe-lol-collections": "Collections",
@@ -44,6 +45,7 @@ export class Filters {
 		const brightness_modifiers = [
 			"rcp-fe-lol-yourshop", 
 			"rcp-fe-lol-home-main", 
+			"rcp-fe-lol-activity-center-main",
 			"rcp-fe-lol-champ-select",
 			"rcp-fe-lol-store", 
 			"rcp-fe-lol-collections", 

@@ -19,6 +19,9 @@
 	margin: 4px !important;
 	color: #cdbe91 !important;
 	font-family: var(--font-family, var(--font-display));
+	font-size: 18px !important;
+	transition: opacity 0.5s ease 0s, transform 0.5s ease 0s;
+    transform: translateX(0px);
 }
 
 .watermark-text {

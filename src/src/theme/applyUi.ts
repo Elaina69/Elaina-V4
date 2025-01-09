@@ -162,7 +162,11 @@ class NewGamesearchQueue {
 			`
 		)
 		upl.observer.subscribeToElementCreation('.parties-status-card-map', (element: any) => 
-			element.style.margin = '-3px 10px 0 0'
+			element.style.cssText = `
+				margin: -3px 10px 0 0;
+				filter: ${filters["PartiesStatusCard"]};
+			`
+
 		)
 		
 		// lol-parties-game-invites

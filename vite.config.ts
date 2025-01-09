@@ -128,7 +128,7 @@ export default defineConfig((config) => ({
                 // Add author comment block
                 const Author = `/**\n* @name ElainaV4\n* @author Elaina Da Catto\n* @description Elaina theme for Pengu Loader\n* @link https://github.com/Elaina69\n* @Nyan Meow~~~\n*/`;
                 const importDir = ""
-
+/*
 + `
 import wallpaper from "./assets/backgrounds/wallpapers?dir"
 import audio from "./assets/backgrounds/audio?dir"
@@ -162,7 +162,7 @@ const refreshList = async () => {
 
 await refreshList()
 `
-
+*/
                 async function prependCommentToFile(filePath, commentBlock) {
                     try {
                         if (!existsSync(filePath)) {

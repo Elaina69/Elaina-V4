@@ -1,0 +1,23 @@
+.activity-center-ready > main {
+    transition: opacity 0.5s ease-in-out !important;
+}
+
+.activity-center-application {
+    background-color: transparent !important;
+}
+
+#activity-center, #activity-center .activity-center__template {
+    background-color: transparent !important;
+}
+
+.activity-center__tabs_section-divider {
+    transition: opacity 0.5s ease, transform 0.5s ease !important;
+}
+
+.activity-center__tabs_footer {
+    transition: opacity 0.5s ease, transform 0.5s ease !important;
+}
+
+.activity-center__tabs_scrollable {
+    transition: opacity 0.5s ease, transform 0.5s ease !important;
+}

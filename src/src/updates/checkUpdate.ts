@@ -10,7 +10,10 @@ const fileLocation = window.DataStore.get("Dev-mode")
   	? `//plugins/${getThemeName()}/elaina-theme-data/src/update/update.js`
   	: `https://cdn.jsdelivr.net/npm/elaina-theme-data/src/update/update.js`;
 
-CdnKey = (await cdnImport(fileLocation, "Can't load cdn key")).default.key;
+try {
+	CdnKey = (await cdnImport(fileLocation, "Can't load cdn key")).default.key;
+}
+catch { CdnKey = LocalKey }
 
 export class CheckUpdate {
 	main = () => {

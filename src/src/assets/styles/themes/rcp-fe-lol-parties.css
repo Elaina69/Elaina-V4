@@ -51,3 +51,98 @@
     display: flex;
     gap: 3em;
 }
+
+.parties-game-type-select-wrapper.ember-view {
+	transition: transform 0.5s ease !important;
+    transform: translateX(0px);
+}
+
+.parties-custom-game-setup.ember-view { 
+	transition: transform 0.5s ease !important;
+    transform: translateX(0px);
+} 
+
+.custom-game-list.ember-view { 
+	transition: transform 0.5s ease !important;
+    transform: translateX(0px);
+}
+
+.parties-lower-section { 
+	transition: transform 0.5s ease !important;
+    transform: translateX(0px);
+}
+
+.v2-footer-component.ember-view { 
+	transition: transform 0.5s ease !important;
+    transform: translateX(0px);
+}
+
+.invite-info-panel-container {
+	transition: opacity 0.5s ease, transform 0.5s ease !important;
+    transform: translateX(0px);
+    opacity: 1;
+}
+
+.arrow-footer.ember-view > div { 
+	transition: transform 0.5s ease !important;
+    transform: translateX(0px);
+}
+
+.parties-point-eligibility-custom.ember-view { 
+	transition: transform 0.5s ease !important;
+    transform: translateX(0px);
+}
+
+.custom-game-teams.ember-view { 
+	transition: transform 0.5s ease !important;
+    transform: translateX(0px);
+}
+
+.parties-invite-info-panel.ember-view { 
+	transition: opacity 0.5s ease, transform 0.5s ease !important;
+    transform: translateX(0px);
+	opacity: 1;
+}
+
+.parties-invite-dropzone {
+    transition: transform 0.5s ease 0s;
+    transform: translateX(0px);
+}
+
+.party-members-container {
+	transition: transform 0.5s ease 0s;
+    transform: translateX(0px);
+}
+
+.tft-cards-container {
+	transition: transform 0.5s ease 0s;
+    transform: translateX(0px);
+}
+
+.tft-footer-container.ember-view {
+	transition: transform 0.5s ease 0s;
+    transform: translateX(0px);
+}
+
+.chat-container {
+	height: 0px !important;
+	top: 40px !important;
+}
+
+.parties-chat-room {
+	height: 0px !important;
+    left: 0px !important;
+    top: -6px !important;
+}
+
+.custom-root .parties-chat-room-custom {
+	top: 358px !important;
+}
+
+.find-match-button-container {
+	filter: var(--find-match-button) !important;
+}
+
+.confirm-button-container {
+	filter: var(--find-match-button) !important;
+}

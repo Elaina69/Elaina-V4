@@ -21,6 +21,7 @@
     "dependencies": {
         "archiver": "^7.0.1",
         "chalk": "^5.3.0",
+        "nano-jsx": "^0.1.0",
         "pengu-upl": "^1.0.0"
     }
 }

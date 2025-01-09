@@ -1,6 +1,9 @@
 :root {
 	--social-sidebar-bg-color: linear-gradient(rgb(6 6 6), rgb(0 0 0 / 25%));
-	--social-sidebar-bg-color-friendslist-hide: transparent;
+}
+
+.rcp-fe-viewport-sidebar {
+	background: transparent !important;
 }
 
 lol-social-avatar[ref='iconElement'], .lol-social-identity.ember-view > .details {
@@ -38,6 +41,7 @@ lol-social-roster-member .offline .member-name {
 .alpha-version-panel {
 	background: linear-gradient(rgba(0, 0, 0, 0), rgba(38, 78, 52, 0))!important;
 	border-top: thin solid #1e282d00 !important;
+	transition: transform 0.5s ease !important;
 }
 
 .friend-requests {
@@ -59,4 +63,25 @@ lol-social-roster-member .offline .member-name {
 /* VNG age rating */
 .vng-age-rating.ember-view {
 	display: none !important;
+}
+
+.sidebar-background {
+	height: 100%;
+    width: 100%;
+    background: var(--social-sidebar-bg-color) !important;
+    position: absolute;
+	transition: transform 0.5s ease;
+    transform: translateX(0px);
+}
+
+.lol-social-lower-pane-container {
+	transition: transform 0.5s ease !important;
+}
+
+lol-parties-game-info-panel {
+	transition: transform 0.5s ease !important;
+}
+
+.tournaments-persistent-panel {
+	transition: transform 0.5s ease !important;
 }

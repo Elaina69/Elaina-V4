@@ -1,6 +1,7 @@
 /* By Elaina Da Catto */
 /* Meow~~~ */
 
+@import url("./rcp-fe-lol-activity-center.css");
 @import url("./rcp-fe-lol-clash-full.css");
 @import url("./rcp-fe-lol-event-hub.css");
 @import url("./rcp-fe-lol-loot.css");
@@ -11,6 +12,8 @@
 @import url("./rcp-fe-viewport-sidebar.css");
 @import url("./theme-background-controllers.css");
 @import url("./theme-elaina-trigger.css");
+@import url("./theme-hide-friendlist.css");
+@import url("./theme-hide-navbar.css");
 @import url("./theme-settings.css");
 @import url("./theme-update-message.css");
 @import url("./theme-wallpapers.css");
@@ -29,16 +32,8 @@ html {
 	overflow: hidden !important;
 }
 
-iframe html {
-	background: transparent!important;
-}
-
-iframe .bg-cover {
-	opacity:0!important
-}
-
-.uikit-background-switcher .lol-uikit-background-switcher-image.transition.fade {
-	animation: unset!important
+.basic-button .play-button-container {
+    filter: var(--play-button-filter) !important;
 }
 
 .stats-backdrop {
@@ -52,10 +47,6 @@ iframe .bg-cover {
 
 #background-ambient {
 	display: none !important;
-}
-
-.ranked-intro-background {
-   display: none !important;
 }
 
 .store-backdrop {

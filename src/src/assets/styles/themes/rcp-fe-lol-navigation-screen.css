@@ -14,3 +14,50 @@ div[data-screen-name="rcp-fe-lol-navigation-screen"] {
 .deep-links-promo {
 	display: none !important;
 }
+
+.hide-top-navbar {
+	opacity: 1 !important;
+    height: 100%;
+    min-width: 40px;
+    cursor: pointer;
+    pointer-events: auto;
+    position: relative;
+    --disabled-color: #f0e6d280;
+    justify-content: center;
+    display: flex;
+	transition: transform 0.5s ease 0s;
+    transform: translateX(0px);
+}
+
+.hide-top-navbar-icon {
+	width: 36px;
+    height: 36px;
+    margin-right: 0px;
+    position: relative;
+    top: 22px;
+    display: block;
+}
+
+.right-nav-menu {
+	transition: opacity 0.5s ease, transform 0.5s ease 0s;
+    transform: translateX(0px);
+	opacity: 1;
+}
+
+.main-navigation-menu-item {
+	transition: opacity 0.5s ease, transform 0.5s ease 0s;
+    transform: translateX(0px);
+	opacity: 1;
+}
+
+.right-nav-vertical-rule {
+	transition: opacity 0.5s ease, transform 0.5s ease 0s;
+    transform: translateX(0px);
+	opacity: 1;
+}
+
+.wallet-and-badges {
+	transition: opacity 0.5s ease, transform 0.5s ease 0s;
+    transform: translateX(0px);
+	opacity: 1;
+}

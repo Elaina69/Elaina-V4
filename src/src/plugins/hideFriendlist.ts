@@ -1,6 +1,7 @@
 import * as upl from "pengu-upl"
 import utils from "../utils/utils"
 import { getThemeName } from "../otherThings"
+import { log } from "../utils/themeLog"
 
 export class HideFriendList {
     freezeProperties(object: Object, properties: string[]): void {
@@ -18,45 +19,21 @@ export class HideFriendList {
         }
     }
 
-    buttonShowHideFriendlist = (hide: boolean) => {
-        let button = document.querySelector(".hideFriendslist > img")
+    createSidebarBackground = () => {
+        let sidebarBG = document.createElement("div")
+        sidebarBG.setAttribute("class", "sidebar-background")
+        let sideBar = document.querySelector(".rcp-fe-viewport-sidebar > .screen-root")
 
-        if (!hide) {
-            button?.setAttribute("src", `//plugins/${getThemeName()}/assets/icon/plugins-icons/visible.png`)
-        }
-        else button?.setAttribute("src", `//plugins/${getThemeName()}/assets/icon/plugins-icons/hide.png`)
+        sideBar?.prepend(sidebarBG)
     }
 
     createButton = () => {
-        let friendsActionbar = document.querySelector(".actions-bar > .buttons")
+        let friendsActionbar = document.querySelector("#rcp-fe-viewport-root")
 
         let buttonDiv = document.createElement("div")
         let button = document.createElement("img")
 
         buttonDiv.setAttribute("class", "hideFriendslist")
-        buttonDiv.style.cssText = `
-            cursor: pointer;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        `
-
-        button.style.cssText = `
-            width: 20px;
-            height: 20px;
-            filter: drop-shadow(0px 1000px 0 #c8aa6e);
-            transform: translateY(-1000px);
-            display: flex;
-        `
-
-        buttonDiv.addEventListener('mouseover', () => {
-            button.style.filter = "drop-shadow(0px 1000px 0 #f0d6e2)"
-        })
-        buttonDiv.addEventListener('mouseout', () => {
-            button.style.filter = "drop-shadow(0px 1000px 0 #c8aa6e)"
-        })
 
         buttonDiv.addEventListener('click', () => {
             if (window.DataStore.get("HideFriendList")) {
@@ -74,30 +51,40 @@ export class HideFriendList {
         buttonDiv.append(button)
     }
 
-    showHideFriendslist = (hide: boolean) => {
-        let friendList: any = document.querySelector(".list-content > .roster-block")
-        let sideBar: any = document.querySelector(".rcp-fe-viewport-sidebar")
+    buttonShowHideFriendlist = (hide: boolean) => {
+        let buttonDiv:any = document.querySelector(".hideFriendslist")
+        let button = document.querySelector(".hideFriendslist > img")
 
         if (!hide) {
-            friendList.style.display = "flex"
-            this.centerViewport(hide)
-            if (!window.DataStore.get("sidebar-transparent")) {
-                try {
-                    document.querySelector("#sideBarColor-hideFriendslist")?.remove()
-                } catch {}
-                utils.addStyleWithID("sideBarColor-hideFriendslist", `.rcp-fe-viewport-sidebar {\n\tbackground: var(--social-sidebar-bg-color) !important\n}`)
-            }
+            button?.setAttribute("src", `//plugins/${getThemeName()}/assets/icon/plugins-icons/next_button.png`)
+            buttonDiv.style.cssText = `transform: translateX(0px);`
         }
         else {
-            friendList.style.display = "none"
-            this.centerViewport(hide)
-            if (!window.DataStore.get("sidebar-transparent")) {
-                try {
-                    document.querySelector("#sideBarColor-hideFriendslist")?.remove()
-                } catch {}
-                utils.addStyleWithID("sideBarColor-hideFriendslist", `.rcp-fe-viewport-sidebar {\n\tbackground: var(--social-sidebar-bg-color-friendslist-hide) !important\n}`)
-            }
+            buttonDiv.style.cssText = `transform: translateX(225px);`
+            button?.setAttribute("src", `//plugins/${getThemeName()}/assets/icon/plugins-icons/prev_button.png`)
         }
+    }
+
+    showHideFriendslist = (hide: boolean) => {
+        let elements = [
+            document.querySelector(".lol-social-lower-pane-container"),
+            document.querySelector(".sidebar-background"),
+            document.querySelector(".alpha-version-panel"),
+            document.querySelector("lol-parties-game-info-panel"),
+            document.querySelector(".clash-social-persistent.ember-view"),
+            document.querySelector(".watermark")
+        ];
+        
+        let translateValue = hide ? "225px" : "0px";
+        
+        elements.forEach((element: any) => {
+            if (element) {
+                element.style.cssText = `transform: translateX(${translateValue});`;
+            }
+            else { log("Get error while adding style, but it will not affect entire theme.") }
+        });
+        
+        this.centerViewport(hide);
     }
 
     centerViewport = (hide: boolean) => {
@@ -107,28 +94,45 @@ export class HideFriendList {
             } catch {}
             utils.addStyleWithID("centerViewport", `
                 .parties-game-type-select-wrapper.ember-view { 
-                    left: 0px ;
+                    transform: translateX(0px);
                 } 
                 .parties-custom-game-setup.ember-view { 
-                    position: relative; left: 0px ;
+                    transform: translateX(0px);
                 } 
                 .custom-game-list.ember-view { 
-                    position: relative; 
-                    left: 0px ;
-                }
-                .parties-lower-section { 
-                    position: relative; 
-                    left: 0px ;
+                    transform: translateX(0px);
                 }
                 .v2-footer-component.ember-view { 
-                    left: 0px;
+                    transform: translateX(0px);
                 }
                 .invite-info-panel-container {
-                    display: flex !important;
+                    transform: translateX(0px);
+                    opacity: 1
+                }
+                .parties-point-eligibility-custom.ember-view { 
+                    transform: translateX(0px);
+                }
+                .custom-game-teams.ember-view { 
+                    transform: translateX(0px);
+                }
+                .parties-invite-info-panel.ember-view { 
+                    transform: translateX(0px);
+                    opacity: 1 !important;
                 }
                 .arrow-footer.ember-view > div { 
-                    position: relative; 
-                    left: 0px;
+                    transform: translateX(0px);
+                }
+                .parties-invite-dropzone {
+                    transform: translateX(0px);
+                }
+                .party-members-container {
+                    transform: translateX(0px);
+                }
+                .tft-cards-container {
+                    transform: translateX(0px);
+                }
+                .tft-footer-container.ember-view {
+                    transform: translateX(0px);
                 }
             `)
         } 
@@ -138,36 +142,96 @@ export class HideFriendList {
             } catch {}
             utils.addStyleWithID("centerViewport", `
                 .parties-game-type-select-wrapper.ember-view { 
-                    left: 113px;
+                    transform: translateX(113px);
                 } 
                 .v2-footer-component.ember-view { 
-                    left: 113px;
+                    transform: translateX(113px);
                 } 
                 .parties-custom-game-setup.ember-view { 
-                    position: relative; 
-                    left: 113px ;
+                    transform: translateX(113px);
                 } 
                 .custom-game-list.ember-view { 
-                    position: relative; 
-                    left: 113px ;
-                }
-                .parties-lower-section { 
-                    position: relative; 
-                    left: 113px ;
+                    transform: translateX(113px);
                 }
                 .arrow-footer.ember-view > div { 
-                    position: relative; 
-                    left: 113px;
+                    transform: translateX(113px);
+                }
+                .parties-point-eligibility-custom.ember-view { 
+                    transform: translateX(113px);
+                }
+                .custom-game-teams.ember-view { 
+                    transform: translateX(113px);
+                }
+                .parties-invite-info-panel.ember-view { 
+                    transform: translateX(113px);
+                    opacity: 0 !important;
                 }
                 .invite-info-panel-container {
-                    display: none !important;
+                    transform: translateX(113px);
+                    opacity: 0
+                }
+                .parties-invite-dropzone {
+                    transform: translateX(113px);
+                }
+                .party-members-container {
+                    transform: translateX(113px);
+                }
+                .tft-cards-container {
+                    transform: translateX(113px);
+                }
+                .tft-footer-container.ember-view {
+                    transform: translateX(113px);
                 }
             `)
         }
     }
 
+    showHideButton = () => {
+        let pageListenner = async (node: any) => {   
+            let previous_page = '';   
+            const pagename = node.getAttribute("data-screen-name");
+            const isOtherPage = !["rcp-fe-lol-champ-select"].includes(pagename);
+        
+            if (pagename === "rcp-fe-lol-champ-select") {
+                // log("Hide button")
+                try {
+                    let button: any = document.querySelector(".hideFriendslist")
+                    button.style.display = "none"
+                }
+                catch {}
+            } 
+            else if (isOtherPage && document.querySelector(".hideFriendslist")) {
+                // log("Show button")
+                try {
+                    let button: any = document.querySelector(".hideFriendslist")
+                    button.style.display = "block"
+                }
+                catch {}
+            }
+            if (previous_page !== pagename) previous_page = pagename;
+        };
+        
+        utils.mutationObserverAddCallback(pageListenner, ["screen-root"]);
+    }
+
     main = () => {
+        this.showHideButton()
         upl.observer.subscribeToElementCreation(".actions-bar > .buttons", (element: any) => {
+            if (document.querySelector(".sidebar-background")) return
+
+            // just make sure
+            try {
+                let bg: any = document.getElementsByClassName("sidebar-background")
+                if (bg.length > 1) {
+                    for (let i = 0; i < bg.length; i++) {
+                        bg[i].remove()
+                    }
+                }
+            } catch {}
+
+            this.createSidebarBackground()
+        })
+        upl.observer.subscribeToElementCreation(".sidebar-background", (element: any) => {
             if (document.querySelector(".hideFriendslist")) return
 
             // just make sure
