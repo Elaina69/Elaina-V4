@@ -1,8 +1,6 @@
 // internal types
 declare module 'https://elainatheme.xyz/index.js';
 
-declare module 'https://cdn.skypack.dev/axios';
-
 interface Plugin {
     init?: (context: any) => any
     load?: () => any
