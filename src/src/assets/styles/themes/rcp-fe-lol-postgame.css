@@ -13,3 +13,16 @@
 .postgame-champion-background-mask {
 	background: transparent !important;
 }
+
+.vote-ceremony-v3-background {
+	display: none !important;
+}
+
+.postgame-map-icon {
+	filter: var(--PartiesStatusCard) !important;
+}
+
+.postgame-root-component .postgame-header-section.progression-tab {
+	backdrop-filter: blur(0px) !important;
+	background: transparent !important;
+}

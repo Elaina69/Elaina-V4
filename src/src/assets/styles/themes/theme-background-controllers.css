@@ -86,9 +86,15 @@
 }
 
 .mute-unmute-icon {
+    display: block;
     width: 20px;
     height: 20px;
 	cursor: pointer;
+}
+
+
+.audio-name-bar {
+    margin-bottom: 5px;
 }
 
 
@@ -100,7 +106,7 @@
     left: 20px;
     position: absolute;
     opacity: 0.3;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.5s ease;
 	padding-top: 50px;
 }
 
@@ -109,11 +115,11 @@
 }
 
 .webm-bottom-buttons-container-hovered {
-	transition: opacity 0.3s ease;
+	transition: opacity 0.3s ease, transform 0.5s ease;
     opacity: 1;
 	display: flex;
     bottom: 9px;
-    left: 20px;
+    left: 230px;
     position: absolute;
 }
 
@@ -127,6 +133,7 @@
 
 .music-controls {
 	display: flex;
+    margin-bottom: 2px;
 }
 
 .webm-bottom-buttons-container:hover .music-controls-main {
@@ -161,6 +168,7 @@
 }
 
 .next-audio-icon {
+    display: block;
     width: 17px !important;
     margin-left: 2px !important;
     margin-top: 2px !important;
@@ -181,6 +189,7 @@
 }
 
 .prev-audio-icon {
+    display: block;
     width: 17px !important;
     margin-left: 2px !important;
     margin-top: 2px !important;
@@ -202,6 +211,7 @@
 }
 
 .pause-audio-icon {
+    display: block;
 	width: 17px !important;
     margin-left: 2px !important;
     margin-top: 2px !important;
@@ -219,10 +229,11 @@
     height: 21px !important;
     cursor: pointer;
 	display: block !important;
-	margin-right: 4px !important;
+	margin-right: 9px !important;
 }
 
 .mute-audio-icon {
+    display: block;
 	width: 17px !important;
     margin-left: 2px !important;
     margin-top: 2px !important;
@@ -244,6 +255,7 @@
 }
 
 .audio-loop-icon {
+    display: block;
 	width: 17px !important;
     margin-left: 2px !important;
     margin-top: 2px !important;
@@ -258,11 +270,11 @@
 /* Wallpaper Controls */
 .wallpaper-controls {
     display: flex;
-    top: 140px;
-    left: 37px;
+    top: 90px;
+    left: 20px;
     position: absolute;
     opacity: 0.3;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.5s ease;
 }
 
 .wallpaper-controls:hover {
@@ -274,7 +286,7 @@
     width: 21px !important;
 	height: 21px !important;
 	margin-left: 7px;
-    margin-top: 4px;
+    margin-top: 11px;
 	border: 2px solid #8c8263 !important;
     border-radius: 50% !important;
     background-color: black !important;
@@ -286,9 +298,10 @@
 }
 
 .pause-bg-icon {
+    display: block;
 	width: 17px !important;
-    margin-left: 2px !important;
-    margin-top: 2px !important;
+    margin-left: 1.5px !important;
+    margin-top: 3px !important;
 }
 
 #next-bg {
@@ -297,7 +310,7 @@
     height: 21px !important;
     cursor: pointer;
 	left: 2px;
-    top: 4px;
+    top: 10px;
 }
 
 .next-bg-icon {
@@ -316,7 +329,7 @@
     height: 21px !important;
     cursor: pointer;
 	left: 3px;	
-	top: 4px;		
+	top: 10px;		
 }
 
 .prev-bg-icon {

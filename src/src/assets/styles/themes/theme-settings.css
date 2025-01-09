@@ -218,10 +218,12 @@
 
 #changePlaybackRow {
 	display: flex !important;
+	margin-left: 25px !important;
 }
 
 .Playback-speed {
 	margin-bottom: 0px !important;
+	margin-left: 15px !important;
 }
 
 #playback-percent {
@@ -317,4 +319,20 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 10px;
+}
+
+#slideTimeRow {
+	margin-left: 25px !important;
+}
+
+#wallpaperSlide {
+	margin-left: 25px !important;
+}
+
+#offaudio {
+	margin-left: 25px !important;
+}
+
+#disablethemeaudio {
+	margin-left: 25px !important;
 }

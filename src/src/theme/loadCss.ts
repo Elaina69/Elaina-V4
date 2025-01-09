@@ -2,6 +2,7 @@ import utils from "../utils/utils.ts"
 import { getThemeName } from "../otherThings"
 
 let icdata: Object = (await import(`//plugins/${getThemeName()}/config/icons.js`)).default;
+let filters: Object = (await import(`//plugins/${getThemeName()}/config/filters.js`)).default;
 
 let datapath: string = `//plugins/${getThemeName()}/`
 let iconFolder: string = `${datapath}assets/icon/`
@@ -36,6 +37,9 @@ class AddCss {
 				--ElainaFly: url("${iconFolder}${icdata["Animation-logo"]}");
 				--ElainaStatic: url("${iconFolder}${icdata["Static-logo"]}");
 				--Hover-card-backdrop: url("${iconFolder}${icdata['Hover-card']}");
+				--play-button-filter: ${filters["PlayButton"]};
+				--find-match-button: ${filters["find-match-button"]};
+				--PartiesStatusCard: ${filters["PartiesStatusCard"]};
 			}
 		`)
 	}
@@ -65,11 +69,6 @@ class AddCss {
 					key: "hide-champions-splash-art",
 					css: "hide-champs-splash-art.css",
 					altCss: "null.css"
-				},
-				{
-					key: "sidebar-transparent",
-					css: "sidebar-transparent.css",
-					altCss: "sidebar-color.css"
 				},
 				{
 					key: "animate-loading",
