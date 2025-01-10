@@ -1,7 +1,7 @@
 import * as upl from "pengu-upl"
 import utils from "../utils/utils"
 import { getThemeName } from "../otherThings"
-import { log } from "../utils/themeLog"
+import { log, error } from "../utils/themeLog"
 
 export class HideFriendList {
     freezeProperties(object: Object, properties: string[]): void {
@@ -81,7 +81,7 @@ export class HideFriendList {
             if (element) {
                 element.style.cssText = `transform: translateX(${translateValue});`;
             }
-            else { log("Get error while adding style, but it will not affect entire theme.") }
+            else { error("Get error while adding style, but it will not affect entire theme.") }
         });
         
         this.centerViewport(hide);
