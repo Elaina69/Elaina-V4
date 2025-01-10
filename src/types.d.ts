@@ -117,6 +117,8 @@ declare interface Window {
     error                       : (message: string, ...args: string[]) => void;
     setAudio                    : () => void;   
     restoreDefaultDataStore     : () => Promise<void>; 
+    hideShowNavBar              : () => void;
+    changeHomePageStyle         : () => void;
     
     storeObserver               : any;
     __llver                     : string;

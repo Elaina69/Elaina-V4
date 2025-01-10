@@ -47,7 +47,7 @@ class ElainaTheme {
     init(context: any) {
         log('Initializing theme');
     
-        createHomePageTab(context);
+        // createHomePageTab(context);
         transparentLobby(context);
         Cdninit(context);
     }
