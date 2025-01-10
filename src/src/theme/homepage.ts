@@ -290,7 +290,7 @@ class WallpaperController {
     }
 
     wallpaperSlider = (wallpaper: string) => {
-        if (window.DataStore.get("wallpaper-slider") && this.checkBGType(wallpaper) == 0) {
+        if (window.DataStore.get("wallpaper-slideshow") && this.checkBGType(wallpaper) == 0) {
             window.setTimeout(()=> {
                 this.nextWallpaper()
             }, window.DataStore.get("wallpaper-change-slide-time"))
@@ -680,6 +680,7 @@ const mainController = new MainController()
 // Create hide navbar button
 class HideNavbarButton {
     checkNewContent = () => {
+        if (!window.DataStore.has("navbar-content")) window.DataStore.set("navbar-content", [])
         let navbarContent = document.querySelectorAll<HTMLElement>(".activity-center__tab_content");
 
         navbarContent.forEach((element) => {
@@ -698,7 +699,7 @@ class HideNavbarButton {
             }
         }
         for (const element of window.DataStore.get("navbar-content")) {
-            if (!set.has(element)) {
+            if (!set2.has(element)) {
                 haveNewContent++;
             }
         }
@@ -747,16 +748,16 @@ class HideNavbarButton {
 
         try {
             if (window.DataStore.get("hide-homepage-navbar")) {
-                nav.style.cssText = `transform: translateX(-212px);`
-                navFooter.style.cssText = `transform: translateX(-212px);`
-                navDivider.style.cssText = `transform: translateX(-212px);`
+                nav.style.cssText = `transform: translateX(-212px); pointer-events: none;`
+                navFooter.style.cssText = `transform: translateX(-212px); pointer-events: none;`
+                navDivider.style.cssText = `transform: translateX(-212px); pointer-events: none;`
                 hideButton.style.cssText = `transform: translateX(0px);`
                 hideButtonIcon.setAttribute("src", `${iconFolder}plugins-icons/next_button.png`);
             }
             else {
-                nav.style.cssText = `transform: translateX(0px);`
-                navFooter.style.cssText = `transform: translateX(0px);`
-                navDivider.style.cssText = `transform: translateX(0px);`
+                nav.style.cssText = `transform: translateX(0px); pointer-events: auto;`
+                navFooter.style.cssText = `transform: translateX(0px); pointer-events: auto;`
+                navDivider.style.cssText = `transform: translateX(0px); pointer-events: auto;`
                 hideButton.style.cssText = `transform: translateX(212px);`
                 hideButtonIcon.setAttribute("src", `${iconFolder}plugins-icons/prev_button.png`);
             }
@@ -768,33 +769,36 @@ class HideNavbarButton {
         const wallpaperController: any = document.querySelector(".wallpaper-controls")
         const audioController: any = document.querySelector(".webm-bottom-buttons-container")
         const activityCenter: any = document.querySelector(".activity-center-ready > main")
+        const activityCenterChinese: any = document.querySelector(".managed-iframe-wrapper > iframe")
         
         if (window.DataStore.get("hide-homepage-navbar")) {
-            if (activityCenter) activityCenter.style.cssText = `opacity: 0;`
+            if (activityCenter) activityCenter.style.cssText = `opacity: 0; pointer-events: none;`
+            if (activityCenterChinese) activityCenterChinese.style.cssText = `opacity: 0; pointer-events: none;`
             if (wallpaperController) wallpaperController.style.cssText = `transform: translateX(0px);`
             if (audioController) audioController.style.cssText = `transform: translateX(0px);`
         }
         else {
-            if (activityCenter) activityCenter.style.cssText = `opacity: 1;`
+            if (activityCenter) activityCenter.style.cssText = `opacity: 1; pointer-events: auto;`
+            if (activityCenterChinese) activityCenterChinese.style.cssText = `opacity: 1; pointer-events: auto;`
             if (wallpaperController) wallpaperController.style.cssText = `transform: translateX(212px);`
             if (audioController) audioController.style.cssText = `transform: translateX(212px);`
         }
     }
 
     addHideButton = () => {
-        if (document.querySelector(".hide-navbar-button")) return
-
-        // just make sure
-        try {
-            let button: any = document.getElementsByClassName("hide-navbar-button")
-            if (button.length > 1) {
-                for (let i = 0; i < button.length; i++) {
-                    button[i].remove()
-                }
-            }
-        } catch {}
-
         upl.observer.subscribeToElementCreation(".activity-center__tabs_container", (element: any) => {
+            if (document.querySelector(".hide-navbar-button")) return
+
+            // just make sure
+            try {
+                let button: any = document.getElementsByClassName("hide-navbar-button")
+                if (button.length > 1) {
+                    for (let i = 0; i < button.length; i++) {
+                        button[i].remove()
+                    }
+                }
+            } catch {}
+
             this.checkNewContent()
             this.createHideButton()
             this.hideShowNavBar()
@@ -976,7 +980,7 @@ class WallpaperAndAudio {
             window.DataStore.set("Wallpaper-currentTime", video.currentTime)
         });
         
-        if (window.DataStore.get("wallpaper-slider")) {
+        if (window.DataStore.get("wallpaper-slideshow")) {
             video.loop = false
             video.addEventListener("ended", () => {
                 wallpaperController.nextWallpaper();
@@ -1124,3 +1128,5 @@ window.create_webm_buttons = mainController.createMainController
 window.applyHideAndShowtab = changeHomePageTabs.applyHideAndShowtab
 window.applyHideAndShowTFTtab = changeHomePageTabs.applyHideAndShowTFTtab
 window.setAudio = wallpaperAndAudio.setAudioElement
+window.hideShowNavBar = hideNavbarButton.hideShowNavBar
+window.changeHomePageStyle = hideNavbarButton.changeHomePageStyle

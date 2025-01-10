@@ -21,3 +21,7 @@
 .activity-center__tabs_scrollable {
     transition: opacity 0.5s ease, transform 0.5s ease !important;
 }
+
+.managed-iframe-wrapper > iframe {
+    transition: opacity 0.5s ease-in-out !important;
+}

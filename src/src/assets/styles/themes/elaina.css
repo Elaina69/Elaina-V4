@@ -41,6 +41,10 @@ html {
 	mix-blend-mode: difference !important;
 }
 
+#rcp-fe-viewport-root {
+	overflow: unset !important;
+}
+
 #rcp-fe-lol-home-error {
 	display: none!important
 }

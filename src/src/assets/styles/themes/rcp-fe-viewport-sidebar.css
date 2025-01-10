@@ -67,7 +67,7 @@ lol-social-roster-member .offline .member-name {
 
 .sidebar-background {
 	height: 100%;
-    width: 100%;
+    width: 222px;
     background: var(--social-sidebar-bg-color) !important;
     position: absolute;
 	transition: transform 0.5s ease;
@@ -84,4 +84,9 @@ lol-parties-game-info-panel {
 
 .tournaments-persistent-panel {
 	transition: transform 0.5s ease !important;
+}
+
+lol-social-roster-group lol-social-arrow-toggle {
+	left: 8px !important;
+    top: 9px !important;
 }
