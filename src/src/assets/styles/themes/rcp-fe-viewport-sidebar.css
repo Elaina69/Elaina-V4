@@ -68,7 +68,6 @@ lol-social-roster-member .offline .member-name {
 .sidebar-background {
 	height: 100%;
     width: 222px;
-    background: var(--social-sidebar-bg-color) !important;
     position: absolute;
 	transition: transform 0.5s ease;
     transform: translateX(0px);
