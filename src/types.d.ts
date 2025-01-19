@@ -1,6 +1,3 @@
-// internal types
-declare module 'https://elainatheme.xyz/index.js';
-
 interface Plugin {
     init?: (context: any) => any
     load?: () => any

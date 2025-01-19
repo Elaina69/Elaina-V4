@@ -5,6 +5,7 @@
  * @link https://github.com/Elaina69
  * @Nyan Meow~~~
  */
+import "./src/utils/setTime.ts"
 import { log } from './src/utils/themeLog.ts';
 
 log('By %cElaina Da Catto', 'color: #e4c2b3');
@@ -18,7 +19,6 @@ import './src/services/backupAndRestoreDatastore';
 
 // Import modules
 import { Cdninit } from './src/theme/Cdninit.ts';
-import { CheckServerAvailability } from './src/services/checkServer.ts';
 import { CheckUpdate } from "./src/updates/checkUpdate.ts"
 import { createHomePageTab, HomePage } from "./src/theme/homepage.ts";
 import { transparentLobby, ApplyUI } from "./src/theme/applyUi.ts";
@@ -53,10 +53,6 @@ class ElainaTheme {
     }
 
     main() {
-        // Check theme server
-        const checkServerAvailability = new CheckServerAvailability()
-        checkServerAvailability.main()
-
         // Check theme's version and available update
         const checkUpdate = new CheckUpdate()
         checkUpdate.main()
