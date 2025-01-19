@@ -85,6 +85,11 @@ class AddCss {
 					css: "lobby-transparent-filter.css",
 					altCss: "null.css"
 				},
+				{
+					key: "sidebar-transparent",
+					css: "sidebar-transparent.css",
+					altCss: "sidebar-color.css"
+				},
 			],
 	
 			"iconCss": [

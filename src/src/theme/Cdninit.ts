@@ -5,7 +5,7 @@ let initLink: string
 
 export async function cdnImport(url: string, errorMsg: any): Promise<any> {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 2000);
+    const timeoutId = setTimeout(() => controller.abort(), 3000);
 
     try {
         const res = await fetch(url, { signal: controller.signal });
@@ -34,10 +34,4 @@ else {
 
 
 const { Cdninit } = await cdnImport(initLink, "Failed to load Init data")
-    .then( res => { return res ? res : {} })
-    .catch( err => { 
-        error("Failed to destructure init property", err)
-        window.restartClient()
-    });
-
 export { Cdninit }

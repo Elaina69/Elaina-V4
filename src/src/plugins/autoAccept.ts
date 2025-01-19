@@ -17,26 +17,26 @@ export class AutoAccept {
 		}
 	}
 	
-	fetch_or_create_champselect_buttons_container(): Element | null {
-		if (document.querySelector(".cs-buttons-container")) {
-			return document.querySelector(".cs-buttons-container")
+	fetch_or_create_champselect_buttons_container(): any {
+		try {
+			document.querySelector(".cs-buttons-container")?.remove()
 		}
-		else {
-			const div = document.createElement("div")
-			div.className = "cs-buttons-container"
-	
-			let nor: HTMLElement | null = document.querySelector(".v2-footer-notifications.ember-view")
-			let tft: HTMLElement | null = document.querySelector(".parties-footer-notifications.ember-view")
-	
-			if (nor) {
-				nor.append(div)
-				return div
-			}
-			else { 
-				tft?.append(div)
-				return div
-			}
-		}	
+		catch {}
+
+		const div = document.createElement("div")
+		div.className = "cs-buttons-container"
+
+		let nor: HTMLElement | null = document.querySelector(".v2-footer-notifications.ember-view")
+		let tft: HTMLElement | null = document.querySelector(".parties-footer-notifications.ember-view")
+
+		if (nor) {
+			nor.append(div)
+			return div
+		}
+		else if (tft) { 
+			tft?.append(div)
+			return div
+		}
 	}
 
 	acceptMatchmaking = async (): Promise<void> => {
@@ -55,30 +55,39 @@ export class AutoAccept {
 		}
 	}
 
+
+	createButton = async (element: any) => {
+		const newOption = document.createElement("lol-uikit-radio-input-option")
+		const container = this.fetch_or_create_champselect_buttons_container()
+		const Option2 = document.createElement("div")
+		
+		newOption.setAttribute("id", "autoAcceptQueueButton")
+		newOption.setAttribute("onclick", "window.autoAcceptQueueButtonSelect()")
+	
+		Option2.classList.add("auto-accept-button-text")
+		Option2.innerHTML = await getString("auto_accept")
+	
+		if (window.DataStore.get("auto_accept")){
+			newOption.setAttribute("selected", "")
+		}
+	
+		if (element && !document.getElementById("autoAcceptQueueButton")) {
+			if (window.DataStore.get("auto_accept_button")) {
+				container?.append(newOption)
+				newOption.append(Option2)
+			}
+		}
+	}
+
 	main = (auto_accept_button: boolean = true) => {
 		window.autoAcceptQueueButtonSelect = this.autoAcceptQueueButtonSelect
 
 		upl.observer.subscribeToElementCreation(".v2-lobby-root-component.ember-view .v2-footer-notifications.ember-view",async (element: any) => {
-			const newOption = document.createElement("lol-uikit-radio-input-option")
-			const container = this.fetch_or_create_champselect_buttons_container()
-			const Option2 = document.createElement("div")
-			
-			newOption.setAttribute("id", "autoAcceptQueueButton")
-			newOption.setAttribute("onclick", "window.autoAcceptQueueButtonSelect()")
-		
-			Option2.classList.add("auto-accept-button-text")
-			Option2.innerHTML = await getString("auto_accept")
-		
-			if (window.DataStore.get("auto_accept")){
-				newOption.setAttribute("selected", "")
-			}
-		
-			if (element && !document.getElementById("autoAcceptQueueButton")) {
-				if (window.DataStore.get("auto_accept_button")) {
-					container?.append(newOption)
-					newOption.append(Option2)
-				}
-			}
+			await this.createButton(element)
+		})
+
+		upl.observer.subscribeToElementCreation(".tft-footer-container.ember-view .parties-footer-notifications.ember-view",async (element: any) => {
+			await this.createButton(element)
 		})
 
 		if (auto_accept_button) {

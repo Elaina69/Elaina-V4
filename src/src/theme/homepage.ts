@@ -81,7 +81,7 @@ if (CdnKey === LocalKey) {
         const themeVersion = (await cdnImport(`${cdnUrl}/src/update/update.js`, "Can't get theme version")).default.version;
         window.DataStore.set("Theme-version", themeVersion);
     }
-    catch { error("Can't get theme version") }
+    catch (err: any) { error("Can't get theme version", err) }
 
     if (!window.DataStore.get(`Change-CDN-version`)) {
         const response = await fetch(`${cdnUrl}/package.json`);
@@ -94,47 +94,47 @@ log(`%cCDN build  : %c${window.DataStore.get("Cdn-version")}`, 'color: #e4c2b3',
 
 // Create and set new page as Homepage
 export function createHomePageTab(context: any) {
-    context.rcp.postInit('rcp-fe-lol-navigation', async (api: any) => {
-        //@ts-ignore
-        window.__RCP_NAV_API = api;
+    // context.rcp.postInit('rcp-fe-lol-navigation', async (api: any) => {
+    //     //@ts-ignore
+    //     window.__RCP_NAV_API = api;
 
-        try {
-            const originalCreate = api._apiHome.navigationManager.createSubNavigationFromJSON;
-            api._apiHome.navigationManager.createSubNavigationFromJSON = async function (e, t, n) {
-                console.dir(n);
+    //     try {
+    //         const originalCreate = api._apiHome.navigationManager.createSubNavigationFromJSON;
+    //         api._apiHome.navigationManager.createSubNavigationFromJSON = async function (e, t, n) {
+    //             console.dir(n);
 
-                n.push({
-                    id: 'elaina-home',
-                    displayName: await getString("home"),
-                    isPlugin: false,
-                    enabled: true,
-                    visibile: true,
-                    priority: 1,
-                    url: 'https://elainatheme.xyz/blankpage',
-                });
+    //             n.push({
+    //                 id: 'elaina-home',
+    //                 displayName: await getString("home"),
+    //                 isPlugin: false,
+    //                 enabled: true,
+    //                 visibile: true,
+    //                 priority: 1,
+    //                 url: 'https://elainatheme.xyz/blankpage',
+    //             });
 
-                return originalCreate.apply(this, [e, t, n]);
-            };
-        }
-        catch {
-            error("Failed to create homepage, maybe you're in pbe version")
-        }
-    });
+    //             return originalCreate.apply(this, [e, t, n]);
+    //         };
+    //     }
+    //     catch {
+    //         error("Failed to create homepage, maybe you're in pbe version")
+    //     }
+    // });
 
-    context.rcp.postInit("rcp-fe-lol-navigation", async (api) => {
-        try {
-            const navigationManager = api._apiHome.navigationManager;
-            api._apiHome.navigationManager = new Proxy(navigationManager, {
-                set(target, property, value) {
-                    target[property] = (property === "firstNavItemId") ? 'elaina-home' : value;
-                    return true;
-                }
-            });
-        }
-        catch {
-            error("Failed to create homepage, maybe you're in pbe version")
-        }
-    });
+    // context.rcp.postInit("rcp-fe-lol-navigation", async (api) => {
+    //     try {
+    //         const navigationManager = api._apiHome.navigationManager;
+    //         api._apiHome.navigationManager = new Proxy(navigationManager, {
+    //             set(target, property, value) {
+    //                 target[property] = (property === "firstNavItemId") ? 'elaina-home' : value;
+    //                 return true;
+    //             }
+    //         });
+    //     }
+    //     catch {
+    //         error("Failed to create homepage, maybe you're in pbe version")
+    //     }
+    // });
 }
 
 function freezeProperties(object: Object, properties: any[]) {
@@ -147,7 +147,8 @@ function freezeProperties(object: Object, properties: any[]) {
 					get: () => value,
 					set: (v) => v,
 				})
-			}catch {}
+			}
+            catch {}
 		}
 	}
 }
@@ -165,15 +166,17 @@ class ChangeHomePageTabs {
                 } else {
                     warn(`Element not found for ${name}`);
                 }
-            } catch (error: any) {
+            } 
+            catch (error: any) {
                 error(`Error hiding ${name} tab:`, error);
             }
         }
         else {
             try {
                 document.querySelector(obj).style.display = "block";
-            } catch {
-                error(`This client doesn't have ${name} tab`);
+            } 
+            catch (err: any) {
+                error(`This client doesn't have ${name} tab`, err);
             }
         }
     };
@@ -655,7 +658,7 @@ class MainController {
                 window.DataStore.set("NextBg_Count", window.DataStore.get("NextBg_Count") + 1);
                 wallpaperController.nextWallpaper();
                 if (window.DataStore.get("NextBg_Count") >= 69 && window.DataStore.get("NSFW-Content")) {
-                    window.open("https://elainatheme.xyz/elaina_nsfw/easteregg1", "_blank");
+                    window.open(`${window.DataStore.get("Elaina-domain-server")}elaina_nsfw/easteregg1`, "_blank");
                     window.DataStore.set("NextBg_Count", 0);
                 }
             }
@@ -797,7 +800,8 @@ class HideNavbarButton {
                         button[i].remove()
                     }
                 }
-            } catch {}
+            } 
+            catch {}
 
             this.checkNewContent()
             this.createHideButton()
@@ -909,7 +913,7 @@ class HideTopNavbarButton {
             }
             this.changeButtonIcon(isHidden)
         }
-        catch { log("Can't find top navigation bar")}
+        catch (err: any) { error("Can't find top navigation bar", err)}
     }
 
     addHideButton = () => {
@@ -924,7 +928,8 @@ class HideTopNavbarButton {
                         button[i].remove()
                     }
                 }
-            } catch {}
+            } 
+            catch {}
 
             this.createHideButton()
             window.setTimeout(()=> {
@@ -1119,7 +1124,9 @@ export class HomePage {
 
         utils.mutationObserverAddCallback(addHomePage.pageListenner, ["screen-root"]);
         hideNavbarButton.addHideButton()
-        hideTopNavbarButton.addHideButton()
+        if (window.DataStore.get("enable-hide-top-navbar-friendlist-button")) {
+            hideTopNavbarButton.addHideButton()
+        }
     }
 }
 

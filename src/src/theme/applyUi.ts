@@ -1,6 +1,6 @@
 import * as upl from 'pengu-upl'
 import { getThemeName } from "../otherThings"
-import { log, warn } from '../utils/themeLog';
+import { log, warn, error } from '../utils/themeLog';
 
 let filters = (await import(`//plugins/${getThemeName()}/config/filters.js`)).default;
 let icdata = (await import(`//plugins/${getThemeName()}/config/icons.js`)).default;
@@ -19,7 +19,8 @@ function freezeProperties(object: Object, properties: any[]) {
 					get: () => value,
 					set: (v) => v,
 				})
-			}catch {}
+			}
+			catch {}
 		}
 	}
 }
@@ -45,7 +46,7 @@ upl.observer.subscribeToElementCreation(".parallax-layer-container",(element: an
 class AramOnlyMode {
 	removeNode(obj: string): void {
 		try { document.querySelector(obj)?.remove() }
-		catch{ log(`Can not remove ${obj}`)}
+		catch (err: any) { error(`Can not remove ${obj}:`, err)}
 	}
 
 	removeOtherGamemode = () => {
@@ -141,6 +142,11 @@ class NewGamesearchQueue {
 			element.style.cssText = `height: 28px;`
 		)
 		upl.observer.subscribeToElementCreation('.parties-game-search-divider', this.DisplayNone)
+		upl.observer.subscribeToElementCreation('.parties-game-search-map', (element: any) => 
+			element.style.cssText = `
+				filter: ${filters["PartiesStatusCard"]};
+			`
+		)
 	
 		// lol-parties-status-card
 		upl.observer.subscribeToElementCreation('.parties-status-card-bg-container', this.DisplayNone)
@@ -166,7 +172,6 @@ class NewGamesearchQueue {
 				margin: -3px 10px 0 0;
 				filter: ${filters["PartiesStatusCard"]};
 			`
-
 		)
 		
 		// lol-parties-game-invites
@@ -185,23 +190,27 @@ class TransparentSettingsDialogs {
 				let a = element.querySelector("lol-uikit-dialog-frame").shadowRoot.querySelector("div")
 				a.style.background = style
 				freezeProperties(a.style,["background"])
-			}catch{}
+			}
+			catch{}
 			try{
 				let b = element.querySelector("lol-uikit-dialog-frame > div")
 				b.style.background = style
 				freezeProperties(b.style,["background"])
-			}catch{}
+			}
+			catch{}
 			try{
 				let a: any = document.getElementsByClassName("dialog-frame")
 				for(let i = 0; i< a.length; i++) {
 					let b = a[i].shadowRoot.querySelector("div")
 					b.style.background = style
 				}
-			}catch{}
+			}
+			catch{}
 			try{
 				let c = element.querySelector("lol-regalia-identity-customizer-element").shadowRoot.querySelector("lol-regalia-banner-v2-element")
 				c.remove()
-			}catch{}
+			}
+			catch{}
 
 			// Settings
 			try{
@@ -211,7 +220,8 @@ class TransparentSettingsDialogs {
 				a.style.background = style
 				freezeProperties(obj.style,["background"])
 				freezeProperties(a.style,["background"])
-			}catch{}
+			}
+			catch{}
 			
 		})
 	}
@@ -331,7 +341,7 @@ class CustomIcon {
 					hoverCard.style.backgroundImage = "var(--Hover-card-backdrop)"
 				}
 			}
-			catch { warn("Can't change hover card backdrop.") }
+			catch (err: any) { error("Can't change hover card backdrop.", err) }
 		})
 	}
 

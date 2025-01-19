@@ -24,7 +24,7 @@
 </p>
 
 <p align="center">
-    <img src="https://count.getloli.com/@Elainav4?name=Elainav4&theme=gelbooru-h&padding=7&offset=0&align=center&scale=1&pixelated=1&darkmode=auto" alt="moe counter" />
+    <img src="https://count.getloli.com/@Elainav4?name=Elainav4&theme=gelbooru&padding=7&offset=0&align=center&scale=1&pixelated=1&darkmode=auto" alt="moe counter" />
     <p align="center"> Visitors (Since 2023/02/01) </p>
     <br>
     <p align="center"> One of the best theme for Pengu Loader (League of Legends) </p>

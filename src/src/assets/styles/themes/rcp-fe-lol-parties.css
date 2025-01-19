@@ -146,3 +146,11 @@
 .confirm-button-container {
 	filter: var(--find-match-button) !important;
 }
+
+.tft-find-match-button-container {
+	filter: var(--find-match-button) !important;
+}
+
+.parties-footer-notifications {
+	top: -120px !important;
+}

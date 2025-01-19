@@ -40,7 +40,7 @@ export class InviteAllFriends {
                 log("Friends list refreshed.")
             }
         }
-        catch{}
+        catch {}
     }
 
     addInviteAllButton = async (): Promise<void> => {

@@ -148,9 +148,12 @@ function AddContextMenu(title: any, subTitle: any, items: any[] = []) {
 }
 
 function OnClickRefreshButton() {
-    document.querySelectorAll('.loot-category-information').forEach(elem => {
-        elem.remove();
-    });
+    try {
+        document.querySelectorAll('.loot-category-information').forEach(elem => {
+            elem.remove();
+        });
+    }
+    catch {}
     CreateChapmsInformation()
     CreateSkinsInformation()
 }
@@ -470,8 +473,7 @@ export class LootHelper {
     
         upl.observer.subscribeToElementCreation((".loot-inventory-grid "), (element: any) => {
             log("%cLoot helper loaded", "color: #e4c2b3")
-            CreateChapmsInformation()
-            CreateSkinsInformation()
+            OnClickRefreshButton()
         })
 
         upl.observer.subscribeToElementCreation((".loot-display-category-tabs-container"), (element: any) => {

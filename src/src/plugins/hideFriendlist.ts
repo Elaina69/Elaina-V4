@@ -14,7 +14,8 @@ export class HideFriendList {
                         get: () => value,
                         set: (v) => v,
                     })
-                }catch {}
+                } 
+                catch {}
             }
         }
     }
@@ -91,7 +92,8 @@ export class HideFriendList {
         if (!hide) {
             try {
                 document.querySelector("#centerViewport")?.remove();
-            } catch {}
+            } 
+            catch {}
             utils.addStyleWithID("centerViewport", `
                 .parties-game-type-select-wrapper.ember-view { 
                     transform: translateX(0px);
@@ -139,7 +141,8 @@ export class HideFriendList {
         else {
             try {
                 document.querySelector("#centerViewport")?.remove();
-            } catch {}
+            } 
+            catch {}
             utils.addStyleWithID("centerViewport", `
                 .parties-game-type-select-wrapper.ember-view { 
                     transform: translateX(113px);
@@ -227,7 +230,8 @@ export class HideFriendList {
                         bg[i].remove()
                     }
                 }
-            } catch {}
+            } 
+            catch {}
 
             this.createSidebarBackground()
         })
@@ -242,11 +246,14 @@ export class HideFriendList {
                         button[i].remove()
                     }
                 }
-            } catch {}
+            } 
+            catch {}
 
-            this.createButton()
-            this.buttonShowHideFriendlist(window.DataStore.get("HideFriendList"))
-            this.showHideFriendslist(window.DataStore.get("HideFriendList"))
+            if (window.DataStore.get("enable-hide-top-navbar-friendlist-button")) {
+                this.createButton()
+                this.buttonShowHideFriendlist(window.DataStore.get("HideFriendList"))
+                this.showHideFriendslist(window.DataStore.get("HideFriendList"))
+            }
         })
     }
 }
