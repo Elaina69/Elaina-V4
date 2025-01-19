@@ -6,7 +6,7 @@ import { log, error } from '../utils/themeLog';
 export class BackupRestoreData {
 	async importData(url: string): Promise<any> {
 		const controller = new AbortController();
-		const timeoutId = setTimeout(() => controller.abort(), 2000);
+		const timeoutId = setTimeout(() => controller.abort(), 3000);
 	
 		try {
 			const res = await fetch(url, { signal: controller.signal });
@@ -15,10 +15,11 @@ export class BackupRestoreData {
 				return Data.default
 			} 
 			else throw new Error();
-		} catch {
-			let errorMsg = "Can't load default datastore from local"
+		} 
+		catch (err: any) {
+			let errorMsg = "Can't load default datastore from local: "
 			clearTimeout(timeoutId);
-			error(errorMsg);
+			error(errorMsg, err);
 			window.Toast.error(errorMsg);
 		}
 	};
@@ -93,6 +94,6 @@ try {
 	// Backup datastore
 	backupRestoreData.backup()
 }
-catch { error("Can not restore datastore") }
+catch(err:any) { error("Can not restore datastore", err) }
 
 window.restoreDefaultDataStore = restoreDefaultDataStore

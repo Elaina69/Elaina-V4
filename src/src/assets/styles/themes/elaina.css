@@ -36,6 +36,10 @@ html {
     filter: var(--play-button-filter) !important;
 }
 
+.npe-header-league-logo {
+	filter: var(--play-button-filter) !important;
+}
+
 .stats-backdrop {
 	opacity: 0.3!important;
 	mix-blend-mode: difference !important;

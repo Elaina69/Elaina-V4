@@ -146,7 +146,8 @@ export class CustomProfile {
                         get: () => value,
                         set: (v) => v,
                     })
-                }catch {}
+                }
+                catch {}
             }
         }
     }
@@ -247,7 +248,7 @@ export class CustomProfile {
                     }
                 }
             }
-            catch{}
+            catch {}
         })
 
         upl.observer.subscribeToElementCreation(".collection-totals",(element: any)=>{
@@ -288,7 +289,7 @@ export class CustomProfile {
                     },3000)
                 }
             }
-            catch{}
+            catch {}
         })
 
         upl.observer.subscribeToElementCreation(".crystal-wrapper",(element: any)=>{
