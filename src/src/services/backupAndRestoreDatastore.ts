@@ -3,6 +3,8 @@ import utils from "../utils/utils.ts"
 import * as upl from 'pengu-upl';
 import { log, error } from '../utils/themeLog';
 
+let datastore_list = (await import(`//plugins/${getThemeName()}/config/datastoreDefault.js`)).default
+
 export class BackupRestoreData {
 	async importData(url: string): Promise<any> {
 		const controller = new AbortController();
@@ -58,11 +60,6 @@ export class BackupRestoreData {
 	}
 
 	restore = async (force: boolean = false) => {
-		let datastore_list: Object = window.DataStore.get("Dev-mode")
-			? (await this.importData(`//plugins/${getThemeName()}/elaina-theme-data/src/config/datastoreDefault.js`))
-			//@ts-ignore
-			: (await this.importData(`https://cdn.jsdelivr.net/npm/elaina-theme-data/src/config/datastoreDefault.js`))
-
 		if (window.DataStore.get("Elaina-Plugins")) {
 			this.setDefaultData(datastore_list)
 		}
