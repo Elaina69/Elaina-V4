@@ -79,7 +79,7 @@ catch {
 
 if (CdnKey === LocalKey) {
     try {
-        const themeVersion = (await cdnImport(`${localUrl}/src/update/update.js`, "Can't get theme version")).default.version;
+        const themeVersion = (await cdnImport(`${cdnUrl}/src/update/update.js`, "Can't get theme version")).default.version;
         window.DataStore.set("Theme-version", themeVersion);
     }
     catch (err: any) { error("Can't get theme version", err) }
