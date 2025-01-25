@@ -1,5 +1,7 @@
 import { getThemeName } from "../otherThings";
-import { error } from "../utils/themeLog.ts";
+import { log, error } from "../utils/themeLog.ts";
+
+let cdnServer = (await import(`//plugins/${getThemeName()}/config/cdnServer.js`)).default
 
 let initLink: string
 
@@ -23,15 +25,24 @@ export async function cdnImport(url: string, errorMsg: any): Promise<any> {
     }
 };
 
+log(cdnServer["cdn-url"])
 if (window.DataStore.get("Dev-mode")) {
     initLink = `//plugins/${getThemeName()}/elaina-theme-data/cdninit.js`;
     await cdnImport(`//plugins/${getThemeName()}/elaina-theme-data/index.js`, "Failed to load local data");
 } 
 else {
-    initLink = `https://cdn.jsdelivr.net/npm/elaina-theme-data/cdninit.js`;
-    await cdnImport(`https://cdn.jsdelivr.net/npm/elaina-theme-data/index.js`, "Failed to load CDN data");
+    initLink = `${cdnServer["cdn-url"]}elaina-theme-data@${cdnServer["version"]}/cdninit.js`;
+    await cdnImport(`${cdnServer["cdn-url"]}elaina-theme-data@${cdnServer["version"]}/index.js`, "Failed to load CDN data");
 }
 
 
 const { Cdninit } = await cdnImport(initLink, "Failed to load Init data")
+.then( res => {
+    if (res) return res 
+    else {
+        error("CDN respond {null}.")
+        return {}
+    } 
+})
+
 export { Cdninit }

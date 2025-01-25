@@ -23,6 +23,7 @@ window.DataStore.set("Plugin-folder-name", getThemeName());
 let addedBackgrounds = false
 let navbarContentList: any[] = [];
 let haveNewContent = 0
+let cdnServer = (await import(`//plugins/${getThemeName()}/config/cdnServer.js`)).default
 
 // Set default data
 const defaultData = {
@@ -58,7 +59,7 @@ window.setTimeout(async () => {
 
 // Check version
 let CdnKey: number;
-let cdnUrl = "https://cdn.jsdelivr.net/npm/elaina-theme-data"
+let cdnUrl = `${cdnServer["cdn-url"]}elaina-theme-data@${cdnServer["version"]}`
 let localUrl = `//plugins/${getThemeName()}/elaina-theme-data`
 
 try {
@@ -465,7 +466,7 @@ class MainController {
         
         
         // Create audio progress bar
-        const progressBar = this.createElementWithClass("div", "progress-bar");
+        const progressBar = this.createElementWithClass("div", "theme-audio-progress-bar");
         const progress = this.createElementWithClass("div", "progress-status");
         const audioNameBar = this.createElementWithClass("div", "audio-name-bar");
         const audioName = this.createElementWithId("p", "audio-name");

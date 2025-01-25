@@ -1,10 +1,7 @@
 /* Progress Bar */
-.progress-bar {
+.theme-audio-progress-bar {
     opacity: 0.5;
     transition: opacity 0.3s ease;
-}
-
-.progress-bar {
     position: absolute;
     bottom: 1px;
     left: -2px;
@@ -26,7 +23,7 @@
 	left: -4px;
 }
 
-.webm-bottom-buttons-container:hover .progress-bar {
+.webm-bottom-buttons-container:hover .theme-audio-progress-bar {
     opacity: 1;
 }
 

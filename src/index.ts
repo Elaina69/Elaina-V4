@@ -38,20 +38,23 @@ import { OfflineMode } from "./src/plugins/offlineMode.ts"
 import { Practice5vs5 } from "./src/plugins/practice5vs5.ts"
 import { InviteAllFriends } from "./src/plugins/inviteAllFriends.ts"
 import { HideFriendList } from './src/plugins/hideFriendlist.ts';
+import { Settings } from "./src/plugins/settings.ts";
 
 // Import other plugins
 import { ForceJungLane } from "./src/plugins/forceJungleLane.ts"
 import "./src/plugins/debug.ts"
 
-class ElainaTheme {
-    init(context: any) {
-        log('Initializing theme');
+// Export Init
+export function init(context: any) {
+    log('Initializing theme');
     
-        // createHomePageTab(context);
-        transparentLobby(context);
-        Cdninit(context);
-    }
+    // createHomePageTab(context);
+    Settings(context);
+    transparentLobby(context);
+    Cdninit(context);
+}
 
+class ElainaTheme {
     main() {
         // Check theme's version and available update
         const checkUpdate = new CheckUpdate()
@@ -142,8 +145,3 @@ const elainaTheme = new ElainaTheme()
 window.addEventListener("load", () => {
     elainaTheme.main()
 })
-
-// Export Init
-export function init(context: any) {
-    elainaTheme.init(context)
-}

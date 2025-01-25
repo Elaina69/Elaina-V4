@@ -116,7 +116,10 @@ declare interface Window {
     restoreDefaultDataStore     : () => Promise<void>; 
     hideShowNavBar              : () => void;
     changeHomePageStyle         : () => void;
-    
+    readfile                    : (path: string) => Promise<void>;
+    readBackup                  : (id: any, fileName: string) => Promise<void>;
+    writeBackup                 : (id: any, fileName: string, content: any) => Promise<void>;
+    deleteBackup                : (id: any) => Promise<void>;
     storeObserver               : any;
     __llver                     : string;
 };
