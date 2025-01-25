@@ -3,12 +3,13 @@ import { getThemeName, cdnImport } from "../otherThings.ts"
 import { log, warn } from "../utils/themeLog.ts"
 
 let CdnKey: number = 0
+let cdnServer = (await import(`//plugins/${getThemeName()}/config/cdnServer.js`)).default
 
 log(`%cChecking theme version...`, "color: #e4c2b3")
 
 const fileLocation = window.DataStore.get("Dev-mode")
   	? `//plugins/${getThemeName()}/elaina-theme-data/src/update/update.js`
-  	: `https://cdn.jsdelivr.net/npm/elaina-theme-data/src/update/update.js`;
+  	: `${cdnServer["cdn-url"]}elaina-theme-data@${cdnServer["version"]}/src/update/update.js`;
 
 try {
 	CdnKey = (await cdnImport(fileLocation, "Can't load cdn key")).default.key;
