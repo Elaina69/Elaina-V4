@@ -474,6 +474,10 @@ export class LootHelper {
         upl.observer.subscribeToElementCreation((".loot-inventory-grid "), (element: any) => {
             log("%cLoot helper loaded", "color: #e4c2b3")
             OnClickRefreshButton()
+
+            window.setTimeout(()=> {
+                OnClickRefreshButton()
+            },2000)
         })
 
         upl.observer.subscribeToElementCreation((".loot-display-category-tabs-container"), (element: any) => {
