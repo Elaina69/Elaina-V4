@@ -6,10 +6,6 @@
 	background: transparent !important;
 }
 
-lol-social-avatar[ref='iconElement'], .lol-social-identity.ember-view > .details {
-	z-index: 1 !important;
-}
-
 lol-social-roster-member .offline .member-name {
 	color:#9a9696!important
 }
