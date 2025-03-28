@@ -115,6 +115,7 @@ export default {
     "Disable-Theme-Audio"           : "Vô hiệu hóa nhạc của Elaina theme",
     
     "prevent-manual-update"         : "Không nhận thông báo về các bản cập nhật thủ công trong tương lai",
+    "holiday-message"               : "Tin nhắn thông báo cho những ngày lễ",
     "hide-homepage-navbar"          : "Ẩn thanh điều hướng trang chủ thủ công",
     "custom-navbar-css"             : "Thanh điều hướng cấp 2 tùy chỉnh",
     "old-prev/next-button"          : "Nút thay đổi hình nền cũ",
