@@ -128,7 +128,7 @@ export default defineConfig((config) => ({
                 // Add author comment block
                 const Author = `/**\n* @name ElainaV4\n* @author Elaina Da Catto\n* @description Elaina theme for Pengu Loader\n* @link https://github.com/Elaina69\n* @Nyan Meow~~~\n*/`;
                 const importDir = ""
-/*
+
 + `
 import wallpaper from "./assets/backgrounds/wallpapers?dir"
 import audio from "./assets/backgrounds/audio?dir"
@@ -156,31 +156,33 @@ const refreshList = async () => {
     }, {});
 
     Object.entries(filteredLists).forEach(([key, list]) => {
-        window.DataStore.set(\`\${key}-list\`, list);
+        ElainaData.set(\`\${key}-list\`, list);
     });
 }
 
 await refreshList()
 `
-*/
-                async function prependCommentToFile(filePath, commentBlock) {
+
+                async function prependCommentToFile(filePath: string, commentBlock: string, lineNumber: number) {
                     try {
                         if (!existsSync(filePath)) {
                             console.error(chalk.red(`File not found: ${filePath}`));
                             return;
                         }
-            
+
                         const data = await readFile(filePath, 'utf-8');
-                        const updatedContent = `${commentBlock.trim()}\n\n${data}`;
+                        const lines = data.split('\n');
+                        lines.splice(lineNumber - 1, 0, commentBlock.trim());
+                        const updatedContent = lines.join('\n');
                         await writeFile(filePath, updatedContent, 'utf-8');
-                        //console.log(chalk.green('✔ Author name added successfully!'));
+                        // console.log(chalk.green('✔ Comment added successfully!'));
                     } catch (err) {
                         console.error(chalk.red('Error while processing the file:'), err);
                     }
                 }
             
-                await prependCommentToFile(indexJs, importDir);
-                await prependCommentToFile(indexJs, Author);
+                await prependCommentToFile(indexJs, importDir, 30);
+                await prependCommentToFile(indexJs, Author, 1);
             
                 // Copy assets and config folders
                 const copyTask = async (src, dest, taskName) => {
@@ -200,6 +202,7 @@ await refreshList()
             
                 await copyTask('src/src/assets', join(outDir, 'assets'), 'Copying assets folder to /dist');
                 await copyTask('src/src/config', join(outDir, 'config'), 'Copying config folder to /dist');
+                await copyTask('src/src/locales', join(outDir, 'locales'), 'Copying locales folder to /dist');
             
                 try {
                     await copyTask('src/elaina-theme-data', join(outDir, 'elaina-theme-data'), 'Copying CDN folder to /dist');

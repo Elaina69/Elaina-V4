@@ -15,7 +15,7 @@ export class CustomStatus {
         let MultiStatus = statusMessage.split("\\r\\n(end status)\\r\\n")
 
         if   (MultiStatus.length == 1) {time = 100000}
-        else {time = window.DataStore.get("status-delay")}
+        else {time = ElainaData.get("status-delay")}
         
         window.setInterval( async ()=> {
             if   (i == MultiStatus.length - 1) {i = 0}

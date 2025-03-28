@@ -15,7 +15,7 @@ function openAssets() {window.openPluginsFolder(`${getThemeName()}/assets`)}
 
 export class ThemePresetSettings {
 	createThemeMenu = async (root: HTMLElement) =>  {
-		const version: string = window.DataStore.get("Theme-version")
+		const version: string = ElainaData.get("Theme-version")
 		
 		let l_reload_client = await getString('reload-client')
 		let l_open_assets = await getString('l.open_assets')
@@ -97,7 +97,7 @@ export class ThemePresetSettings {
 	main = async () => {
 		const manager = () => document.getElementById('lol-uikit-layer-manager-wrapper')
 		const root = document.createElement('div')
-		if (window.DataStore.get("Old-League-Loader-Settings")) {
+		if (ElainaData.get("Old-League-Loader-Settings")) {
 			while (!manager()) await new Promise(r => setTimeout(r, 300))
 			await this.createThemeMenu(root)
 			manager()?.prepend(root)

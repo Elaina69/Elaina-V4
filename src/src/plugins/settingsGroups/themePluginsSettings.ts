@@ -156,10 +156,17 @@ async function pluginsSettings(panel) {
             UI.CheckBox(
                 `${await getString("auto_accept_button")}`,'autoacceptbutton','autoacceptbuttonbox',
                 ()=>{
-                    if (!window.DataStore.get("auto_accept_button")) {
+                    if (!ElainaData.get("auto_accept_button")) {
                         document.getElementById("autoAcceptQueueButton")?.remove()
                     }
                 },true,"auto_accept_button"
+            ),
+            document.createElement('br'),
+            UI.CheckBox(
+                `${await getString("dodge-button")}`, "dodgebutton", "dodgebuttonbox",
+                () => {
+                    restartAfterChange("dodgebutton", "dodge-button")
+                },true, "dodge-button"
             ),
             document.createElement('br'),
             UI.CheckBox(
@@ -177,7 +184,7 @@ async function pluginsSettings(panel) {
             UI.Row("j1_4",[
                 UI.CheckBox(
                     `${await getString("1/4-joke")}`,'_1_4','_1_4box',
-                    ()=>{},window.DataStore.get("Dev-button"), "April fool` joke"
+                    ()=>{},ElainaData.get("Dev-button"), "April fool` joke"
                 )
             ]),
             // UI.Row("pandoru",[
@@ -211,7 +218,7 @@ async function pluginsSettings(panel) {
                     UI.Input("Find-Delay")
                 ])
             ]),
-            UI.Dropdown(window.DataStore.get("queueList"), "Gamemode", `${await getString("Gamemode")}`, "description", "queueId"),
+            UI.Dropdown(ElainaData.get("queueList"), "Gamemode", `${await getString("Gamemode")}`, "description", "queueId"),
             document.createElement('br'),
             document.createElement('br'),
             UI.CheckBox(
@@ -275,14 +282,14 @@ async function pluginsSettings(panel) {
                 UI.CheckBox(
                     `${await getString("custom-status")}`,'cussta','cusstabox',
                     ()=>{
-                        if (window.DataStore.get("Custom-Status")) {
+                        if (ElainaData.get("Custom-Status")) {
                             if (window.confirm("This may cause some issues with the client's chat, are you sure you want to enable this plugins?")) {
                                 restartAfterChange('cussta',"Custom-Status")
                             }
                             else {
                                 let box: any = document.getElementById("cusstabox")
                                 box.checked = false
-                                window.DataStore.set("Custom-Status", false)
+                                ElainaData.set("Custom-Status", false)
                                 
                             }
                         }
@@ -308,18 +315,18 @@ async function pluginsSettings(panel) {
                 `${await getString("Debug-mode")}`,'debug','debugbox',
                 ()=>{
                     restartAfterChange('debug',"Debug-mode")
-                },window.DataStore.get("Dev-button"),"Debug-mode"
+                },ElainaData.get("Dev-button"),"Debug-mode"
             ),
             document.createElement('br'),
             UI.CheckBox(
                 `${await getString("Developer-Mode")}`,'devbutton','devbuttonbox', ()=>{
                     restartAfterChange('devbutton',"Dev-mode")
             
-                    if (!window.DataStore.get("Dev-mode")) {}
+                    if (!ElainaData.get("Dev-mode")) {}
                     else {
                         window.alert("You just turned on developer mode \nIf you are not a developer, please turn it off right now \nOtherwise the whole theme will not work properly")
                     }
-                },window.DataStore.get("Dev-button"),"Dev-mode"
+                },ElainaData.get("Dev-button"),"Dev-mode"
             ),
             document.createElement('br'),
         ])

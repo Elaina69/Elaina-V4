@@ -9,10 +9,17 @@ export class DodgeButton {
     }
     
     async dodgeQueue(): Promise<void>{
-        await fetch('/lol-login/v1/session/invoke?destination=lcdsServiceProxy&method=call&args=["","teambuilder-draft","quitV2",""]',
-            {body:'["","teambuilder-draft","quitV2",""]',method:"POST"}
-        )
-        await fetch('/lol-lobby/v1/lobby/custom/cancel-champ-select',{method:"POST"})
+        try {
+            await fetch('/lol-login/v1/session/invoke?destination=lcdsServiceProxy&method=call&args=["","teambuilder-draft","quitV2",""]', {
+                body:'["","teambuilder-draft","quitV2",""]',
+                method:"POST"
+            })
+        } catch {}
+        try {
+            await fetch('/lol-lobby/v1/lobby/custom/cancel-champ-select',{
+                method:"POST"
+            })
+        } catch {}
     }
     
     async generateDodgeAndExitButton(siblingDiv: HTMLElement | null): Promise<void>{
@@ -41,7 +48,9 @@ export class DodgeButton {
     main = () => {
         upl.observer.subscribeToElementCreation(".bottom-right-buttons", (element: any) => {
             if (utils.phase == "ChampSelect" && element && !document.querySelector(".dodge-button-container")) {
-                this.generateDodgeAndExitButton(element);
+                if (ElainaData.get("dodge-button")) {
+                    this.generateDodgeAndExitButton(element);
+                }
             }
         })
     }

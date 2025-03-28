@@ -7,23 +7,23 @@ let cdnServer = (await import(`//plugins/${getThemeName()}/config/cdnServer.js`)
 
 log(`%cChecking theme version...`, "color: #e4c2b3")
 
-const fileLocation = window.DataStore.get("Dev-mode")
-  	? `//plugins/${getThemeName()}/elaina-theme-data/src/update/update.js`
-  	: `${cdnServer["cdn-url"]}elaina-theme-data@${cdnServer["version"]}/src/update/update.js`;
-
 try {
+	const fileLocation = ElainaData.get("Dev-mode")
+  		? `//plugins/${getThemeName()}/elaina-theme-data/src/update/update.js`
+  		: `${cdnServer["cdn-url"]}elaina-theme-data@${cdnServer["version"]}/src/update/update.js`;
+
 	CdnKey = (await cdnImport(fileLocation, "Can't load cdn key")).default.key;
 }
 catch { CdnKey = LocalKey }
 
 export class CheckUpdate {
 	main = () => {
-		if (!window.DataStore.get("prevent-manual-update")) {
+		if (!ElainaData.get("prevent-manual-update")) {
 			window.addEventListener("load", ()=> {
 				let checkKey: boolean = (LocalKey >= CdnKey)
 		
-				if (checkKey) window.DataStore.set(`Force-Update`, false)
-				else window.DataStore.set(`Force-Update`, true)
+				if (checkKey) ElainaData.set(`Force-Update`, false)
+				else ElainaData.set(`Force-Update`, true)
 		
 				let checkVersion = new Promise((resolve: any, reject): void => {
 					setTimeout(() => {

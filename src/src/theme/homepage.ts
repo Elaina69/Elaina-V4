@@ -17,8 +17,8 @@ const datapath: string = `//plugins/${getThemeName()}/`
 const iconFolder: string = `${datapath}assets/icon/`;
 const bgFolder: string = `${datapath}assets/backgrounds/`;
 
-window.DataStore.set("Font-folder", `${datapath}assets/fonts/`);
-window.DataStore.set("Plugin-folder-name", getThemeName());
+ElainaData.set("Font-folder", `${datapath}assets/fonts/`);
+ElainaData.set("Plugin-folder-name", getThemeName());
 
 let addedBackgrounds = false
 let navbarContentList: any[] = [];
@@ -41,8 +41,8 @@ const defaultData = {
 
 const setDefaultData = (list: Object) => {
     for (const [key, value] of Object.entries(list)) {
-        if (!window.DataStore.has(key)) {
-            window.DataStore.set(key, value);
+        if (!ElainaData.has(key)) {
+            ElainaData.set(key, value);
             log(`${key} data restored`);
         }
     }
@@ -53,7 +53,7 @@ setDefaultData(defaultData);
 // Get Summoner ID
 window.setTimeout(async () => {
     const summonerID: number = await utils.getSummonerID();
-    window.DataStore.set("Summoner-ID", summonerID);
+    ElainaData.set("Summoner-ID", summonerID);
     log(`%cCurrent summonerID: %c${summonerID}`, 'color: #e4c2b3', 'color: #0070ff');
 }, 7000);
 
@@ -63,7 +63,7 @@ let cdnUrl = `${cdnServer["cdn-url"]}elaina-theme-data@${cdnServer["version"]}`
 let localUrl = `//plugins/${getThemeName()}/elaina-theme-data`
 
 try {
-    if (window.DataStore.get("Dev-mode")) {
+    if (ElainaData.get("Dev-mode")) {
         CdnKey = (await cdnImport(`${localUrl}/src/update/update.js`, "Can't load cdn key")).default.key;
         log('%cRunning Elaina theme - %cDev version', 'color: #e4c2b3', 'color: red');
     } 
@@ -74,24 +74,24 @@ try {
 }
 catch {
     CdnKey = LocalKey
-    log('%cRunning Elaina theme - %cChecking version error', 'color: #e4c2b3', 'color: #00ff44');
+    log('%cRunning Elaina theme - %cChecking version error', 'color: #e4c2b3', 'color:rgb(229, 255, 0)');
 }
 
 if (CdnKey === LocalKey) {
     try {
         const themeVersion = (await cdnImport(`${cdnUrl}/src/update/update.js`, "Can't get theme version")).default.version;
-        window.DataStore.set("Theme-version", themeVersion);
+        ElainaData.set("Theme-version", themeVersion);
+
+        if (!ElainaData.get(`Change-CDN-version`)) {
+            const response = await fetch(`${cdnUrl}/package.json`);
+            const { version: cdnVersion } = await response.json();
+            ElainaData.set("Cdn-version", cdnVersion);
+        }
     }
     catch (err: any) { error("Can't get theme version", err) }
-
-    if (!window.DataStore.get(`Change-CDN-version`)) {
-        const response = await fetch(`${cdnUrl}/package.json`);
-        const { version: cdnVersion } = await response.json();
-        window.DataStore.set("Cdn-version", cdnVersion);
-    }
 }
-log(`%cTheme build: %c${window.DataStore.get("Theme-version")}`, 'color: #e4c2b3', 'color: #00ff44');
-log(`%cCDN build  : %c${window.DataStore.get("Cdn-version")}`, 'color: #e4c2b3', 'color: #00ff44');
+log(`%cTheme build: %c${ElainaData.get("Theme-version")}`, 'color: #e4c2b3', 'color: #00ff44');
+log(`%cCDN build  : %c${ElainaData.get("Cdn-version")}`, 'color: #e4c2b3', 'color: #00ff44');
 
 // Create and set new page as Homepage
 export function createHomePageTab(context: any) {
@@ -182,28 +182,21 @@ class ChangeHomePageTabs {
         }
     };
 
-    applyHideAndShowtab = () => {
-        this.hideShowTab(window.DataStore.get("hide-overview"), 'lol-uikit-navigation-item[item-id="overview"]', "Overview");
-        this.hideShowTab(window.DataStore.get("hide-merch"), 'lol-uikit-navigation-item[item-id="merch"]', "Merch");
-        this.hideShowTab(window.DataStore.get("hide-patch-note"), 'lol-uikit-navigation-item[item-id="latest_patch_notes"]', "Patch note");
-        this.hideShowTab(window.DataStore.get("hide-esport"), 'lol-uikit-navigation-item[item-id="news"]', "Esport");
-    };
-
     applyHideAndShowTFTtab = () => {
-        this.hideShowTab(window.DataStore.get("hide-tft-match-history"), 'lol-uikit-navigation-bar a[href="/match-history"]', "TFT match history");
-        this.hideShowTab(window.DataStore.get("hide-tft-news"), 'lol-uikit-navigation-bar a[href="/news"]', "TFT news");
-        this.hideShowTab(window.DataStore.get("hide-tft-rotational-shop"), 'lol-uikit-navigation-bar a[href="/rotational-shop"]', "TFT rotational shop");
-        this.hideShowTab(window.DataStore.get("hide-tft-troves"), 'lol-uikit-navigation-bar a[href="/troves"]', "TFT troves");
-        this.hideShowTab(window.DataStore.get("hide-tft-battle-pass"), 'lol-uikit-navigation-bar a[href="/battle-pass"]', "TFT battle pass");
-        this.hideShowTab(window.DataStore.get("hide-tft-home"), 'lol-uikit-navigation-bar a[href="/home"]', "TFT home");
+        this.hideShowTab(ElainaData.get("hide-tft-match-history"), 'lol-uikit-navigation-bar a[href="/match-history"]', "TFT match history");
+        this.hideShowTab(ElainaData.get("hide-tft-news"), 'lol-uikit-navigation-bar a[href="/news"]', "TFT news");
+        this.hideShowTab(ElainaData.get("hide-tft-rotational-shop"), 'lol-uikit-navigation-bar a[href="/rotational-shop"]', "TFT rotational shop");
+        this.hideShowTab(ElainaData.get("hide-tft-troves"), 'lol-uikit-navigation-bar a[href="/troves"]', "TFT troves");
+        this.hideShowTab(ElainaData.get("hide-tft-battle-pass"), 'lol-uikit-navigation-bar a[href="/battle-pass"]', "TFT battle pass");
+        this.hideShowTab(ElainaData.get("hide-tft-home"), 'lol-uikit-navigation-bar a[href="/home"]', "TFT home");
     }
+
     deleteNavbarTab = () => {
         const intervalId = window.setInterval(() => {
             const overviewTab = document.querySelector('lol-uikit-navigation-item[item-id="overview"]');
             const TFThome = document.querySelector('lol-uikit-navigation-bar a[href="/home"]');
             if (overviewTab || TFThome) {
                 window.clearInterval(intervalId);
-                this.applyHideAndShowtab()
                 this.applyHideAndShowTFTtab()
             }
         }, 1000);
@@ -217,13 +210,13 @@ const changeHomePageTabs = new ChangeHomePageTabs()
 class WallpaperController {
     elainaPlayPause = () => {
         const elainaBgElem: any = document.getElementById("elaina-bg");
-        window.DataStore.get('pause-wallpaper') % 2 === 0 ? elainaBgElem.pause() : elainaBgElem.play();
+        ElainaData.get('pause-wallpaper') % 2 === 0 ? elainaBgElem.pause() : elainaBgElem.play();
     };
     
     playPauseSetIcon = (elem: any = document.querySelector(".pause-bg-icon")) => {
         const pauseBgIcon = elem;
         if (!pauseBgIcon) return;
-        pauseBgIcon.setAttribute("src", `${iconFolder}plugins-icons/${window.DataStore.get('pause-wallpaper') % 2 === 0 ? 'play_button' : 'pause_button'}.png`);
+        pauseBgIcon.setAttribute("src", `${iconFolder}plugins-icons/${ElainaData.get('pause-wallpaper') % 2 === 0 ? 'play_button' : 'pause_button'}.png`);
     };
     
     loadBG = (BG: string) => {
@@ -231,7 +224,7 @@ class WallpaperController {
         const elainaStaticBg: any = document.getElementById("elaina-static-bg");
         elainaBg.src = `${bgFolder}wallpapers/${BG}`;
         elainaStaticBg.src = `${bgFolder}wallpapers/${BG}`;
-        elainaBg.playbackRate = window.DataStore.get("Playback-speed") / 100;
+        elainaBg.playbackRate = ElainaData.get("Playback-speed") / 100;
     };
 
     changeBG = async (BG: string) => {
@@ -259,12 +252,12 @@ class WallpaperController {
         const elainaStaticBg: any = document.getElementById("elaina-static-bg");
         elainaStaticBg.classList.add("webm-hidden");
     
-        window.DataStore.set('wallpaper-index', window.DataStore.get('wallpaper-index') + 1);
-        if (window.DataStore.get('wallpaper-index') > window.DataStore.get("Wallpaper-list").length - 1) {
-            window.DataStore.set('wallpaper-index', 0);
+        ElainaData.set('wallpaper-index', ElainaData.get('wallpaper-index') + 1);
+        if (ElainaData.get('wallpaper-index') > ElainaData.get("Wallpaper-list").length - 1) {
+            ElainaData.set('wallpaper-index', 0);
         }
     
-        await this.changeBG(window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]);
+        await this.changeBG(ElainaData.get("Wallpaper-list")[ElainaData.get('wallpaper-index')]);
     };
     
     prevWallpaper = async() => {
@@ -273,12 +266,12 @@ class WallpaperController {
         const elainaStaticBg: any = document.getElementById("elaina-static-bg");
         elainaStaticBg.classList.add("webm-hidden");
     
-        window.DataStore.set('wallpaper-index', window.DataStore.get('wallpaper-index') - 1);
-        if (window.DataStore.get('wallpaper-index') < 0) {
-            window.DataStore.set('wallpaper-index', window.DataStore.get("Wallpaper-list").length - 1);
+        ElainaData.set('wallpaper-index', ElainaData.get('wallpaper-index') - 1);
+        if (ElainaData.get('wallpaper-index') < 0) {
+            ElainaData.set('wallpaper-index', ElainaData.get("Wallpaper-list").length - 1);
         }
     
-        await this.changeBG(window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]);
+        await this.changeBG(ElainaData.get("Wallpaper-list")[ElainaData.get('wallpaper-index')]);
     };
 
     checkBGType = (wallpaper: string) => {
@@ -294,10 +287,10 @@ class WallpaperController {
     }
 
     wallpaperSlider = (wallpaper: string) => {
-        if (window.DataStore.get("wallpaper-slideshow") && this.checkBGType(wallpaper) == 0) {
+        if (ElainaData.get("wallpaper-slideshow") && this.checkBGType(wallpaper) == 0) {
             window.setTimeout(()=> {
                 this.nextWallpaper()
-            }, window.DataStore.get("wallpaper-change-slide-time"))
+            }, ElainaData.get("wallpaper-change-slide-time"))
         }
     }
 }
@@ -308,20 +301,20 @@ const wallpaperController = new WallpaperController()
 class AudioController {
     audioPlayPause = () => {
         const audio: any = document.getElementById("bg-audio");
-        window.DataStore.get('pause-audio') % 2 === 0 ? audio.pause() : audio.play();
+        ElainaData.get('pause-audio') % 2 === 0 ? audio.pause() : audio.play();
         this.changeSongName()
     };
     
     playPauseSetIconAudio = (elem: any = document.querySelector(".pause-audio-icon")) => {
         const pauseAudioIcon = elem;
         if (!pauseAudioIcon) return;
-        pauseAudioIcon.setAttribute("src", `${iconFolder}plugins-icons/${window.DataStore.get('pause-audio') % 2 === 0 ? 'play_button' : 'pause_button'}.png`);
+        pauseAudioIcon.setAttribute("src", `${iconFolder}plugins-icons/${ElainaData.get('pause-audio') % 2 === 0 ? 'play_button' : 'pause_button'}.png`);
     };
     
     audioMute = () => {
         const audio: any = document.getElementById("bg-audio");
         const wallpaperAudio: any = document.getElementById("elaina-bg");
-        const isMuted = window.DataStore.get("mute-audio");
+        const isMuted = ElainaData.get("mute-audio");
         wallpaperAudio.muted = isMuted;
         audio.muted = isMuted;
         log(`%caudio and wallpaper mute: %c${isMuted}`, '', isMuted ? 'color: #00ff44' : 'color: red');
@@ -330,18 +323,18 @@ class AudioController {
     muteSetIconAudio = (elem: any = document.querySelector(".mute-audio-icon")) => {
         const muteAudioIcon = elem;
         if (!muteAudioIcon) return;
-        muteAudioIcon.setAttribute("src", `${iconFolder}plugins-icons/${window.DataStore.get("mute-audio") ? 'mute' : 'audio'}.png`);
+        muteAudioIcon.setAttribute("src", `${iconFolder}plugins-icons/${ElainaData.get("mute-audio") ? 'mute' : 'audio'}.png`);
     };
     
     setAudioLoopIcon = (elem: any = document.querySelector(".audio-loop-icon")) => {
         const iconElement = elem;
         if (!iconElement) return;
-        iconElement.setAttribute("src", `${iconFolder}plugins-icons/${window.DataStore.get("audio-loop") ? 'rotating-arrow' : 'unrotating-arrow'}.png`);
+        iconElement.setAttribute("src", `${iconFolder}plugins-icons/${ElainaData.get("audio-loop") ? 'rotating-arrow' : 'unrotating-arrow'}.png`);
     };
     
     toggleAudioLoop = () => {
         const audio: any = document.getElementById("bg-audio");
-        if (window.DataStore.get('audio-loop')) {
+        if (ElainaData.get('audio-loop')) {
             audio.removeEventListener("ended", this.nextSong);
             audio.addEventListener("ended", () => {
                 audio.pause();
@@ -368,32 +361,32 @@ class AudioController {
     }
     
     nextSong = async () => {
-        if (window.DataStore.get("Continues_Audio")) {
-            window.DataStore.set('audio-index', window.DataStore.get('audio-index') + 1);
+        if (ElainaData.get("Continues_Audio")) {
+            ElainaData.set('audio-index', ElainaData.get('audio-index') + 1);
     
-            if (window.DataStore.get('audio-index') > window.DataStore.get("Audio-list").length - 1) {
-                window.DataStore.set('audio-index', 0);
+            if (ElainaData.get('audio-index') > ElainaData.get("Audio-list").length - 1) {
+                ElainaData.set('audio-index', 0);
             }
-            await this.updateAudio(window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]);
+            await this.updateAudio(ElainaData.get("Audio-list")[ElainaData.get('audio-index')]);
         }
     };
     
     prevSong = async () => {
-        if (window.DataStore.get("Continues_Audio")) {
-            window.DataStore.set('audio-index', window.DataStore.get('audio-index') - 1);
+        if (ElainaData.get("Continues_Audio")) {
+            ElainaData.set('audio-index', ElainaData.get('audio-index') - 1);
     
-            if (window.DataStore.get('audio-index') < 0) {
-                window.DataStore.set('audio-index', window.DataStore.get("Audio-list").length - 1);
+            if (ElainaData.get('audio-index') < 0) {
+                ElainaData.set('audio-index', ElainaData.get("Audio-list").length - 1);
             }
-            await this.updateAudio(window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]);
+            await this.updateAudio(ElainaData.get("Audio-list")[ElainaData.get('audio-index')]);
         }
     };
     
     changeSongName = ()=> {
-        let currentSong = window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]
+        let currentSong = ElainaData.get("Audio-list")[ElainaData.get('audio-index')]
         let songNameText: Element | null = document.querySelector(".audio-name-bar > p")
         if (songNameText) {
-            if (window.DataStore.get('pause-audio') % 2 === 0) {
+            if (ElainaData.get('pause-audio') % 2 === 0) {
                 songNameText.innerHTML = `Paused: <br/>${currentSong}`
             }
             else songNameText.innerHTML = `Now playing: <br/>${currentSong}`
@@ -433,7 +426,7 @@ class MainController {
     createMainController = () => {
         const container = this.createElementWithClass("div", "webm-bottom-buttons-container");
 
-        if (window.DataStore.get("Disable-Theme-Audio")) container.style.display = "none"
+        if (ElainaData.get("Disable-Theme-Audio")) container.style.display = "none"
     
         // Create music controller
         const musicControlsMain = this.createElementWithClass("div", "music-controls-main");
@@ -478,11 +471,11 @@ class MainController {
         volumeSlider.type = "range";
         volumeSlider.min = "0";
         volumeSlider.max = "100";
-        volumeSlider.value = window.DataStore.get("audio-volume") * 100;
+        volumeSlider.value = ElainaData.get("audio-volume") * 100;
         volumeSlider.classList.add("volume-slider");
     
         const muteUnmuteButton = this.createElementWithClass("div", "mute-unmute-button");
-        const muteUnmuteIcon = this.createIcon("mute-unmute-icon", `${iconFolder}plugins-icons/${window.DataStore.get("mute-audio") ? 'mute' : 'audio'}.png`);
+        const muteUnmuteIcon = this.createIcon("mute-unmute-icon", `${iconFolder}plugins-icons/${ElainaData.get("mute-audio") ? 'mute' : 'audio'}.png`);
     
         // Set icon wallpaper/audio controller button
         audioController.playPauseSetIconAudio(pauseAudioIcon);
@@ -492,9 +485,9 @@ class MainController {
         wallpaperController.playPauseSetIcon(pauseBgIcon);
     
         // Set current audio name to progress bar
-        window.DataStore.get('pause-audio') % 2 === 0 
-            ? audioName.innerHTML = `Paused: <br/>${window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]}`
-            : audioName.innerHTML = `Now playing: <br/>${window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]}`
+        ElainaData.get('pause-audio') % 2 === 0 
+            ? audioName.innerHTML = `Paused: <br/>${ElainaData.get("Audio-list")[ElainaData.get('audio-index')]}`
+            : audioName.innerHTML = `Now playing: <br/>${ElainaData.get("Audio-list")[ElainaData.get('audio-index')]}`
     
         // Append volume slider container
         muteUnmuteButton.appendChild(muteUnmuteIcon);
@@ -513,7 +506,7 @@ class MainController {
         audioNameBar.append(audioName);
     
         // Wallpaper controls
-        if (window.DataStore.get("old-prev/next-button")) {
+        if (ElainaData.get("old-prev/next-button")) {
             wallpaperControls.append(prevBg, pauseBg, nextBg);
             nextBg.append(nextBgIcon);
             prevBg.append(prevBgIcon);
@@ -524,7 +517,7 @@ class MainController {
             newBgChange.append(bgDropdown);
             wallpaperControls.append(newBgChange, pauseBg);
     
-            window.DataStore.get("Wallpaper-list").forEach((opt, id) => {
+            ElainaData.get("Wallpaper-list").forEach((opt, id) => {
                 const el = document.createElement("lol-uikit-dropdown-option");
                 el.setAttribute("slot", "lol-uikit-dropdown-option");
                 el.innerText = opt;
@@ -534,11 +527,11 @@ class MainController {
                     const elainaStaticBg: any = document.getElementById("elaina-static-bg");
                     elainaStaticBg.classList.add("webm-hidden");
     
-                    window.DataStore.set('wallpaper-index', id);
+                    ElainaData.set('wallpaper-index', id);
                     
-                    await wallpaperController.changeBG(window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')])
+                    await wallpaperController.changeBG(ElainaData.get("Wallpaper-list")[ElainaData.get('wallpaper-index')])
                 };
-                if (window.DataStore.get('wallpaper-index') === id) {
+                if (ElainaData.get('wallpaper-index') === id) {
                     el.setAttribute("selected", "true");
                 }
                 bgDropdown.appendChild(el);
@@ -566,17 +559,17 @@ class MainController {
         // Handle volume slider input
         volumeSlider.addEventListener('input', () => {
             const volumeValue = volumeSlider.value / 100;
-            window.DataStore.set("audio-volume", volumeValue);
+            ElainaData.set("audio-volume", volumeValue);
             const audio: any = document.getElementById("bg-audio");
             audio.volume = volumeValue;
     
             if (volumeValue === 0) {
-                window.DataStore.set("mute-audio", true);
+                ElainaData.set("mute-audio", true);
                 audio.muted = true;
                 audioController.muteSetIconAudio();
                 muteUnmuteIcon.setAttribute("src", `${iconFolder}plugins-icons/mute.png`);
             } else {
-                window.DataStore.set("mute-audio", false);
+                ElainaData.set("mute-audio", false);
                 audio.muted = false;
                 audioController.muteSetIconAudio();
                 muteUnmuteIcon.setAttribute("src", `${iconFolder}plugins-icons/audio.png`);
@@ -585,8 +578,8 @@ class MainController {
     
         // Mute/unmute button within the volume slider
         muteUnmuteButton.addEventListener('click', () => {
-            const isMuted = !window.DataStore.get("mute-audio");
-            window.DataStore.set("mute-audio", isMuted);
+            const isMuted = !ElainaData.get("mute-audio");
+            ElainaData.set("mute-audio", isMuted);
             audioController.audioMute();
             audioController.muteSetIconAudio();
             muteUnmuteIcon.setAttribute("src", `${iconFolder}plugins-icons/${isMuted ? 'mute' : 'audio'}.png`);
@@ -595,8 +588,8 @@ class MainController {
                 volumeSlider.value = 0;
                 audio.volume = 0;
             } else {
-                volumeSlider.value = window.DataStore.get("audio-volume") * 100;
-                audio.volume = window.DataStore.get("audio-volume");
+                volumeSlider.value = ElainaData.get("audio-volume") * 100;
+                audio.volume = ElainaData.get("audio-volume");
             }
         });
     
@@ -629,7 +622,7 @@ class MainController {
         // Event delegation for dynamically created elements
         container.addEventListener('click',async (event: any) => {
             if (event.target.closest('#pause-audio')) {
-                window.DataStore.set('pause-audio', window.DataStore.get('pause-audio') + 1);
+                ElainaData.set('pause-audio', ElainaData.get('pause-audio') + 1);
                 audioController.audioPlayPause();
                 audioController.playPauseSetIconAudio();
                 audioController.changeSongName();
@@ -643,7 +636,7 @@ class MainController {
                 audioController.changeSongName();
             }
             if (event.target.closest('#audio-loop')) {
-                window.DataStore.set("audio-loop", !window.DataStore.get("audio-loop"));
+                ElainaData.set("audio-loop", !ElainaData.get("audio-loop"));
                 audioController.toggleAudioLoop();
                 audioController.setAudioLoopIcon();
             }
@@ -651,16 +644,16 @@ class MainController {
     
         wallpaperControls.addEventListener('click', (event: any) => {
             if (event.target.closest('#pause-bg')) {
-                window.DataStore.set('pause-wallpaper', window.DataStore.get('pause-wallpaper') + 1);
+                ElainaData.set('pause-wallpaper', ElainaData.get('pause-wallpaper') + 1);
                 wallpaperController.elainaPlayPause();
                 wallpaperController.playPauseSetIcon();
             }
             if (event.target.closest('#next-bg')) {
-                window.DataStore.set("NextBg_Count", window.DataStore.get("NextBg_Count") + 1);
+                ElainaData.set("NextBg_Count", ElainaData.get("NextBg_Count") + 1);
                 wallpaperController.nextWallpaper();
-                if (window.DataStore.get("NextBg_Count") >= 69 && window.DataStore.get("NSFW-Content")) {
-                    window.open(`${window.DataStore.get("Elaina-domain-server")}elaina_nsfw/easteregg1`, "_blank");
-                    window.DataStore.set("NextBg_Count", 0);
+                if (ElainaData.get("NextBg_Count") >= 69 && ElainaData.get("NSFW-Content")) {
+                    window.open(`${ElainaData.get("Elaina-domain-server")}elaina_nsfw/easteregg1`, "_blank");
+                    ElainaData.set("NextBg_Count", 0);
                 }
             }
             if (event.target.closest('#prev-bg')) {
@@ -669,7 +662,7 @@ class MainController {
         });
 
         // change wallpaper/audio controller if hide homepage navbar
-        if (window.DataStore.get("hide-homepage-navbar")) {
+        if (ElainaData.get("hide-homepage-navbar")) {
             container.style.left = "20px"
             wallpaperControls.style.left = "20px"
         }
@@ -684,7 +677,7 @@ const mainController = new MainController()
 // Create hide navbar button
 class HideNavbarButton {
     checkNewContent = () => {
-        if (!window.DataStore.has("navbar-content")) window.DataStore.set("navbar-content", [])
+        if (!ElainaData.has("navbar-content")) ElainaData.set("navbar-content", [])
         let navbarContent = document.querySelectorAll<HTMLElement>(".activity-center__tab_content");
 
         navbarContent.forEach((element) => {
@@ -694,7 +687,7 @@ class HideNavbarButton {
             }
         });
 
-        let set = new Set(window.DataStore.get("navbar-content")); 
+        let set = new Set(ElainaData.get("navbar-content")); 
         let set2 = new Set(navbarContentList); 
 
         for (const element of navbarContentList) {
@@ -702,7 +695,7 @@ class HideNavbarButton {
                 haveNewContent++;
             }
         }
-        for (const element of window.DataStore.get("navbar-content")) {
+        for (const element of ElainaData.get("navbar-content")) {
             if (!set2.has(element)) {
                 haveNewContent++;
             }
@@ -730,15 +723,15 @@ class HideNavbarButton {
         }
         
         hideButton.addEventListener("click", () => {
-            if (window.DataStore.get("hide-homepage-navbar")) {
-                window.DataStore.set("hide-homepage-navbar", false)
+            if (ElainaData.get("hide-homepage-navbar")) {
+                ElainaData.set("hide-homepage-navbar", false)
             }
             else {
-                window.DataStore.set("hide-homepage-navbar", true)
+                ElainaData.set("hide-homepage-navbar", true)
             }
             this.hideShowNavBar()
             this.changeHomePageStyle()
-            window.DataStore.set("navbar-content", navbarContentList)
+            ElainaData.set("navbar-content", navbarContentList)
             newContent.style.display = "none"
         })
     }
@@ -751,7 +744,7 @@ class HideNavbarButton {
         const hideButtonIcon: any = document.querySelector(".hide-navbar-button-icon")
 
         try {
-            if (window.DataStore.get("hide-homepage-navbar")) {
+            if (ElainaData.get("hide-homepage-navbar")) {
                 nav.style.cssText = `transform: translateX(-212px); pointer-events: none;`
                 navFooter.style.cssText = `transform: translateX(-212px); pointer-events: none;`
                 navDivider.style.cssText = `transform: translateX(-212px); pointer-events: none;`
@@ -775,7 +768,7 @@ class HideNavbarButton {
         const activityCenter: any = document.querySelector(".activity-center-ready > main")
         const activityCenterChinese: any = document.querySelector(".managed-iframe-wrapper > iframe")
         
-        if (window.DataStore.get("hide-homepage-navbar")) {
+        if (ElainaData.get("hide-homepage-navbar")) {
             if (activityCenter) activityCenter.style.cssText = `opacity: 0; pointer-events: none;`
             if (activityCenterChinese) activityCenterChinese.style.cssText = `opacity: 0; pointer-events: none;`
             if (wallpaperController) wallpaperController.style.cssText = `transform: translateX(0px);`
@@ -832,14 +825,14 @@ class HideTopNavbarButton {
             hideButton.append(hideButtonIcon)
         }
 
-        this.changeButtonIcon(window.DataStore.get("hide-top-navbar"))
+        this.changeButtonIcon(ElainaData.get("hide-top-navbar"))
 
         hideButton.addEventListener("click", () => {
-            if (window.DataStore.get("hide-top-navbar")) {
-                window.DataStore.set("hide-top-navbar", false)
+            if (ElainaData.get("hide-top-navbar")) {
+                ElainaData.set("hide-top-navbar", false)
             }
             else {
-                window.DataStore.set("hide-top-navbar", true)
+                ElainaData.set("hide-top-navbar", true)
             }
             this.hideShowTopNavBar()
         })
@@ -862,7 +855,7 @@ class HideTopNavbarButton {
         const hideButton: any = document.querySelector(".hide-top-navbar")
 
         try {
-            let isHidden = window.DataStore.get("hide-top-navbar")
+            let isHidden = ElainaData.get("hide-top-navbar")
             if (isHidden) {
                 let nav: any = document.querySelector(".right-nav-menu")
                 let navWidth = nav.offsetWidth
@@ -969,24 +962,28 @@ class WallpaperAndAudio {
     }
 
     setWallpaperElement = () => {
-        if (window.DataStore.get('wallpaper-index') > window.DataStore.get("Wallpaper-list").length - 1) {
-            window.DataStore.set('wallpaper-index', 0);
+        if (ElainaData.get('wallpaper-index') > ElainaData.get("Wallpaper-list").length - 1) {
+            ElainaData.set('wallpaper-index', 0);
         }
 
         const video: any = document.getElementById("elaina-bg")
         video.autoplay = true;
-        video.volume = window.DataStore.get("wallpaper-volume");
-        video.muted = window.DataStore.get("mute-audio");
-        video.currentTime = window.DataStore.get("Wallpaper-currentTime");
-        video.src = `${bgFolder}wallpapers/${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`;
-        video.playbackRate = window.DataStore.get("Playback-speed") / 100;
+        video.volume = ElainaData.get("wallpaper-volume");
+        video.muted = ElainaData.get("mute-audio");
+        video.currentTime = ElainaData.get("Wallpaper-currentTime");
+        video.src = `${bgFolder}wallpapers/${ElainaData.get("Wallpaper-list")[ElainaData.get('wallpaper-index')]}`;
+        video.playbackRate = ElainaData.get("Playback-speed") / 100;
         
-
+        let savedTime = false
         video.addEventListener('timeupdate', () => {
-            window.DataStore.set("Wallpaper-currentTime", video.currentTime)
+            if (!savedTime && parseInt(video.currentTime) % 3 == 0) {
+                savedTime = true
+                ElainaData.set("Wallpaper-currentTime", parseInt(video.currentTime))
+            }
+            else savedTime = false
         });
         
-        if (window.DataStore.get("wallpaper-slideshow")) {
+        if (ElainaData.get("wallpaper-slideshow")) {
             video.loop = false
             video.addEventListener("ended", () => {
                 wallpaperController.nextWallpaper();
@@ -997,29 +994,34 @@ class WallpaperAndAudio {
 
     setImageWallpaperElement = () => {
         const imgWallpaper: any = document.getElementById("elaina-static-bg")
-        imgWallpaper.src = `${bgFolder}wallpapers/${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]}`;
+        imgWallpaper.src = `${bgFolder}wallpapers/${ElainaData.get("Wallpaper-list")[ElainaData.get('wallpaper-index')]}`;
 
-        wallpaperController.wallpaperSlider(window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')])
+        wallpaperController.wallpaperSlider(ElainaData.get("Wallpaper-list")[ElainaData.get('wallpaper-index')])
     }
 
     setAudioElement = () => {
-        if (!window.DataStore.get("Disable-Theme-Audio")) {
-            if (window.DataStore.get('audio-index') > window.DataStore.get("Audio-list").length - 1) {
-                window.DataStore.set('audio-index', 0);
+        if (!ElainaData.get("Disable-Theme-Audio")) {
+            if (ElainaData.get('audio-index') > ElainaData.get("Audio-list").length - 1) {
+                ElainaData.set('audio-index', 0);
             }
 
             const audio: any = document.getElementById("bg-audio")
             audio.autoplay = true;
-            audio.src = `${bgFolder}audio/${window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]}`;
-            audio.volume = window.DataStore.get("audio-volume");
-            audio.muted = window.DataStore.get("mute-audio");
-            audio.currentTime = window.DataStore.get("Audio-currentTime");
+            audio.src = `${bgFolder}audio/${ElainaData.get("Audio-list")[ElainaData.get('audio-index')]}`;
+            audio.volume = ElainaData.get("audio-volume");
+            audio.muted = ElainaData.get("mute-audio");
+            audio.currentTime = ElainaData.get("Audio-currentTime");
 
+            let savedTime = false
             audio.addEventListener('timeupdate', () => {
-                window.DataStore.set("Audio-currentTime", audio.currentTime)
+                if (!savedTime && parseInt(audio.currentTime) % 3 == 0) {
+                    savedTime = true
+                    ElainaData.set("Audio-currentTime", parseInt(audio.currentTime))
+                }
+                else savedTime = false
             });
 
-            if (window.DataStore.get('audio-loop')) {
+            if (ElainaData.get('audio-loop')) {
                 audio.addEventListener("ended", () => audio.load());
             } 
             else audio.addEventListener("ended", () => {
@@ -1044,7 +1046,7 @@ class WallpaperAndAudio {
                     const phase = JSON.parse(message["data"])[2]["data"];
                     log(phase)
                     if (phase === "GameStart" || phase === "InProgress") {
-                        if (window.DataStore.get("turnoff-audio-ingame")) {
+                        if (ElainaData.get("turnoff-audio-ingame")) {
                             const video: any = document.getElementById("elaina-bg")
                             const audio: any = document.getElementById("bg-audio")
                             video.pause();
@@ -1064,16 +1066,16 @@ class WallpaperAndAudio {
     }
 
     logDebuggingInfo = () => {
-        const loopWallCss = window.DataStore.get("audio-loop") ? "color: #00ff44" : "color: red";
-        const muteCss = window.DataStore.get("mute-audio") ? "color: #00ff44" : "color: red";
-        const pauseWall = window.DataStore.get('pause-wallpaper') % 2 === 0 ? "color: #00ff44" : "color: red";
-        const pauseAudio = window.DataStore.get('pause-audio') % 2 === 0 ? "color: #00ff44" : "color: red";
+        const loopWallCss = ElainaData.get("audio-loop") ? "color: #00ff44" : "color: red";
+        const muteCss = ElainaData.get("mute-audio") ? "color: #00ff44" : "color: red";
+        const pauseWall = ElainaData.get('pause-wallpaper') % 2 === 0 ? "color: #00ff44" : "color: red";
+        const pauseAudio = ElainaData.get('pause-audio') % 2 === 0 ? "color: #00ff44" : "color: red";
         const elainaBg: any = document.getElementById("elaina-bg");
     
-        if (window.DataStore.get("Continues_Audio")) {
-            log(`%cNow playing %c${window.DataStore.get("Wallpaper-list")[window.DataStore.get('wallpaper-index')]} %cand %c${window.DataStore.get("Audio-list")[window.DataStore.get('audio-index')]}`, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', 'color: #0070ff');
-            log(`%ccurrent wallpaper status: pause: %c${window.DataStore.get('pause-wallpaper') % 2 === 0}%c, play/pause-time: %c${window.DataStore.get('pause-wallpaper')}%c, mute: %c${window.DataStore.get("mute-audio")}%c, loop: %c${elainaBg.loop}%c, volume: %c${window.DataStore.get("wallpaper-volume") * 100}%`, 'color: #e4c2b3', pauseWall, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', muteCss, 'color: #e4c2b3', 'color: #00ff44', 'color: #e4c2b3', 'color: #0070ff');
-            log(`%ccurrent audio status: pause: %c${window.DataStore.get('pause-audio') % 2 === 0}%c, play/pause-time: %c${window.DataStore.get('pause-audio')}%c, mute: %c${window.DataStore.get("mute-audio")}%c, loop: %c${window.DataStore.get("audio-loop")}%c, volume: %c${window.DataStore.get("audio-volume") * 100}%`, 'color: #e4c2b3', pauseAudio, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', muteCss, 'color: #e4c2b3', loopWallCss, 'color: #e4c2b3', 'color: #0070ff');
+        if (ElainaData.get("Continues_Audio")) {
+            log(`%cNow playing %c${ElainaData.get("Wallpaper-list")[ElainaData.get('wallpaper-index')]} %cand %c${ElainaData.get("Audio-list")[ElainaData.get('audio-index')]}`, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', 'color: #0070ff');
+            log(`%ccurrent wallpaper status: pause: %c${ElainaData.get('pause-wallpaper') % 2 === 0}%c, play/pause-time: %c${ElainaData.get('pause-wallpaper')}%c, mute: %c${ElainaData.get("mute-audio")}%c, loop: %c${elainaBg.loop}%c, volume: %c${ElainaData.get("wallpaper-volume") * 100}%`, 'color: #e4c2b3', pauseWall, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', muteCss, 'color: #e4c2b3', 'color: #00ff44', 'color: #e4c2b3', 'color: #0070ff');
+            log(`%ccurrent audio status: pause: %c${ElainaData.get('pause-audio') % 2 === 0}%c, play/pause-time: %c${ElainaData.get('pause-audio')}%c, mute: %c${ElainaData.get("mute-audio")}%c, loop: %c${ElainaData.get("audio-loop")}%c, volume: %c${ElainaData.get("audio-volume") * 100}%`, 'color: #e4c2b3', pauseAudio, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', muteCss, 'color: #e4c2b3', loopWallCss, 'color: #e4c2b3', 'color: #0070ff');
         }
     };
 }
@@ -1081,11 +1083,34 @@ class WallpaperAndAudio {
 const wallpaperAndAudio = new WallpaperAndAudio()
 
 class AddHomePage {
+    setActivityCenterMusicStatus = async (bool: boolean) => {
+        let body = {
+            "schemaVersion": 5,
+            "data": {
+                "clientAmbienceMusicEnabled": bool
+            }
+        }
+
+        await fetch("/lol-settings/v1/local/lol-audio", {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        })
+    }
+
     pageListenner = async (node: any) => {      
         const pagename = node.getAttribute("data-screen-name");
-        const isOtherPage = !["rcp-fe-lol-navigation-screen", "window-controls", "social", "rcp-fe-lol-activity-center-main"].includes(pagename);
+        const isOtherPage = ![
+            "rcp-fe-lol-home-main",
+            "window-controls",
+            "rcp-fe-lol-navigation-screen", 
+            "social", 
+            "rcp-fe-lol-activity-center-main"
+        ].includes(pagename);
     
-        if (pagename === "rcp-fe-lol-home-main" || pagename === "window-controls" || pagename === "rcp-fe-lol-activity-center-main") {
+        if (!isOtherPage) {
             if (!addedBackgrounds) {
                 addedBackgrounds = true
                 wallpaperAndAudio.loadWallpaperAndMusic()
@@ -1100,7 +1125,9 @@ class AddHomePage {
                 mainController.deleteController();
                 mainController.createMainController();
                 document.querySelector(".webm-bottom-buttons-container")?.setAttribute("class", "webm-bottom-buttons-container-hovered")
-                window.setTimeout(()=> {document.querySelector(".webm-bottom-buttons-container-hovered")?.setAttribute("class", "webm-bottom-buttons-container")},2000)
+                window.setTimeout(()=> {
+                    document.querySelector(".webm-bottom-buttons-container-hovered")?.setAttribute("class", "webm-bottom-buttons-container")
+                },2000)
 
                 hideNavbarButton.hideShowNavBar();
                 hideNavbarButton.changeHomePageStyle()
@@ -1110,6 +1137,11 @@ class AddHomePage {
         }
         else if (isOtherPage && document.querySelector(".webm-bottom-buttons-container") && pagename != "rcp-fe-lol-info-hub") {
             mainController.deleteController();
+            this.setActivityCenterMusicStatus(true)
+        }
+
+        if (!isOtherPage || pagename === "rcp-fe-lol-postgame" || pagename === "rcp-fe-lol-info-hub") {
+            this.setActivityCenterMusicStatus(false)
         }
     };
 }
@@ -1125,7 +1157,7 @@ export class HomePage {
 
         utils.mutationObserverAddCallback(addHomePage.pageListenner, ["screen-root"]);
         hideNavbarButton.addHideButton()
-        if (window.DataStore.get("enable-hide-top-navbar-friendlist-button")) {
+        if (ElainaData.get("enable-hide-top-navbar-friendlist-button")) {
             hideTopNavbarButton.addHideButton()
         }
     }
@@ -1133,7 +1165,6 @@ export class HomePage {
 
 window.del_webm_buttons = mainController.deleteController
 window.create_webm_buttons = mainController.createMainController
-window.applyHideAndShowtab = changeHomePageTabs.applyHideAndShowtab
 window.applyHideAndShowTFTtab = changeHomePageTabs.applyHideAndShowTFTtab
 window.setAudio = wallpaperAndAudio.setAudioElement
 window.hideShowNavBar = hideNavbarButton.hideShowNavBar

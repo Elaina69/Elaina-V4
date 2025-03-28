@@ -8,12 +8,12 @@ export class AutoAccept {
 	autoAcceptQueueButtonSelect() {
 		let element: any = document.getElementById("autoAcceptQueueButton")
 		if (element?.attributes.selected != undefined) {
-			window.DataStore.set("auto_accept", false)
+			ElainaData.set("auto_accept", false)
 			element.removeAttribute("selected")
 		}
 		else {
 			element?.setAttribute("selected", "true")
-			window.DataStore.set("auto_accept", true)
+			ElainaData.set("auto_accept", true)
 		}
 	}
 	
@@ -46,7 +46,7 @@ export class AutoAccept {
 
 	autoAcceptCallback = async (message: Object) => {
 		utils.phase = JSON.parse(message["data"])[2]["data"]
-		if (utils.phase == "ReadyCheck" && window.DataStore.get("auto_accept") && !queue_accepted) {
+		if (utils.phase == "ReadyCheck" && ElainaData.get("auto_accept") && !queue_accepted) {
 			await this.acceptMatchmaking(),
 			queue_accepted = true
 		}
@@ -67,12 +67,12 @@ export class AutoAccept {
 		Option2.classList.add("auto-accept-button-text")
 		Option2.innerHTML = await getString("auto_accept")
 	
-		if (window.DataStore.get("auto_accept")){
+		if (ElainaData.get("auto_accept")){
 			newOption.setAttribute("selected", "")
 		}
 	
 		if (element && !document.getElementById("autoAcceptQueueButton")) {
-			if (window.DataStore.get("auto_accept_button")) {
+			if (ElainaData.get("auto_accept_button")) {
 				container?.append(newOption)
 				newOption.append(Option2)
 			}

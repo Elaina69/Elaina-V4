@@ -243,6 +243,8 @@
 
 .ManualBackup {
 	margin-left: 25px !important;
+	width: 62% !important;
+    display: block !important;
 }
 
 #downloadBackup {
@@ -335,4 +337,29 @@
 
 #disablethemeaudio {
 	margin-left: 25px !important;
+}
+
+#manualRestoreBackup {
+	margin-right: 10px !important;
+}
+
+#manualRestoreBackupSystemInfo {
+	display: flex !important;
+}
+
+#systemInfo-Os, #systemInfo-Cpu, #systemInfo-Core, #systemInfo-Mem, #systemInfo-Gpu, #systemInfo-Vram, #systemInfo-LastBackup {
+	margin-top: 0px !important;
+    margin-bottom: 2px !important;
+}
+
+#backupInfo {
+	visibility: hidden;
+}
+
+#backupSystemInfo {
+	margin-left: 24px !important;
+}
+
+lol-uikit-navigation-item[name=el-backup-restore-settings] {
+	display: none;
 }

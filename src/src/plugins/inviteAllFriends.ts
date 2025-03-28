@@ -3,14 +3,14 @@ import { log } from "../utils/themeLog";
 
 export class InviteAllFriends {
     setDefaultFriendsListData = () => {
-        if (!window.DataStore.has("frGroupName")) {
-            window.DataStore.set("frGroupName", 0)
+        if (!ElainaData.has("frGroupName")) {
+            ElainaData.set("frGroupName", 0)
         }
-        if (!window.DataStore.has("grouplist")) {
-            window.DataStore.set("grouplist", [])
+        if (!ElainaData.has("grouplist")) {
+            ElainaData.set("grouplist", [])
         }
-        if (!window.DataStore.has("friendslist")) {
-            window.DataStore.set("friendslist", [])
+        if (!ElainaData.has("friendslist")) {
+            ElainaData.set("friendslist", [])
         }
     }
 
@@ -19,7 +19,7 @@ export class InviteAllFriends {
             let CurrentGroup = document.querySelector("div.lol-social-lower-pane-container .roster-block")?.querySelectorAll("lol-social-roster-group").length
             let CurrentFriend = document.querySelector("div.lol-social-lower-pane-container .roster-block")?.querySelectorAll("lol-social-roster-member").length
 
-            if (window.DataStore.get("grouplist").length != CurrentGroup || window.DataStore.get("friendslist").length != CurrentFriend) {
+            if (ElainaData.get("grouplist").length != CurrentGroup || ElainaData.get("friendslist").length != CurrentFriend) {
                 let friends: any[] = []
                 let groups: any[] = []
                 let a: any[] = await (await fetch('/lol-chat/v1/friends')).json()
@@ -30,8 +30,8 @@ export class InviteAllFriends {
                 for (let i = 0; i < b.length; i++) {
                     groups.push({"id": b[i]["id"],"name": b[i]["name"]})
                 }
-                window.DataStore.set("friendslist", friends)
-                window.DataStore.set("grouplist", groups)
+                ElainaData.set("friendslist", friends)
+                ElainaData.set("grouplist", groups)
                 
                 // delete invite all button if exist and create new one
                 document.getElementById("inviteAllDiv")?.remove()
@@ -47,9 +47,9 @@ export class InviteAllFriends {
         if (document.querySelector(".lobby-header-buttons-container") != null) {
             let groupList: { name: string[]; id: string[] } = {"name":[],"id":[]}
 
-            for(let i = 0; i < window.DataStore.get("grouplist").length ; i++) {
-                groupList["id"].push(window.DataStore.get("grouplist")[i]["id"])
-                groupList["name"].push(window.DataStore.get("grouplist")[i]["name"])
+            for(let i = 0; i < ElainaData.get("grouplist").length ; i++) {
+                groupList["id"].push(ElainaData.get("grouplist")[i]["id"])
+                groupList["name"].push(ElainaData.get("grouplist")[i]["name"])
             }
 
             const mainDiv = document.createElement("div")
@@ -67,14 +67,14 @@ export class InviteAllFriends {
                     error: ""
                 })
 
-                for(let i = 0; i < window.DataStore.get("friendslist").length ; i++) {
+                for(let i = 0; i < ElainaData.get("friendslist").length ; i++) {
                     //let invalidAvail = ["offline","dnd","mobile"]
 
-                    if (window.DataStore.get("frGroupName") == window.DataStore.get("friendslist")[i]["groupId"]) {
+                    if (ElainaData.get("frGroupName") == ElainaData.get("friendslist")[i]["groupId"]) {
                         let invite = await fetch("/lol-lobby/v2/lobby/invitations",{
                             method: 'POST',
                             headers: {"content-type": "application/json"},
-                            body: JSON.stringify([{"toSummonerId": window.DataStore.get("friendslist")[i]["summonerId"]}])
+                            body: JSON.stringify([{"toSummonerId": ElainaData.get("friendslist")[i]["summonerId"]}])
                         })
                         if (invite.status == 200 /*&& !invalidAvail.includes(DataStore.get("friendslist")[i]["availability"])*/) Invited++
                     }
@@ -96,10 +96,10 @@ export class InviteAllFriends {
                 el.setAttribute("slot", "lol-uikit-dropdown-option")
                 el.innerText = groupList["name"][i]
                 el.onclick = () => {
-                    window.DataStore.set("frGroupName", groupList["id"][i])
+                    ElainaData.set("frGroupName", groupList["id"][i])
                 }
 
-                if (window.DataStore.get("frGroupName") == groupList["id"][i]) {
+                if (ElainaData.get("frGroupName") == groupList["id"][i]) {
                     el.setAttribute("selected", "true")
                 }
                 dropdown.appendChild(el)
@@ -124,7 +124,7 @@ export class InviteAllFriends {
 
             refreshList = window.setInterval(()=> {
                 this.refreshFriendsList()
-            }, 1000)
+            }, 10000)
         })
 
         upl.observer.subscribeToElementDeletion(".v2-header-component.ember-view", (element: any) => {
