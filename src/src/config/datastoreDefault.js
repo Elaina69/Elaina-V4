@@ -133,4 +133,9 @@ export default {
 	"wallpaper-change-slide-time"	: 10000,
 	"navbar-content"				: [],
 	"enable-hide-top-navbar-friendlist-button": true,
+	"System-Info"					: "",
+	"last-backup-time"				: "",
+	"custom-champs-image"			: false,	
+	"dodge-button"					: true,
+	"holiday-message"				: true,
 }

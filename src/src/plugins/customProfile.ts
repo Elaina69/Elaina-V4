@@ -116,21 +116,21 @@ interface PlayerPreferences {
 
 let requestChallengeCrystal = {
     "lol": {
-        "challengePoints"       : `${window.DataStore.get("Challenge-Points")}`,
-        "challengeCrystalLevel" : `${rank["Ranked Tier ID"][window.DataStore.get("challengeCrystalLevel")]["Option"]}`
+        "challengePoints"       : `${ElainaData.get("Challenge-Points")}`,
+        "challengeCrystalLevel" : `${rank["Ranked Tier ID"][ElainaData.get("challengeCrystalLevel")]["Option"]}`
     }
 }
 let requestRank = {
     "lol": {
-        "rankedLeagueQueue"    : rank["Ranked Queue ID"][window.DataStore.get("Ranked Queue ID")]["Option"],
-        "rankedLeagueTier"     : rank["Ranked Tier ID"][window.DataStore.get("Ranked Tier ID")]["Option"],
-        "rankedLeagueDivision" : rank["Ranked Division ID"][window.DataStore.get("Ranked Division ID")]["name"]
+        "rankedLeagueQueue"    : rank["Ranked Queue ID"][ElainaData.get("Ranked Queue ID")]["Option"],
+        "rankedLeagueTier"     : rank["Ranked Tier ID"][ElainaData.get("Ranked Tier ID")]["Option"],
+        "rankedLeagueDivision" : rank["Ranked Division ID"][ElainaData.get("Ranked Division ID")]["name"]
     }
 }
 
 let requestMasteryScore = {
     "lol": {
-        "masteryScore":`${window.DataStore.get("Mastery-Score")}`
+        "masteryScore":`${ElainaData.get("Mastery-Score")}`
     }
 }
 
@@ -238,11 +238,11 @@ export class CustomProfile {
         upl.observer.subscribeToElementCreation("#lol-uikit-tooltip-root",async (element: any)=>{
             try{
                 let checkID = element.querySelector(`lol-regalia-hovercard-v2-element`)?.getAttribute("summoner-id")
-                if (checkID == window.DataStore.get("Summoner-ID")) {
+                if (checkID == ElainaData.get("Summoner-ID")) {
                     let GetMStext: any = document.querySelector("#hover-card-header > div.hover-card-header-left > span.hover-card-mastery-score")
                     let MStext = GetMStext.innerText
-                    let checkMS = MStext.includes(`${window.DataStore.get("Mastery-Score")}`)
-                    if (!checkMS && window.DataStore.get("Custom-mastery-score")) {
+                    let checkMS = MStext.includes(`${ElainaData.get("Mastery-Score")}`)
+                    if (!checkMS && ElainaData.get("Custom-mastery-score")) {
                         await this.request("PUT","/lol-chat/v1/me",{body: requestMasteryScore})
                     }
                 }
@@ -253,18 +253,18 @@ export class CustomProfile {
         upl.observer.subscribeToElementCreation(".collection-totals",(element: any)=>{
             let a: HTMLElement | null = element.querySelector(".total-owned.total-count.ember-view")
             if (a) {
-                a.innerText = `${window.DataStore.get("Mastery-Score")}`
+                a.innerText = `${ElainaData.get("Mastery-Score")}`
                 this.freezeProperties(a,["innerText"])
             }
         })
 
         upl.observer.subscribeToElementCreation(".style-profile-champion-mastery-score",(element: any)=>{
-            element.innerText = `${window.DataStore.get("Mastery-Score")}`
+            element.innerText = `${ElainaData.get("Mastery-Score")}`
             this.freezeProperties(element,["innerText"])
         })
 
         window.setTimeout(async ()=>{
-            if (window.DataStore.get("Custom-rank")) {
+            if (ElainaData.get("Custom-rank")) {
                 await this.request("PUT","/lol-chat/v1/me",{body: requestRank})
             }
         }, 10000)
@@ -274,12 +274,12 @@ export class CustomProfile {
         upl.observer.subscribeToElementCreation("#lol-uikit-tooltip-root",async (element: any)=>{
             try{
                 let checkID = element.querySelector(`lol-regalia-hovercard-v2-element`)?.getAttribute("summoner-id")
-                if (checkID == window.DataStore.get("Summoner-ID")) {
+                if (checkID == ElainaData.get("Summoner-ID")) {
                     let fix = window.setInterval(async ()=>{
                         let getCPtext: HTMLElement | null = element.querySelector(".hover-card-challenge-crystal")
                         let CPtext = getCPtext?.innerText
-                        let checkCP = CPtext?.includes(`${window.DataStore.get("Challenge-Points")}`)
-                        if (!checkCP && window.DataStore.get("Custom-challenge-crystal")) {
+                        let checkCP = CPtext?.includes(`${ElainaData.get("Challenge-Points")}`)
+                        if (!checkCP && ElainaData.get("Custom-challenge-crystal")) {
                             await this.request("PUT","/lol-chat/v1/me",{body: requestChallengeCrystal})
                         }
                     },100)
@@ -295,13 +295,13 @@ export class CustomProfile {
             let a: HTMLElement | null = element.querySelector(".contents > div:nth-child(1)")
             let b: HTMLElement | null = element.querySelector(".total-points")
             let level: HTMLElement | null = element.querySelector(".level")
-            a?.setAttribute("class", `crystal-image ${rank["Ranked Tier ID"][window.DataStore.get("Ranked Tier ID")]["Option"]}`)
-            if (b) b.innerText = `${window.DataStore.get("Challenge-Points")}`
-            if (level) level.innerText = rank["Ranked Tier ID"][window.DataStore.get("Ranked Tier ID")]["Option"].toLowerCase()
+            a?.setAttribute("class", `crystal-image ${rank["Ranked Tier ID"][ElainaData.get("Ranked Tier ID")]["Option"]}`)
+            if (b) b.innerText = `${ElainaData.get("Challenge-Points")}`
+            if (level) level.innerText = rank["Ranked Tier ID"][ElainaData.get("Ranked Tier ID")]["Option"].toLowerCase()
         })
 
         window.setTimeout(async ()=>{
-            if (window.DataStore.get("Custom-challenge-crystal")) {
+            if (ElainaData.get("Custom-challenge-crystal")) {
                 await this.request("PUT","/lol-chat/v1/me",{body: requestChallengeCrystal})
             }
         }, 10000)

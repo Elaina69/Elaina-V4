@@ -4,10 +4,10 @@ export class CustomBeRp {
 		let RPMac: Element | null = document.querySelector(".currency-rp")
 		
 		if (RP) {
-			RP.innerHTML = `${window.DataStore.get("RP-data")}`
+			RP.innerHTML = `${ElainaData.get("RP-data")}`
 		}
 		else if (RPMac) {
-			RPMac.innerHTML = `${window.DataStore.get("RP-data")}`
+			RPMac.innerHTML = `${ElainaData.get("RP-data")}`
 		}
 	}
 
@@ -21,7 +21,7 @@ export class CustomBeRp {
 					<lol-uikit-video type="intro" src="/fe/lol-navigation/add-blue-essence.webm" class="animation-add-blue-essence"></lol-uikit-video>
 					<lol-uikit-video type="intro" src="/fe/lol-navigation/remove-blue-essence.webm" class="animation-remove-blue-essence"></lol-uikit-video>
 				</div>
-				${window.DataStore.get("BE")}
+				${ElainaData.get("BE")}
 			`
 		}
 	}

@@ -30,7 +30,7 @@ async function fetch_riotclient_credentials() {
 }
 
 let debugLogEndpoints = async (message: any) => { 
-	if (window.DataStore.get("Debug-mode")) {
+	if (ElainaData.get("Debug-mode")) {
 		if (debug_sub) console.log(JSON.parse(message["data"])[2]["uri"], 
 		JSON.parse(message["data"])[2]["data"]) 
 	}
@@ -38,7 +38,7 @@ let debugLogEndpoints = async (message: any) => {
 
 window.addEventListener('load', () => {
 	fetch_riotclient_credentials()
-	if (window.DataStore.get("Debug-mode")) {
+	if (ElainaData.get("Debug-mode")) {
 		subscribe_endpoint("", debugLogEndpoints)
 	}
 })

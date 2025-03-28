@@ -87,12 +87,12 @@ class AramOnlyMode {
 class CustomProfileRankName {
 	changeRankLine1 = () => {
 		upl.observer.subscribeToElementCreation(".style-profile-ranked-component.ember-view .style-profile-emblem-header-title", (element: any) => 
-			element.innerHTML = window.DataStore.get("Rank-line1") 
+			element.innerHTML = ElainaData.get("Rank-line1") 
 		)
 	}
 	changeRankLine2 = () => {
 		upl.observer.subscribeToElementCreation(".style-profile-emblem-subheader-ranked > div", (element: any) => 
-			element.innerHTML = window.DataStore.get("Rank-line2") 
+			element.innerHTML = ElainaData.get("Rank-line2") 
 		)
 	}
 }
@@ -250,7 +250,7 @@ class CustomIcon {
 		upl.observer.subscribeToElementCreation(".hover-card-info-container",(element: any)=>{
 			element.style.background = "#1a1c21"
 		})
-		upl.observer.subscribeToElementCreation(`lol-regalia-hovercard-v2-element[summoner-id="${window.DataStore.get("Summoner-ID")}"]`,(element: any)=>{
+		upl.observer.subscribeToElementCreation(`lol-regalia-hovercard-v2-element[summoner-id="${ElainaData.get("Summoner-ID")}"]`,(element: any)=>{
 			let a = element.shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector(".lol-regalia-summoner-icon")
 			a.style.backgroundImage = "var(--Avatar)"
 			freezeProperties(a.style, ['backgroundImage'])
@@ -261,7 +261,7 @@ class CustomIcon {
 			freezeProperties(a.style, ['backgroundImage'])
 		})
 		upl.observer.subscribeToElementCreation("lol-regalia-parties-v2-element",(element: any)=>{
-			if (element.getAttribute("summoner-id") == window.DataStore.get("Summoner-ID")) {
+			if (element.getAttribute("summoner-id") == ElainaData.get("Summoner-ID")) {
 				let a = element.shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector(".lol-regalia-summoner-icon")
 				a.style.backgroundImage = "var(--Avatar)"
 				freezeProperties(a.style, ['backgroundImage'])
@@ -275,13 +275,13 @@ class CustomIcon {
 	}
 
 	border = () => {
-		upl.observer.subscribeToElementCreation(`lol-regalia-hovercard-v2-element[summoner-id="${window.DataStore.get("Summoner-ID")}"]`,(element: any)=>{
+		upl.observer.subscribeToElementCreation(`lol-regalia-hovercard-v2-element[summoner-id="${ElainaData.get("Summoner-ID")}"]`,(element: any)=>{
 			let a = element.shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("lol-uikit-themed-level-ring-v2").shadowRoot.querySelector("div")
 			a.style.backgroundImage = "var(--Border)"
 			freezeProperties(a.style, ['backgroundImage'])
 		})
 		upl.observer.subscribeToElementCreation("lol-regalia-parties-v2-element",(element: any)=>{
-			if (element.getAttribute("summoner-id") == window.DataStore.get("Summoner-ID")) {
+			if (element.getAttribute("summoner-id") == ElainaData.get("Summoner-ID")) {
 				let a = element.shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector("lol-uikit-themed-level-ring-v2").shadowRoot.querySelector("div")
 				a.style.backgroundImage = "var(--Border)"
 				freezeProperties(a.style, ['backgroundImage'])
@@ -306,8 +306,8 @@ class CustomIcon {
 		upl.observer.subscribeToElementCreation(".lobby-banner.local > lol-regalia-parties-v2-element",(element: any)=>{
 			let a = element.shadowRoot.querySelector("lol-regalia-banner-v2-element").shadowRoot.querySelector("uikit-state-machine > div:nth-child(2) > img")
 			bannerInterval = window.setInterval(() => {
-				if (a.src != banner+window.DataStore.get("CurrentBanner")){
-					a.src = banner+window.DataStore.get("CurrentBanner")
+				if (a.src != banner+ElainaData.get("CurrentBanner")){
+					a.src = banner+ElainaData.get("CurrentBanner")
 				}
 				else { window.clearInterval(bannerInterval) }
 			},1000)
@@ -317,14 +317,14 @@ class CustomIcon {
 		})
 		upl.observer.subscribeToElementCreation("lol-regalia-identity-customizer-element",(element: any)=>{
 			let a = element.shadowRoot.querySelector("lol-regalia-banner-v2-element").shadowRoot.querySelector("uikit-state-machine > div:nth-child(2) > img")
-			a.src = banner+window.DataStore.get("CurrentBanner")
+			a.src = banner+ElainaData.get("CurrentBanner")
 			freezeProperties(a,["src"])
 		})
 		upl.observer.subscribeToElementCreation("lol-regalia-profile-v2-element",(element: any)=>{
 			let a = element.shadowRoot.querySelector("lol-regalia-banner-v2-element").shadowRoot.querySelector("uikit-state-machine > div:nth-child(2) > img")
 			bannerInterval = window.setInterval(()=>{
-				if (a.src != banner+window.DataStore.get("CurrentBanner")){
-					a.src = banner+window.DataStore.get("CurrentBanner")
+				if (a.src != banner+ElainaData.get("CurrentBanner")){
+					a.src = banner+ElainaData.get("CurrentBanner")
 				}
 			},1000)
 		})
@@ -336,7 +336,7 @@ class CustomIcon {
 	hoverCardbackdrop = () => {
 		upl.observer.subscribeToElementCreation("#lol-uikit-tooltip-root",(element: any)=>{
 			try {
-				if (element.querySelector("lol-regalia-hovercard-v2-element").getAttribute("summoner-id") == window.DataStore.get("Summoner-ID")) {
+				if (element.querySelector("lol-regalia-hovercard-v2-element").getAttribute("summoner-id") == ElainaData.get("Summoner-ID")) {
 					let hoverCard: any = document.querySelector("#hover-card-backdrop")
 					hoverCard.style.backgroundImage = "var(--Hover-card-backdrop)"
 				}
@@ -371,48 +371,48 @@ class CustomIcon {
 
 export class ApplyUI {
 	main = () => {
-		if (window.DataStore.get("aram-only")) {
+		if (ElainaData.get("aram-only")) {
 			const aramOnlyMode = new AramOnlyMode()
 
 			aramOnlyMode.removeOtherGamemode()
 			aramOnlyMode.removeOtherCustomGamemode()
 		}
 		
-		if (window.DataStore.get("Custom-Rank-Name")) {
+		if (ElainaData.get("Custom-Rank-Name")) {
 			const customProfileRankName = new CustomProfileRankName()
 
 			customProfileRankName.changeRankLine1()
 			customProfileRankName.changeRankLine2()
 		}
 
-		if (window.DataStore.get("Runes-BG")) {
+		if (ElainaData.get("Runes-BG")) {
 			const customRunesBackground = new CustomRunesBackground()
 
 			customRunesBackground.removeOtherImage()
 			customRunesBackground.changeRunesBackground()
 		}
 
-		if (window.DataStore.get("new-gamesearch-queue")) {
+		if (ElainaData.get("new-gamesearch-queue")) {
 			const newGamesearchQueue = new NewGamesearchQueue()
 
 			newGamesearchQueue.restyleGamesearchCard()
 		}
 
-		if (window.DataStore.get("settings-dialogs-transparent")) {
+		if (ElainaData.get("settings-dialogs-transparent")) {
 			const transparentSettingsDialogs = new TransparentSettingsDialogs()
 
 			transparentSettingsDialogs.applyStyle()
 		}
 
-		if (window.DataStore.get("Custom-Icon")) {
+		if (ElainaData.get("Custom-Icon")) {
 			const customIcon = new CustomIcon()
 	
 			customIcon.tickerIcon()
-			if (window.DataStore.get("Custom-Avatar")) customIcon.avatar()
-			if (window.DataStore.get("Custom-Border")) customIcon.border()
-			if (window.DataStore.get("Custom-Regalia-Banner")) customIcon.regaliaBanner()
-			if (window.DataStore.get("Custom-Hover-card-backdrop")) customIcon.hoverCardbackdrop()
-			if (window.DataStore.get('Custom-Gamemode-Icon')) customIcon.gamemodeIcon()
+			if (ElainaData.get("Custom-Avatar")) customIcon.avatar()
+			if (ElainaData.get("Custom-Border")) customIcon.border()
+			if (ElainaData.get("Custom-Regalia-Banner")) customIcon.regaliaBanner()
+			if (ElainaData.get("Custom-Hover-card-backdrop")) customIcon.hoverCardbackdrop()
+			if (ElainaData.get('Custom-Gamemode-Icon')) customIcon.gamemodeIcon()
 		}
 	}
 }

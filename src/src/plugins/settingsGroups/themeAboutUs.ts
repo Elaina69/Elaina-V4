@@ -52,7 +52,7 @@ export async function aboutustab(panel) {
             document.createElement("br"),
             UI.Row("User-counter",[
                 UI.Label(await getString("user-counter"), "first_line"),
-                UI.ImageAndLink(false,`https://count.getloli.com/@Elainav4?name=Elainav4&theme=${window.DataStore.get("NSFW-Content")? "gelbooru-h" : "booru-lewd"}&padding=7&offset=0&align=center&scale=1&pixelated=1&darkmode=auto&num=${window.DataStore.has("User-Counter")? window.DataStore.get("User-Counter") : ""}`, "moe-counter", "", () => {})
+                UI.ImageAndLink(false,`https://count.getloli.com/@Elainav4?name=Elainav4&theme=${ElainaData.get("NSFW-Content")? "gelbooru-h" : "booru-lewd"}&padding=7&offset=0&align=center&scale=1&pixelated=1&darkmode=auto&num=${ElainaData.has("User-Counter")? ElainaData.get("User-Counter") : ""}`, "moe-counter", "", () => {})
             ]),
             document.createElement("br"),
             UI.Row("Donation",[

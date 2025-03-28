@@ -1,1 +1,1 @@
-window.DataStore.set("start-time", Date.now())
+ElainaData.set("start-time", Date.now())

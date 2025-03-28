@@ -36,8 +36,8 @@ const SELECTORS = `
 
 export class NameSpoofer {
     updateNames(root = document) {
-        const Name = window.DataStore.get("Spoof-name");
-        const spoof = window.DataStore.get("Name-Spoofer");
+        const Name = ElainaData.get("Spoof-name");
+        const spoof = ElainaData.get("Name-Spoofer");
         
         if (!spoof) return;
         

@@ -7,7 +7,7 @@ let initLink: string
 
 export async function cdnImport(url: string, errorMsg: any): Promise<any> {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 3000);
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
 
     try {
         const res = await fetch(url, { signal: controller.signal });
@@ -26,7 +26,7 @@ export async function cdnImport(url: string, errorMsg: any): Promise<any> {
 };
 
 log(cdnServer["cdn-url"])
-if (window.DataStore.get("Dev-mode")) {
+if (ElainaData.get("Dev-mode")) {
     initLink = `//plugins/${getThemeName()}/elaina-theme-data/cdninit.js`;
     await cdnImport(`//plugins/${getThemeName()}/elaina-theme-data/index.js`, "Failed to load local data");
 } 

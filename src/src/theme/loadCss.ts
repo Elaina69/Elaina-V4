@@ -143,9 +143,9 @@ class AddCss {
 	
 		for (const groupKey in addonCssList) {
 			addonCssList[groupKey].forEach(({ key, css, altCss }) => {
-				let cssPath = window.DataStore.get(key) ? css : altCss;
+				let cssPath = ElainaData.get(key) ? css : altCss;
 
-				if ((cssPath && groupKey == "iconCss" && window.DataStore.get("Custom-Icon"))
+				if ((cssPath && groupKey == "iconCss" && ElainaData.get("Custom-Icon"))
 				||  (cssPath && groupKey == "componentsCss")) {
 					cssImports += `@import url("${datapath}assets/styles/components/${cssPath}");\n`;
 				}
@@ -156,7 +156,7 @@ class AddCss {
 	};
 
 	customFont = () => {
-		utils.addFont(`${datapath}assets/fonts/${window.DataStore.get("CurrentFont")}`,"Custom-font","Custom")
+		utils.addFont(`${datapath}assets/fonts/${ElainaData.get("CurrentFont")}`,"Custom-font","Custom")
 	}
 
 	customCursor = () => {
@@ -166,7 +166,7 @@ class AddCss {
 	customNicknameColor = () => {
 		utils.addStyleWithID("nickname-color-css", /*css*/`
 			span.player-name__force-locale-text-direction {
-				color: ${window.DataStore.get("nickname-color-with-opacity")};
+				color: ${ElainaData.get("nickname-color-with-opacity")};
 			}
 		`)
 	}
@@ -180,8 +180,8 @@ export class LoadCss {
 		addCss.componentsCss()
 		addCss.cssVar()
 
-		if (window.DataStore.get("Custom-Font")) addCss.customFont()
-		if (window.DataStore.get("Custom-Cursor")) addCss.customCursor()
-		if (window.DataStore.get("change-nickname-color")) addCss.customNicknameColor()
+		if (ElainaData.get("Custom-Font")) addCss.customFont()
+		if (ElainaData.get("Custom-Cursor")) addCss.customCursor()
+		if (ElainaData.get("change-nickname-color")) addCss.customNicknameColor()
 	}
 }

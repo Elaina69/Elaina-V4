@@ -70,6 +70,13 @@ interface PluginFS {
     ls: (path: string) => Promise<string[] | undefined>
     rm: (path: string, recursively: boolean) => Promise<number>
 }
+
+interface elainathemeApi {
+    login: (userId: number, username: string) => Promise<{ token: string }>
+    writeBackup: (token: string, userId: number, data: Object) => Promise<void>
+    readBackup: (token: string, userId: number) => Promise<void>
+    deleteBackup: (token: string, userId: number) => Promise<void>
+}
   
 // globals
 
@@ -79,6 +86,7 @@ declare interface Window {
     Toast: Toast;
     Effect: Effect;
     PluginFS: PluginFS
+    ElainaData: elainaData
   
     Pengu: {
         version: string
@@ -93,6 +101,8 @@ declare interface Window {
         version: string
         build: string
     };
+
+    elainathemeApi: elainathemeApi;
   
     openDevTools                : () => void;
     openPluginsFolder           : (subdir?: string) => void;
@@ -116,10 +126,7 @@ declare interface Window {
     restoreDefaultDataStore     : () => Promise<void>; 
     hideShowNavBar              : () => void;
     changeHomePageStyle         : () => void;
-    readfile                    : (path: string) => Promise<void>;
-    readBackup                  : (id: any, fileName: string) => Promise<void>;
-    writeBackup                 : (id: any, fileName: string, content: any) => Promise<void>;
-    deleteBackup                : (id: any) => Promise<void>;
+    getBackupPath               : () => string | null; 
     storeObserver               : any;
     __llver                     : string;
 };

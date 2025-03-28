@@ -1,6 +1,4 @@
 import { getThemeName } from "../otherThings.ts"
-import utils from "../utils/utils.ts"
-import * as upl from 'pengu-upl';
 import { log, error } from '../utils/themeLog';
 
 let datastore_list = (await import(`//plugins/${getThemeName()}/config/datastoreDefault.js`)).default
@@ -8,7 +6,7 @@ let datastore_list = (await import(`//plugins/${getThemeName()}/config/datastore
 export class BackupRestoreData {
 	async importData(url: string): Promise<any> {
 		const controller = new AbortController();
-		const timeoutId = setTimeout(() => controller.abort(), 3000);
+		const timeoutId = setTimeout(() => controller.abort(), 7000);
 	
 		try {
 			const res = await fetch(url, { signal: controller.signal });
@@ -28,42 +26,22 @@ export class BackupRestoreData {
 
 	setDefaultData(list: Object, restore: Boolean = false) {
 		Object.entries(list).forEach(([key, value]) => {
-			  if (!window.DataStore.has(key)) {
-				window.DataStore.set(key, value);
+			if (!ElainaData.has(key)) {
+				ElainaData.set(key, value);
 				log(`${key} data restored`)
-			  }
-			else if (window.DataStore.has(key) && restore) {
-				window.DataStore.set(key, value);
+			}
+			else if (ElainaData.has(key) && restore) {
+				ElainaData.set(key, value);
 				log(`${key} data restored`)
-			  }
+			}
 		});
 	}
 
-	backup = () => {
-		//backup when ready to close client
-		upl.observer.subscribeToElementCreation(".riotclient-app-controls",()=>{
-			document.querySelector('div[action=close]')?.addEventListener("click", ()=>{
-				if (window.DataStore.get("backup-datastore")) writeBackupData()
-			})
-		})
-
-
-		//backup right after game start (should run if you don't close client when ingame)
-		window.addEventListener("load",async ()=> {
-			utils.subscribe_endpoint('/lol-gameflow/v1/gameflow-phase', (message: any) => {
-				let phase = JSON.parse(message["data"])[2]["data"]
-				if (phase == "GameStart" || phase == "InProgress") {
-					if (window.DataStore.get("backup-datastore")) writeBackupData()
-				}
-			})
-		})
-	}
-
 	restore = async (force: boolean = false) => {
-		if (window.DataStore.get("Elaina-Plugins")) {
+		if (ElainaData.get("Elaina-Plugins")) {
 			this.setDefaultData(datastore_list)
 		}
-		else if (!window.DataStore.get("Elaina-Plugins") || !window.DataStore.has("Elaina-Plugins") || force) {
+		else if (!ElainaData.get("Elaina-Plugins") || !ElainaData.has("Elaina-Plugins") || force) {
 			let restoreData = new Promise((resolve: any, reject) => {
 				this.setDefaultData(datastore_list)
 				setTimeout(async () => {
@@ -87,9 +65,6 @@ const restoreDefaultDataStore = backupRestoreData.restore
 try {
 	// Restore Datastore file if no theme's data
 	await restoreDefaultDataStore()
-
-	// Backup datastore
-	backupRestoreData.backup()
 }
 catch(err:any) { error("Can not restore datastore", err) }
 

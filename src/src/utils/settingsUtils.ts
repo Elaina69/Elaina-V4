@@ -1,5 +1,8 @@
+import { log } from "./themeLog.ts"
 export function settingsUtils(context, groupDataArray) {
+  log("Loaded settings utils")
   context.rcp.postInit('rcp-fe-lol-settings', async (api) => {
+    log("Loaded rcp-fe-lol-settings for Elaina's settings")
     // @ts-ignore
     window.__RCP_SETTINGS_API = api;
 
@@ -42,6 +45,7 @@ export function settingsUtils(context, groupDataArray) {
   });
 
   context.rcp.postInit('rcp-fe-ember-libs', async (api) => {
+    log("Loaded rcp-fe-ember-libs for Elaina's settings")
     // @ts-ignore
     window.__RCP_EMBER_API = api;
 
@@ -64,6 +68,7 @@ export function settingsUtils(context, groupDataArray) {
   });
 
   context.rcp.postInit('rcp-fe-lol-l10n', async (api) => {
+    log("Loaded rcp-fe-lol-l10n for Elaina's settings")
     const tra = api.tra();
 
     const originalGet = tra.__proto__.get;
@@ -88,6 +93,7 @@ export function settingsUtils(context, groupDataArray) {
   });
 
   context.rcp.postInit('rcp-fe-ember-libs', async (api) => {
+    log("Loaded rcp-fe-ember-libs for Elaina's settings")
     // @ts-ignore
     window.__RCP_EMBER_API = api;
 

@@ -37,15 +37,15 @@ export class HideFriendList {
         buttonDiv.setAttribute("class", "hideFriendslist")
 
         buttonDiv.addEventListener('click', () => {
-            if (window.DataStore.get("HideFriendList")) {
-                window.DataStore.set("HideFriendList", false)
+            if (ElainaData.get("HideFriendList")) {
+                ElainaData.set("HideFriendList", false)
             }
             else {
-                window.DataStore.set("HideFriendList", true)
+                ElainaData.set("HideFriendList", true)
             }
 
-            this.buttonShowHideFriendlist(window.DataStore.get("HideFriendList"))
-            this.showHideFriendslist(window.DataStore.get("HideFriendList"))
+            this.buttonShowHideFriendlist(ElainaData.get("HideFriendList"))
+            this.showHideFriendslist(ElainaData.get("HideFriendList"))
         })
 
         friendsActionbar?.append(buttonDiv)
@@ -249,10 +249,10 @@ export class HideFriendList {
             } 
             catch {}
 
-            if (window.DataStore.get("enable-hide-top-navbar-friendlist-button")) {
+            if (ElainaData.get("enable-hide-top-navbar-friendlist-button")) {
                 this.createButton()
-                this.buttonShowHideFriendlist(window.DataStore.get("HideFriendList"))
-                this.showHideFriendslist(window.DataStore.get("HideFriendList"))
+                this.buttonShowHideFriendlist(ElainaData.get("HideFriendList"))
+                this.showHideFriendslist(ElainaData.get("HideFriendList"))
             }
         })
     }
