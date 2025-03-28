@@ -115,6 +115,7 @@ export default {
     "Disable-Theme-Audio"           : "Disable theme's audio",
     
     "prevent-manual-update"         : "不接收未来手动更新通知",
+    "holiday-message"               : "Message notification for holidays",
     "hide-homepage-navbar"          : "Hide homepage's navbar manually",
     "custom-navbar-css"             : "自定义次导航栏",
     "old-prev/next-button"          : "旧版壁纸切换按钮",
