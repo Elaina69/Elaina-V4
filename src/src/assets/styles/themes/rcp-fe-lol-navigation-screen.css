@@ -7,9 +7,13 @@ div[data-screen-name="rcp-fe-lol-navigation-screen"] {
 }
 
 .navigation-root-component.ember-view {
-	background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 24%))!important;
 	height: 77px !important;	
 }
+
+#rcp-fe-lol-navigation-app, .postgame-header-section {
+    background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 24%))!important;	
+}
+
 /* LoR advertise */
 .deep-links-promo {
 	display: none !important;

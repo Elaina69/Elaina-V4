@@ -6,9 +6,9 @@
 	background: transparent !important;
 }
 
-lol-social-avatar[ref='iconElement'], .lol-social-identity.ember-view > .details {
+/* lol-social-avatar[ref='iconElement'], .lol-social-identity.ember-view > .details {
 	z-index: 1 !important;
-}
+} */
 
 lol-social-roster-member .offline .member-name {
 	color:#9a9696!important
@@ -88,4 +88,8 @@ lol-parties-game-info-panel {
 lol-social-roster-group lol-social-arrow-toggle {
 	left: 8px !important;
     top: 9px !important;
+}
+
+.lol-social-identity {
+	background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 24%))!important;
 }
