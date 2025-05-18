@@ -2,6 +2,12 @@
 	display: none !important;
 }
 
-.clash-tab-team-background, .clash-tab-bracket-background, .tournament-scouting, .clash-missed-lockin-modal, .clash-root-background-landing, .clash-root-background {
+.clash-tab-team-background, .clash-tab-bracket-background, .tournament-scouting, 
+.clash-missed-lockin-modal, .clash-root-background-landing, .clash-root-background,
+.clash-arurf-intro-modal {
 	background-image: none !important;
+}
+
+.clash-arurf-intro-modal {
+	background: transparent !important;
 }

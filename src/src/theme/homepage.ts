@@ -765,17 +765,17 @@ class HideNavbarButton {
     changeHomePageStyle = () => {
         const wallpaperController: any = document.querySelector(".wallpaper-controls")
         const audioController: any = document.querySelector(".webm-bottom-buttons-container")
-        const activityCenter: any = document.querySelector(".activity-center-ready > main")
+        const activityCenter: any = document.querySelector("#activity-center > main")
         const activityCenterChinese: any = document.querySelector(".managed-iframe-wrapper > iframe")
         
         if (ElainaData.get("hide-homepage-navbar")) {
-            if (activityCenter) activityCenter.style.cssText = `opacity: 0; pointer-events: none;`
+            if (activityCenter) activityCenter.style.cssText = `opacity: 0 !important; pointer-events: none !important;`
             if (activityCenterChinese) activityCenterChinese.style.cssText = `opacity: 0; pointer-events: none;`
             if (wallpaperController) wallpaperController.style.cssText = `transform: translateX(0px);`
             if (audioController) audioController.style.cssText = `transform: translateX(0px);`
         }
         else {
-            if (activityCenter) activityCenter.style.cssText = `opacity: 1; pointer-events: auto;`
+            if (activityCenter) activityCenter.style.cssText = `opacity: 1 !important; pointer-events: auto !important;`
             if (activityCenterChinese) activityCenterChinese.style.cssText = `opacity: 1; pointer-events: auto;`
             if (wallpaperController) wallpaperController.style.cssText = `transform: translateX(212px);`
             if (audioController) audioController.style.cssText = `transform: translateX(212px);`
@@ -800,6 +800,9 @@ class HideNavbarButton {
             this.checkNewContent()
             this.createHideButton()
             this.hideShowNavBar()
+        })
+
+        upl.observer.subscribeToElementCreation("#activity-center > main div", (element: any) => {
             this.changeHomePageStyle()
         })
 
@@ -1155,7 +1158,7 @@ export class HomePage {
         wallpaperAndAudio.addImageWallpaperElement()
         wallpaperAndAudio.addAudioElement()
 
-        utils.mutationObserverAddCallback(addHomePage.pageListenner, ["screen-root"]);
+        utils.mutationObserverAddCallback(addHomePage.pageListenner, ["screen-root"])
         hideNavbarButton.addHideButton()
         if (ElainaData.get("enable-hide-top-navbar-friendlist-button")) {
             hideTopNavbarButton.addHideButton()

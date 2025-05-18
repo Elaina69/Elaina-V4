@@ -92,4 +92,5 @@ lol-social-roster-group lol-social-arrow-toggle {
 
 .lol-social-identity {
 	background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 24%))!important;
+	padding: 18px 10px 0 0 !important;
 }

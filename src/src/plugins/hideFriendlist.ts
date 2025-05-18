@@ -136,6 +136,9 @@ export class HideFriendList {
                 .tft-footer-container.ember-view {
                     transform: translateX(0px);
                 }
+                .multiteam-lobby-root__scrollable-wrapper {
+                    transform: translateX(0px);
+                }
             `)
         } 
         else {
@@ -183,6 +186,9 @@ export class HideFriendList {
                     transform: translateX(113px);
                 }
                 .tft-footer-container.ember-view {
+                    transform: translateX(113px);
+                }
+                .multiteam-lobby-root__scrollable-wrapper {
                     transform: translateX(113px);
                 }
             `)

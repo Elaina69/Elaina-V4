@@ -1,4 +1,4 @@
-.activity-center-ready > main {
+#activity-center > main {
     transition: opacity 0.5s ease-in-out !important;
 }
 

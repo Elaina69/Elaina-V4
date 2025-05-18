@@ -138,4 +138,6 @@ export default {
 	"custom-champs-image"			: false,	
 	"dodge-button"					: true,
 	"holiday-message"				: true,
+	"Custom-Status-Local"			: false,
+	"Custom-Loading-Icon"			: true,
 }

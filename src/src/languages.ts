@@ -21,7 +21,7 @@ async function haveLocaleFile(langCode: string) {
 
 async function getString(key: string): Promise<string> {
     const lang = document.querySelector("html")?.lang as string;
-    let localeModule
+    let localeModule: Object
 
     if (await haveLocaleFile(lang)) {
         localeModule = await importLocale(lang)

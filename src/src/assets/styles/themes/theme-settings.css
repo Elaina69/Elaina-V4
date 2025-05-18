@@ -70,23 +70,7 @@
 	width: 138.375px;
 }
 
-#j1_4 {
-	margin-bottom: 17px;
-}
-
-#autobanpick {
-	margin-bottom: 17px;
-}
-
-#loothelp {
-	margin-bottom: 17px;
-}
-
-#rdskin {
-	margin-bottom: 17px;
-}
-
-#pandoru {
+#j1_4, #autobanpick, #loothelp, #rdskin, #pandoru {
 	margin-bottom: 17px;
 }
 
@@ -94,11 +78,11 @@
     display: none !important;
 }
 
-#Custom-icon-list {
-	margin-left: 25px !important;
-}
-
-#customprf {
+#Custom-icon-list, #customprf, #customrank_detail, 
+#customchallengecrystal, #customstatus, #restoreFileInfo, 
+#background-settings, #change-nickname-color-row, #add-background-manually-row, 
+#slideTimeRow, #wallpaperSlide, #offaudio, 
+#disablethemeaudio, #Custom-banner-row {
 	margin-left: 25px !important;
 }
 
@@ -255,20 +239,8 @@
 	display: flex !important;
 }
 
-#restoreFileInfo {
-	margin-left: 25px !important;
-}
-
-#background-settings {
-	margin-left: 25px !important;
-}
-
 .open-background-folder {
 	margin-bottom: 25px !important;
-}
-
-#add-background-manually-row {
-	margin-left: 25px !important;
 }
 
 #manual-wallpaper, #manual-audio, #manual-banner, #manual-font {
@@ -290,10 +262,6 @@
 #nickname-color-text {
 	margin-top: 6px !important;
 	margin-left: 15px;
-}
-
-#change-nickname-color-row {
-	margin-left: 25px !important;
 }
 
 .color-picker-container {
@@ -323,22 +291,6 @@
     gap: 10px;
 }
 
-#slideTimeRow {
-	margin-left: 25px !important;
-}
-
-#wallpaperSlide {
-	margin-left: 25px !important;
-}
-
-#offaudio {
-	margin-left: 25px !important;
-}
-
-#disablethemeaudio {
-	margin-left: 25px !important;
-}
-
 #manualRestoreBackup {
 	margin-right: 10px !important;
 }
@@ -362,4 +314,22 @@
 
 lol-uikit-navigation-item[name=el-backup-restore-settings] {
 	display: none;
+}
+
+#settings-loading {
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.settings-loading-image {
+	margin-top: 80px;
+    width: 200px;
+    height: 200px;
+}
+
+#settings-loading-text {
+	font-size: 18px;
 }

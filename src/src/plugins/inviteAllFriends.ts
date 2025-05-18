@@ -14,34 +14,36 @@ export class InviteAllFriends {
         }
     }
 
-    refreshFriendsList = async () => {
+    refreshFriendsList = async (): Promise<void> => {
         try {
-            let CurrentGroup = document.querySelector("div.lol-social-lower-pane-container .roster-block")?.querySelectorAll("lol-social-roster-group").length
-            let CurrentFriend = document.querySelector("div.lol-social-lower-pane-container .roster-block")?.querySelectorAll("lol-social-roster-member").length
+            const rosterBlock = document.querySelector("div.lol-social-lower-pane-container .roster-block");
+            const currentGroupCount = rosterBlock?.querySelectorAll("lol-social-roster-group").length || 0;
+            const currentFriendCount = rosterBlock?.querySelectorAll("lol-social-roster-member").length || 0;
 
-            if (ElainaData.get("grouplist").length != CurrentGroup || ElainaData.get("friendslist").length != CurrentFriend) {
-                let friends: any[] = []
-                let groups: any[] = []
-                let a: any[] = await (await fetch('/lol-chat/v1/friends')).json()
-                let b: any[] = await (await fetch('/lol-chat/v1/friend-groups')).json()
-                for (let i = 0; i < a.length; i++) {
-                    friends.push({"summonerId": a[i]["summonerId"],"groupId": a[i]["groupId"],"availability": a[i]["availability"]})
-                }
-                for (let i = 0; i < b.length; i++) {
-                    groups.push({"id": b[i]["id"],"name": b[i]["name"]})
-                }
-                ElainaData.set("friendslist", friends)
-                ElainaData.set("grouplist", groups)
-                
-                // delete invite all button if exist and create new one
-                document.getElementById("inviteAllDiv")?.remove()
-                this.addInviteAllButton()
+            if (ElainaData.get("grouplist").length !== currentGroupCount || ElainaData.get("friendslist").length !== currentFriendCount) {
+                const friends = await fetch('/lol-chat/v1/friends').then(res => res.json());
+                const groups = await fetch('/lol-chat/v1/friend-groups').then(res => res.json());
 
-                log("Friends list refreshed.")
+                ElainaData.set("friendslist", friends.map((friend: any) => ({
+                    summonerId: friend.summonerId,
+                    groupId: friend.groupId,
+                    availability: friend.availability
+                })));
+
+                ElainaData.set("grouplist", groups.map((group: any) => ({
+                    id: group.id,
+                    name: group.name
+                })));
+
+                document.getElementById("inviteAllDiv")?.remove();
+                this.addInviteAllButton();
+
+                log("Friends list refreshed.");
             }
+        } catch (error: any) {
+            log("Error refreshing friends list:", error);
         }
-        catch {}
-    }
+    };
 
     addInviteAllButton = async (): Promise<void> => {
         if (document.querySelector(".lobby-header-buttons-container") != null) {
@@ -59,6 +61,7 @@ export class InviteAllFriends {
             let button = document.createElement("lol-uikit-flat-button")
             button.textContent = "Invite all"
             button.onclick = async () => {
+                await this.refreshFriendsList()
                 let Invited = 0
                 let fakerun = new Promise(() => {})
                 window.Toast.promise(fakerun, {
@@ -117,18 +120,10 @@ export class InviteAllFriends {
 
     main = () => {
         this.setDefaultFriendsListData()
-        let refreshList: any
 
         upl.observer.subscribeToElementCreation(".v2-header-component.ember-view", (element: any) => {
+            this.refreshFriendsList()
             this.addInviteAllButton()
-
-            refreshList = window.setInterval(()=> {
-                this.refreshFriendsList()
-            }, 10000)
-        })
-
-        upl.observer.subscribeToElementDeletion(".v2-header-component.ember-view", (element: any) => {
-            clearInterval(refreshList)
         })
     }
 }
