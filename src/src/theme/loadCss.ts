@@ -20,11 +20,16 @@ class AddCss {
 				--tft_act: url("${iconFolder}gamemodes/${icdata["tft_act"]}");
 				--cherry_def: url("${iconFolder}gamemodes/${icdata["cherry_def"]}");
 				--cherry_act: url("${iconFolder}gamemodes/${icdata["cherry_act"]}");
+				--brawl_def: url("${iconFolder}gamemodes/${icdata["brawl_def"]}");
+				--brawl_act: url("${iconFolder}gamemodes/${icdata["brawl_act"]}");
+
 				--pri8000: url("${bgFolder}runes/${icdata['Precision']}");
 				--pri8100: url("${bgFolder}runes/${icdata['Domination']}");
 				--pri8200: url("${bgFolder}runes/${icdata['Sorcery']}");
 				--pri8300: url("${bgFolder}runes/${icdata['Inspiration']}");
 				--pri8400: url("${bgFolder}runes/${icdata['Resolve']}");
+
+				--Loading: url("${iconFolder}${icdata["Loading"]}");
 				--Avatar: url("${iconFolder}${icdata["Avatar"]}");
 				--RP-Icon: url("${iconFolder}${icdata["RP-icon"]}");
 				--BE-Icon: url("${iconFolder}${icdata["BE-icon"]}");
@@ -136,6 +141,11 @@ class AddCss {
 				{
 					key: 'Custom-Gamemode-Icon',
 					css: "gamemodes.css",
+					altCss: "null.css"
+				},
+				{
+					key: 'Custom-Loading-Icon',
+					css: "loadingIcon.css",
 					altCss: "null.css"
 				}
 			]

@@ -4,6 +4,7 @@ export default {
     "dodge"           : "秒退",
     "exit"            : "退出",
     "more-info"       : "更多",
+    "settings-loading": "Loading...",
 
 
     // auto accept button
@@ -134,6 +135,7 @@ export default {
     "animate-loading"               : "使用GIF图像作为加载logo",
 
     "custom-icon"                   : "自定义图标",
+    "Custom-Loading-Icon"           : "Loading",
     "custom-avatar"                 : "头像",
     "Custom-Border"                 : "边框",
     "Custom-Regalia-Banner"         : "个人资料旗帜",
@@ -199,6 +201,7 @@ export default {
 	"challenge-rank"            : "段位",
 	"challenge-point"           : "积分",
 	"custom-status"             : "自定义状态",
+    "Custom-Status-Local"       : "(Experiment) Local custom status",
 	"status-delay"              : "状态延迟时间（毫秒）",
 
 	"name-spoofer"              : "自定义昵称",

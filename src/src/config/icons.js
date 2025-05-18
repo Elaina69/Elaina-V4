@@ -2,6 +2,7 @@ export default {
     //______________________________________________________________________________//
 
     "Animation-logo": "animation-logo.gif",
+    "Loading"       : "loading.gif",
     "Static-logo"   : "logo.png",
 
     "Avatar"        : "avatar.gif",
@@ -47,5 +48,9 @@ export default {
     "cherry_def"   : "cherry-default.png",
     "cherry_act"   : "cherry-active.png",
     "cherry_video" : "cherry-video.webm",
+
+    "brawl_def"   : "cherry-default.png",
+    "brawl_act"   : "cherry-active.png",
+    "brawl_video" : "cherry-video.webm",
     //______________________________________________________________________________//
 }
