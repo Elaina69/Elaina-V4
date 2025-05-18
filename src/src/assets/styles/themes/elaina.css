@@ -136,6 +136,7 @@ lol-uikit-navigation-item > .section::after {
 .champion-select .action-button-container::after {
 	filter: sepia(1) !important;
 }
+
 /* Dodge button */
 .dodge-button-container {
 	position: absolute;

@@ -154,3 +154,8 @@
 .parties-footer-notifications {
 	top: -120px !important;
 }
+
+.multiteam-lobby-root__scrollable-wrapper {
+	transform: translateX(0px);
+    transition: transform 0.5s ease !important;
+}

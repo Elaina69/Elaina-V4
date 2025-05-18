@@ -129,39 +129,39 @@ export default defineConfig((config) => ({
                 const Author = `/**\n* @name ElainaV4\n* @author Elaina Da Catto\n* @description Elaina theme for Pengu Loader\n* @link https://github.com/Elaina69\n* @Nyan Meow~~~\n*/`;
                 const importDir = ""
 
-+ `
-import wallpaper from "./assets/backgrounds/wallpapers?dir"
-import audio from "./assets/backgrounds/audio?dir"
-import font from "./assets/fonts?dir"
-import banner from "./assets/icon/regalia-banners?dir"
+// + `
+// import wallpaper from "./assets/backgrounds/wallpapers?dir"
+// import audio from "./assets/backgrounds/audio?dir"
+// import font from "./assets/fonts?dir"
+// import banner from "./assets/icon/regalia-banners?dir"
 
-const refreshList = async () => {
-    const FILE_REGEX = {
-        Wallpaper: /\.(png|jpg|jpeg|gif|bmp|webp|ico|mp4|webm|mkv|mov|avi|wmv|3gp|m4v)$/,
-        Audio: /\.(mp3|flac|ogg|wav|aac)$/,
-        Font: /\.(ttf|otf|woff|woff2)$/,
-        Banner: /\.(png|jpg|jpeg|gif|bmp|webp|ico)$/,
-    };
+// const refreshList = async () => {
+//     const FILE_REGEX = {
+//         Wallpaper: /\.(png|jpg|jpeg|gif|bmp|webp|ico|mp4|webm|mkv|mov|avi|wmv|3gp|m4v)$/,
+//         Audio: /\.(mp3|flac|ogg|wav|aac)$/,
+//         Font: /\.(ttf|otf|woff|woff2)$/,
+//         Banner: /\.(png|jpg|jpeg|gif|bmp|webp|ico)$/,
+//     };
 
-    const dataLists = {
-        Wallpaper: await wallpaper.files(),
-        Audio: await audio.files(),
-        Banner: await banner.files(),
-        Font: await font.files(),
-    };
+//     const dataLists = {
+//         Wallpaper: await wallpaper.files(),
+//         Audio: await audio.files(),
+//         Banner: await banner.files(),
+//         Font: await font.files(),
+//     };
 
-    const filteredLists = Object.keys(FILE_REGEX).reduce((acc, key) => {
-        acc[key] = dataLists[key].filter(file => FILE_REGEX[key].test(file));
-        return acc;
-    }, {});
+//     const filteredLists = Object.keys(FILE_REGEX).reduce((acc, key) => {
+//         acc[key] = dataLists[key].filter(file => FILE_REGEX[key].test(file));
+//         return acc;
+//     }, {});
 
-    Object.entries(filteredLists).forEach(([key, list]) => {
-        ElainaData.set(\`\${key}-list\`, list);
-    });
-}
+//     Object.entries(filteredLists).forEach(([key, list]) => {
+//         ElainaData.set(\`\${key}-list\`, list);
+//     });
+// }
 
-await refreshList()
-`
+// await refreshList()
+// `
 
                 async function prependCommentToFile(filePath: string, commentBlock: string, lineNumber: number) {
                     try {
@@ -228,6 +228,7 @@ await refreshList()
                     archive.pipe(output);
                     archive.directory(join(outDir, 'assets'), "assets");
                     archive.directory(join(outDir, 'config'), "config");
+                    archive.directory(join(outDir, 'locales'), 'locales');
                     archive.file(indexJs, { name: basename(indexJs) });
             
                     await archive.finalize();

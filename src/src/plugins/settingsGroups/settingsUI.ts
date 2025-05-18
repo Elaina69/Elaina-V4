@@ -1,6 +1,25 @@
 import { datapath, utils } from "../settings.ts"
+import { getThemeName } from "../../otherThings.ts";
+
+let icdata: Object = (await import(`//plugins/${getThemeName()}/config/icons.js`)).default;
 
 class ui {
+    Loading = (text: string) => {
+        const loading = document.createElement("div");
+        loading.id = "settings-loading";
+
+        const loadingImage = document.createElement('img')
+        loadingImage.classList.add("settings-loading-image")
+        loadingImage.style.content = "var(--Loading)"
+
+        const loadingText = this.Label(text, "settings-loading-text");
+
+        loading.appendChild(loadingImage);
+        loading.appendChild(loadingText);
+
+        return loading
+    }
+
     Row = (id, childs) => {
         const row = document.createElement('div')
         row.classList.add('elaina-theme-settings-row')
@@ -117,6 +136,7 @@ class ui {
         const label = document.createElement("label")
         const none = document.createElement("div")
 
+        container.style.width = "fit-content"
         origin.id = ID
         origin.setAttribute("lastDatastore", ElainaData.get(datastore_name))
     

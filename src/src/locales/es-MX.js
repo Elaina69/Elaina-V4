@@ -4,6 +4,7 @@ export default {
     "dodge"           : "Dodge",
     "exit"            : "Exit",
     "more-info"       : "More info",
+    "settings-loading": "Loading...",
 
 
     // auto accept button
@@ -134,6 +135,7 @@ export default {
     "animate-loading"               : "Using gif image for loading logo",
 
     "custom-icon"                   : "Custom icon",
+    "Custom-Loading-Icon"           : "Loading",
     "custom-avatar"                 : "Avatar",
     "Custom-Border"                 : "Border",
     "Custom-Regalia-Banner"         : "Regalia Banner",
@@ -199,6 +201,7 @@ export default {
     "challenge-rank"            : "Challenge rank",
     "challenge-point"           : "Challenge point",
     "custom-status"             : "Custom status",
+    "Custom-Status-Local"       : "(Experiment) Local custom status",
     "status-delay"              : "Delay time ( Miliseconds )",
 
     "name-spoofer"              : "Name spoofer",

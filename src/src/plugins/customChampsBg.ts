@@ -19,9 +19,6 @@ function updateDefaultSkinThumbnails(selector, img) {
 if (ElainaData.get("custom-champs-image")) {
     window.setInterval(()=>{
         let thumbnail = document.getElementsByClassName("champion-thumbnail")
-        let champSetRow = document.querySelectorAll(".champion-set-row .champion-border")
-        let champSelectList = document.querySelectorAll(".champion-grid-champion-thumbnail")
-    
         if (!thumbnail) return
         else {
             for (let i = 0; i < thumbnail.length; i++) {
@@ -41,6 +38,7 @@ if (ElainaData.get("custom-champs-image")) {
             }
         }
     
+        let champSetRow = document.querySelectorAll(".champion-set-row .champion-border")
         if (!champSetRow) return
         else {
             for (let i = 0; i < champSetRow.length; i++) {
@@ -53,18 +51,19 @@ if (ElainaData.get("custom-champs-image")) {
             }
         }
     
+        let champSelectList = document.querySelectorAll(".champion-grid-champion-thumbnail")
         if (!champSelectList) return
         else {
             for (let i = 0; i < champSelectList.length; i++) {
                 for (let j = 0; j < list.length; j++) {
-                    let img = champSetRow[i].querySelector("img");
+                    let img = champSelectList[i].querySelector("img");
                     if (img && img.getAttribute("src")?.includes(list[j]["default_icon_id"].toString())) {
                         img.setAttribute("src", `${datapath}assets/champs/${list[j]["image_thumbnail"]}`);
                     }
                 }
             }
         }
-    },200)
+    },100)
     
     upl.observer.subscribeToElementCreation(".lockup-champion-name",(element: any)=>{
         bgInterval = window.setInterval(()=>{
@@ -73,28 +72,38 @@ if (ElainaData.get("custom-champs-image")) {
                     element.textContent = list[j]["replace_name"]
                     element.parentNode.querySelector(".lockup-champion-title").textContent = list[j]["replace_sub_name"]
     
-                    let a: HTMLElement|null = document.querySelector("lol-uikit-section[section-id='cdp_overview'] .cdp-backdrop-img")
-                    let b: HTMLElement|null = document.querySelector("lol-uikit-section[section-id='cdp_progression'] .cdp-backdrop-img")
-    
-                    if (a) {
-                        a?.setAttribute("src", `${datapath}assets/champs/${list[j]["image"]}`)
-                        a.style.cssText = `left: ${list[j]["css-left"]}`
+                    // Overview tab
+                    let overview: HTMLElement|null = document.querySelector("lol-uikit-section[section-id='cdp_overview'] .cdp-backdrop-img")
+                    if (overview) {
+                        let bio = document.querySelector(".cdp-overview-short-bio")
+                        if (bio && list[j]["lore"] != "") {
+                            bio.innerHTML = list[j]["lore"]
+                        }
+
+                        overview?.setAttribute("src", `${datapath}assets/champs/${list[j]["image"]}`)
+                        overview.style.cssText = `left: ${list[j]["css-left"]}`
                     }
-                    if (b) {
-                        b?.setAttribute("src", `${datapath}assets/champs/${list[j]["image"]}`)
-                        b.style.cssText = `left: ${list[j]["css-left"]}`
+
+                    // Mastery tab
+                    let mastery: HTMLElement|null = document.querySelector("lol-uikit-section[section-id='cdp_mastery'] .cdp-backdrop-img")
+                    if (mastery) {
+                        mastery?.setAttribute("src", `${datapath}assets/champs/${list[j]["image"]}`)
+                        mastery.style.cssText = `left: ${list[j]["css-left"]}`
+                    }
+                    
+                    // Progression tab
+                    let progression: HTMLElement|null = document.querySelector("lol-uikit-section[section-id='cdp_progression'] .cdp-backdrop-img")
+                    if (progression) {
+                        progression?.setAttribute("src", `${datapath}assets/champs/${list[j]["image"]}`)
+                        progression.style.cssText = `left: ${list[j]["css-left"]}`
                     }
     
+                    // Skins tab
                     let defaultSkin = document.querySelector(".uikit-background-switcher.ember-view > img")
                     let skinName = document.querySelector(".champion-skin-name.skin-name")
                     if (document.querySelector(".cdp-skins-section.ember-view > lol-uikit-section-controller[selected-item='skin_0']")) {
                         defaultSkin?.setAttribute("src", `${datapath}assets/champs/${list[j]["image"]}`)
                         if (skinName) skinName.textContent = list[j]["replace_name"]
-                    }
-    
-                    let bio = document.querySelector(".cdp-overview-short-bio")
-                    if (bio && list[j]["lore"] != "") {
-                        bio.innerHTML = list[j]["lore"]
                     }
     
                     updateDefaultSkinThumbnails(".carousel-track-container .buffer-wrapper", `url(${datapath}assets/champs/${list[j]["image_thumbnail"]})`);

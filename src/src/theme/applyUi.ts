@@ -8,7 +8,6 @@ let icdata = (await import(`//plugins/${getThemeName()}/config/icons.js`)).defau
 let datapath = `//plugins/${getThemeName()}/`
 let iconFolder  = `${datapath}assets/icon/`
 
-
 function freezeProperties(object: Object, properties: any[]) {
 	for (const type in object) {
 		if ((properties && properties.length && properties.includes(type)) || (!properties || !properties.length)) {
@@ -362,8 +361,44 @@ class CustomIcon {
 			this.gameModeIcon_active("div[data-game-mode='TFT']", icdata["tft_video"])
 			this.gameModeIcon_active("div[data-game-mode='ARAM']", icdata["aram_video"])
 			this.gameModeIcon_active("div[data-game-mode='CHERRY']",icdata["cherry_video"])
+			this.gameModeIcon_active("div[data-game-mode='BRAWL']",icdata["brawl_video"])
 			this.gameModeIcon_active('div[data-map-id="11"]',icdata["classic_video"])
 			this.gameModeIcon_active('div[data-map-id="12"]',icdata["aram_video"])
+		})
+	}
+
+	loadingIcon = () => {
+		let storeInterval: number
+		upl.observer.subscribeToElementCreation("#rcp-fe-lol-store-iframe", (element: any) => {
+			log("Store page.")
+			storeInterval = window.setInterval(() => {
+				let storeIframe: any = element.querySelector("iframe")
+				if (storeIframe) {
+					let storeDoc: any = storeIframe.contentDocument || storeIframe.contentWindow.document
+					let loadingIcon: any = storeDoc.querySelector(".store-app-wrapper > .loading-spinner")
+					if (loadingIcon) {
+						loadingIcon.style.cssText = `
+							width: 190px;
+							height: 190px;
+							background-image: unset;
+							background-size: unset;
+							content: url("${iconFolder}${icdata["Loading"]}");
+							-webkit-animation-iteration-count: unset;
+							-webkit-animation-duration: unset;
+							-webkit-animation-timing-function: unset;
+							animation-iteration-count: unset;
+							animation-duration: unset;
+							animation-timing-function: unset;
+						`
+						// log("Store loading icon changed.")
+					}
+				}
+			}, 300)
+		})
+
+		upl.observer.subscribeToElementDeletion("#rcp-fe-lol-store-iframe", () => {
+			log("Store page deleted.")
+			window.clearInterval(storeInterval)
 		})
 	}
 }
@@ -413,6 +448,7 @@ export class ApplyUI {
 			if (ElainaData.get("Custom-Regalia-Banner")) customIcon.regaliaBanner()
 			if (ElainaData.get("Custom-Hover-card-backdrop")) customIcon.hoverCardbackdrop()
 			if (ElainaData.get('Custom-Gamemode-Icon')) customIcon.gamemodeIcon()
+			if (ElainaData.get("Custom-Loading-Icon")) customIcon.loadingIcon()
 		}
 	}
 }

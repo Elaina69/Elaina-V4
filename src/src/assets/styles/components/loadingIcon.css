@@ -1,0 +1,56 @@
+.lol-uikit-spinner-image, .lol-social-sidebar .inprogress .spinner,
+.match-history-loading-icon {
+	content: var(--Loading) !important;
+	animation: none !important;
+}
+
+.style-profile-loading-spinner {
+	background: unset !important;
+	content: var(--Loading) !important;
+	animation: profile-fadeout 0.5s forwards !important;
+    width: 190px !important;
+    height: 190px !important;
+}
+
+.match-history-loading-icon {
+	background: none !important;
+	top: 40% !important;
+	left: 45% !important;
+	width: 190px !important;
+	height: 190px !important;
+}
+
+.lol-social-sidebar .inprogress .spinner {
+	background: none !important;
+	width: 50px !important;
+	height: 50px !important;
+}
+
+.lol-uikit-spinner-image-default-size, 
+.season-pass-spinner-container > img, 
+.emotes-loading-section > img,
+.loading-spinner > img,
+.activity-center__loading-screen__spinner {
+	height: 190px;
+    width: 190px;
+	margin: auto;
+}
+
+.loot-inventory-grid-spinner {
+	left: calc(50% - 75px) !important;
+    top: calc(50% - 85px) !important;
+}
+
+.rcp-fe-lol-tft-news .managed-iframe-spinner > img {
+	top: -40px !important;
+}
+
+.hextech-loading-animation {
+	width: 190px !important;
+	height: 190px !important;
+	content: var(--Loading) !important;
+}
+
+.hextech-loading-animation > svg {
+	display: none !important;
+}

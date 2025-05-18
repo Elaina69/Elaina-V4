@@ -1,3 +1,5 @@
+import { log } from "../utils/themeLog.ts"
+
 let riotclient_auth: any, riotclient_port: any
 let regex_rc_auth = /^--riotclient-auth-token=(.+)$/
 let regex_rc_port = /^--riotclient-app-port=([0-9]+)$/
@@ -7,6 +9,7 @@ async function subscribe_endpoint(endpoint: any, callback: any) {
 	const getUri: any = document.querySelector('link[rel="riot:plugins:websocket"]')
 	const uri = getUri.href
 	const ws = new WebSocket(uri, 'wamp')
+	log(uri)
 
 	ws.onopen = () => ws.send(JSON.stringify([5, 'OnJsonApiEvent' + endpoint.replace(/\//g, '_')]))
 	ws.onmessage = callback

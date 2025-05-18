@@ -1,3 +1,8 @@
+/**
+ * @author Lyfhael
+ * @modifier Elaina Da Catto
+ */
+
 import utils from '../utils/utils.ts';
 import * as upl from "pengu-upl"
 
@@ -6,7 +11,7 @@ let player_declined: boolean = false
 
 export class AutoAccept {
 	autoAcceptQueueButtonSelect() {
-		let element: any = document.getElementById("autoAcceptQueueButton")
+		const element = document.getElementById("autoAcceptQueueButton") as any
 		if (element?.attributes.selected != undefined) {
 			ElainaData.set("auto_accept", false)
 			element.removeAttribute("selected")
@@ -26,8 +31,8 @@ export class AutoAccept {
 		const div = document.createElement("div")
 		div.className = "cs-buttons-container"
 
-		let nor: HTMLElement | null = document.querySelector(".v2-footer-notifications.ember-view")
-		let tft: HTMLElement | null = document.querySelector(".parties-footer-notifications.ember-view")
+		let nor = document.querySelector(".v2-footer-notifications.ember-view") as HTMLElement
+		let tft = document.querySelector(".parties-footer-notifications.ember-view") as HTMLElement
 
 		if (nor) {
 			nor.append(div)

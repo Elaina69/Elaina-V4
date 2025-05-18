@@ -4,6 +4,7 @@ export default {
     "dodge"           : "Hủy",
     "exit"            : "Thoát",
     "more-info"       : "Chi tiết",
+    "settings-loading": "Chờ xíu nhen...",
 
 
     // auto accept button
@@ -134,6 +135,7 @@ export default {
     "animate-loading"               : "Sử dụng ảnh gif cho logo khởi động",
 
     "custom-icon"                   : "Icon tùy chỉnh",
+    "Custom-Loading-Icon"           : "Loading",
     "custom-avatar"                 : "Biểu tượng",
     "Custom-Border"                 : "Khung",
     "Custom-Regalia-Banner"         : "Cờ hiệu",
@@ -199,6 +201,7 @@ export default {
     "challenge-rank"            : "Xếp hạng thử thách",
     "challenge-point"           : "Điểm thử thách",
     "custom-status"             : "Trạng thái tùy chỉnh",
+    "Custom-Status-Local"       : "(Thử nghiệm) Trạng thái tùy chỉnh (Local)",
     "status-delay"              : "Độ trễ ( Mili giây )",
 
     "name-spoofer"              : "Tên giả (dành cho stream)",

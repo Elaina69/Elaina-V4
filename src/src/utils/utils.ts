@@ -6,7 +6,9 @@
  */
 
 // State variables
-let pvp_net_id: any, summoner_id: any, phase: any;
+let pvp_net_id: any, 
+    summoner_id: any, 
+    phase: any;
 
 const routines: {callback: Function, target: string[]}[] = [];
 const mutationCallbacks: {callback: Function, target: string[]}[] = [];

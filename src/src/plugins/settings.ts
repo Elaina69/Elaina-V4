@@ -2,7 +2,7 @@ import utils from '../utils/utils.ts'
 import * as upl from "pengu-upl"
 import structure from "./settingsGroups/settingsStructure.ts"
 import { settingsUtils } from "../utils/settingsUtils.ts"
-import { themesSettings } from "./settingsGroups/themeSettings.ts"
+import { themeSettings } from "./settingsGroups/themeSettings.ts"
 import { pluginsSettings } from "./settingsGroups/themePluginsSettings.ts"
 import { aboutustab } from "./settingsGroups/themeAboutUs.ts"
 import { log, error, warn } from "../utils/themeLog.ts";
@@ -76,7 +76,7 @@ window.addEventListener('load', async () => {
                 const aboutus = document.querySelector('lol-uikit-scrollable.aboutus_settings')
 
                 if (theme && mutations.some((record) => Array.from(record.addedNodes).includes(theme))) {
-                    themesSettings(theme)
+                    themeSettings(theme)
                 }
                 else if (plugin && mutations.some((record) => Array.from(record.addedNodes).includes(plugin))) {
                     pluginsSettings(plugin)
