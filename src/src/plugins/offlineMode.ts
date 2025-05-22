@@ -4,12 +4,12 @@ import { log } from '../utils/themeLog.ts';
 let covert_status = "chat";
 
 export class OfflineMode {
-	get_status() {
+	private possible_status = ["dnd", "chat", "away", "offline", "mobile"]
+
+	get_status_by_icon() {
 		let element = document.querySelector(".availability-icon")
-		let possible_status = ["dnd", "chat", "away", "offline", "mobile"]
-	
 		if (element) {
-			for (let elem of possible_status){
+			for (let elem of this.possible_status){
 				if (element.classList.contains(elem)){
 					return elem
 				}
@@ -19,7 +19,8 @@ export class OfflineMode {
 	}
 	
 	switch_between_status = async () => {
-		let status = this.get_status()
+		let status = this.get_status_by_icon()
+
 		let availability = (status == "chat") ? "mobile" 
 			: (status == "mobile") ? "dnd" 
 			: (status == "dnd") ? "away" 
@@ -36,7 +37,9 @@ export class OfflineMode {
 			"method": "PUT",
 		});
 	
-		document.querySelector(".availability-icon")?.classList.remove(status)
+		for (let i = 0; i < this.possible_status.length; i++) {
+			document.querySelector(".availability-icon")?.classList.remove(this.possible_status[i])
+		}
 		document.querySelector(".availability-icon")?.classList.add(availability)
 		covert_status = availability
 	}
@@ -69,6 +72,13 @@ export class OfflineMode {
 				circle_status.classList.add("offline-mode-available");
 				circle_status.outerHTML = circle_status.outerHTML
 				document.querySelector(".availability-hitbox")?.setAttribute("onclick", "window.switch_between_status()")
+
+				let status = (await (await fetch("/lol-chat/v1/me")).json()).availability
+				let status_icon = this.get_status_by_icon()
+				if (this.get_status_by_icon() !== status) {
+					document.querySelector(".availability-icon")?.classList.remove(status_icon)
+					document.querySelector(".availability-icon")?.classList.add(status)
+				}
 			}
 			if (covert_status == "offline") {		
 				await this.patchStatus();

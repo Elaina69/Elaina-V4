@@ -52,73 +52,29 @@
     gap: 3em;
 }
 
-.parties-game-type-select-wrapper.ember-view {
+.parties-game-type-select-wrapper.ember-view ,
+.parties-custom-game-setup.ember-view,
+.custom-game-list.ember-view,
+.parties-lower-section,
+.v2-footer-component.ember-view,
+.arrow-footer.ember-view > div,
+.parties-point-eligibility-custom.ember-view,
+.custom-game-teams.ember-view,
+.multiteam-lobby-root__scrollable-wrapper { 
 	transition: transform 0.5s ease !important;
     transform: translateX(0px);
 }
 
-.parties-custom-game-setup.ember-view { 
-	transition: transform 0.5s ease !important;
-    transform: translateX(0px);
-} 
-
-.custom-game-list.ember-view { 
-	transition: transform 0.5s ease !important;
-    transform: translateX(0px);
-}
-
-.parties-lower-section { 
-	transition: transform 0.5s ease !important;
-    transform: translateX(0px);
-}
-
-.v2-footer-component.ember-view { 
-	transition: transform 0.5s ease !important;
-    transform: translateX(0px);
-}
-
-.invite-info-panel-container {
-	transition: opacity 0.5s ease, transform 0.5s ease !important;
-    transform: translateX(0px);
-    opacity: 1;
-}
-
-.arrow-footer.ember-view > div { 
-	transition: transform 0.5s ease !important;
-    transform: translateX(0px);
-}
-
-.parties-point-eligibility-custom.ember-view { 
-	transition: transform 0.5s ease !important;
-    transform: translateX(0px);
-}
-
-.custom-game-teams.ember-view { 
-	transition: transform 0.5s ease !important;
-    transform: translateX(0px);
-}
-
+/* .invite-info-panel-container,
 .parties-invite-info-panel.ember-view { 
 	transition: opacity 0.5s ease, transform 0.5s ease !important;
     transform: translateX(0px);
 	opacity: 1;
-}
+} */
 
-.parties-invite-dropzone {
-    transition: transform 0.5s ease 0s;
-    transform: translateX(0px);
-}
-
-.party-members-container {
-	transition: transform 0.5s ease 0s;
-    transform: translateX(0px);
-}
-
-.tft-cards-container {
-	transition: transform 0.5s ease 0s;
-    transform: translateX(0px);
-}
-
+.parties-invite-dropzone,
+.party-members-container,
+.tft-cards-container,
 .tft-footer-container.ember-view {
 	transition: transform 0.5s ease 0s;
     transform: translateX(0px);
@@ -139,23 +95,12 @@
 	top: 358px !important;
 }
 
-.find-match-button-container {
-	filter: var(--find-match-button) !important;
-}
-
-.confirm-button-container {
-	filter: var(--find-match-button) !important;
-}
-
+.find-match-button-container,
+.confirm-button-container,
 .tft-find-match-button-container {
 	filter: var(--find-match-button) !important;
 }
 
 .parties-footer-notifications {
 	top: -120px !important;
-}
-
-.multiteam-lobby-root__scrollable-wrapper {
-	transform: translateX(0px);
-    transition: transform 0.5s ease !important;
 }

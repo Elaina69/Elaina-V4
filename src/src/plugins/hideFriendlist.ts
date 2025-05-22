@@ -95,49 +95,27 @@ export class HideFriendList {
             } 
             catch {}
             utils.addStyleWithID("centerViewport", `
-                .parties-game-type-select-wrapper.ember-view { 
-                    transform: translateX(0px);
-                } 
-                .parties-custom-game-setup.ember-view { 
-                    transform: translateX(0px);
-                } 
-                .custom-game-list.ember-view { 
-                    transform: translateX(0px);
+                div[data-screen-name=social] > .social-plugin-home > .ember-view {
+                    height: 100% !important;
                 }
-                .v2-footer-component.ember-view { 
-                    transform: translateX(0px);
-                }
-                .invite-info-panel-container {
-                    transform: translateX(0px);
-                    opacity: 1
-                }
-                .parties-point-eligibility-custom.ember-view { 
-                    transform: translateX(0px);
-                }
-                .custom-game-teams.ember-view { 
-                    transform: translateX(0px);
-                }
-                .parties-invite-info-panel.ember-view { 
-                    transform: translateX(0px);
-                    opacity: 1 !important;
-                }
-                .arrow-footer.ember-view > div { 
-                    transform: translateX(0px);
-                }
-                .parties-invite-dropzone {
-                    transform: translateX(0px);
-                }
-                .party-members-container {
-                    transform: translateX(0px);
-                }
-                .tft-cards-container {
-                    transform: translateX(0px);
-                }
-                .tft-footer-container.ember-view {
-                    transform: translateX(0px);
-                }
-                .multiteam-lobby-root__scrollable-wrapper {
-                    transform: translateX(0px);
+                .parties-game-type-select-wrapper.ember-view,
+                .parties-custom-game-setup.ember-view ,
+                .custom-game-list.ember-view,
+                .v2-footer-component.ember-view,
+                .parties-point-eligibility-custom.ember-view,
+                .custom-game-teams.ember-view,
+                .arrow-footer.ember-view > div,
+                .parties-invite-dropzone,
+                .party-members-container,
+                .tft-cards-container,
+                .tft-footer-container.ember-view,
+                .multiteam-lobby-root__scrollable-wrapper,
+                .career-postgame-progression-component, 
+                .postgame-root-component .postgame-footer,
+                .career-postgame-sub-navigation-component,
+                .postgame-root-component .postgame-progression-lottie-outline,
+                .scoreboard-root-content-container  {
+                    transform: translateX(0px) !important;
                 }
             `)
         } 
@@ -147,49 +125,27 @@ export class HideFriendList {
             } 
             catch {}
             utils.addStyleWithID("centerViewport", `
-                .parties-game-type-select-wrapper.ember-view { 
-                    transform: translateX(113px);
-                } 
-                .v2-footer-component.ember-view { 
-                    transform: translateX(113px);
-                } 
-                .parties-custom-game-setup.ember-view { 
-                    transform: translateX(113px);
-                } 
-                .custom-game-list.ember-view { 
-                    transform: translateX(113px);
+                div[data-screen-name=social] > .social-plugin-home > .ember-view {
+                    height: 0% !important;
                 }
-                .arrow-footer.ember-view > div { 
-                    transform: translateX(113px);
-                }
-                .parties-point-eligibility-custom.ember-view { 
-                    transform: translateX(113px);
-                }
-                .custom-game-teams.ember-view { 
-                    transform: translateX(113px);
-                }
-                .parties-invite-info-panel.ember-view { 
-                    transform: translateX(113px);
-                    opacity: 0 !important;
-                }
-                .invite-info-panel-container {
-                    transform: translateX(113px);
-                    opacity: 0
-                }
-                .parties-invite-dropzone {
-                    transform: translateX(113px);
-                }
-                .party-members-container {
-                    transform: translateX(113px);
-                }
-                .tft-cards-container {
-                    transform: translateX(113px);
-                }
-                .tft-footer-container.ember-view {
-                    transform: translateX(113px);
-                }
-                .multiteam-lobby-root__scrollable-wrapper {
-                    transform: translateX(113px);
+                .parties-game-type-select-wrapper.ember-view,
+                .parties-custom-game-setup.ember-view ,
+                .custom-game-list.ember-view,
+                .v2-footer-component.ember-view,
+                .parties-point-eligibility-custom.ember-view,
+                .custom-game-teams.ember-view,
+                .arrow-footer.ember-view > div,
+                .parties-invite-dropzone,
+                .party-members-container,
+                .tft-cards-container,
+                .tft-footer-container.ember-view,
+                .multiteam-lobby-root__scrollable-wrapper,
+                .career-postgame-progression-component, 
+                .postgame-root-component .postgame-footer,
+                .career-postgame-sub-navigation-component,
+                .postgame-root-component .postgame-progression-lottie-outline,
+                .scoreboard-root-content-container  {
+                    transform: translateX(113px) !important;
                 }
             `)
         }

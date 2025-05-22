@@ -1,10 +1,11 @@
 import * as upl from 'pengu-upl'
-import list from "../config/champsBgList.js"
 import { log } from "../utils/themeLog.js"
-import { getThemeName } from '../otherThings.js'
+import { getThemeName, cdnImport } from '../otherThings.js'
 
 let datapath = `//plugins/${getThemeName()}/`
 let bgInterval: number
+
+const list = (await cdnImport(`${datapath}config/champsBgList.js`, "Can't import custom champion data")).default;
 
 function updateDefaultSkinThumbnails(selector, img) {
     const elements = document.querySelectorAll(selector);
@@ -18,51 +19,83 @@ function updateDefaultSkinThumbnails(selector, img) {
 
 if (ElainaData.get("custom-champs-image")) {
     window.setInterval(()=>{
-        let thumbnail = document.getElementsByClassName("champion-thumbnail")
-        if (!thumbnail) return
-        else {
-            for (let i = 0; i < thumbnail.length; i++) {
-                let nameElements = document.getElementsByClassName("champion-name");
-                if (!(nameElements[i] instanceof HTMLElement)) continue; // Ensure it's an HTMLElement
-                let name = nameElements[i] as HTMLElement;
-        
-                for (let j = 0; j < list.length; j++) {
-                    if (name.innerText === list[j]["default_name"]) {
-                        let championImage = thumbnail[i].querySelector(".champion-image");
-                        if (championImage instanceof HTMLImageElement) {
-                            championImage.setAttribute("src", `${datapath}assets/champs/${list[j]["image_preview"]}`);
-                        }
-                        name.innerText = list[j]["replace_name"];
-                    }
+        const thumbnails = document.getElementsByClassName("champion-thumbnail");
+        const nameContainers = document.getElementsByClassName("champion-name-container");
+
+        for (let i = 0; i < thumbnails.length; i++) {
+            const nameContainer = nameContainers[i];
+            if (!nameContainer) continue;
+            const championNameElement = nameContainer.querySelector(".champion-name") as HTMLElement;
+            const championImage = thumbnails[i].querySelector(".champion-image") as HTMLImageElement;
+            if (!championNameElement || !championImage) continue;
+
+            const cleanName = championNameElement.innerText.replace(/\s+/g, '').toLowerCase();
+            const champData = list.find(
+                champ =>
+                    cleanName === champ.default_name.replace(/\s+/g, '').toLowerCase() ||
+                    cleanName === champ.replace_name.replace(/\s+/g, '').toLowerCase()
+            );
+
+            if (champData) {
+                if (championImage.style.content !== `url(${datapath}assets/champs/${champData.image_preview})`) {
+                    championImage.style.content = `url(${datapath}assets/champs/${champData.image_preview})`;
+                }
+                if (!nameContainer.querySelector("#champion-name-replace")) {
+                    let newName = document.createElement("p");
+                    newName.classList.add("champion-name");
+                    newName.id = "champion-name-replace";
+                    newName.innerText = champData.replace_name;
+                    newName.style.cssText = `
+                        font-size: 13px;
+                        text-align: center;
+                        color: #a09b8c;
+                        font-weight: 400;
+                        letter-spacing: .025em;
+                        line-height: 16px;
+                        -webkit-font-smoothing: subpixel-antialiased;
+                        -webkit-font-feature-settings: "kern" 1;
+                        font-kerning: normal;
+                        -webkit-user-select: none;
+                        font-family: var(--font-body);
+                    `;
+                    nameContainer.append(newName);
+                    championNameElement.style.display = "none";
+                    log(`Replaced ${champData.default_name} with ${champData.replace_name}`);
+                }
+            } else {
+                const replacedName = nameContainer.querySelector("#champion-name-replace");
+                if (replacedName) {
+                    championImage.style.removeProperty("content");
+                    championNameElement.style.removeProperty("display");
+                    replacedName.remove();
+                    log(`Restored ${championNameElement.innerText}`);
                 }
             }
         }
     
-        let champSetRow = document.querySelectorAll(".champion-set-row .champion-border")
-        if (!champSetRow) return
-        else {
-            for (let i = 0; i < champSetRow.length; i++) {
-                for (let j = 0; j < list.length; j++) {
-                    let img = champSetRow[i].querySelector("img");
-                    if (img && img.getAttribute("src")?.includes(list[j]["default_icon_id"].toString())) {
-                        img.setAttribute("src", `${datapath}assets/champs/${list[j]["image_thumbnail"]}`);
-                    }
-                }
+        const champSetRow = document.querySelectorAll(".champion-set-row .champion-border");
+        champSetRow.forEach(border => {
+            const img = border.querySelector("img");
+            if (!img) return;
+            const champData = list.find(champ =>
+                img.getAttribute("src")?.includes(champ.default_icon_id.toString())
+            );
+            if (champData) {
+                img.setAttribute("src", `${datapath}assets/champs/${champData.image_thumbnail}`);
             }
-        }
-    
-        let champSelectList = document.querySelectorAll(".champion-grid-champion-thumbnail")
-        if (!champSelectList) return
-        else {
-            for (let i = 0; i < champSelectList.length; i++) {
-                for (let j = 0; j < list.length; j++) {
-                    let img = champSelectList[i].querySelector("img");
-                    if (img && img.getAttribute("src")?.includes(list[j]["default_icon_id"].toString())) {
-                        img.setAttribute("src", `${datapath}assets/champs/${list[j]["image_thumbnail"]}`);
-                    }
-                }
+        });
+
+        const champSelectList = document.querySelectorAll(".champion-grid-champion-thumbnail");
+        champSelectList.forEach(thumbnail => {
+            const img = thumbnail.querySelector("img");
+            if (!img) return;
+            const champData = list.find(champ =>
+                img.getAttribute("src")?.includes(champ.default_icon_id.toString())
+            );
+            if (champData) {
+                img.setAttribute("src", `${datapath}assets/champs/${champData.image_thumbnail}`);
             }
-        }
+        });
     },100)
     
     upl.observer.subscribeToElementCreation(".lockup-champion-name",(element: any)=>{

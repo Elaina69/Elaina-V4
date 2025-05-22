@@ -2,6 +2,7 @@ div[data-game-mode='CLASSIC'] .icon-bg.icon-bg-filler,
 div[data-game-mode='TFT'] .icon-bg.icon-bg-filler, 
 div[data-game-mode='ARAM'] .icon-bg.icon-bg-filler, 
 div[data-game-mode='CHERRY'] .icon-bg.icon-bg-filler,
+div[data-game-mode='BRAWL'] .icon-bg.icon-bg-filler,
 div[data-map-id="11"] .icon-bg.icon-bg-filler, 
 div[data-map-id="12"] .icon-bg.icon-bg-filler {
 	background-image: url("") !important;

@@ -25,3 +25,12 @@
 .postgame-root-component .postgame-header-section.progression-tab {
 	backdrop-filter: blur(0px) !important;
 }
+
+.career-postgame-progression-component, 
+.postgame-root-component .postgame-footer,
+.career-postgame-sub-navigation-component,
+.postgame-root-component .postgame-progression-lottie-outline,
+.scoreboard-root-content-container  {
+	transition: transform 0.5s ease !important;
+    transform: translateX(0px);
+}

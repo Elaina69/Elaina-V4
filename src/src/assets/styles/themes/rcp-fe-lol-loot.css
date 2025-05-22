@@ -29,3 +29,9 @@
 .mythic-shop-backdrop {
 	background: none !important;
 }
+
+/* 	Decrease (to make loot tray get higher) 
+	or increase (to make loot tray get lower) if you have css bug from loot tab */
+.loot-tray {
+	margin-top: 0px !important;
+}
