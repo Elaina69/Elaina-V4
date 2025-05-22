@@ -73,14 +73,8 @@ lol-social-roster-member .offline .member-name {
     transform: translateX(0px);
 }
 
-.lol-social-lower-pane-container {
-	transition: transform 0.5s ease !important;
-}
-
-lol-parties-game-info-panel {
-	transition: transform 0.5s ease !important;
-}
-
+.lol-social-lower-pane-container,
+lol-parties-game-info-panel,
 .tournaments-persistent-panel {
 	transition: transform 0.5s ease !important;
 }
@@ -93,4 +87,8 @@ lol-social-roster-group lol-social-arrow-toggle {
 .lol-social-identity {
 	background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 24%))!important;
 	padding: 18px 10px 0 0 !important;
+}
+
+.lol-social-identity .lower-details .lol-social-availability-hitbox {
+	    margin: 5px 5px 0 5px !important;
 }
