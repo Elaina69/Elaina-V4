@@ -314,15 +314,10 @@ export class CustomProfile {
     }
 
     customBagde = () => {
-        const cp = new CustomProfile
-        async function onMutation(): Promise<void> {
-            const toSetup = [
-                //setupInvisibleBanner(),
-                cp.setupBadgesFunctions()
-            ]
-            await Promise.all(toSetup)
-        }
+        utils.routineAddCallback(() => this.setupBadgesFunctions(), [".rcp-fe-lol-profiles-main"])
+    }
 
-        utils.routineAddCallback(onMutation, [".rcp-fe-lol-profiles-main"])
+    invisibleBanner = () => {
+        utils.routineAddCallback(() => this.setupInvisibleBanner(), [".rcp-fe-lol-profiles-main"])
     }
 }
