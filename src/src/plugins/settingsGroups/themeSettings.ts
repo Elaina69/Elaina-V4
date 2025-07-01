@@ -1,5 +1,6 @@
 import { UI } from "./settingsUI.ts"
 import { restartAfterChange, utils, error } from "../settings.ts"
+import { del_webm_buttons, create_webm_buttons, applyHideAndShowTFTtab, setAudio, hideShowNavBar, changeHomePageStyle } from "../../theme/homepage.ts";
 
 const FILE_REGEX = {
     Wallpaper: /\.(png|jpg|jpeg|gif|bmp|webp|ico|mp4|webm|mkv|mov|avi|wmv|3gp|m4v)$/,
@@ -38,12 +39,12 @@ async function themeSettings(panel) {
                 ),
                 document.createElement('br'),
                 UI.Label(await getString("update-list-manually"), ""),
-                UI.Row("add-background-manually-row", [
+                UI.RowHideable("add-background-manually-row", [
                     UI.Label(" ", "add-background-manual-message"),
-                    UI.Label(await getString("wallpaper"), ""),
+                    UI.Label(await getString("wallpaper") + `: \n[${(ElainaData.get("Wallpaper-list")).join(', ')}]`, "theme-settings-wallpaper-list"),
                     UI.Row("manual-wallpaper", [
                         UI.Input("manual-wallpaper-name"),
-                        UI.Button(await getString("add"),"add-background",async ()=> {
+                        UI.Button(await getString("add"),"add-wallpaper",async ()=> {
                             let text: any = document.querySelector("#add-background-manual-message")
                             let currentWallpaper = ElainaData.get("Wallpaper-list")
                             let newWallpaper = ElainaData.get("manual-wallpaper-name")
@@ -68,8 +69,12 @@ async function themeSettings(panel) {
                                     text.style.color = "red"
                                 }
                             }
+                            let wallpaperListLabel: any = document.querySelector("#theme-settings-wallpaper-list")
+                            if (wallpaperListLabel) {
+                                wallpaperListLabel.innerText = `${await getString("wallpaper")}: \n[${(ElainaData.get("Wallpaper-list")).join(', ')}]`;
+                            }
                         }),
-                        UI.Button(await getString("delete"),"delete-background",async ()=> {
+                        UI.Button(await getString("delete"),"delete-wallpaper",async ()=> {
                             let text: any = document.querySelector("#add-background-manual-message")
                             let currentWallpaper = ElainaData.get("Wallpaper-list")
                             let newWallpaper = ElainaData.get("manual-wallpaper-name")
@@ -92,12 +97,16 @@ async function themeSettings(panel) {
                                 text.textContent = await getString("wallpaper-not-exist")
                                 text.style.color = "red"
                             }
+                            let wallpaperListLabel: any = document.querySelector("#theme-settings-wallpaper-list")
+                            if (wallpaperListLabel) {
+                                wallpaperListLabel.innerText = `${await getString("wallpaper")}: \n[${(ElainaData.get("Wallpaper-list")).join(', ')}]`;
+                            }
                         })
                     ]),
-                    UI.Label(await getString("audio"), ""),
+                    UI.Label(await getString("audio") + `: \n[${(ElainaData.get("Audio-list")).join(', ')}]`, "theme-settings-audio-list"),
                     UI.Row("manual-audio", [
                         UI.Input("manual-audio-name"),
-                        UI.Button(await getString("add"),"add-background",async ()=> {
+                        UI.Button(await getString("add"),"add-audio",async ()=> {
                             let text: any = document.querySelector("#add-background-manual-message")
                             let currentAudio = ElainaData.get("Audio-list")
                             let newAudio = ElainaData.get("manual-audio-name")
@@ -110,18 +119,24 @@ async function themeSettings(panel) {
                                 text.textContent = await getString("invalid-audio-format");
                                 text.style.color = "red";
                             }
-                            if (!exist) {
-                                currentAudio.push(newAudio)
-                                ElainaData.set("Audio-list", currentAudio)
-                                text.textContent = await getString("audio-added")
-                                text.style.color = "green"
-                            }
                             else {
-                                text.textContent = await getString("audio-already-added")
-                                text.style.color = "red"
+                                if (!exist) {
+                                    currentAudio.push(newAudio)
+                                    ElainaData.set("Audio-list", currentAudio)
+                                    text.textContent = await getString("audio-added")
+                                    text.style.color = "green"
+                                }
+                                else {
+                                    text.textContent = await getString("audio-already-added")
+                                    text.style.color = "red"
+                                }
+                            }
+                            let audioListLabel: any = document.querySelector("#theme-settings-audio-list")
+                            if (audioListLabel) {
+                                audioListLabel.innerText = `${await getString("audio")}: \n[${ElainaData.get("Audio-list")}]`;
                             }
                         }),
-                        UI.Button(await getString("delete"),"delete-background",async ()=> {
+                        UI.Button(await getString("delete"),"delete-audio",async ()=> {
                             let text: any = document.querySelector("#add-background-manual-message")
                             let currentAudio = ElainaData.get("Audio-list")
                             let newAudio = ElainaData.get("manual-audio-name")
@@ -144,12 +159,16 @@ async function themeSettings(panel) {
                                 text.textContent = await getString("audio-not-exist")
                                 text.style.color = "red"
                             }
+                            let audioListLabel: any = document.querySelector("#theme-settings-audio-list")
+                            if (audioListLabel) {
+                                audioListLabel.innerText = `${await getString("audio")}: \n[${ElainaData.get("Audio-list")}]`;
+                            }
                         })
                     ]),
-                    UI.Label(await getString("banner"), ""),
+                    UI.Label(await getString("banner") + `: \n[${(ElainaData.get("Banner-list")).join(', ')}]`, "theme-settings-banner-list"),
                     UI.Row("manual-banner", [
                         UI.Input("manual-banner-name"),
-                        UI.Button(await getString("add"),"add-background",async ()=> {
+                        UI.Button(await getString("add"),"add-banner",async ()=> {
                             let text: any = document.querySelector("#add-background-manual-message")
                             let currentBanner = ElainaData.get("Banner-list")
                             let newBanner = ElainaData.get("manual-banner-name")
@@ -162,18 +181,24 @@ async function themeSettings(panel) {
                                 text.textContent = await getString("invalid-banner-format");
                                 text.style.color = "red";
                             }
-                            if (!exist) {
-                                currentBanner.push(newBanner)
-                                ElainaData.set("Banner-list", currentBanner)
-                                text.textContent = await getString("banner-added")
-                                text.style.color = "green"
-                            }
                             else {
-                                text.textContent = await getString("banner-already-added")
-                                text.style.color = "red"
+                                if (!exist) {
+                                    currentBanner.push(newBanner)
+                                    ElainaData.set("Banner-list", currentBanner)
+                                    text.textContent = await getString("banner-added")
+                                    text.style.color = "green"
+                                }
+                                else {
+                                    text.textContent = await getString("banner-already-added")
+                                    text.style.color = "red"
+                                }
+                            }
+                            let bannerListLabel: any = document.querySelector("#theme-settings-banner-list")
+                            if (bannerListLabel) {
+                                bannerListLabel.innerText = `${await getString("banner")}: \n[${(ElainaData.get("Banner-list")).join(', ')}]`;
                             }
                         }),
-                        UI.Button(await getString("delete"),"delete-background",async ()=> {
+                        UI.Button(await getString("delete"),"delete-banner",async ()=> {
                             let text: any = document.querySelector("#add-background-manual-message")
                             let currentBanner = ElainaData.get("Banner-list")
                             let newBanner = ElainaData.get("manual-banner-name")
@@ -196,12 +221,16 @@ async function themeSettings(panel) {
                                 text.textContent = await getString("banner-not-exist")
                                 text.style.color = "red"
                             }
+                            let bannerListLabel: any = document.querySelector("#theme-settings-banner-list")
+                            if (bannerListLabel) {
+                                bannerListLabel.innerText = `${await getString("banner")}: \n[${(ElainaData.get("Banner-list")).join(', ')}]`;
+                            }
                         })
                     ]),
-                    UI.Label(await getString("font"), ""),
+                    UI.Label(await getString("font") + `: \n[${(ElainaData.get("Font-list")).join(', ')}]`, "theme-settings-font-list"),
                     UI.Row("manual-font", [
                         UI.Input("manual-font-name"),
-                        UI.Button(await getString("add"),"add-background",async ()=> {
+                        UI.Button(await getString("add"),"add-font",async ()=> {
                             let text: any = document.querySelector("#add-background-manual-message")
                             let currentFont = ElainaData.get("Font-list")
                             let newFont = ElainaData.get("manual-font-name")
@@ -214,18 +243,24 @@ async function themeSettings(panel) {
                                 text.textContent = await getString("invalid-font-format");
                                 text.style.color = "red";
                             }
-                            if (!exist) {
-                                currentFont.push(newFont)
-                                ElainaData.set("Font-list", currentFont)
-                                text.textContent = await getString("font-added")
-                                text.style.color = "green"
-                            }
                             else {
-                                text.textContent = await getString("font-already-added")
-                                text.style.color = "red"
+                                if (!exist) {
+                                    currentFont.push(newFont)
+                                    ElainaData.set("Font-list", currentFont)
+                                    text.textContent = await getString("font-added")
+                                    text.style.color = "green"
+                                }
+                                else {
+                                    text.textContent = await getString("font-already-added")
+                                    text.style.color = "red"
+                                }
+                            }
+                            let fontListLabel: any = document.querySelector("#theme-settings-font-list")
+                            if (fontListLabel) {
+                                fontListLabel.innerText = `${await getString("font")}: \n[${(ElainaData.get("Font-list")).join(', ')}]`;
                             }
                         }),
-                        UI.Button(await getString("delete"),"delete-background",async ()=> {
+                        UI.Button(await getString("delete"),"delete-font",async ()=> {
                             let text: any = document.querySelector("#add-background-manual-message")
                             let currentFont = ElainaData.get("Font-list")
                             let newFont = ElainaData.get("manual-font-name")
@@ -248,12 +283,20 @@ async function themeSettings(panel) {
                                 text.textContent = await getString("font-not-exist")
                                 text.style.color = "red"
                             }
+                            let fontListLabel: any = document.querySelector("#theme-settings-font-list")
+                            if (fontListLabel) {
+                                fontListLabel.innerText = `${await getString("font")}: \n[${(ElainaData.get("Font-list")).join(', ')}]`;
+                            }
                         })
                     ]),
                 ]),
                 UI.Label(await getString("wallpaper/audio-settings"), ""),
-                UI.Row("background-settings",[
+                UI.RowHideable("background-settings",[
+                    document.createElement('br'),
                     UI.Button(await getString("open-background-folder"), "open-background-folder", () => { window.openPluginsFolder(`${ElainaData.get("Plugin-folder-name")}/assets/backgrounds`) }),
+                    UI.Label(await getString("WallpaperAudio-timeUpdate"), ""),
+                    UI.Input("WallpaperAudio-timeUpdate"),
+                    document.createElement('br'),
                     UI.Slider(
                         await getString("wallpaper-volume"),ElainaData.get("wallpaper-volume"),"elaina-bg","wallpaper-volume"
                     ),
@@ -262,6 +305,7 @@ async function themeSettings(panel) {
                         UI.SpeedInput("Playback-speed"),
                         UI.Label("%","playback-percent"),
                     ]),
+                    UI.Label("", "speed-check"),
                     document.createElement('br'),
                     UI.CheckBox(
                         `${await getString("wallpaper-slideshow")}`,'wallpaperSlide','wallpaperSlidebox', 
@@ -287,7 +331,7 @@ async function themeSettings(panel) {
                             let audio: any = document.getElementById("bg-audio")
                     
                             if (!ElainaData.get("Disable-Theme-Audio")) {
-                                window.setAudio()
+                                setAudio()
                                 audioController.style.display = "flex"
                             }
                             else {
@@ -312,8 +356,8 @@ async function themeSettings(panel) {
                 document.createElement('br'),
                 UI.CheckBox(
                     `${await getString("hide-homepage-navbar")}`,'homenav','homenavbox', ()=>{
-                        window.hideShowNavBar()
-                        window.changeHomePageStyle()
+                        hideShowNavBar()
+                        changeHomePageStyle()
                     }, true, "hide-homepage-navbar"
                 ),
                 document.createElement('br'),
@@ -326,8 +370,8 @@ async function themeSettings(panel) {
                 UI.CheckBox(
                     `${await getString("old-prev/next-button")}`,"oldpnb","oldpnbbox",
                     ()=>{
-                        window.del_webm_buttons()
-                        window.create_webm_buttons()
+                        del_webm_buttons()
+                        create_webm_buttons()
                     },true, "old-prev/next-button"
                 ),
                 document.createElement('br'),
@@ -359,6 +403,12 @@ async function themeSettings(panel) {
                     },true, "settings-dialogs-transparent"
                 ),
                 document.createElement('br'),
+                UI.CheckBox(await getString("hide-profile-background"), "hideprfbg", "hideprfbgbox", 
+                    ()=>{
+                        restartAfterChange("hideprfbg", "hide-profile-background")
+                    }, true, "hide-profile-background"
+                ),
+                document.createElement('br'),
                 UI.CheckBox(
                     `${await getString("hide-champions-splash-art")}`,'hidechampart','hidechampartbox',
                     ()=>{
@@ -372,20 +422,6 @@ async function themeSettings(panel) {
                         restartAfterChange("hidevl", "hide-vertical-lines")
                     },true, "hide-vertical-lines"
                 ),
-                document.createElement('br'),
-                UI.CheckBox(
-                    `${await getString("custom-font")}`,'cusfont','cusfontbox',
-                    ()=>{
-                        if (!ElainaData.get("Custom-Font")) {
-                            document.querySelector("#Custom-font")?.remove()
-                        }
-                        else {
-                            utils.addFont(ElainaData.get("Font-folder")+ElainaData.get("CurrentFont"),"Custom-font","Custom")
-                        }
-                    },true, "Custom-Font"
-                ),
-                document.createElement('br'),
-                UI.DropdownCustomFont(),
                 document.createElement('br'),
                 UI.Row("Custom-Curency",[
                     UI.Row("custom-rp",[
@@ -421,21 +457,35 @@ async function themeSettings(panel) {
                 UI.Input("Rank-line2"),
                 document.createElement('br'),
                 UI.CheckBox(
+                    `${await getString("custom-font")}`,'cusfont','cusfontbox',
+                    ()=>{
+                        if (!ElainaData.get("Custom-Font")) {
+                            document.querySelector("#Custom-font")?.remove()
+                        }
+                        else {
+                            utils.addFont(ElainaData.get("Font-folder")+ElainaData.get("CurrentFont"),"Custom-font","Custom")
+                        }
+                    },true, "Custom-Font"
+                ),
+                document.createElement('br'),
+                UI.DropdownCustomFont(),
+                document.createElement('br'),
+                UI.CheckBox(
                     `${await getString("change-nickname-color")}`,'nicknamecolor','nicknamecolorbox', ()=>{     
                         if (!ElainaData.get("change-nickname-color")) {
                             document.getElementById("nickname-color-css")?.remove()
                         }
                         else {
                             utils.addStyleWithID("nickname-color-css", /*css*/`
-                                span.player-name__force-locale-text-direction {
+                                span.player-name__force-locale-text-direction, #nickname-color-preview {
                                     color: ${ElainaData.get("nickname-color-with-opacity")};
                                 }
                             `)
                         }
                     },true, "change-nickname-color"
                 ),
-                document.createElement('br'),
-                UI.Row("change-nickname-color-row", [
+                UI.RowHideable("change-nickname-color-row", [
+                    document.createElement('br'),
                     UI.Row("nickname-color-with-text", [
                         UI.colorPicker("nickname-color", "nickname-color", () => {
                             let input: any = document.getElementById("nickname-color")
@@ -450,13 +500,18 @@ async function themeSettings(panel) {
                                 document.getElementById("nickname-color-css")?.remove()
             
                                 utils.addStyleWithID("nickname-color-css", /*css*/`
-                                    span.player-name__force-locale-text-direction {
+                                    span.player-name__force-locale-text-direction, #nickname-color-preview {
                                         color: ${ElainaData.get("nickname-color-with-opacity")};
                                     }
                                 `)
                             }
                         }),
-                        UI.Label(ElainaData.get("nickname-color-with-opacity"), "nickname-color-text")
+                        UI.Label(ElainaData.get("nickname-color-with-opacity"), "nickname-color-text"),
+                        UI.Label(`${await getString("preview")}: `, "nickname-color-preview-label"),
+                        UI.Label(
+                            document.querySelector(".rcp-fe-lol-social .player-name__force-locale-text-direction")?.textContent, 
+                            "nickname-color-preview"
+                        )
                     ]),
                     UI.opacitySlider("change-nickname-opacity", await getString("opacity"), "nickname-opacity", async ()=> {
                         let origin: any = document.getElementById("change-nickname-opacity")
@@ -474,7 +529,7 @@ async function themeSettings(panel) {
                             document.getElementById("nickname-color-css")?.remove()
         
                             utils.addStyleWithID("nickname-color-css", /*css*/`
-                                span.player-name__force-locale-text-direction {
+                                span.player-name__force-locale-text-direction, #nickname-color-preview {
                                     color: ${ElainaData.get("nickname-color-with-opacity")};
                                 }
                             `)
@@ -492,8 +547,8 @@ async function themeSettings(panel) {
                         restartAfterChange('cusicon', "Custom-Icon")
                     },true, "Custom-Icon"
                 ),
-                document.createElement('br'),
-                UI.Row("Custom-icon-list",[
+                UI.RowHideable("Custom-icon-list",[
+                    document.createElement('br'),
                     UI.CheckBox(
                         `${await getString("Custom-Loading-Icon")}`,'cusloadicon','cusloadiconbox',
                         ()=>{
@@ -647,42 +702,42 @@ async function themeSettings(panel) {
                 UI.CheckBox(
                     `${await getString("hide-tft-match-history")}`,'hidetftmhtab','hidetftmhtabbox',
                     ()=>{
-                        window.applyHideAndShowTFTtab()
+                        applyHideAndShowTFTtab()
                     },true, "hide-tft-match-history"
                 ),
                 document.createElement('br'),
                 UI.CheckBox(
                     `${await getString("hide-tft-news")}`,'hidetftntab','hidetftntabbox',
                     ()=>{
-                        window.applyHideAndShowTFTtab()
+                        applyHideAndShowTFTtab()
                     },true, "hide-tft-news"
                 ),
                 document.createElement('br'),
                 UI.CheckBox(
                     `${await getString("hide-tft-rotational-shop")}`,'hidetftrstab','hidetftrstabbox',
                     ()=>{
-                        window.applyHideAndShowTFTtab()
+                        applyHideAndShowTFTtab()
                     },true, "hide-tft-rotational-shop"
                 ),
                 document.createElement('br'),
                 UI.CheckBox(
                     `${await getString("hide-tft-troves")}`,'hidetfttrovestab','hidetfttrovestabbox',
                     ()=>{
-                        window.applyHideAndShowTFTtab()
+                        applyHideAndShowTFTtab()
                     },true, "hide-tft-troves"
                 ),
                 document.createElement('br'),
                 UI.CheckBox(
                     `${await getString("hide-tft-battle-pass")}`,'hidetftbattletab','hidetftbattletabbox',
                     ()=>{
-                        window.applyHideAndShowTFTtab()
+                        applyHideAndShowTFTtab()
                     }, true, "hide-tft-battle-pass"
                 ),
                 document.createElement('br'),
                 UI.CheckBox(
                     `${await getString("hide-tft-home")}`,'hidetfthometab','hidetfthometabbox',
                     ()=>{
-                        window.applyHideAndShowTFTtab()
+                        applyHideAndShowTFTtab()
                     },true, "hide-tft-home"
                 ),
                 document.createElement('br'),
@@ -703,6 +758,11 @@ async function themeSettings(panel) {
                 // document.createElement('br'),
             ])
         )
+
+        let hideButtons = document.querySelectorAll("#elaina-theme-settings-row-hide-button");
+        hideButtons.forEach((button: any) => {
+            button.click()
+        });
     }
     catch (err: any) {
         error("Error loading theme settings:", err);
