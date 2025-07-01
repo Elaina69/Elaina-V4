@@ -12,6 +12,7 @@ import { log, warn, error } from "../utils/themeLog.ts";
 import * as upl from 'pengu-upl';
 import utils from '../utils/utils.ts';
 import LocalKey from "../updates/updateKeyLocal.ts";
+import { setDefaultData } from "../services/backupAndRestoreDatastore.ts";
 
 const datapath: string = `//plugins/${getThemeName()}/`
 const iconFolder: string = `${datapath}assets/icon/`;
@@ -28,27 +29,19 @@ let cdnServer = (await import(`//plugins/${getThemeName()}/config/cdnServer.js`)
 // Set default data
 const defaultData = {
     "Wallpaper-list": ["elaina1.webm", "elaina2.jpg"],
-    "Audio-list": ["Laur - その花は世界を紡ぐ.flac", "Laur - その花は世界を紡ぐ.flac"],
+    "Audio-list": ["Laur - その花は世界を紡ぐ.flac", "Laur - Mellifluous.flac"],
     "wallpaper-index": 0,
     "audio-index": 0,
     "wallpaper-volume": 0.0,
-    "audio-volume": 0.15,
-    'mute-audio': false,
+    "audio-volume": 0.10,
+    "mute-audio": false,
     "Playback-speed": 100,
     "Audio-currentTime": 0,
-    "Wallpaper-currentTime": 0
+    "Wallpaper-currentTime": 0,
+    "WallpaperAudio-timeUpdate": 3000,
 };
 
-const setDefaultData = (list: Object) => {
-    for (const [key, value] of Object.entries(list)) {
-        if (!ElainaData.has(key)) {
-            ElainaData.set(key, value);
-            log(`${key} data restored`);
-        }
-    }
-};
-
-setDefaultData(defaultData);
+setDefaultData(defaultData, false);
 
 // Get Summoner ID
 window.setTimeout(async () => {
@@ -79,9 +72,6 @@ catch {
 
 if (CdnKey === LocalKey) {
     try {
-        const themeVersion = (await cdnImport(`${cdnUrl}/src/update/update.js`, "Can't get theme version")).default.version;
-        ElainaData.set("Theme-version", themeVersion);
-
         if (!ElainaData.get(`Change-CDN-version`)) {
             const response = await fetch(`${cdnUrl}/package.json`);
             const { version: cdnVersion } = await response.json();
@@ -90,7 +80,6 @@ if (CdnKey === LocalKey) {
     }
     catch (err: any) { error("Can't get theme version", err) }
 }
-log(`%cTheme build: %c${ElainaData.get("Theme-version")}`, 'color: #e4c2b3', 'color: #00ff44');
 log(`%cCDN build  : %c${ElainaData.get("Cdn-version")}`, 'color: #e4c2b3', 'color: #00ff44');
 
 // Create and set new page as Homepage
@@ -361,25 +350,21 @@ class AudioController {
     }
     
     nextSong = async () => {
-        if (ElainaData.get("Continues_Audio")) {
-            ElainaData.set('audio-index', ElainaData.get('audio-index') + 1);
+        ElainaData.set('audio-index', ElainaData.get('audio-index') + 1);
     
-            if (ElainaData.get('audio-index') > ElainaData.get("Audio-list").length - 1) {
-                ElainaData.set('audio-index', 0);
-            }
-            await this.updateAudio(ElainaData.get("Audio-list")[ElainaData.get('audio-index')]);
+        if (ElainaData.get('audio-index') > ElainaData.get("Audio-list").length - 1) {
+            ElainaData.set('audio-index', 0);
         }
+        await this.updateAudio(ElainaData.get("Audio-list")[ElainaData.get('audio-index')]);
     };
     
     prevSong = async () => {
-        if (ElainaData.get("Continues_Audio")) {
-            ElainaData.set('audio-index', ElainaData.get('audio-index') - 1);
+        ElainaData.set('audio-index', ElainaData.get('audio-index') - 1);
     
-            if (ElainaData.get('audio-index') < 0) {
-                ElainaData.set('audio-index', ElainaData.get("Audio-list").length - 1);
-            }
-            await this.updateAudio(ElainaData.get("Audio-list")[ElainaData.get('audio-index')]);
+        if (ElainaData.get('audio-index') < 0) {
+            ElainaData.set('audio-index', ElainaData.get("Audio-list").length - 1);
         }
+        await this.updateAudio(ElainaData.get("Audio-list")[ElainaData.get('audio-index')]);
     };
     
     changeSongName = ()=> {
@@ -976,10 +961,11 @@ class WallpaperAndAudio {
         video.currentTime = ElainaData.get("Wallpaper-currentTime");
         video.src = `${bgFolder}wallpapers/${ElainaData.get("Wallpaper-list")[ElainaData.get('wallpaper-index')]}`;
         video.playbackRate = ElainaData.get("Playback-speed") / 100;
+        video.preload = "metadata";
         
         let savedTime = false
         video.addEventListener('timeupdate', () => {
-            if (!savedTime && parseInt(video.currentTime) % 3 == 0) {
+            if (!savedTime && parseInt(video.currentTime) % ElainaData.get("WallpaperAudio-timeUpdate") == 0) {
                 savedTime = true
                 ElainaData.set("Wallpaper-currentTime", parseInt(video.currentTime))
             }
@@ -997,6 +983,7 @@ class WallpaperAndAudio {
 
     setImageWallpaperElement = () => {
         const imgWallpaper: any = document.getElementById("elaina-static-bg")
+        imgWallpaper.preload = "metadata";
         imgWallpaper.src = `${bgFolder}wallpapers/${ElainaData.get("Wallpaper-list")[ElainaData.get('wallpaper-index')]}`;
 
         wallpaperController.wallpaperSlider(ElainaData.get("Wallpaper-list")[ElainaData.get('wallpaper-index')])
@@ -1014,10 +1001,11 @@ class WallpaperAndAudio {
             audio.volume = ElainaData.get("audio-volume");
             audio.muted = ElainaData.get("mute-audio");
             audio.currentTime = ElainaData.get("Audio-currentTime");
+            audio.preload = "metadata";
 
             let savedTime = false
             audio.addEventListener('timeupdate', () => {
-                if (!savedTime && parseInt(audio.currentTime) % 3 == 0) {
+                if (!savedTime && parseInt(audio.currentTime) % ElainaData.get("WallpaperAudio-timeUpdate") == 0) {
                     savedTime = true
                     ElainaData.set("Audio-currentTime", parseInt(audio.currentTime))
                 }
@@ -1075,11 +1063,9 @@ class WallpaperAndAudio {
         const pauseAudio = ElainaData.get('pause-audio') % 2 === 0 ? "color: #00ff44" : "color: red";
         const elainaBg: any = document.getElementById("elaina-bg");
     
-        if (ElainaData.get("Continues_Audio")) {
-            log(`%cNow playing %c${ElainaData.get("Wallpaper-list")[ElainaData.get('wallpaper-index')]} %cand %c${ElainaData.get("Audio-list")[ElainaData.get('audio-index')]}`, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', 'color: #0070ff');
-            log(`%ccurrent wallpaper status: pause: %c${ElainaData.get('pause-wallpaper') % 2 === 0}%c, play/pause-time: %c${ElainaData.get('pause-wallpaper')}%c, mute: %c${ElainaData.get("mute-audio")}%c, loop: %c${elainaBg.loop}%c, volume: %c${ElainaData.get("wallpaper-volume") * 100}%`, 'color: #e4c2b3', pauseWall, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', muteCss, 'color: #e4c2b3', 'color: #00ff44', 'color: #e4c2b3', 'color: #0070ff');
-            log(`%ccurrent audio status: pause: %c${ElainaData.get('pause-audio') % 2 === 0}%c, play/pause-time: %c${ElainaData.get('pause-audio')}%c, mute: %c${ElainaData.get("mute-audio")}%c, loop: %c${ElainaData.get("audio-loop")}%c, volume: %c${ElainaData.get("audio-volume") * 100}%`, 'color: #e4c2b3', pauseAudio, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', muteCss, 'color: #e4c2b3', loopWallCss, 'color: #e4c2b3', 'color: #0070ff');
-        }
+        log(`%cNow playing %c${ElainaData.get("Wallpaper-list")[ElainaData.get('wallpaper-index')]} %cand %c${ElainaData.get("Audio-list")[ElainaData.get('audio-index')]}`, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', 'color: #0070ff');
+        log(`%ccurrent wallpaper status: pause: %c${ElainaData.get('pause-wallpaper') % 2 === 0}%c, play/pause-time: %c${ElainaData.get('pause-wallpaper')}%c, mute: %c${ElainaData.get("mute-audio")}%c, loop: %c${elainaBg.loop}%c, volume: %c${ElainaData.get("wallpaper-volume") * 100}%`, 'color: #e4c2b3', pauseWall, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', muteCss, 'color: #e4c2b3', 'color: #00ff44', 'color: #e4c2b3', 'color: #0070ff');
+        log(`%ccurrent audio status: pause: %c${ElainaData.get('pause-audio') % 2 === 0}%c, play/pause-time: %c${ElainaData.get('pause-audio')}%c, mute: %c${ElainaData.get("mute-audio")}%c, loop: %c${ElainaData.get("audio-loop")}%c, volume: %c${ElainaData.get("audio-volume") * 100}%`, 'color: #e4c2b3', pauseAudio, 'color: #e4c2b3', 'color: #0070ff', 'color: #e4c2b3', muteCss, 'color: #e4c2b3', loopWallCss, 'color: #e4c2b3', 'color: #0070ff');
     };
 }
 
@@ -1166,9 +1152,11 @@ export class HomePage {
     }
 }
 
-window.del_webm_buttons = mainController.deleteController
-window.create_webm_buttons = mainController.createMainController
-window.applyHideAndShowTFTtab = changeHomePageTabs.applyHideAndShowTFTtab
-window.setAudio = wallpaperAndAudio.setAudioElement
-window.hideShowNavBar = hideNavbarButton.hideShowNavBar
-window.changeHomePageStyle = hideNavbarButton.changeHomePageStyle
+const del_webm_buttons = mainController.deleteController
+const create_webm_buttons = mainController.createMainController
+const applyHideAndShowTFTtab = changeHomePageTabs.applyHideAndShowTFTtab
+const setAudio = wallpaperAndAudio.setAudioElement
+const hideShowNavBar = hideNavbarButton.hideShowNavBar
+const changeHomePageStyle = hideNavbarButton.changeHomePageStyle
+
+export { del_webm_buttons, create_webm_buttons, applyHideAndShowTFTtab, setAudio, hideShowNavBar, changeHomePageStyle };
