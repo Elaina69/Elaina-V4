@@ -25,7 +25,7 @@ export class BackupRestoreData {
 	};
 
 	setDefaultData(list: Object, restore: Boolean = false) {
-		Object.entries(list).forEach(([key, value]) => {
+		for (const [key, value] of Object.entries(list)) {
 			if (!ElainaData.has(key)) {
 				ElainaData.set(key, value);
 				log(`${key} data restored`)
@@ -34,7 +34,7 @@ export class BackupRestoreData {
 				ElainaData.set(key, value);
 				log(`${key} data restored`)
 			}
-		});
+		}
 	}
 
 	restore = async (force: boolean = false) => {
@@ -61,6 +61,7 @@ export class BackupRestoreData {
 
 const backupRestoreData = new BackupRestoreData()
 const restoreDefaultDataStore = backupRestoreData.restore
+const setDefaultData = backupRestoreData.setDefaultData
 
 try {
 	// Restore Datastore file if no theme's data
@@ -69,3 +70,5 @@ try {
 catch(err:any) { error("Can not restore datastore", err) }
 
 window.restoreDefaultDataStore = restoreDefaultDataStore
+
+export { restoreDefaultDataStore, setDefaultData }

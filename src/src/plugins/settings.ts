@@ -4,6 +4,7 @@ import structure from "./settingsGroups/settingsStructure.ts"
 import { settingsUtils } from "../utils/settingsUtils.ts"
 import { themeSettings } from "./settingsGroups/themeSettings.ts"
 import { pluginsSettings } from "./settingsGroups/themePluginsSettings.ts"
+import { backuprestoretab } from "./settingsGroups/themeBackupRestore.ts"
 import { aboutustab } from "./settingsGroups/themeAboutUs.ts"
 import { log, error, warn } from "../utils/themeLog.ts";
 import { getThemeName } from '../otherThings.ts'
@@ -34,7 +35,7 @@ async function restartAfterChange(el: string, data: string) {
 
         b.addEventListener("click",() => {
             if (ElainaData.get("backup-datastore")) {
-                try { window.writeBackupData() }
+                try { writeBackupData() }
                 catch (err: any) { error("Server is down rightnow", err)}
                 window.setTimeout(()=>{
                     window.restartClient()
@@ -49,6 +50,19 @@ async function restartAfterChange(el: string, data: string) {
     else if (ElainaData.get("settingsChangenumber") == 0) {
         document.querySelector("#restartAfterChangeButton")?.remove()
     }
+}
+
+async function writeBackupData() {
+    let datastore_list = (await import(`${datapath}config/datastoreDefault.js`)).default
+
+    ElainaData.set("last-backup-time", new Date())
+
+    let keys = Object.keys(datastore_list)
+    let mirage = datastore_list
+    keys.forEach(key => {
+        mirage[key] = ElainaData.get(key)
+    })
+    await window.elainathemeApi.writeBackup(ElainaData.get("ElainaTheme-Token"), ElainaData.get("Summoner-ID"), mirage)
 }
     
 window.addEventListener('load', async () => {
@@ -73,6 +87,7 @@ window.addEventListener('load', async () => {
             new MutationObserver((mutations) => {
                 const plugin = document.querySelector('lol-uikit-scrollable.plugins_settings')
                 const theme = document.querySelector('lol-uikit-scrollable.theme_settings')
+                const backupandrestore = document.querySelector('lol-uikit-scrollable.backup_restore_settings')
                 const aboutus = document.querySelector('lol-uikit-scrollable.aboutus_settings')
 
                 if (theme && mutations.some((record) => Array.from(record.addedNodes).includes(theme))) {
@@ -80,6 +95,9 @@ window.addEventListener('load', async () => {
                 }
                 else if (plugin && mutations.some((record) => Array.from(record.addedNodes).includes(plugin))) {
                     pluginsSettings(plugin)
+                }
+                else if (backupandrestore && mutations.some((record) => Array.from(record.addedNodes).includes(backupandrestore))) {
+                    backuprestoretab(backupandrestore)
                 }
                 else if (aboutus && mutations.some((record) => Array.from(record.addedNodes).includes(aboutus))) {
                     aboutustab(aboutus)
@@ -96,3 +114,5 @@ export { datapath, utils, restartAfterChange, log, error, warn }
 export function Settings(context: any) {
     settingsUtils(context, structure)
 }
+
+window.writeBackupData = writeBackupData
