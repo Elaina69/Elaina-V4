@@ -1,4 +1,4 @@
-import { cdnImport } from "./theme/Cdninit.ts"
+import { cdnImport } from "./theme/Cdn.ts"
 
 // Get this theme folder's name and export it
 export function getThemeName(): string | null {

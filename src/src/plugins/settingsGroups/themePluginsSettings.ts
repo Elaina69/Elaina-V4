@@ -227,14 +227,20 @@ async function pluginsSettings(panel) {
                 UI.Dropdown(ElainaData.get("queueList"), "Gamemode", `${await getString("Gamemode")}`, "description", "queueId"),
                 document.createElement('br'),
                 document.createElement('br'),
+                UI.CheckBox(await getString("invisible_banner"),'invbanner','invbannerbox',
+                    ()=>{
+                        restartAfterChange('invbanner', "invisible_banner")
+                    },true, "invisible_banner"
+                ),
+                document.createElement('br'),
                 UI.CheckBox(
                     `${await getString("Custom-profile-hover")}`,'cusprf','cusprfbox',
                     ()=>{
                         restartAfterChange('cusprf', "Custom-profile-hover")
                     },true, "Custom-profile-hover"
                 ),
-                document.createElement('br'),
-                UI.Row("customprf", [
+                UI.RowHideable("customprf", [
+                    document.createElement('br'),
                     UI.CheckBox(
                         `${await getString("Custom-mastery-score")}`,'cusmastery','cusmasterybox',
                         ()=>{
@@ -346,6 +352,11 @@ async function pluginsSettings(panel) {
                 document.createElement('br'),
             ])
         )
+
+        let hideButtons = document.querySelectorAll("#elaina-theme-settings-row-hide-button");
+        hideButtons.forEach((button: any) => {
+            button.click()
+        });
     }
     catch (err: any) {
         error("Error loading theme settings:", err);

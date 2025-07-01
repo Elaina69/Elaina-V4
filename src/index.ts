@@ -25,7 +25,7 @@ import { Settings } from "./src/plugins/settings.ts";
 import { transparentLobby } from "./src/theme/applyUi.ts";
 import { AutoQueue } from "./src/plugins/autoQueue.ts";
 import { skipHonor } from "./src/plugins/skipHonor.js";
-import { Cdninit } from './src/theme/Cdninit.ts';
+import /**{ Cdninit } from **/'./src/theme/Cdn.ts';
 
 // Export Init
 export function init(context: any) {
@@ -36,7 +36,7 @@ export function init(context: any) {
     transparentLobby(context);
     AutoQueue(context);
     skipHonor(context);
-    Cdninit(context);
+    // Cdninit(context);
 }
 
 // Import modules
@@ -112,6 +112,9 @@ class ElainaTheme {
         // Custom profile
         const customProfile = new CustomProfile()
         customProfile.customBagde()
+        if (ElainaData.get("invisible_banner")) {
+            customProfile.invisibleBanner()
+        }
         if (ElainaData.get("Custom-profile-hover")) {
             if (ElainaData.get("Custom-mastery-score")) customProfile.customMasteryScore()
             if (ElainaData.get("Custom-challenge-crystal")) customProfile.customChallengeCrystal()

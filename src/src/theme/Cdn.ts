@@ -1,4 +1,4 @@
-import { getThemeName } from "../otherThings";
+import { getThemeName } from "../otherThings.ts";
 import { log, error } from "../utils/themeLog.ts";
 
 let cdnServer = (await import(`//plugins/${getThemeName()}/config/cdnServer.js`)).default
@@ -36,13 +36,13 @@ else {
 }
 
 
-const { Cdninit } = await cdnImport(initLink, "Failed to load Init data")
-.then( res => {
-    if (res) return res 
-    else {
-        error("CDN respond {null}.")
-        return {}
-    } 
-})
+// const { Cdninit } = await cdnImport(initLink, "Failed to load Init data")
+// .then( res => {
+//     if (res) return res 
+//     else {
+//         error("CDN respond {null}.")
+//         return {}
+//     } 
+// })
 
-export { Cdninit }
+// export { Cdninit }

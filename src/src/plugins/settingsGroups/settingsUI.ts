@@ -20,17 +20,50 @@ class ui {
         return loading
     }
 
-    Row = (id, childs) => {
+    Row = (id, childs, show = true) => {
         const row = document.createElement('div')
         row.classList.add('elaina-theme-settings-row')
         row.id = id
-        if (Array.isArray(childs)) childs.forEach((el) => row.appendChild(el))
+        if (Array.isArray(childs) && show) childs.forEach((el) => row.appendChild(el))
+        return row
+    }
+
+    RowHideable = (id, childs, show = true) => {
+        const row = document.createElement('div')
+        const main = document.createElement('div')
+        const hideButton = document.createElement('div')
+        const hideIcon = this.Image("plugins-icons/next_button.png", 'elaina-theme-settings-row-hide-icon')
+
+        row.classList.add('elaina-theme-settings-row-hideable')
+        row.id = id
+        hideButton.id = "elaina-theme-settings-row-hide-button"
+        main.setAttribute('isHiding', 'false')
+
+        row.append(hideButton)
+        hideButton.append(hideIcon)
+        
+        row.append(main)
+
+        if (Array.isArray(childs) && show) childs.forEach((el) => main.appendChild(el))
+
+        hideButton.onclick = () => {
+            if (main.getAttribute('isHiding') === 'false') {
+                main.setAttribute('isHiding', 'true')
+                hideIcon.setAttribute("class", 'elaina-theme-settings-row-hide-icon-hidden')
+            }
+            else {
+                main.setAttribute('isHiding', 'false')
+                hideIcon.setAttribute("class", 'elaina-theme-settings-row-hide-icon')
+            }
+        }
+
         return row
     }
 
     Label = (text, id) => {
         const label = document.createElement('p')
         label.classList.add('lol-settings-window-size-text')
+        label.classList.add('elaina-theme-settings-text')
         label.innerText = text
         label.id = id
         return label
