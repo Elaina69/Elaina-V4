@@ -10,7 +10,6 @@ interface RcpAnnouceEvent extends CustomEvent {
 }
   
 // built-in types
-  
 interface Action {
     id?: string
     name: string | (() => string)
@@ -79,15 +78,12 @@ interface elainathemeApi {
 }
   
 // globals
-
 declare interface Window {
     DataStore: DataStore;
     CommandBar: CommandBar;
     Toast: Toast;
     Effect: Effect;
     PluginFS: PluginFS
-    ElainaData: elainaData
-  
     Pengu: {
         version: string
         superPotato: boolean
@@ -95,40 +91,31 @@ declare interface Window {
         isMac: boolean
         fs: PluginFS
     };
-  
     os: {
         name: 'win' | 'mac'
         version: string
         build: string
     };
-
-    elainathemeApi: elainathemeApi;
-  
     openDevTools                : () => void;
     openPluginsFolder           : (subdir?: string) => void;
     reloadClient                : () => void;
     restartClient               : () => void;
     getScriptPath               : () => string | undefined;
+    storeObserver               : any;
+    __llver                     : string;
+
+    ElainaData: elainaData
+    elainathemeApi: elainathemeApi;
     getThemeName                : () => void;
     cdnImport                   : (url: string, errorMsg: any) => Promise<any>;
-    autoAcceptQueueButtonSelect : () => void;
-    del_webm_buttons            : () => void;
-    create_webm_buttons         : () => void;
-    applyHideAndShowtab         : () => void;
-    applyHideAndShowTFTtab      : () => void;
-    exitClient                  : () => void;
-    dodgeQueue                  : () => void;
-    switch_between_status       : () => void;
     log                         : (message: string, ...args: string[]) => void;
     warn                        : (message: string, ...args: string[]) => void;
     error                       : (message: string, ...args: string[]) => void;
-    setAudio                    : () => void;   
     restoreDefaultDataStore     : () => Promise<void>; 
-    hideShowNavBar              : () => void;
-    changeHomePageStyle         : () => void;
-    getBackupPath               : () => string | null; 
-    storeObserver               : any;
-    __llver                     : string;
+    switch_between_status       : () => void;
+    autoAcceptQueueButtonSelect : () => void;
+    exitClient                  : () => void;
+    dodgeQueue                  : () => void;
 };
 
 declare function getString(param: string)   : Promise<string>;
