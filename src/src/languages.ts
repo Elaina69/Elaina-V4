@@ -1,12 +1,14 @@
 import { warn, log } from "./utils/themeLog.js";
 import { getThemeName } from "./otherThings.js";
 
-let knownLocale = false
-let getStringTime = 0
-
 async function importLocale(langCode: string): Promise<Object> {
     const module = await import(`//plugins/${getThemeName()}/locales/${langCode}.js`);
     return module.default;
+}
+
+function getClientLocale(): string  {
+    const lang = document.querySelector("html")?.lang as string;
+    return lang
 }
 
 async function haveLocaleFile(langCode: string) {
@@ -19,33 +21,28 @@ async function haveLocaleFile(langCode: string) {
     }
 }
 
-async function getString(key: string): Promise<string> {
-    const lang = document.querySelector("html")?.lang as string;
+async function checkTranslationKey(lang: string, key: string): Promise<string> {
     let localeModule: Object
 
     if (await haveLocaleFile(lang)) {
-        localeModule = await importLocale(lang)
-        knownLocale = true
-    }
-    else {
-        localeModule = await importLocale('default')
-        knownLocale = false
-    }
-    
-    if (getStringTime == 0) {
-        if (knownLocale) log("Current locale:", lang)
-        else log("Current locale:", 'default')
-    }
-    
-    let result = localeModule[key];
+        localeModule = await importLocale(lang) 
+        if (!localeModule[key]) {
+            warn(`Missing translation for key: ${key} in locale: ${lang}`);
+            localeModule = await importLocale('default')
 
-    getStringTime += 1
-
-    if (!result) {
-        warn(`Missing translation for key: ${key}`);
-        return key
+            if (!localeModule[key]) {
+                warn(`Missing translation for key: ${key} in default locale.`);
+                return key;
+            }
+        }
     }
+    else localeModule = await importLocale('default')
+        
+    return localeModule[key]
+}
 
+async function getString(key: string): Promise<string> {
+    let result = await checkTranslationKey(getClientLocale(), key);
     return result
 }
 

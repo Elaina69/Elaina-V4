@@ -32,23 +32,23 @@ export async function aboutustab(panel) {
                 UI.Label(await getString("contributors") + ":","contributors"),
                 UI.Row("Contributors-row",[
                     UI.Contributor(false, "https://avatars.githubusercontent.com/u/38210249","Nomi-san","Daubuoi"),
-                    UI.Contributor(false, "https://avatars.githubusercontent.com/u/8694498","BakaFT","Support, Translator"),
+                    UI.Contributor(false, "https://avatars.githubusercontent.com/u/8694498","BakaFT", `${await getString("support")}, ${await getString("translator")}`),
                 ]),
                 UI.Row("Contributors-row",[
-                    UI.Contributor(false, "https://avatars.githubusercontent.com/u/45071533","Sarah Engel","Support, Plugins provider"),
-                    UI.Contributor(true, "about-us/soulmare.png","Soulmare","Support, Translator"),
+                    UI.Contributor(false, "https://avatars.githubusercontent.com/u/45071533","Sarah Engel", `${await getString("support")}, ${await getString("plugins-provider")}`),
+                    UI.Contributor(true, "about-us/soulmare.png","Soulmare", `${await getString("support")}, ${await getString("translator")}`),
                 ]),
                 UI.Row("Contributors-row",[
-                    UI.Contributor(true, "about-us/balaclava.png","Balaclava","Plugins provider"),
-                    UI.Contributor(true, "about-us/dmitryfisk.png","DmitryFisk","Plugins provider"),
+                    UI.Contributor(true, "about-us/balaclava.png","Balaclava", `${await getString("plugins-provider")}`),
+                    UI.Contributor(true, "about-us/dmitryfisk.png","DmitryFisk", `${await getString("plugins-provider")}`),
                 ]),
                 UI.Row("Contributors-row",[
-                    UI.Contributor(true, "about-us/legnatbird.png","Legnatbird","Support, Translator"),
-                    UI.Contributor(true, "about-us/flirip.png","Flirip","Translator"),
+                    UI.Contributor(true, "about-us/legnatbird.png","Legnatbird", `${await getString("support")}, ${await getString("translator")}`),
+                    UI.Contributor(true, "about-us/flirip.png","Flirip", `${await getString("translator")}`),
                 ]),
                 UI.Row("Donation-row",[
-                    UI.Contributor(true, "about-us/unproductive.webp","unproductive","Support, Plugins provider"),
-                    UI.Contributor(false, "https://avatars.githubusercontent.com/u/59478113","Rumi","Support"),
+                    UI.Contributor(true, "about-us/unproductive.webp","unproductive", `${await getString("support")}, ${await getString("plugins-provider")}`),
+                    UI.Contributor(false, "https://avatars.githubusercontent.com/u/59478113","Rumi", `${await getString("support")}`),
                 ]),
                 /*
                 UI.Row("Contributors-row",[
@@ -59,7 +59,7 @@ export async function aboutustab(panel) {
                 document.createElement("br"),
                 UI.Row("User-counter",[
                     UI.Label(await getString("user-counter"), "first_line"),
-                    UI.ImageAndLink(false,`https://count.getloli.com/@Elainav4?name=Elainav4&theme=${ElainaData.get("NSFW-Content")? "gelbooru-h" : "booru-lewd"}&padding=7&offset=0&align=center&scale=1&pixelated=1&darkmode=auto&num=${ElainaData.has("User-Counter")? ElainaData.get("User-Counter") : ""}`, "moe-counter", "", () => {})
+                    UI.ImageAndLink(false,`https://count.getloli.com/@Elainav4?name=Elainav4&theme=${ElainaData.get("NSFW-Content")? "gelbooru-h" : "booru-lewd"}&padding=7&offset=0&align=center&scale=1&pixelated=1&darkmode=auto&num=${ElainaData.has("User-Counter")? ElainaData.get("User-Counter") : " "}`, "moe-counter", "", () => {})
                 ]),
                 document.createElement("br"),
                 UI.Row("Donation",[

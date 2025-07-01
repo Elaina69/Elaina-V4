@@ -106,6 +106,7 @@ export default {
 
     "wallpaper/audio-settings"      : "Wallpaper/Audio settings", 
     "open-background-folder"        : "Open backgrounds's folder",
+    "WallpaperAudio-timeUpdate"     : "Wallpaper/Audio interval will save progress to Datastore (per Miliseconds)",
     "wallpaper-volume"              : "Wallpaper volume",
     "Wallpaper-Speed"               : "Wallpaper speed",
     "wallpaper-slideshow"           : "Wallpaper slider",
@@ -124,6 +125,7 @@ export default {
     "sidebar-transparent"           : "Sidebar transparent",
     "lobby-transparent-filter"      : "Lobby transparent filter",
     "settings-dialogs-transparent"  : "Transparent dialogs and settings panel",
+    "hide-profile-background"       : "Hide profile background",
     "hide-champions-splash-art"     : "Hide champions splash art in champs select",
     "hide-vertical-lines"           : "Hide vertical lines on the right of the navbar",
     "custom-font"                   : "Custom font",
@@ -132,6 +134,7 @@ export default {
     "custom-rank-name"              : "Custom rank name",
     "change-nickname-color"         : "Change nickname color",
     "opacity"                       : "Opacity",
+    "preview"                       : "Preview",
     "animate-loading"               : "Using gif image for loading logo",
 
     "custom-icon"                   : "Custom icon",
@@ -191,6 +194,7 @@ export default {
     "Find-Delay"                : "Match finding delay ( Miliseconds )",
     "Gamemode"                  : "Game modes",
 
+    "invisible_banner"          : "Invisible banner (this will apply your last season rank banner)",
     "Custom-profile-hover"      : "Custom profile(Hover-card)",
     "Custom-mastery-score"      : "Custom mastery score",
     "custom-rank-hover"         : "Custom rank(Hover-card)",
@@ -242,6 +246,9 @@ export default {
     "donate-firstline"  : "Thanks for using Elaina theme :3",
     "donate-secondline" : "If you love Elaina theme, you can support me by sharing this theme to your friend",
     "donate-thirdline"  : "or donating me",
+    "support"           : "Support",
+    "translator"        : "Translator",
+    "plugins-provider"  : "Plugins provider",
 
 
     // Auto honor

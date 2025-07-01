@@ -106,6 +106,7 @@ export default {
 
     "wallpaper/audio-settings"      : "Cài đặt Hình nền/Nhạc", 
     "open-background-folder"        : "Mở thư mục backgrounds",
+    "WallpaperAudio-timeUpdate"     : "Khoảng thời gian Hình nền/Nhạc sẽ lưu tiến trình vào Datastore (mỗi Mili-giây)",
     "wallpaper-volume"              : "Âm lượng hình nền",
     "Wallpaper-Speed"               : "Tốc độ hình nền",
     "wallpaper-slideshow"           : "Bộ trình chiếu hình nền",
@@ -124,6 +125,7 @@ export default {
     "sidebar-transparent"           : "Thanh bên trong suốt",
     "lobby-transparent-filter"      : "Filter trong suốt cho sảnh chờ",
     "settings-dialogs-transparent"  : "Bảng cài đặt và hộp hội thoại trong suốt",
+    "hide-profile-background"       : "Ẩn hình nền hồ sơ",
     "hide-champions-splash-art"     : "Ẩn ảnh nền tướng trong lúc chọn tướng",
     "hide-vertical-lines"           : "Ẩn các đường ngăn cách bên phải thanh điều hướng",
     "custom-font"                   : "Phông chữ tùy chỉnh",
@@ -132,6 +134,7 @@ export default {
     "custom-rank-name"              : "Tên Rank tùy chỉnh",
     "change-nickname-color"         : "Đổi màu tên người chơi",
     "opacity"                       : "Độ mờ",
+    "preview"                       : "Xem trước",
     "animate-loading"               : "Sử dụng ảnh gif cho logo khởi động",
 
     "custom-icon"                   : "Icon tùy chỉnh",
@@ -191,6 +194,7 @@ export default {
     "Find-Delay"                : "Độ trễ tìm trận ( Mili giây )",
     "Gamemode"                  : "Chế độ game",
 
+    "invisible_banner"          : "Cờ hiệu trong suốt (sẽ áp dụng cờ hiệu xếp hạng cuối mùa trước)",
     "Custom-profile-hover"      : "Hồ sơ tùy chỉnh (Hover-card)",
     "Custom-mastery-score"      : "Điểm thông thạo tùy chỉnh",
     "custom-rank-hover"         : "Rank tùy chỉnh (Hover-card)",
@@ -242,6 +246,9 @@ export default {
     "donate-firstline"  : "Cảm ơn vì đã sử dụng Elaina Theme :3",
     "donate-secondline" : "Nếu bạn yêu thích Elaina theme, bạn có thể hỗ trợ tui bằng cách chia sẻ nó cho bạn bè của bạn",
     "donate-thirdline"  : "hoặc donate cho tui (>.<)!",
+    "support"           : "Hỗ trợ",
+    "translator"        : "Dịch thuật viên",
+    "plugins-provider"  : "Cung cấp plugins",
 
 
     // Auto honor

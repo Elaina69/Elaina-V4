@@ -106,6 +106,7 @@ export default {
 
     "wallpaper/audio-settings"      : "Настройки обоев/аудио", 
     "open-background-folder"        : "Открыть папку с обоями",
+    "WallpaperAudio-timeUpdate"     : "Wallpaper/Audio interval will save progress to Datastore (per Miliseconds)",
     "wallpaper-volume"              : "Громкость обоев",
     "Wallpaper-Speed"               : "Скорость переключения обоев",
     "wallpaper-slideshow"           : "Переключение обоев",
@@ -124,6 +125,7 @@ export default {
     "sidebar-transparent"           : "Прозрачная боковая панель",
     "lobby-transparent-filter"      : "Прозрачный фильтр лобби",
     "settings-dialogs-transparent"  : "Прозрачные диалоги и панель настроек",
+    "hide-profile-background"       : "Hide profile background",
     "hide-champions-splash-art"     : "Скрыть арт чемпионов в выборе чемпионов",
     "hide-vertical-lines"           : "Скрыть вертикальные линии справа от панели навигации",
     "custom-font"                   : "Кастомный шрифт",
@@ -132,6 +134,7 @@ export default {
     "custom-rank-name"              : "Кастомное название ранга",
     "change-nickname-color"         : "Изменить цвет никнейма",
     "opacity"                       : "Прозрачность",
+    "preview"                       : "Preview",
     "animate-loading"               : "Использовать gif-изображение для логотипа загрузки",
 
     "custom-icon"                   : "Пользовательская иконка",
@@ -191,6 +194,7 @@ export default {
     "Find-Delay"                : "Задержка поиска матча (миллисекунды)",
     "Gamemode"                  : "Игровые режимы",
 
+    "invisible_banner"          : "Invisible banner (this will apply your last season rank banner)",
     "Custom-profile-hover"      : "Пользовательский профиль (при наведении)",
     "Custom-mastery-score"      : "Пользовательский счет мастерства",
     "custom-rank-hover"         : "Пользовательский ранг (при наведении)",
@@ -242,6 +246,9 @@ export default {
     "donate-firstline"  : "Спасибо за использование темы Elaina :3",
     "donate-secondline" : "Если вам нравится тема Elaina, вы можете поддержать меня, поделившись этой темой с друзьями",
     "donate-thirdline"  : "или пожертвовав мне",
+    "support"           : "Support",
+    "translator"        : "Translator",
+    "plugins-provider"  : "Plugins provider",
 
 
     // Auto honor

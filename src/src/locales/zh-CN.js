@@ -106,6 +106,7 @@ export default {
 
     "wallpaper/audio-settings"      : "壁纸/音频设置",
     "open-background-folder"        : "打开背景文件夹",
+    "WallpaperAudio-timeUpdate"     : "Wallpaper/Audio interval will save progress to Datastore (per Miliseconds)",
     "wallpaper-volume"              : "壁纸音量",
     "Wallpaper-Speed"               : "壁纸速度",
     "wallpaper-slideshow"           : "Wallpaper slider",
@@ -124,6 +125,7 @@ export default {
     "sidebar-transparent"           : "好友栏透明",
     "lobby-transparent-filter"      : "大厅透明滤镜",
     "settings-dialogs-transparent"  : "设置面板和对话框透明",
+    "hide-profile-background"       : "Hide profile background",
     "hide-champions-splash-art"     : "选择英雄时隐藏英雄原画",
     "hide-vertical-lines"           : "隐藏主导航栏按钮的分割线",
     "custom-font"                   : "自定义字体",
@@ -132,6 +134,7 @@ export default {
     "custom-rank-name"              : "自定义段位名称",
     "change-nickname-color"         : "更改昵称颜色",
     "opacity"                       : "透明度",
+    "preview"                       : "Preview",
     "animate-loading"               : "使用GIF图像作为加载logo",
 
     "custom-icon"                   : "自定义图标",
@@ -191,6 +194,7 @@ export default {
 	"Find-Delay"                : "寻找对局延迟（毫秒）",
 	"Gamemode"                  : "游戏模式",
 
+    "invisible_banner"          : "Invisible banner (this will apply your last season rank banner)",
 	"Custom-profile-hover"      : "自定义个人资料（悬浮卡片）",
 	"Custom-mastery-score"      : "自定义成就积分（熟练度）",
 	"custom-rank-hover"         : "自定义段位（悬浮卡片）",
@@ -242,6 +246,9 @@ export default {
 	"donate-firstline"  : "感谢使用Elaina主题 :3",
 	"donate-secondline" : "如果您喜欢Elaina主题，可以通过将这个主题分享给朋友来支持我",
 	"donate-thirdline"  : "或者直接捐赠我",
+    "support"           : "Support",
+    "translator"        : "Translator",
+    "plugins-provider"  : "Plugins provider",
 
 
 	// 自动荣誉
