@@ -1,8 +1,3 @@
-.rcp-fe-lol-profiles-main > .component-factory-application > .ember-view > .style-profile-backdrop-component.ember-view > 
-.style-profile-backdrop-container > .style-profile-masked-image {
-	display: none !important;
-}
-
 .uikit-background-switcher .lol-uikit-background-switcher-image.transition.fade {
 	animation: unset!important
 }
@@ -11,8 +6,8 @@
 	display: none !important;
 }
 
-.style-profile-honor-component.ember-view > .style-profile-emblem-wrapper  > .style-profile-emblem-header > 
-.style-profile-emblem-header-subtitle {
+.style-profile-honor-component.ember-view > .style-profile-emblem-wrapper  > 
+.style-profile-emblem-header > .style-profile-emblem-header-subtitle {
 	display: none !important;
 }
 
@@ -22,5 +17,30 @@
 
 .ranked-intro-background {
 	display: none !important;
- }
- 
+}
+
+.ranked-intro-component .ranked-intro-footer-container .queue-up-button-container {
+	filter: var(--play-button-filter) !important;
+}
+
+.lol-leagues .smoke-background-container {
+	display: none !important;
+}
+
+.rcp-fe-lol-profiles-main  .player-name-input-component {
+	opacity: 0.3 !important;
+	transition: opacity 0.3s ease !important;
+}
+
+.rcp-fe-lol-profiles-main  .player-name-input-component:hover {
+	opacity: 1 !important;
+}
+
+.rcp-fe-lol-profiles-main  .style-profile-skin-picker-button {
+	opacity: 0.3 !important;
+	transition: opacity 0.3s ease !important;
+}
+
+.rcp-fe-lol-profiles-main  .style-profile-skin-picker-button:hover {
+	opacity: 1 !important;
+}

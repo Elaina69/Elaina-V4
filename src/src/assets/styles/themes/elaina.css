@@ -10,6 +10,8 @@
 @import url("./rcp-fe-lol-postgame.css");
 @import url("./rcp-fe-lol-profiles-main.css");
 @import url("./rcp-fe-viewport-sidebar.css");
+@import url("./rcp-fe-lol-collections.css");
+@import url("./rcp-fe-viewport-main.css");
 @import url("./theme-background-controllers.css");
 @import url("./theme-elaina-trigger.css");
 @import url("./theme-hide-friendlist.css");
@@ -32,12 +34,9 @@ html {
 	overflow: hidden !important;
 }
 
-.basic-button .play-button-container {
-    filter: var(--play-button-filter) !important;
-}
-
+.basic-button .play-button-container,
 .npe-header-league-logo {
-	filter: var(--play-button-filter) !important;
+    filter: var(--play-button-filter) !important;
 }
 
 .stats-backdrop {
@@ -50,7 +49,7 @@ html {
 }
 
 #rcp-fe-lol-home-error {
-	display: none!important
+	display: none !important
 }
 
 #background-ambient {
@@ -62,16 +61,16 @@ html {
 }
 
 .background {
-	background-image: unset!important;
+	background-image: unset !important;
 }
 
 .rcp-fe-lol-game-in-progress {
-	background-image: unset!important;
-	background-color: unset!important;
+	background-image: unset !important;
+	background-color: unset !important;
 }
 
 .loading-tab::after {
-	background-image: none!important
+	background-image: none !important
 }
 
 .yourshop-root {
@@ -91,16 +90,16 @@ div > div > .rcp-fe-lol-tft-application-background {
 }
 
 .store-loading {
-	background-color: transparent!important;
+	background-color: transparent !important;
 }
 
 .menu-item-icon {
-	background-color: #fff1f1!important;
-	color: #fff1f1!important;
+	background-color: #fff1f1 !important;
+	color: #fff1f1 !important;
 }
 
 .main-navigation-menu .section .section-text {
-	color: #fff1f1!important;
+	color: #fff1f1 !important;
 }
 
 .challenge-banner-title-container {
@@ -109,7 +108,7 @@ div > div > .rcp-fe-lol-tft-application-background {
 }
 
 .collections-application {
-	background: rgba(0, 0, 0, 0)!important;
+	background: rgba(0, 0, 0, 0) !important;
 }
 
 .item-sets-table-row {
@@ -117,24 +116,15 @@ div > div > .rcp-fe-lol-tft-application-background {
 }
 
 .inventory-search {
-	background: #00000085!important;
-}
-
-.emote-item-icon.interactive {
-	background: #000000b0 !important;
+	background: #00000085 !important;
 }
 
 lol-uikit-navigation-item > .section::after {
 	background-image: linear-gradient(0deg, rgb(210 195 149 / 32%) 0%, rgb(0 0 0 / 10%) 55%);
 }
 
-/* Champions select */
-.champion-select .timer-status::before {
-	filter: contrast(0) brightness(1) !important;
-}
-
-.champion-select .action-button-container::after {
-	filter: sepia(1) !important;
+.hover-card-backdrop {
+	height: 75% !important;
 }
 
 /* Dodge button */
@@ -149,7 +139,7 @@ lol-uikit-navigation-item > .section::after {
 /* Loading screen */
 .lol-loading-screen-container.lol-loading-screen-default-state {
 	backdrop-filter: blur(20px) brightness(0.7);
-	background: #0000004f!important;
+	background: #0000004f !important;
 }
 
 .lol-loading-screen-progress-bar-container {

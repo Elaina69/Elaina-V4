@@ -1,0 +1,25 @@
+.emote-wheel-wrapper-v2,
+.emote-root-component .nav-container,
+.emote-delete-slot,
+.emote-reaction-wrapper {
+    transition: transform 0.5s ease !important;
+    transform: translateX(0px);
+}
+
+#champion-name-replace {
+	font-size: 13px;
+    text-align: center;
+	font-weight: 400;
+	font-family: var(--font-body);
+	font-kerning: normal;
+    letter-spacing: .025em;
+    line-height: 16px;
+	color: #a09b8c;
+	-webkit-font-smoothing: subpixel-antialiased;
+    -webkit-font-feature-settings: "kern" 1;
+    -webkit-user-select: none;
+}
+
+.emote-item-icon.interactive {
+	background: #000000b0 !important;
+}

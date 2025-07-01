@@ -30,6 +30,23 @@
 	background: none !important;
 }
 
+.rcp-fe-lol-loot .shoppefront-background {
+	display: none !important;
+}
+
+.rcp-fe-lol-loot .shoppefront-categories-sidebar {
+	background: none !important;
+}
+
+.shoppefront-search-bar, .loot-filter {
+	opacity: 0.3 !important;
+	transition: opacity 0.3s ease !important;
+}
+
+.shoppefront-search-bar:hover, .loot-filter:hover {
+	opacity: 1 !important;
+}
+
 /* 	Decrease (to make loot tray get higher) 
 	or increase (to make loot tray get lower) if you have css bug from loot tab */
 .loot-tray {

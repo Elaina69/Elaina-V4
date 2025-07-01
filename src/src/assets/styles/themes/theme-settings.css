@@ -2,17 +2,38 @@
 	--Settings-and-Dialog-frame-color: rgb(0 0 0 / 15%);
 }
 
-.elaina-theme-settings-row {
+.elaina-theme-settings-row, .elaina-theme-settings-row-hideable {
     margin-bottom: 15px;
     clear: both;
 }
 
-.elaina-theme-settings-row::after {
+.elaina-theme-settings-row::after, .elaina-theme-settings-row-hideable::after {
     clear: both;
     content: ".";
     display: block;
     height: 0;
     visibility: hidden;
+}
+
+.elaina-theme-settings-row-hideable > div[isHiding="true"] {
+	display: none;
+}
+
+.elaina-theme-settings-row-hideable > div[isHiding="false"] {
+	display: block;
+}
+
+.moe-counter {
+    width: 345px;
+}
+
+#User-counter {
+    text-align: center;
+}
+
+.elaina-theme-settings-text {
+	word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
 }
 
 #Q-Delay {
@@ -240,7 +261,7 @@
 }
 
 .open-background-folder {
-	margin-bottom: 25px !important;
+	margin-bottom: 20px !important;
 }
 
 #manual-wallpaper, #manual-audio, #manual-banner, #manual-font {
@@ -251,7 +272,10 @@
 	margin-bottom: 0px !important;
 }
 
-.add-background, .delete-background {
+.add-wallpaper, .delete-wallpaper,
+.add-audio, .delete-audio,
+.add-banner, .delete-banner,
+.add-font, .delete-font {
 	margin-left: 15px;
 }
 
@@ -299,7 +323,10 @@
 	display: flex !important;
 }
 
-#systemInfo-Os, #systemInfo-Cpu, #systemInfo-Core, #systemInfo-Mem, #systemInfo-Gpu, #systemInfo-Vram, #systemInfo-LastBackup {
+#systemInfo-Os, #systemInfo-Cpu, 
+#systemInfo-Core, #systemInfo-Mem, 
+#systemInfo-Gpu, #systemInfo-Vram, 
+#systemInfo-LastBackup {
 	margin-top: 0px !important;
     margin-bottom: 2px !important;
 }
@@ -312,9 +339,9 @@
 	margin-left: 24px !important;
 }
 
-lol-uikit-navigation-item[name=el-backup-restore-settings] {
+/* lol-uikit-navigation-item[name=el-backup-restore-settings] {
 	display: none;
-}
+} */
 
 #settings-loading {
 	display: flex;
@@ -332,4 +359,47 @@ lol-uikit-navigation-item[name=el-backup-restore-settings] {
 
 #settings-loading-text {
 	font-size: 18px;
+}
+
+#nickname-color-preview-label {
+	margin: 6px 5px 0px 60px !important;
+}
+
+#nickname-color-preview {
+	line-height: 18px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    letter-spacing: .0375em !important;
+	margin-top: 5px !important;
+}
+
+#elaina-theme-settings-row-hide-button {
+    border: 2px solid #8c8263;
+    border-radius: 10px;
+    width: 55px;
+    background-color: black;
+    height: 20px;
+    cursor: pointer;
+	margin-left: -25px !important;
+	margin-top: 5px !important;
+}
+
+.elaina-theme-settings-row-hide-icon, .elaina-theme-settings-row-hide-icon-hidden {
+	display: flex;
+    width: 16px;
+	transform: rotate(90deg);
+	transition: transform 0.3s ease;
+	position: relative;
+	margin: auto;
+	top: 2px;
+}
+
+.elaina-theme-settings-row-hide-icon {
+	transform: rotate(90deg);
+	transition: transform 0.3s ease;
+}
+
+.elaina-theme-settings-row-hide-icon-hidden {
+	transform: rotate(-90deg);
+	transition: transform 0.3s ease;
 }

@@ -65,3 +65,7 @@ div[data-screen-name="rcp-fe-lol-navigation-screen"] {
     transform: translateX(0px);
 	opacity: 1;
 }
+
+.rcp-fe-lol-navigation-app .navbar_backdrop {
+    backdrop-filter: blur(0px) !important;
+}
