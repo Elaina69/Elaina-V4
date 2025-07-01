@@ -104,3 +104,12 @@
 .parties-footer-notifications {
 	top: -120px !important;
 }
+
+/* Champions select */
+.champion-select .timer-status::before {
+	filter: contrast(0) brightness(1) !important;
+}
+
+.champion-select .action-button-container::after {
+	filter: sepia(1) !important;
+}

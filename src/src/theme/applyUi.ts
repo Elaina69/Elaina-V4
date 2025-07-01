@@ -334,13 +334,26 @@ class CustomIcon {
 
 	hoverCardbackdrop = () => {
 		upl.observer.subscribeToElementCreation("#lol-uikit-tooltip-root",(element: any)=>{
+			// try {
+			// 	if (element.querySelector("lol-regalia-hovercard-v2-element").getAttribute("summoner-id") == ElainaData.get("Summoner-ID")) {
+			// 		let hoverCard: any = document.querySelector("#hover-card-backdrop")
+			// 		hoverCard.style.backgroundImage = "var(--Hover-card-backdrop)"
+			// 	}
+			// }
+			// catch (err: any) { error("Can't change hover card backdrop.", err) }
+
 			try {
-				if (element.querySelector("lol-regalia-hovercard-v2-element").getAttribute("summoner-id") == ElainaData.get("Summoner-ID")) {
-					let hoverCard: any = document.querySelector("#hover-card-backdrop")
-					hoverCard.style.backgroundImage = "var(--Hover-card-backdrop)"
+				let hovercard = element.querySelector("lol-regalia-hovercard-v2-element");
+				if (hovercard && hovercard.getAttribute("summoner-id") == ElainaData.get("Summoner-ID")) {
+					let hoverCardBackdrop = document.querySelector("#hover-card-backdrop") as HTMLElement;
+					if (hoverCardBackdrop) {
+						hoverCardBackdrop.style.backgroundImage = "var(--Hover-card-backdrop)";
+					}
 				}
+			} 
+			catch (err: any) {
+				error("Can't change hover card backdrop.", err);
 			}
-			catch (err: any) { error("Can't change hover card backdrop.", err) }
 		})
 	}
 
@@ -364,6 +377,7 @@ class CustomIcon {
 			this.gameModeIcon_active("div[data-game-mode='BRAWL']",icdata["brawl_video"])
 			this.gameModeIcon_active('div[data-map-id="11"]',icdata["classic_video"])
 			this.gameModeIcon_active('div[data-map-id="12"]',icdata["aram_video"])
+			this.gameModeIcon_active("div[data-game-mode='PRACTICETOOL']",icdata["classic_video"])
 		})
 	}
 
