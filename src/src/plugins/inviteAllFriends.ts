@@ -16,14 +16,9 @@ export class InviteAllFriends {
 
     refreshFriendsList = async (): Promise<void> => {
         try {
-            const rosterBlock = document.querySelector("div.lol-social-lower-pane-container .roster-block");
-            const currentGroupCount = rosterBlock?.querySelectorAll("lol-social-roster-group").length || 0;
-            const currentFriendCount = rosterBlock?.querySelectorAll("lol-social-roster-member").length || 0;
-
-            if (ElainaData.get("grouplist").length !== currentGroupCount || ElainaData.get("friendslist").length !== currentFriendCount) {
-                const friends = await fetch('/lol-chat/v1/friends').then(res => res.json());
-                const groups = await fetch('/lol-chat/v1/friend-groups').then(res => res.json());
-
+            let friends = await fetch('/lol-chat/v1/friends').then(res => res.json());
+            let groups = await fetch('/lol-chat/v1/friend-groups').then(res => res.json());
+            if (ElainaData.get("grouplist").length !== groups.length || ElainaData.get("friendslist").length !== friends.length) {
                 ElainaData.set("friendslist", friends.map((friend: any) => ({
                     summonerId: friend.summonerId,
                     groupId: friend.groupId,
@@ -71,15 +66,14 @@ export class InviteAllFriends {
                 })
 
                 for(let i = 0; i < ElainaData.get("friendslist").length ; i++) {
-                    //let invalidAvail = ["offline","dnd","mobile"]
-
-                    if (ElainaData.get("frGroupName") == ElainaData.get("friendslist")[i]["groupId"]) {
+                    if (ElainaData.get("frGroupName") == ElainaData.get("friendslist")[i]["groupId"]
+                    && ElainaData.get("friendslist")[i]["availability"] == "chat") {
                         let invite = await fetch("/lol-lobby/v2/lobby/invitations",{
                             method: 'POST',
                             headers: {"content-type": "application/json"},
                             body: JSON.stringify([{"toSummonerId": ElainaData.get("friendslist")[i]["summonerId"]}])
                         })
-                        if (invite.status == 200 /*&& !invalidAvail.includes(DataStore.get("friendslist")[i]["availability"])*/) Invited++
+                        if (invite.status == 200) Invited++
                     }
                 }
 
