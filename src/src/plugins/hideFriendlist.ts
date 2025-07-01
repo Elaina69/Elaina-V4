@@ -114,7 +114,11 @@ export class HideFriendList {
                 .postgame-root-component .postgame-footer,
                 .career-postgame-sub-navigation-component,
                 .postgame-root-component .postgame-progression-lottie-outline,
-                .scoreboard-root-content-container  {
+                .scoreboard-root-content-container,
+                .emote-wheel-wrapper-v2,
+                .emote-root-component .nav-container,
+                .emote-delete-slot,
+                .emote-reaction-wrapper  {
                     transform: translateX(0px) !important;
                 }
             `)
@@ -144,7 +148,11 @@ export class HideFriendList {
                 .postgame-root-component .postgame-footer,
                 .career-postgame-sub-navigation-component,
                 .postgame-root-component .postgame-progression-lottie-outline,
-                .scoreboard-root-content-container  {
+                .scoreboard-root-content-container,
+                .emote-wheel-wrapper-v2,
+                .emote-root-component .nav-container,
+                .emote-delete-slot,
+                .emote-reaction-wrapper  {
                     transform: translateX(113px) !important;
                 }
             `)

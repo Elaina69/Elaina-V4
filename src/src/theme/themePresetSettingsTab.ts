@@ -15,8 +15,6 @@ function openAssets() {window.openPluginsFolder(`${getThemeName()}/assets`)}
 
 export class ThemePresetSettings {
 	createThemeMenu = async (root: HTMLElement) =>  {
-		const version: string = ElainaData.get("Theme-version")
-		
 		let l_reload_client = await getString('reload-client')
 		let l_open_assets = await getString('l.open_assets')
 		let l_open_configs = await getString('l.open_configs')
@@ -61,7 +59,6 @@ export class ThemePresetSettings {
 										<div style="position: relative">
 											<div style="margin-bottom: 24px"> 
 												<h4 style="padding: 6px 0">Elaina-V4</h4>
-												<p>v${version}</p>
 											</div>
 											<hr class="heading-spacer" />
 											<div style="display: flex; flex-direction: column; align-items: center; gap: 12px">

@@ -50,9 +50,12 @@ class AddCss {
 	}
 
 	mainThemeCss = () => {
-		utils.addStyle(
-			`@import url("${datapath}assets/styles/themes/elaina.css");\n` + 
-			`@font-face {\n\tfont-family: 'Elaina';\n\tsrc: url('${datapath}assets/fonts/beaufortforlol-bold.ttf')\n}`
+		utils.addStyle(`
+			@import url("${datapath}assets/styles/themes/elaina.css");
+			@font-face {
+				font-family: 'Elaina';
+				src: url('${datapath}assets/fonts/beaufortforlol-bold.ttf')
+			}`
 		)
 	}
 
@@ -73,6 +76,11 @@ class AddCss {
 				{
 					key: "hide-champions-splash-art",
 					css: "hide-champs-splash-art.css",
+					altCss: "null.css"
+				},
+				{
+					key: "hide-profile-background",
+					css: "hide-profile-background.css",
 					altCss: "null.css"
 				},
 				{
@@ -175,7 +183,7 @@ class AddCss {
 
 	customNicknameColor = () => {
 		utils.addStyleWithID("nickname-color-css", /*css*/`
-			span.player-name__force-locale-text-direction {
+			span.player-name__force-locale-text-direction, #nickname-color-preview {
 				color: ${ElainaData.get("nickname-color-with-opacity")};
 			}
 		`)

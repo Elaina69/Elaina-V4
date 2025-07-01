@@ -45,19 +45,7 @@ if (ElainaData.get("custom-champs-image")) {
                     newName.classList.add("champion-name");
                     newName.id = "champion-name-replace";
                     newName.innerText = champData.replace_name;
-                    newName.style.cssText = `
-                        font-size: 13px;
-                        text-align: center;
-                        color: #a09b8c;
-                        font-weight: 400;
-                        letter-spacing: .025em;
-                        line-height: 16px;
-                        -webkit-font-smoothing: subpixel-antialiased;
-                        -webkit-font-feature-settings: "kern" 1;
-                        font-kerning: normal;
-                        -webkit-user-select: none;
-                        font-family: var(--font-body);
-                    `;
+
                     nameContainer.append(newName);
                     championNameElement.style.display = "none";
                     log(`Replaced ${champData.default_name} with ${champData.replace_name}`);
