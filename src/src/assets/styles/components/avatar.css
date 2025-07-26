@@ -1,4 +1,4 @@
-.top > .icon-image.has-icon, .style-profile-champion-icon-masked > img {
+.top > .icon-image.has-icon {
 	content: var(--Avatar) !important;
 }
 
