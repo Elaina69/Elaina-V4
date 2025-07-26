@@ -1,4 +1,4 @@
-import utils from '../utils/utils.ts'
+import utils from '../../utils/utils.ts'
 import * as upl from 'pengu-upl';
 
 let rank = {
@@ -135,24 +135,7 @@ let requestMasteryScore = {
 }
 
 export class CustomProfile {
-    freezeProperties(object: Object, properties: string[]): void {
-        for (const type in object) {
-            if ((properties && properties.length && properties.includes(type)) || (!properties || !properties.length)) {
-                let value = object[type]
-                try {
-                    Object.defineProperty(object, type, {
-                        configurable: false,
-                        get: () => value,
-                        set: (v) => v,
-                    })
-                }
-                catch {}
-            }
-        }
-    }
-
-    async request(method: string, endpoint: string, { headers = {}, body = {} }: { headers?: Record<string, string>; body?: Record<string, any> } = {}
-    ): Promise<Response> {
+    async request(method: string, endpoint: string, { headers = {}, body = {} }: { headers?: Record<string, string>; body?: Record<string, any> } = {}): Promise<Response> {
         const requestOptions: RequestInit = {
             method: method,
             headers: {
@@ -254,13 +237,13 @@ export class CustomProfile {
             let a: HTMLElement | null = element.querySelector(".total-owned.total-count.ember-view")
             if (a) {
                 a.innerText = `${ElainaData.get("Mastery-Score")}`
-                this.freezeProperties(a,["innerText"])
+                utils.freezeProperties(a,["innerText"])
             }
         })
 
         upl.observer.subscribeToElementCreation(".style-profile-champion-mastery-score",(element: any)=>{
             element.innerText = `${ElainaData.get("Mastery-Score")}`
-            this.freezeProperties(element,["innerText"])
+            utils.freezeProperties(element,["innerText"])
         })
 
         window.setTimeout(async ()=>{
@@ -311,6 +294,15 @@ export class CustomProfile {
         window.setTimeout(async ()=>{
             await this.request("PUT","/lol-chat/v1/me",{body: requestRank})
         }, 10000)
+    }
+
+    CustomProfileRankName = () => {
+        upl.observer.subscribeToElementCreation(".style-profile-ranked-component.ember-view .style-profile-emblem-header-title", (element: any) => 
+            element.innerHTML = ElainaData.get("Rank-line1") 
+        )
+        upl.observer.subscribeToElementCreation(".style-profile-emblem-subheader-ranked > div", (element: any) => 
+            element.innerHTML = ElainaData.get("Rank-line2") 
+        )
     }
 
     customBagde = () => {

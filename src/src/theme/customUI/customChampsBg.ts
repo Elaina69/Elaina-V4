@@ -1,6 +1,6 @@
 import * as upl from 'pengu-upl'
-import { log } from "../utils/themeLog.js"
-import { getThemeName, cdnImport } from '../otherThings.js'
+import { log } from "../../utils/themeLog.js"
+import { getThemeName, cdnImport } from '../../otherThings.js'
 
 let datapath = `//plugins/${getThemeName()}/`
 let bgInterval: number

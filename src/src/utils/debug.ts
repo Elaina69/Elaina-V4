@@ -1,4 +1,4 @@
-import { log } from "../utils/themeLog.ts"
+import { log } from "./themeLog.ts"
 
 let riotclient_auth: any, riotclient_port: any
 let regex_rc_auth = /^--riotclient-auth-token=(.+)$/

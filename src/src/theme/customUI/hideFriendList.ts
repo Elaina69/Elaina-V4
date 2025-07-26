@@ -1,25 +1,9 @@
 import * as upl from "pengu-upl"
-import utils from "../utils/utils"
-import { getThemeName } from "../otherThings"
-import { log, error } from "../utils/themeLog"
+import utils from "../../utils/utils"
+import { getThemeName } from "../../otherThings"
+import { error } from "../../utils/themeLog"
 
 export class HideFriendList {
-    freezeProperties(object: Object, properties: string[]): void {
-        for (const type in object) {
-            if ((properties && properties.length && properties.includes(type)) || (!properties || !properties.length)) {
-                let value = object[type]
-                try {
-                    Object.defineProperty(object, type, {
-                        configurable: false,
-                        get: () => value,
-                        set: (v) => v,
-                    })
-                } 
-                catch {}
-            }
-        }
-    }
-
     createSidebarBackground = () => {
         let sidebarBG = document.createElement("div")
         sidebarBG.setAttribute("class", "sidebar-background")
@@ -68,21 +52,21 @@ export class HideFriendList {
 
     showHideFriendslist = (hide: boolean) => {
         let elements = [
-            document.querySelector(".lol-social-lower-pane-container"),
-            document.querySelector(".sidebar-background"),
-            document.querySelector(".alpha-version-panel"),
-            document.querySelector("lol-parties-game-info-panel"),
-            document.querySelector(".clash-social-persistent.ember-view"),
-            document.querySelector(".watermark")
+            ".lol-social-lower-pane-container",
+            ".sidebar-background",
+            ".alpha-version-panel",
+            "lol-parties-game-info-panel",
+            ".clash-social-persistent.ember-view",
+            ".watermark"
         ];
         
         let translateValue = hide ? "225px" : "0px";
         
         elements.forEach((element: any) => {
-            if (element) {
-                element.style.cssText = `transform: translateX(${translateValue});`;
+            if (document.querySelector(element)) {
+                document.querySelector(element).style.cssText = `transform: translateX(${translateValue});`;
             }
-            else { error("Get error while adding style, but it will not affect entire theme.") }
+            else { error(`Get error while changing style for ${element}, but it will not affect entire theme.`) }
         });
         
         this.centerViewport(hide);
