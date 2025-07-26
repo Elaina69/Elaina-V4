@@ -1,5 +1,6 @@
 import { UI } from "./settingsUI.ts"
-import { restartAfterChange, error } from "../settings.ts"
+import { restartAfterChange } from "../settings.ts"
+import { error } from "../../utils/themeLog.ts"
 
 async function pluginsSettings(panel) {
     const loading = UI.Row("loading", [
@@ -139,7 +140,7 @@ async function pluginsSettings(panel) {
                         `*${await getString("note")}: ${await getString("note-1")}`, ""
                         ),
                     ]),
-                    UI.Image("logo.png", "plugins-settings-logo")
+                    UI.Image(true, "logo.png", "plugins-settings-logo")
                 ]),
                 UI.Label(
                     `${await getString("plugins-settings")}`, ""

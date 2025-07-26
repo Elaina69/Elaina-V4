@@ -1,4 +1,3 @@
-import utils from '../utils/utils.ts'
 import * as upl from "pengu-upl"
 import structure from "./settingsGroups/settingsStructure.ts"
 import { settingsUtils } from "../utils/settingsUtils.ts"
@@ -6,7 +5,7 @@ import { themeSettings } from "./settingsGroups/themeSettings.ts"
 import { pluginsSettings } from "./settingsGroups/themePluginsSettings.ts"
 import { backuprestoretab } from "./settingsGroups/themeBackupRestore.ts"
 import { aboutustab } from "./settingsGroups/themeAboutUs.ts"
-import { log, error, warn } from "../utils/themeLog.ts";
+import { log, error } from "../utils/themeLog.ts";
 import { getThemeName } from '../otherThings.ts'
 
 let datapath = `//plugins/${getThemeName()}/`
@@ -66,6 +65,16 @@ async function writeBackupData() {
 }
     
 window.addEventListener('load', async () => {
+    // Add a listener to the close button to write backup data if Dev mode is enabled
+    upl.observer.subscribeToElementCreation(".app-controls-button.app-controls-close", (element) => {
+        element.addEventListener("click", async () => {
+            if (ElainaData.get("backup-datastore")) {
+                await writeBackupData()
+            }
+        })
+    })
+
+    // Add a listener to the logo in plugins settings to enable developer mode
     upl.observer.subscribeToElementCreation(".plugins-settings-logo", (element) => {
         element.addEventListener("click", ()=> {
             ElainaData.set("Active-dev-button", ElainaData.get("Active-dev-button") + 1)
@@ -79,7 +88,7 @@ window.addEventListener('load', async () => {
             }
         })
     })
-    
+
     const interval = setInterval(() => {
         const manager = document.getElementById('lol-uikit-layer-manager-wrapper')
         if (manager) {
@@ -110,7 +119,7 @@ window.addEventListener('load', async () => {
     },500)
 })
 
-export { datapath, utils, restartAfterChange, log, error, warn }
+export { datapath, restartAfterChange }
 export function Settings(context: any) {
     settingsUtils(context, structure)
 }
