@@ -14,6 +14,15 @@ const routines: {callback: Function, target: string[]}[] = [];
 const mutationCallbacks: {callback: Function, target: string[]}[] = [];
 
 /**
+ * Pauses execution for a specified time
+ * @param {number} time - The time to pause in milliseconds
+ * @returns {Promise<void>} A promise that resolves after the specified time
+ */
+async function stop(time: number): Promise<void> {
+    return await new Promise(resolve => setTimeout(resolve, time));
+}
+
+/**
  * Adds a CSS style to the document body
  * @param {string} style - The CSS style to add
  */
@@ -126,6 +135,27 @@ function mutationObserverAddCallback(callback: Function, target: string[]) {
     mutationCallbacks.push({ callback, target });
 }
 
+/**
+ * Freezes properties of an object to prevent modification
+ * @param object The object to freeze properties on
+ * @param properties The list of properties to freeze, if empty all properties will be frozen
+ */
+function freezeProperties(object: Object, properties: any[]) {
+	for (const type in object) {
+		if ((properties && properties.length && properties.includes(type)) || (!properties || !properties.length)) {
+			let value = object[type]
+			try {
+				Object.defineProperty(object, type, {
+					configurable: false,
+					get: () => value,
+					set: (v) => v,
+				})
+			}
+			catch {}
+		}
+	}
+}
+
 // Initialize event listeners and observers
 window.addEventListener('load', () => {
     subscribe_endpoint("/lol-gameflow/v1/gameflow-phase", updatePhaseCallback);
@@ -166,7 +196,9 @@ const utils = {
     addFont,
     CustomCursor,
     getSummonerID,
-    addStyleWithID
+    addStyleWithID,
+    freezeProperties,
+    stop
 };
 
 export default utils;
