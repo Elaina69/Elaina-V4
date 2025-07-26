@@ -34,7 +34,6 @@ class AddCss {
 				--RP-Icon: url("${iconFolder}${icdata["RP-icon"]}");
 				--BE-Icon: url("${iconFolder}${icdata["BE-icon"]}");
 				--Rank-Icon: url("${iconFolder}${icdata["Rank-icon"]}");
-				--Emblem: url("${iconFolder}${icdata["Honor"]}");
 				--Clash-banner: url("${iconFolder}${icdata["Class-banner"]}");
 				--Ticker: url("${iconFolder}${icdata["Ticker"]}");
 				--Trophy: url("${iconFolder}${icdata["Trophy"]}");
