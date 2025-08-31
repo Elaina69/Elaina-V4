@@ -2,10 +2,10 @@ import { getThemeName } from "../otherThings"
 import { log, error } from '../utils/themeLog';
 import { customAvatar } from "../theme/customUI/customIcon";
 
-let icdata = (await import(`//plugins/${getThemeName()}/config/icons.js`)).default;
+const icdata = (await import(`//plugins/${getThemeName()}/config/icons.js`)).default;
 
-let datapath = `//plugins/${getThemeName()}/`
-let iconFolder  = `${datapath}assets/icon/`
+const datapath = `//plugins/${getThemeName()}/`
+const iconFolder  = `${datapath}assets/icon/`
 
 let friendIconList: { 
     summonerID: number, 
@@ -45,11 +45,16 @@ class SyncUserIcons {
             "image/webp": ".webp",
             "image/gif": ".gif"
         };
-        log(mimeToExt[blob.type])
+        log("Uploading " + icon)
         const ext = mimeToExt[blob.type] || ".png";
         const file = new File([blob], iconType + ext, { type: blob.type });
 
-        await window.elainathemeApi.uploadImage(ElainaData.get("ElainaTheme-Token"), ElainaData.get("Summoner-ID"), iconType, file)
+        try {
+            await window.elainathemeApi.uploadImage(ElainaData.get("ElainaTheme-Token"), ElainaData.get("Summoner-ID"), iconType, file)
+        }
+        catch (err: any) {
+            error(`Failed to upload icon of type ${iconType}: `, err);
+        }
     }
 
     async getIcon(summonerID: number, iconType: string) {
@@ -79,11 +84,14 @@ class SyncUserIcons {
         })
 
         // Upload your icons
-        await this.uploadIcon(`${iconFolder}${icdata["Avatar"]}`, "avatar");
-        await this.uploadIcon(`${iconFolder}${icdata["Border"]}`, "border");
-        await this.uploadIcon(`${iconFolder}Regalia-Banners/${ElainaData.get("CurrentBanner")}`, "banner");
-        await this.uploadIcon(`${iconFolder}${icdata["Hover-card"]}`, "hoverCardBackdrop");
-        await this.uploadIcon(`${iconFolder}${icdata["Honor"]}`, "emblem");
+        const uploadIcons = [
+            this.uploadIcon(`${iconFolder}${icdata["Avatar"]}`, "avatar"),
+            this.uploadIcon(`${iconFolder}${icdata["Border"]}`, "border"),
+            this.uploadIcon(`${iconFolder}Regalia-Banners/${ElainaData.get("CurrentBanner")}`, "banner"),
+            this.uploadIcon(`${iconFolder}${icdata["Hover-card"]}`, "hoverCardBackdrop"),
+            this.uploadIcon(`${iconFolder}${icdata["Honor"]}`, "emblem")
+        ];
+        await Promise.all(uploadIcons);
 
         // Update avatar on conversations
         let conversationChat = document.querySelectorAll(".conversation.chat");
