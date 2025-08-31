@@ -308,14 +308,20 @@ class AudioController {
     
     toggleAudioLoop = () => {
         const audio: any = document.getElementById("bg-audio");
+
+        function handleAudioEnded() {
+            audio.pause();
+            audio.load();
+        }
+
         if (ElainaData.get('audio-loop')) {
             audio.removeEventListener("ended", this.nextSong);
-            audio.addEventListener("ended", () => {
-                audio.pause();
-                audio.load();
-            });
-        } else {
+            audio.addEventListener("ended", handleAudioEnded);
+        } 
+        else {
+            audio.removeEventListener("ended", handleAudioEnded);
             audio.addEventListener("ended", this.nextSong);
+            this.changeSongName()
         }
     };
     
@@ -997,13 +1003,7 @@ class WallpaperAndAudio {
                 else savedTime = false
             });
 
-            if (ElainaData.get('audio-loop')) {
-                audio.addEventListener("ended", () => audio.load());
-            } 
-            else audio.addEventListener("ended", () => {
-                audioController.nextSong()
-                audioController.changeSongName()
-            });
+            audioController.toggleAudioLoop();
             
             audio.addEventListener("error", () => audio.load());
         }
