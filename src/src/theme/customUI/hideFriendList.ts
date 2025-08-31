@@ -5,18 +5,18 @@ import { error } from "../../utils/themeLog"
 
 export class HideFriendList {
     createSidebarBackground = () => {
-        let sidebarBG = document.createElement("div")
+        const sidebarBG = document.createElement("div")
         sidebarBG.setAttribute("class", "sidebar-background")
-        let sideBar = document.querySelector(".rcp-fe-viewport-sidebar > .screen-root")
+        const sideBar = document.querySelector(".rcp-fe-viewport-sidebar > .screen-root")
 
         sideBar?.prepend(sidebarBG)
     }
 
     createButton = () => {
-        let friendsActionbar = document.querySelector("#rcp-fe-viewport-root")
+        const friendsActionbar = document.querySelector("#rcp-fe-viewport-root")
 
-        let buttonDiv = document.createElement("div")
-        let button = document.createElement("img")
+        const buttonDiv = document.createElement("div")
+        const button = document.createElement("img")
 
         buttonDiv.setAttribute("class", "hideFriendslist")
 
@@ -37,8 +37,8 @@ export class HideFriendList {
     }
 
     buttonShowHideFriendlist = (hide: boolean) => {
-        let buttonDiv:any = document.querySelector(".hideFriendslist")
-        let button = document.querySelector(".hideFriendslist > img")
+        const buttonDiv:any = document.querySelector(".hideFriendslist")
+        const button = document.querySelector(".hideFriendslist > img")
 
         if (!hide) {
             button?.setAttribute("src", `//plugins/${getThemeName()}/assets/icon/plugins-icons/next_button.png`)
@@ -51,7 +51,7 @@ export class HideFriendList {
     }
 
     showHideFriendslist = (hide: boolean) => {
-        let elements = [
+        const elements = [
             ".lol-social-lower-pane-container",
             ".sidebar-background",
             ".alpha-version-panel",

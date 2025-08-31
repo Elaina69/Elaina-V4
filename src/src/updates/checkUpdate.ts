@@ -3,7 +3,7 @@ import { getThemeName, cdnImport } from "../otherThings.ts"
 import { log, warn } from "../utils/themeLog.ts"
 
 let CdnKey: number = 0
-let cdnServer = (await import(`//plugins/${getThemeName()}/config/cdnServer.js`)).default
+const cdnServer = (await import(`//plugins/${getThemeName()}/config/cdnServer.js`)).default
 
 log(`%cChecking theme version...`, "color: #e4c2b3")
 

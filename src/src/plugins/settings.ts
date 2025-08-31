@@ -8,7 +8,7 @@ import { aboutustab } from "./settingsGroups/themeAboutUs.ts"
 import { log, error } from "../utils/themeLog.ts";
 import { getThemeName } from '../otherThings.ts'
 
-let datapath = `//plugins/${getThemeName()}/`
+const datapath = `//plugins/${getThemeName()}/`
 
 ElainaData.set("settingsChangenumber", 0)
 

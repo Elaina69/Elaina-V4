@@ -7,21 +7,21 @@ import { getThemeName } from '../otherThings.ts'
 import { Component, jsx, render } from "nano-jsx"
 import utils from "../utils/utils.ts"
 
-let icdata: Object = (await import(`//plugins/${window.getThemeName()}/config/icons.js`)).default;
+const icdata: Object = (await import(`//plugins/${window.getThemeName()}/config/icons.js`)).default;
 
-let datapath: string = `//plugins/${window.getThemeName()}/`
+const datapath: string = `//plugins/${window.getThemeName()}/`
 
 function openConfigs() {window.openPluginsFolder(`${getThemeName()}/config`)}
 function openAssets() {window.openPluginsFolder(`${getThemeName()}/assets`)}
 
 export class ThemePresetSettings {
 	createThemeMenu = async (root: HTMLElement) =>  {
-		let l_reload_client = await getString('reload-client')
-		let l_open_assets = await getString('l.open_assets')
-		let l_open_configs = await getString('l.open_configs')
-		let l_theme_releases = await getString('l.theme_releases')
-		let l_open_settings = await getString('l.open_settings')
-	
+		const l_reload_client = await getString('reload-client')
+		const l_open_assets = await getString('l.open_assets')
+		const l_open_configs = await getString('l.open_configs')
+		const l_theme_releases = await getString('l.theme_releases')
+		const l_open_settings = await getString('l.open_settings')
+
 		class LoaderMenu extends Component {
 			visible: boolean = false; frame: HTMLElement | null = null; opener: HTMLElement | null = null
 			didMount() {

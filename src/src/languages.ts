@@ -21,6 +21,12 @@ async function haveLocaleFile(langCode: string) {
     }
 }
 
+/**
+ * To check if a translation key exists in the specified language file or not.
+ * @param lang The language code to check for the translation file, string
+ * @param key The key to look up in the translation file, string
+ * @returns 
+ */
 async function checkTranslationKey(lang: string, key: string): Promise<string> {
     let localeModule: Object
 
@@ -41,6 +47,10 @@ async function checkTranslationKey(lang: string, key: string): Promise<string> {
     return localeModule[key]
 }
 
+/**
+ * To get a translated string based on the current client locale.
+ * @param key The key to look up in the translation file, string
+ */
 async function getString(key: string): Promise<string> {
     let result = await checkTranslationKey(getClientLocale(), key);
     return result

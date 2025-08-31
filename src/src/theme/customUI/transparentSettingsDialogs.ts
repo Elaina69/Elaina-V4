@@ -3,7 +3,7 @@ import * as upl from 'pengu-upl';
 
 export class TransparentSettingsDialogs {
 	applyStyle = () => {
-		let style = "var(--Settings-and-Dialog-frame-color)"
+		const style = "var(--Settings-and-Dialog-frame-color)"
 		upl.observer.subscribeToElementCreation("lol-uikit-full-page-backdrop",(element: any)=>{
 			// Dialogs
 			try{

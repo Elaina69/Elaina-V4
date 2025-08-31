@@ -4,10 +4,10 @@ import { getThemeName } from "../../otherThings"
 import { log, error } from '../../utils/themeLog';
 import { friendIconList } from '../../plugins/syncUserIcons.ts';
 
-let icdata = (await import(`//plugins/${getThemeName()}/config/icons.js`)).default;
+const icdata = (await import(`//plugins/${getThemeName()}/config/icons.js`)).default;
 
-let datapath = `//plugins/${getThemeName()}/`
-let iconFolder  = `${datapath}assets/icon/`
+const datapath = `//plugins/${getThemeName()}/`
+const iconFolder  = `${datapath}assets/icon/`
 
 class CustomTickerIcon {
 	tickerCss(element: any, defaults: Object) {

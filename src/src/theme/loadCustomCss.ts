@@ -1,10 +1,9 @@
 import utils from "../utils/utils.ts"
-import { getThemeName } from "../otherThings"
+import { getThemeName } from "../otherThings.ts"
 
 let icdata: Object = (await import(`//plugins/${getThemeName()}/config/icons.js`)).default;
-let filters: Object = (await import(`//plugins/${getThemeName()}/config/filters.js`)).default;
-
 let datapath: string = `//plugins/${getThemeName()}/`
+
 let iconFolder: string = `${datapath}assets/icon/`
 let bgFolder: string = `${datapath}assets/backgrounds/`
 
@@ -41,9 +40,6 @@ class AddCss {
 				--ElainaFly: url("${iconFolder}${icdata["Animation-logo"]}");
 				--ElainaStatic: url("${iconFolder}${icdata["Static-logo"]}");
 				--Hover-card-backdrop: url("${iconFolder}${icdata['Hover-card']}");
-				--play-button-filter: ${filters["PlayButton"]};
-				--find-match-button: ${filters["find-match-button"]};
-				--PartiesStatusCard: ${filters["PartiesStatusCard"]};
 			}
 		`)
 	}

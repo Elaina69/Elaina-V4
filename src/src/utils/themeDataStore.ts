@@ -28,6 +28,11 @@ const ElainaData = {
         }
         return false;
     },
+
+    restoreDefaults () {
+        window.DataStore.set("ElainaTheme", {});
+        window.reloadClient()
+    }
 };
 
 window.ElainaData = ElainaData

@@ -1,10 +1,12 @@
 import * as upl from 'pengu-upl';
 import { getThemeName } from "../../otherThings"
-let filters = (await import(`//plugins/${getThemeName()}/config/filters.js`)).default;
+
+const filters = (await import(`//plugins/${getThemeName()}/config/filters.js`)).default;
 
 export class CustomRunesBackground {
     removeOtherImage = () => {
         let remove = (element: any) => {element.remove()}
+
         upl.observer.subscribeToElementCreation('.aux', remove)
         upl.observer.subscribeToElementCreation('#splash', remove)
         upl.observer.subscribeToElementCreation('#construct', remove)

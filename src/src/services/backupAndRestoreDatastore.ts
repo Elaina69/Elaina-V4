@@ -69,6 +69,4 @@ try {
 }
 catch(err:any) { error("Can not restore datastore", err) }
 
-window.restoreDefaultDataStore = restoreDefaultDataStore
-
-export { restoreDefaultDataStore, setDefaultData }
+export { setDefaultData }

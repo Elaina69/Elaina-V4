@@ -106,6 +106,8 @@ declare interface Window {
         version : string
         build   : string
     };
+
+    upl                         : any;
     openDevTools                : () => void;
     openPluginsFolder           : (subdir?: string) => void;
     reloadClient                : () => void;
@@ -122,12 +124,12 @@ declare interface Window {
     log                         : (message: string, ...args: string[]) => void;
     warn                        : (message: string, ...args: string[]) => void;
     error                       : (message: string, ...args: string[]) => void;
-    restoreDefaultDataStore     : () => Promise<void>; 
     switch_between_status       : () => void;
     autoAcceptQueueButtonSelect : () => void;
     exitClient                  : () => void;
     dodgeQueue                  : () => void;
-    friendIconList              : any
+    friendIconList              : any;
+    customRank                  : () => void
 };
 
 declare function getString(param: string)   : Promise<string>;

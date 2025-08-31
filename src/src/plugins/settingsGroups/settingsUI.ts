@@ -1,9 +1,6 @@
 import { datapath } from "../settings.ts"
-import { getThemeName } from "../../otherThings.ts";
 import utils from "../../utils/utils.ts";
 import { log } from "../../utils/themeLog.ts";
-
-let icdata: Object = (await import(`//plugins/${getThemeName()}/config/icons.js`)).default;
 
 class ui {
     /**
@@ -395,11 +392,13 @@ class ui {
      * @param text Nội dung của dropdown
      * @param name Tên của thuộc tính trong mỗi object sẽ hiển thị trong dropdown, lấy trong DataList
      * @param id Id của mỗi option trong dropdown, lấy trong DataList
+     * @param dropdownId Id của dropdown
      * @returns 
      */
-    Dropdown = (DataList: Object, Datastore: string, text: string, name: string, id: string) => {
+    Dropdown = (DataList: Object, Datastore: string, text: string, name: string, id: string, dropdownId?: string) => {
         const origin = document.createElement("div")
         origin.classList.add("Dropdown-div")
+        origin.id = dropdownId || ""
 
         const title = this.Label(text, "")
 
