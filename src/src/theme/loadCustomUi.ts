@@ -37,7 +37,12 @@ export class ApplyUI {
 		if (ElainaData.get("Custom-profile-hover")) {
 			if (ElainaData.get("Custom-mastery-score")) customProfile.customMasteryScore()
 			if (ElainaData.get("Custom-challenge-crystal")) customProfile.customChallengeCrystal()
-			if (ElainaData.get("Custom-rank")) customProfile.customRank()
+			if (ElainaData.get("Custom-rank")) {
+				window.setTimeout(async ()=>{
+					customProfile.customRank()
+					window.customRank = customProfile.customRank
+				}, 10000)
+			}
 		}
 		if (ElainaData.get("Custom-Rank-Name")) customProfile.CustomProfileRankName()
 
