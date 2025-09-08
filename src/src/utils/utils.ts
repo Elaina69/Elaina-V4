@@ -32,6 +32,11 @@ function addStyle(style: string) {
     document.body.appendChild(styleElement);
 }
 
+/**
+ * Adds a CSS style to the document body with a specific ID
+ * @param Id The ID for the style element
+ * @param style The CSS style to add
+ */
 function addStyleWithID(Id: string, style: string) {
     const styleElement = document.createElement('style');
     styleElement.id = Id

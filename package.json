@@ -6,7 +6,7 @@
     "license": "WTFPL",
     "type": "module",
     "config": {
-        "penguPath": "I:\\Riot Games\\pengu-loader"
+        "penguPath": "G:\\Riot Games\\pengu-loader"
     },
     "scripts": {
         "build": "tsc && vite build"

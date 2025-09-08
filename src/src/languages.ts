@@ -1,17 +1,31 @@
 import { warn, log } from "./utils/themeLog.js";
 import { getThemeName } from "./otherThings.js";
 
+/**
+ * Imports a locale file for the specified language code.
+ * @param langCode The language code to import the locale for.
+ * @returns The imported locale object.
+ */
 async function importLocale(langCode: string): Promise<Object> {
     const module = await import(`//plugins/${getThemeName()}/locales/${langCode}.js`);
     return module.default;
 }
 
+/**
+ * Gets the client locale from the HTML document.
+ * @returns The client locale as a string.
+ */
 function getClientLocale(): string  {
     const lang = document.querySelector("html")?.lang as string;
     return lang
 }
 
-async function haveLocaleFile(langCode: string) {
+/**
+ * Checks if a locale file exists for the specified language code.
+ * @param langCode The language code to check for the locale file.
+ * @returns True if the locale file exists, false otherwise.
+ */
+async function haveLocaleFile(langCode: string): Promise<boolean> {
     try {
         await importLocale(langCode)
         return true
