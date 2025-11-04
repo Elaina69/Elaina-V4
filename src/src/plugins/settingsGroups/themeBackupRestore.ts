@@ -70,7 +70,7 @@ async function CheckBackupFile() {
             checkText.textContent = `${await getString("Check-Backup.success")}`
             backupInfo.style.visibility = "visible"
 
-            let backupData = checkFile.data
+            let backupData = JSON.parse(checkFile.data)
             lastbackup.textContent = `${await getString("last-backup")}: ${backupData["last-backup-time"]}`
             if (ElainaData.get("Dev-mode")) {
                 try {
