@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://github.com/Elaina69/Elaina-V4">
-        <img alt="ElainaV4" src="./src/src/assets/icon/logo.png" width="300" />
+        <img alt="ElainaV4" src="https://raw.githubusercontent.com/Elaina69/Elaina-V4/refs/heads/main/src/src/assets/icon/logo.png" width="300" />
     </a>
 </p>
 <h1 align="center">
