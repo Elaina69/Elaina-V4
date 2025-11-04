@@ -5,6 +5,7 @@ export default {
     "exit"            : "Выход",
     "more-info"       : "Больше информации",
     "settings-loading": "Грузится...",
+    "refresh"         : "Refresh",
 
 
     // auto accept button
@@ -118,6 +119,7 @@ export default {
     
     "prevent-manual-update"         : "Не получать уведомления о будущих ручных обновлениях",
     "holiday-message"               : "Уведомления о праздниках",
+    "sync-user-icons"               : "Sync users' custom icons (Only Elaina theme users can see)",
     "hide-homepage-navbar"          : "Скрыть панель навигации главной страницы вручную",
     "custom-navbar-css"             : "Кастомная вторичная панель навигации",
     "old-prev/next-button"          : "Старая кнопка смены обоев",

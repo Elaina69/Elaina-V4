@@ -76,27 +76,29 @@ class SyncUserIcons {
     }
 
     async main() {
-        // Sync friends icons
-        await window.Toast.promise(this.getFriendsIcons(), {
-            loading: 'Syncing friends icons...',
-            success: 'Sync complete!',
-            error: 'Error while syncing friends icons, check console for more info!'
-        })
+        if (ElainaData.get("sync-user-icons")) {
+            // Sync friends icons
+            await window.Toast.promise(this.getFriendsIcons(), {
+                loading: 'Syncing friends icons...',
+                success: 'Sync complete!',
+                error: 'Error while syncing friends icons, check console for more info!'
+            })
 
-        // Upload your icons
-        const uploadIcons = [
-            this.uploadIcon(`${iconFolder}${icdata["Avatar"]}`, "avatar"),
-            this.uploadIcon(`${iconFolder}${icdata["Border"]}`, "border"),
-            this.uploadIcon(`${iconFolder}Regalia-Banners/${ElainaData.get("CurrentBanner")}`, "banner"),
-            this.uploadIcon(`${iconFolder}${icdata["Hover-card"]}`, "hoverCardBackdrop"),
-            this.uploadIcon(`${iconFolder}${icdata["Honor"]}`, "emblem")
-        ];
-        await Promise.all(uploadIcons);
+            // Upload your icons
+            const uploadIcons = [
+                this.uploadIcon(`${iconFolder}${icdata["Avatar"]}`, "avatar"),
+                this.uploadIcon(`${iconFolder}${icdata["Border"]}`, "border"),
+                this.uploadIcon(`${iconFolder}Regalia-Banners/${ElainaData.get("CurrentBanner")}`, "banner"),
+                this.uploadIcon(`${iconFolder}${icdata["Hover-card"]}`, "hoverCardBackdrop"),
+                this.uploadIcon(`${iconFolder}${icdata["Honor"]}`, "emblem")
+            ];
+            await Promise.all(uploadIcons);
 
-        // Update avatar on conversations
-        let conversationChat = document.querySelectorAll(".conversation.chat");
-        for (let i = 0; i < conversationChat.length; i++) {
-            customAvatar.changeConversationChatAvatar(conversationChat[i])
+            // Update avatar on conversations
+            let conversationChat = document.querySelectorAll(".conversation.chat");
+            for (let i = 0; i < conversationChat.length; i++) {
+                customAvatar.changeConversationChatAvatar(conversationChat[i])
+            }
         }
     }
 }

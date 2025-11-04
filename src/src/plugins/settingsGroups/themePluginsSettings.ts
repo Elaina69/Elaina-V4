@@ -145,7 +145,7 @@ async function pluginsSettings(panel) {
                             },true, "Custom-rank"
                         ),
                         document.createElement('br'),
-                        UI.Button(await getString("Refresh"), "refresh_option", async () => {
+                        UI.Button(await getString("refresh"), "refresh_option", async () => {
                             window.customRank()
                         })
                     ]),

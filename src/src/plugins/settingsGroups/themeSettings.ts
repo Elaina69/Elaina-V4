@@ -357,6 +357,12 @@ async function themeSettings(panel) {
                 document.createElement('br'),
                 document.createElement('br'),
                 UI.CheckBox(
+                    await getString("sync-user-icons"),'syncusericons','syncusericonsbox', () => {
+                        restartAfterChange('syncusericons', "sync-user-icons")
+                    }, true, "sync-user-icons"
+                ),
+                document.createElement('br'),
+                UI.CheckBox(
                     `${await getString("hide-homepage-navbar")}`,'homenav','homenavbox', ()=>{
                         hideShowNavBar()
                         changeHomePageStyle()

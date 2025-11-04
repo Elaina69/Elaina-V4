@@ -5,6 +5,7 @@ export default {
     "exit"            : "Exit",
     "more-info"       : "More info",
     "settings-loading": "Loading...",
+    "refresh"         : "Refresh",
 
 
     // auto accept button
@@ -118,6 +119,7 @@ export default {
     
     "prevent-manual-update"         : "Don't receive notifications about future manual updates",
     "holiday-message"               : "Message notification for holidays",
+    "sync-user-icons"               : "Sync users' custom icons (Only Elaina theme users can see)",
     "hide-homepage-navbar"          : "Hide homepage's navbar manually",
     "custom-navbar-css"             : "Custom secondary navigation bar",
     "old-prev/next-button"          : "Old wallpaper change button",
