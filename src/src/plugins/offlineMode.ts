@@ -29,6 +29,7 @@ export class OfflineMode {
 			: "chat"
 	
 		log(`Changed status to ${availability}`)
+		
 		await fetch("/lol-chat/v1/me", {
 			"headers": {
 				"content-type": "application/json",

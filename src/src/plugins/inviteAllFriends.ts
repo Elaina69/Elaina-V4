@@ -16,8 +16,11 @@ export class InviteAllFriends {
 
     refreshFriendsList = async (): Promise<void> => {
         try {
-            let friends = await fetch('/lol-chat/v1/friends').then(res => res.json());
-            let groups = await fetch('/lol-chat/v1/friend-groups').then(res => res.json());
+            const [friends, groups] = await Promise.all([
+                fetch('/lol-chat/v1/friends').then(res => res.json()),
+                fetch('/lol-chat/v1/friend-groups').then(res => res.json())
+            ]);
+
             if (ElainaData.get("grouplist").length !== groups.length || ElainaData.get("friendslist").length !== friends.length) {
                 ElainaData.set("friendslist", friends.map((friend: any) => ({
                     summonerId: friend.summonerId,
@@ -73,6 +76,7 @@ export class InviteAllFriends {
                             headers: {"content-type": "application/json"},
                             body: JSON.stringify([{"toSummonerId": ElainaData.get("friendslist")[i]["summonerId"]}])
                         })
+                        
                         if (invite.status == 200) Invited++
                     }
                 }

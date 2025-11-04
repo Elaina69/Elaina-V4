@@ -35,7 +35,7 @@ html {
 }
 
 .basic-button .play-button-container,
-.npe-header-league-logo {
+.npe-header-league-logo, .animated-progress-bar.patching {
     filter: var(--play-button-filter) !important;
 }
 

@@ -22,7 +22,7 @@ import './src/services/backupAndRestoreDatastore';
 
 // Import Init modules
 import { Settings } from "./src/plugins/settings.ts";
-import { transparentLobby } from "./src/theme/applyUi.ts";
+import { transparentLobby } from "./src/theme/customUI/transparentLobby.ts";
 import { AutoQueue } from "./src/plugins/autoQueue.ts";
 import { skipHonor } from "./src/plugins/skipHonor.js";
 import /**{ Cdninit } from **/'./src/theme/Cdn.ts';
@@ -41,43 +41,37 @@ export function init(context: any) {
 
 // Import modules
 import { CheckUpdate } from "./src/updates/checkUpdate.ts"
-import { HomePage } from "./src/theme/homepage.ts";
-import { ApplyUI } from "./src/theme/applyUi.ts";
-import { Filters } from "./src/theme/filters.ts"
-import { LoadCss } from "./src/theme/loadCss.ts"
-import { ThemePresetSettings } from "./src/theme/themePresetSettingsTab.ts"
+import { ApplyUI } from "./src/theme/loadCustomUi.ts";
+import { Filters } from "./src/theme/loadCustomFilters.ts"
+import { LoadCss } from "./src/theme/loadCustomCss.ts"
+import { ThemePresetSettings } from "./src/plugins/themePresetSettingsTab.ts"
 
 // Import plugins
 import { CustomStatus } from "./src/plugins/customStatus.ts"
 import { AutoAccept } from "./src/plugins/autoAccept.ts"
 import { CustomBeRp } from "./src/plugins/customBeRp.ts"
-import { CustomProfile } from "./src/plugins/customProfile.ts"
 import { DodgeButton } from "./src/plugins/dodgeButton.ts"
 import { LootHelper } from "./src/plugins/lootHelper.ts"
 import { NameSpoofer } from "./src/plugins/nameSpoofer.ts"
 import { OfflineMode } from "./src/plugins/offlineMode.ts"
 import { Practice5vs5 } from "./src/plugins/practice5vs5.ts"
 import { InviteAllFriends } from "./src/plugins/inviteAllFriends.ts"
-import { HideFriendList } from './src/plugins/hideFriendlist.ts';
 
 // Import other plugins
+import * as upl from "pengu-upl"
 import { ForceJungLane } from "./src/plugins/forceJungleLane.ts"
-import "./src/plugins/customChampsBg.ts"
-import "./src/plugins/debug.ts"
+import "./src/plugins/syncUserIcons.ts";
+import "./src/utils/debug.ts"
 
 class ElainaTheme {
-    main() {
+    async main() {
         // Check theme's version and available update
         const checkUpdate = new CheckUpdate()
         checkUpdate.main()
 
-        // Add homepage
-        const homePage = new HomePage()
-        homePage.main()
-
-        // Apply theme UI
+        // Apply theme custom UI
         const applyUI = new ApplyUI()
-        applyUI.main()
+        await applyUI.main()
 
         // Add filter for wallpaper
         const filters = new Filters()
@@ -87,19 +81,13 @@ class ElainaTheme {
         const loadCss = new LoadCss()
         loadCss.main()
 
+        // Load plugins
         // Add theme's pre-settings
         const themePresetSettings = new ThemePresetSettings()
         themePresetSettings.main()
 
-        // Load plugins
         // Custom BE, RP
         const customBeRp = new CustomBeRp()
-        if (ElainaData.get("Custom_RP")) {
-            window.setInterval(() => { customBeRp.RP() }
-        ), 300}
-        if (ElainaData.get("Custom_BE")) {
-            window.setInterval(() => { customBeRp.BE() }
-        ), 300}
 
         // Auto Accept
         const autoAccept = new AutoAccept()
@@ -108,18 +96,6 @@ class ElainaTheme {
         // Custom status
         const customStatus = new CustomStatus()
         if (ElainaData.get("Custom-Status") && ElainaData.get("Custom-profile-hover")) customStatus.main()
-
-        // Custom profile
-        const customProfile = new CustomProfile()
-        customProfile.customBagde()
-        if (ElainaData.get("invisible_banner")) {
-            customProfile.invisibleBanner()
-        }
-        if (ElainaData.get("Custom-profile-hover")) {
-            if (ElainaData.get("Custom-mastery-score")) customProfile.customMasteryScore()
-            if (ElainaData.get("Custom-challenge-crystal")) customProfile.customChallengeCrystal()
-            if (ElainaData.get("Custom-rank")) customProfile.customRank()
-        }
 
         // Add dodge button
         const dodgeButton = new DodgeButton()
@@ -149,13 +125,18 @@ class ElainaTheme {
         const offlineMode = new OfflineMode()
         offlineMode.main()
 
-        // Add hide friendslist button
-        const hideFriendslist = new HideFriendList()
-        hideFriendslist.main()
+        // This code will run for each 1s
+        window.setInterval(() => {
+            if (ElainaData.get("Custom_RP")) customBeRp.RP()
+            if (ElainaData.get("Custom_BE")) customBeRp.BE()
+        }, 1000);
     }
 }
 
 const elainaTheme = new ElainaTheme()
-window.addEventListener("load", () => {
-    elainaTheme.main()
+window.addEventListener("load", async () => {
+    await elainaTheme.main()
+
+    // For debug only
+    if (ElainaData.get("Dev-mode")) window.upl = upl;
 })

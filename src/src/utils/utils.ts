@@ -14,6 +14,15 @@ const routines: {callback: Function, target: string[]}[] = [];
 const mutationCallbacks: {callback: Function, target: string[]}[] = [];
 
 /**
+ * Pauses execution for a specified time
+ * @param {number} time - The time to pause in milliseconds
+ * @returns {Promise<void>} A promise that resolves after the specified time
+ */
+async function stop(time: number): Promise<void> {
+    return await new Promise(resolve => setTimeout(resolve, time));
+}
+
+/**
  * Adds a CSS style to the document body
  * @param {string} style - The CSS style to add
  */
@@ -23,6 +32,11 @@ function addStyle(style: string) {
     document.body.appendChild(styleElement);
 }
 
+/**
+ * Adds a CSS style to the document body with a specific ID
+ * @param Id The ID for the style element
+ * @param style The CSS style to add
+ */
 function addStyleWithID(Id: string, style: string) {
     const styleElement = document.createElement('style');
     styleElement.id = Id
@@ -126,6 +140,27 @@ function mutationObserverAddCallback(callback: Function, target: string[]) {
     mutationCallbacks.push({ callback, target });
 }
 
+/**
+ * Freezes properties of an object to prevent modification
+ * @param object The object to freeze properties on
+ * @param properties The list of properties to freeze, if empty all properties will be frozen
+ */
+function freezeProperties(object: Object, properties: any[]) {
+	for (const type in object) {
+		if ((properties && properties.length && properties.includes(type)) || (!properties || !properties.length)) {
+			let value = object[type]
+			try {
+				Object.defineProperty(object, type, {
+					configurable: false,
+					get: () => value,
+					set: (v) => v,
+				})
+			}
+			catch {}
+		}
+	}
+}
+
 // Initialize event listeners and observers
 window.addEventListener('load', () => {
     subscribe_endpoint("/lol-gameflow/v1/gameflow-phase", updatePhaseCallback);
@@ -154,6 +189,26 @@ window.addEventListener('load', () => {
     observer.observe(document, { attributes: true, childList: true, subtree: true });
 });
 
+/** Updates the source of images matching a specific old source to a new source
+ * @param {string} oldSrc - The old image source to match
+ * @param {string} newSrc - The new image source to set
+ */
+function updateImageSrc(oldSrc: string, newSrc: string) {
+    const originalSrc: any = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, "src");
+
+    Object.defineProperty(HTMLImageElement.prototype, "src", {
+        get: originalSrc.get,
+        set: function(value) {
+            if (typeof value === "string" && value.includes(oldSrc)) {
+                const newLink = newSrc;
+                return originalSrc.set.call(this, newLink);
+            }
+
+            return originalSrc.set.call(this, value);
+        }
+    });
+}
+
 // Export utility functions
 const utils = {
     phase,
@@ -166,7 +221,10 @@ const utils = {
     addFont,
     CustomCursor,
     getSummonerID,
-    addStyleWithID
+    addStyleWithID,
+    freezeProperties,
+    stop,
+    updateImageSrc
 };
 
 export default utils;

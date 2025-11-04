@@ -24,6 +24,6 @@
 }
 
 .hideFriendslist:hover {
-    filter: hue-rotate(0deg) drop-shadow(1px 1px 1px pink) !important;
+    filter: hue-rotate(0deg) drop-shadow(1px 1px 3px pink) !important;
     opacity: 1;
 }

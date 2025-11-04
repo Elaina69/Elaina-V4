@@ -1,4 +1,4 @@
-import { log } from "../utils/themeLog.ts"
+import { log } from "./themeLog.ts"
 
 let riotclient_auth: any, riotclient_port: any
 let regex_rc_auth = /^--riotclient-auth-token=(.+)$/
@@ -19,14 +19,12 @@ async function fetch_riotclient_credentials() {
 	await fetch("/riotclient/command-line-args", {
 		"method": "GET",
 	}).then(response => response.json()).then((data) => {
-		data.forEach((elem: any) => {
+		data.forEach((elem) => {
 			if (regex_rc_auth.exec(elem)) {
-				//@ts-ignore
-				riotclient_auth = regex_rc_auth.exec(elem)[1];
+				riotclient_auth = regex_rc_auth.exec(elem)?.[1]
 			}
 			else if (regex_rc_port.exec(elem)) {
-				//@ts-ignore
-				riotclient_port = regex_rc_port.exec(elem)[1];
+				riotclient_port = regex_rc_port.exec(elem)?.[1];
 			}
 		});
 	})

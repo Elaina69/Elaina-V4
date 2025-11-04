@@ -1,5 +1,6 @@
 import { UI } from "./settingsUI.ts"
-import { utils, log, warn, error } from "../settings.ts"
+import utils from "../../utils/utils.ts"
+import { log, warn, error } from "../../utils/themeLog.ts"
 import { setDefaultData } from "../../services/backupAndRestoreDatastore.ts"
 
 // async function setDefaultData(list, restore) {
@@ -21,94 +22,91 @@ const getSystemInfo = async () => {
     let systemInfo: any
 
     if (ElainaData.get("Dev-mode")) {
-        if (ElainaData.get("AllowTrackingData")) {
-            systemInfo = await ((await fetch("/performance/v1/system-info")).json())
-            ElainaData.set("System-Info", systemInfo)
-        }
-        else {
-            systemInfo = {
-                "CPUName": "Hidden",
-                "CoreCount": 0,
-                "GPUMemory": 0,
-                "GPUName": "Hidden",
-                "OSVersion": "Hidden",
-                "PhysicalMemory": 0
-            }
+        systemInfo = await ((await fetch("/performance/v1/system-info")).json())
+        ElainaData.set("System-Info", systemInfo)
+        // if (ElainaData.get("AllowTrackingData")) {
+        //     systemInfo = await ((await fetch("/performance/v1/system-info")).json())
+        //     ElainaData.set("System-Info", systemInfo)
+        // }
+        // else {
+        //     systemInfo = {
+        //         "CPUName": "Hidden",
+        //         "CoreCount": 0,
+        //         "GPUMemory": 0,
+        //         "GPUName": "Hidden",
+        //         "OSVersion": "Hidden",
+        //         "PhysicalMemory": 0
+        //     }
     
-            ElainaData.set("System-Info", systemInfo)
-        }
+        //     ElainaData.set("System-Info", systemInfo)
+        // }
     }
 }
 
 async function CheckBackupFile() {
-    let check: any = document.getElementById("datastore-cloud-checking")
-    check.textContent = `${await getString("Loading")}...`
-    check.style.color = "#a09b8c"
+    const restoreButton = document.querySelector(".restore-data-button") as HTMLElement
+    const deleteButton = document.querySelector(".delete-data-button") as HTMLElement
+    const checkText = document.getElementById("datastore-cloud-checking") as HTMLElement
+    const backupInfo = document.getElementById("backupInfo") as HTMLElement
 
-    let a: any = document.querySelector(".restore-data-button")
-    let b: any = document.querySelector(".delete-data-button")
-    let c: any = document.getElementById("datastore-cloud-checking")
-    let d: any = document.getElementById("backupInfo")
+    const lastbackup = document.querySelector("#backupSystemInfo > #systemInfo-LastBackup") as HTMLElement
+    const os = document.querySelector("#backupSystemInfo > #systemInfo-Os") as HTMLElement
+    const cpu = document.querySelector("#backupSystemInfo > #systemInfo-Cpu") as HTMLElement
+    const core = document.querySelector("#backupSystemInfo > #systemInfo-Core") as HTMLElement
+    const mem = document.querySelector("#backupSystemInfo > #systemInfo-Mem") as HTMLElement
+    const gpu = document.querySelector("#backupSystemInfo > #systemInfo-Gpu") as HTMLElement
+    const vram = document.querySelector("#backupSystemInfo > #systemInfo-Vram") as HTMLElement
 
-    let lastbackup: any = document.querySelector("#backupSystemInfo > #systemInfo-LastBackup") 
-    let os: any = document.querySelector("#backupSystemInfo > #systemInfo-Os") 
-    let cpu: any = document.querySelector("#backupSystemInfo > #systemInfo-Cpu") 
-    let core: any = document.querySelector("#backupSystemInfo > #systemInfo-Core") 
-    let mem: any = document.querySelector("#backupSystemInfo > #systemInfo-Mem") 
-    let gpu: any = document.querySelector("#backupSystemInfo > #systemInfo-Gpu") 
-    let vram: any = document.querySelector("#backupSystemInfo > #systemInfo-Vram") 
+    try {
+        checkText.textContent = `${await getString("Loading")}...`
+        checkText.style.color = "#a09b8c"
 
-    await new Promise<void>(async (resolve, reject) => {
-        try {
-            let checkFile: any = await window.elainathemeApi.readBackup(ElainaData.get("ElainaTheme-Token"), ElainaData.get("Summoner-ID"))
-            if (checkFile.data != null && Object.keys(checkFile.data).length > 0 && checkFile.success) {
-                log("You have backup file on cloud, ready to restore it.")
-                a.style.visibility = "visible"
-                b.style.visibility = "visible"
-                c.style.color = "green"
-                c.textContent = `${await getString("Check-Backup.success")}`
-                d.style.visibility = "visible"
+        let checkFile: any = await window.elainathemeApi.readBackup(ElainaData.get("ElainaTheme-Token"), ElainaData.get("Summoner-ID"))
+        if (checkFile.data != null && Object.keys(checkFile.data).length > 0 && checkFile.success) {
+            log("You have backup file on cloud, ready to restore it.")
+            restoreButton.style.visibility = "visible"
+            deleteButton.style.visibility = "visible"
+            checkText.style.color = "green"
+            checkText.textContent = `${await getString("Check-Backup.success")}`
+            backupInfo.style.visibility = "visible"
 
-                let backupData = checkFile.data
-                lastbackup.textContent = `${await getString("last-backup")}: ${backupData["last-backup-time"]}`
-                if (ElainaData.get("Dev-mode")) {
-                    try {
-                        os.textContent = `${await getString("OS")}: ${backupData["System-Info"]["OSVersion"]}`
-                        cpu.textContent = `${await getString("CPU")}: ${backupData["System-Info"]["CPUName"]}`
-                        core.textContent = `${await getString("Core")}: ${backupData["System-Info"]["CoreCount"]}`
-                        mem.textContent = `${await getString("RAM")}: ${Math.round(backupData["System-Info"]["PhysicalMemory"] / (1024 ** 3))} GB`
-                        gpu.textContent = `${await getString("GPU")}: ${backupData["System-Info"]["GPUName"]}`
-                        vram.textContent = `${await getString("Vram")}: ${Math.round(backupData["System-Info"]["GPUMemory"] / (1024 ** 3))} GB`
-                    }
-                    catch (err: any) {
-                        warn("Error while getting backup data:", err)
-                    }
+            let backupData = JSON.parse(checkFile.data)
+            lastbackup.textContent = `${await getString("last-backup")}: ${backupData["last-backup-time"]}`
+            if (ElainaData.get("Dev-mode")) {
+                try {
+                    os.textContent = `${await getString("OS")}: ${backupData["System-Info"]["OSVersion"]}`
+                    cpu.textContent = `${await getString("CPU")}: ${backupData["System-Info"]["CPUName"]}`
+                    core.textContent = `${await getString("Core")}: ${backupData["System-Info"]["CoreCount"]}`
+                    mem.textContent = `${await getString("RAM")}: ${Math.round(backupData["System-Info"]["PhysicalMemory"] / (1024 ** 3))} GB`
+                    gpu.textContent = `${await getString("GPU")}: ${backupData["System-Info"]["GPUName"]}`
+                    vram.textContent = `${await getString("Vram")}: ${Math.round(backupData["System-Info"]["GPUMemory"] / (1024 ** 3))} GB`
                 }
-                resolve()
-            }
-            else {
-                log("You don't have backup file on cloud yet.")
-                a.style.visibility = "hidden"
-                b.style.visibility = "hidden"
-                c.style.color = "red"
-                c.textContent = `${await getString("Check-Backup.error")}`
-                d.style.visibility = "hidden"
-                resolve()
+                catch (err: any) {
+                    warn("Error while getting system data:", err)
+                }
             }
         }
-        catch (err: any) { 
-            log("Cloud server is sleep, try backup/restore later. Detail:", err)
-            a.style.visibility = "hidden"
-            b.style.visibility = "hidden"
-            c.style.color = "red"
-            c.textContent = `${await getString("Check-Backup.serverError")}`
-            d.style.visibility = "hidden"
-            reject()
+        else {
+            log("You don't have backup file on cloud yet.")
+            restoreButton.style.visibility = "hidden"
+            deleteButton.style.visibility = "hidden"
+            checkText.style.color = "yellow"
+            checkText.textContent = `${await getString("Check-Backup.error")}`
+            backupInfo.style.visibility = "hidden"
         }
-    })
+    }
+    catch (err: any) { 
+        log("Cloud server is sleep, try backup/restore later. Detail:", err)
+        restoreButton.style.visibility = "hidden"
+        deleteButton.style.visibility = "hidden"
+        checkText.style.color = "red"
+        checkText.textContent = `${await getString("Check-Backup.serverError")}`
+        backupInfo.style.visibility = "hidden"
+    }
 }
 
-export async function backuprestoretab(panel) {
+export async function backuprestoretab(panel: Element) {
+    // Hiện icon loading trong khi đang tải dữ liệu
     const loading = UI.Row("loading", [
         UI.Loading(await getString("settings-loading")),
     ])
@@ -223,13 +221,13 @@ export async function backuprestoretab(panel) {
                 ]),
                 UI.CheckBox(
                     `${await getString("backup-datastore")}`,'bakdata', 'bakdatabox', async ()=>{
-                        if (ElainaData.get("backup-datastore") && ElainaData.get("Dev-mode")) {
+                        if (ElainaData.get("backup-datastore")) {
                             await CheckBackupFile()
                             //writeBackupData()
                         }
-                    }, ElainaData.get("Dev-mode"), "backup-datastore"
+                    }, true, "backup-datastore"
                 ),
-                UI.Label(ElainaData.get("Dev-mode")? `${await getString("Loading")}...`: "", "datastore-cloud-checking"),
+                UI.Label(`${await getString("Loading")}...`, "datastore-cloud-checking"),
                 document.createElement('br'),
                 UI.Row("restoreAndDeleteData", [
                     UI.Button(`${await getString("Restore-Data")}`, "restore-data-button", () => {
@@ -255,12 +253,17 @@ export async function backuprestoretab(panel) {
                         })
                     }),
                     UI.Button(`${await getString("Delete-Data")}`, "delete-data-button",async () => {
-                        if (ElainaData.get("Dev-mode")) {
+                        try {
                             await window.elainathemeApi.deleteBackup(ElainaData.get("ElainaTheme-Token"), summonerID)
-                            await CheckBackupFile()
+                            log("Datastore file deleted from cloud")
+                            await new Promise((r) => setTimeout(r, 1000));
                         }
+                        catch (err: any) {
+                            error("Error deleting datastore file from cloud:", err)
+                        }
+                        finally { await CheckBackupFile() }
                     }),
-                ], ElainaData.get("Dev-mode")),
+                ], true),
                 UI.Row("backupInfo", [
                     UI.Label(await getString("backupInfo"), ""),
                     UI.Row("backupSystemInfo", [
@@ -275,9 +278,7 @@ export async function backuprestoretab(panel) {
                 ])
             ])
         )
-        if (ElainaData.get("Dev-mode")) {
-            await CheckBackupFile()
-        }
+        await CheckBackupFile()
     }
     catch (err: any) {
         error("Error loading theme settings:", err);

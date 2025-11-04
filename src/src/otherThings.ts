@@ -1,6 +1,6 @@
 import { cdnImport } from "./theme/Cdn.ts"
 
-// Get this theme folder's name and export it
+/** Get this theme folder's name */
 export function getThemeName(): string | null {
     const error = new Error();
     const stackTrace = error.stack;

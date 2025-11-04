@@ -6,13 +6,13 @@
  * @Nyan Meow~~~
  */
 
-import { cdnImport } from "../otherThings.ts"
-import { getThemeName } from "../otherThings"
-import { log, warn, error } from "../utils/themeLog.ts";
+import { cdnImport } from "../../otherThings.ts"
+import { getThemeName } from "../../otherThings.ts"
+import { log, warn, error } from "../../utils/themeLog.ts";
 import * as upl from 'pengu-upl';
-import utils from '../utils/utils.ts';
-import LocalKey from "../updates/updateKeyLocal.ts";
-import { setDefaultData } from "../services/backupAndRestoreDatastore.ts";
+import utils from '../../utils/utils.ts';
+import LocalKey from "../../updates/updateKeyLocal.ts";
+import { setDefaultData } from "../../services/backupAndRestoreDatastore.ts";
 
 const datapath: string = `//plugins/${getThemeName()}/`
 const iconFolder: string = `${datapath}assets/icon/`;
@@ -56,6 +56,7 @@ let cdnUrl = `${cdnServer["cdn-url"]}elaina-theme-data@${cdnServer["version"]}`
 let localUrl = `//plugins/${getThemeName()}/elaina-theme-data`
 
 try {
+    // Check if in dev mode
     if (ElainaData.get("Dev-mode")) {
         CdnKey = (await cdnImport(`${localUrl}/src/update/update.js`, "Can't load cdn key")).default.key;
         log('%cRunning Elaina theme - %cDev version', 'color: #e4c2b3', 'color: red');
@@ -125,22 +126,6 @@ export function createHomePageTab(context: any) {
     //         error("Failed to create homepage, maybe you're in pbe version")
     //     }
     // });
-}
-
-function freezeProperties(object: Object, properties: any[]) {
-	for (const type in object) {
-		if ((properties && properties.length && properties.includes(type)) || (!properties || !properties.length)) {
-			let value = object[type]
-			try {
-				Object.defineProperty(object, type, {
-					configurable: false,
-					get: () => value,
-					set: (v) => v,
-				})
-			}
-            catch {}
-		}
-	}
 }
 
 class ChangeHomePageTabs {
@@ -323,14 +308,20 @@ class AudioController {
     
     toggleAudioLoop = () => {
         const audio: any = document.getElementById("bg-audio");
+
+        function handleAudioEnded() {
+            audio.pause();
+            audio.load();
+        }
+
         if (ElainaData.get('audio-loop')) {
             audio.removeEventListener("ended", this.nextSong);
-            audio.addEventListener("ended", () => {
-                audio.pause();
-                audio.load();
-            });
-        } else {
+            audio.addEventListener("ended", handleAudioEnded);
+        } 
+        else {
+            audio.removeEventListener("ended", handleAudioEnded);
             audio.addEventListener("ended", this.nextSong);
+            this.changeSongName()
         }
     };
     
@@ -538,7 +529,7 @@ class MainController {
             showContainerNew.append(container, wallpaperControls);
         } 
         else {
-            error("Could not find the container '.rcp-fe-lol-home' to append controls.");
+            error("Could not find the container '#activity-center' or '.rcp-fe-lol-home' to append controls.");
         }
     
         // Handle volume slider input
@@ -768,10 +759,10 @@ class HideNavbarButton {
     }
 
     addHideButton = () => {
-        upl.observer.subscribeToElementCreation(".activity-center__tabs_container", (element: any) => {
+        upl.observer.subscribeToElementCreation(".activity-center__tabs_footer", (element: any) => {
             if (document.querySelector(".hide-navbar-button")) return
 
-            // just make sure
+            // just make sure, don't ask me why
             try {
                 let button: any = document.getElementsByClassName("hide-navbar-button")
                 if (button.length > 1) {
@@ -855,7 +846,7 @@ class HideTopNavbarButton {
                         opacity: 0;
                         pointer-events: none;
                     `
-                    freezeProperties(navItem[i].style, ["transform"])
+                    utils.freezeProperties(navItem[i].style, ["transform"])
                 }
                 for (let i = 0; i < verticalRule.length; i++) {
                     verticalRule[i].style.cssText = `
@@ -863,7 +854,7 @@ class HideTopNavbarButton {
                         opacity: 0;
                         pointer-events: none;
                     `
-                    freezeProperties(verticalRule[i].style, ["transform"])
+                    utils.freezeProperties(verticalRule[i].style, ["transform"])
                 }
                 walletBadge.style.cssText = `
                     transform: translateX(${navWidth-40}px);
@@ -965,7 +956,7 @@ class WallpaperAndAudio {
         
         let savedTime = false
         video.addEventListener('timeupdate', () => {
-            if (!savedTime && parseInt(video.currentTime) % ElainaData.get("WallpaperAudio-timeUpdate") == 0) {
+            if (!savedTime && parseInt(video.currentTime) % (ElainaData.get("WallpaperAudio-timeUpdate")/1000) == 0) {
                 savedTime = true
                 ElainaData.set("Wallpaper-currentTime", parseInt(video.currentTime))
             }
@@ -1005,20 +996,14 @@ class WallpaperAndAudio {
 
             let savedTime = false
             audio.addEventListener('timeupdate', () => {
-                if (!savedTime && parseInt(audio.currentTime) % ElainaData.get("WallpaperAudio-timeUpdate") == 0) {
+                if (!savedTime && parseInt(audio.currentTime) % (ElainaData.get("WallpaperAudio-timeUpdate")/1000) == 0) {
                     savedTime = true
                     ElainaData.set("Audio-currentTime", parseInt(audio.currentTime))
                 }
                 else savedTime = false
             });
 
-            if (ElainaData.get('audio-loop')) {
-                audio.addEventListener("ended", () => audio.load());
-            } 
-            else audio.addEventListener("ended", () => {
-                audioController.nextSong()
-                audioController.changeSongName()
-            });
+            audioController.toggleAudioLoop();
             
             audio.addEventListener("error", () => audio.load());
         }

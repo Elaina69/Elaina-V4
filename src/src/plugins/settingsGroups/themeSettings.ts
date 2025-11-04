@@ -1,6 +1,8 @@
 import { UI } from "./settingsUI.ts"
-import { restartAfterChange, utils, error } from "../settings.ts"
-import { del_webm_buttons, create_webm_buttons, applyHideAndShowTFTtab, setAudio, hideShowNavBar, changeHomePageStyle } from "../../theme/homepage.ts";
+import { restartAfterChange } from "../settings.ts"
+import utils from "../../utils/utils.ts";
+import { error } from "../../utils/themeLog.ts";
+import { del_webm_buttons, create_webm_buttons, applyHideAndShowTFTtab, setAudio, hideShowNavBar, changeHomePageStyle } from "../../theme/customUI/customHomepage.ts";
 
 const FILE_REGEX = {
     Wallpaper: /\.(png|jpg|jpeg|gif|bmp|webp|ico|mp4|webm|mkv|mov|avi|wmv|3gp|m4v)$/,
@@ -30,7 +32,7 @@ async function themeSettings(panel) {
                             `*${await getString("note")}: ${await getString("note-1")}`, ""
                         ),
                     ]),
-                    UI.Image("logo.png", "theme-settings-logo")
+                    UI.Image(true, "logo.png", "theme-settings-logo")
                 ]),
                 UI.CheckBox(
                     `${await getString("AllowTrackingData")}`,'trackData','trackDatabox', ()=>{
@@ -355,6 +357,12 @@ async function themeSettings(panel) {
                 document.createElement('br'),
                 document.createElement('br'),
                 UI.CheckBox(
+                    await getString("sync-user-icons"),'syncusericons','syncusericonsbox', () => {
+                        restartAfterChange('syncusericons', "sync-user-icons")
+                    }, true, "sync-user-icons"
+                ),
+                document.createElement('br'),
+                UI.CheckBox(
                     `${await getString("hide-homepage-navbar")}`,'homenav','homenavbox', ()=>{
                         hideShowNavBar()
                         changeHomePageStyle()
@@ -509,6 +517,7 @@ async function themeSettings(panel) {
                         UI.Label(ElainaData.get("nickname-color-with-opacity"), "nickname-color-text"),
                         UI.Label(`${await getString("preview")}: `, "nickname-color-preview-label"),
                         UI.Label(
+                            // @ts-ignore
                             document.querySelector(".rcp-fe-lol-social .player-name__force-locale-text-direction")?.textContent, 
                             "nickname-color-preview"
                         )

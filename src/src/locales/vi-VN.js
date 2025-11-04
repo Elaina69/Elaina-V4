@@ -5,6 +5,7 @@ export default {
     "exit"            : "Thoát",
     "more-info"       : "Chi tiết",
     "settings-loading": "Chờ xíu nhen...",
+    "refresh"         : "Làm mới",
 
 
     // auto accept button
@@ -118,6 +119,7 @@ export default {
     
     "prevent-manual-update"         : "Không nhận thông báo về các bản cập nhật thủ công trong tương lai",
     "holiday-message"               : "Tin nhắn thông báo cho những ngày lễ",
+    "sync-user-icons"               : "Đồng bộ icon tùy chỉnh của nhiều người dùng (Chỉ người dùng Elaina theme mới có thể thấy)",
     "hide-homepage-navbar"          : "Ẩn thanh điều hướng trang chủ thủ công",
     "custom-navbar-css"             : "Thanh điều hướng cấp 2 tùy chỉnh",
     "old-prev/next-button"          : "Nút thay đổi hình nền cũ",

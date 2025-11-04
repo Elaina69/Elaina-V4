@@ -75,27 +75,39 @@ interface elainathemeApi {
     writeBackup: (token: string, userId: number, data: Object) => Promise<void>
     readBackup: (token: string, userId: number) => Promise<void>
     deleteBackup: (token: string, userId: number) => Promise<void>
+    uploadImage: (token: string, userId: number, type: string, file: File) => Promise<void>
+    getImage: (userId: number, type: string) => Promise<string>
+    deleteImage: (token: string, userId: number, type: string) => Promise<void>
+    getFriendsImage: (friendList: { summonerId: number }[]) => Promise<{ summonerID: number, icon: { avatar: string, border: string, banner: string, emblem: string, hoverCardBackdrop: string } }[]>
+}
+
+interface syncUserIcons {
+    uploadIcon: (icon: string, iconType: string) => Promise<void>
+    getIcon: (summonerID: number ,iconType: string) => Promise<string | null>
+    main: () => Promise<void>
 }
   
 // globals
 declare interface Window {
-    DataStore: DataStore;
-    CommandBar: CommandBar;
-    Toast: Toast;
-    Effect: Effect;
-    PluginFS: PluginFS
+    DataStore   : DataStore;
+    CommandBar  : CommandBar;
+    Toast       : Toast;
+    Effect      : Effect;
+    PluginFS    : PluginFS
     Pengu: {
         version: string
-        superPotato: boolean
-        plugins: string[]
-        isMac: boolean
-        fs: PluginFS
+        superPotato : boolean
+        plugins     : string[]
+        isMac       : boolean
+        fs          : PluginFS
     };
     os: {
-        name: 'win' | 'mac'
-        version: string
-        build: string
+        name    : 'win' | 'mac'
+        version : string
+        build   : string
     };
+
+    upl                         : any;
     openDevTools                : () => void;
     openPluginsFolder           : (subdir?: string) => void;
     reloadClient                : () => void;
@@ -104,18 +116,20 @@ declare interface Window {
     storeObserver               : any;
     __llver                     : string;
 
-    ElainaData: elainaData
-    elainathemeApi: elainathemeApi;
+    ElainaData                  : elainaData
+    elainathemeApi              : elainathemeApi;
+    syncUserIcons               : syncUserIcons;
     getThemeName                : () => void;
     cdnImport                   : (url: string, errorMsg: any) => Promise<any>;
     log                         : (message: string, ...args: string[]) => void;
     warn                        : (message: string, ...args: string[]) => void;
     error                       : (message: string, ...args: string[]) => void;
-    restoreDefaultDataStore     : () => Promise<void>; 
     switch_between_status       : () => void;
     autoAcceptQueueButtonSelect : () => void;
     exitClient                  : () => void;
     dodgeQueue                  : () => void;
+    friendIconList              : any;
+    customRank                  : () => void
 };
 
 declare function getString(param: string)   : Promise<string>;

@@ -1,3 +1,4 @@
 .style-profile-emblem-content > img {
-	content: var(--Emblem) !important;
+	visibility: hidden;
+	width: unset !important;
 }
