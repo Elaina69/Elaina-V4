@@ -759,10 +759,10 @@ class HideNavbarButton {
     }
 
     addHideButton = () => {
-        upl.observer.subscribeToElementCreation(".activity-center__tabs_container", (element: any) => {
+        upl.observer.subscribeToElementCreation(".activity-center__tabs_footer", (element: any) => {
             if (document.querySelector(".hide-navbar-button")) return
 
-            // just make sure
+            // just make sure, don't ask me why
             try {
                 let button: any = document.getElementsByClassName("hide-navbar-button")
                 if (button.length > 1) {
