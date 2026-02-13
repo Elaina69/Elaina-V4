@@ -183,8 +183,15 @@ const changeHomePageTabs = new ChangeHomePageTabs()
 // For wallpaper
 class WallpaperController {
     elainaPlayPause = () => {
-        const elainaBgElem: any = document.getElementById("elaina-bg");
-        ElainaData.get('pause-wallpaper') % 2 === 0 ? elainaBgElem.pause() : elainaBgElem.play();
+        const elainaBg: any = document.getElementById("elaina-bg");
+        switch (ElainaData.get('pause-wallpaper')) {
+            case 0:
+                elainaBg.play();
+                break;
+            default:
+                elainaBg.pause();
+                break;
+        }
     };
     
     playPauseSetIcon = (elem: any = document.querySelector(".pause-bg-icon")) => {
@@ -196,9 +203,14 @@ class WallpaperController {
     loadBG = (BG: string) => {
         const elainaBg: any = document.getElementById("elaina-bg");
         const elainaStaticBg: any = document.getElementById("elaina-static-bg");
+
+        elainaBg.pause()
+        elainaBg.src = ""
+        elainaBg.load()
         elainaBg.src = `${bgFolder}wallpapers/${BG}`;
-        elainaStaticBg.src = `${bgFolder}wallpapers/${BG}`;
         elainaBg.playbackRate = ElainaData.get("Playback-speed") / 100;
+
+        elainaStaticBg.src = `${bgFolder}wallpapers/${BG}`;
     };
 
     changeBG = async (BG: string) => {
@@ -237,6 +249,7 @@ class WallpaperController {
     prevWallpaper = async() => {
         const elainaBg: any = document.getElementById("elaina-bg");
         elainaBg.classList.add("webm-hidden");
+        
         const elainaStaticBg: any = document.getElementById("elaina-static-bg");
         elainaStaticBg.classList.add("webm-hidden");
     
@@ -275,7 +288,14 @@ const wallpaperController = new WallpaperController()
 class AudioController {
     audioPlayPause = () => {
         const audio: any = document.getElementById("bg-audio");
-        ElainaData.get('pause-audio') % 2 === 0 ? audio.pause() : audio.play();
+        switch (ElainaData.get('pause-audio')) {
+            case 0:
+                audio.pause();
+                break;
+            default:
+                audio.play();
+                break;
+        }
         this.changeSongName()
     };
     
@@ -953,6 +973,7 @@ class WallpaperAndAudio {
         video.src = `${bgFolder}wallpapers/${ElainaData.get("Wallpaper-list")[ElainaData.get('wallpaper-index')]}`;
         video.playbackRate = ElainaData.get("Playback-speed") / 100;
         video.preload = "metadata";
+        video.setAttribute("disablePictureInPicture", "");
         
         let savedTime = false
         video.addEventListener('timeupdate', () => {
