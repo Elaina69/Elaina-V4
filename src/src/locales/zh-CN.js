@@ -114,7 +114,7 @@ export default {
     "change-slide-delay"            : "Change wallpaper slide delay",
     "speed-check-deny"              : "速度百分比必须在 6.25 到 300 之间",
     "music-volume"                  : "音乐音量",
-    "turnoff-audio-ingame"          : "游戏中关闭音乐/壁纸音频",
+    "turnoff-audio-ingame"          : "Pause music/wallpaper when ingame",
     "Disable-Theme-Audio"           : "Disable theme's audio",
     
     "prevent-manual-update"         : "不接收未来手动更新通知",

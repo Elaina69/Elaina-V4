@@ -45,7 +45,7 @@ function addStyleWithID(Id: string, style: string) {
 }
 
 /**
- * Adds a font to the document
+ * Adds a font to the document 
  * @param {string} folder - The font file path
  * @param {string} font_id - The ID for the style element
  * @param {string} font_family - The font family name

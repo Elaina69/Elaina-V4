@@ -114,7 +114,7 @@ export default {
     "change-slide-delay"            : "Chỉnh độ trễ của bộ trình chiếu hình nền",
     "speed-check-deny"              : "Chỉ có thể chỉnh tốc độ >= 6.25 và <= 300",
     "music-volume"                  : "Âm lượng nhạc",
-    "turnoff-audio-ingame"          : "Tắt nhạc/âm thanh hình nền khi vào trận",
+    "turnoff-audio-ingame"          : "Tạm dừng nhạc và hình nền khi vào trận",
     "Disable-Theme-Audio"           : "Vô hiệu hóa nhạc của Elaina theme",
     
     "prevent-manual-update"         : "Không nhận thông báo về các bản cập nhật thủ công trong tương lai",
