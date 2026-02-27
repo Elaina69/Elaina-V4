@@ -217,6 +217,13 @@ class WallpaperController {
             elainaBg.src = `${bgFolder}wallpapers/${BG}`;
             elainaBg.playbackRate = ElainaData.get("Playback-speed") / 100;
             elainaStaticBg.src = `${bgFolder}wallpapers/${BG}`;
+
+            // Respect current pause state after loading new source
+            if (ElainaData.get('pause-wallpaper') % 2 === 1) {
+                elainaBg.play();
+            } else {
+                elainaBg.pause();
+            }
         });
     };
 
@@ -228,7 +235,6 @@ class WallpaperController {
         
         setTimeout(() => {
             this.loadBG(BG);
-            this.elainaPlayPause();
             elainaBg.classList.remove("webm-hidden");
             elainaStaticBg.classList.remove("webm-hidden");
         }, 500);
