@@ -184,8 +184,8 @@ const changeHomePageTabs = new ChangeHomePageTabs()
 class WallpaperController {
     elainaPlayPause = () => {
         const elainaBg: any = document.getElementById("elaina-bg");
-        switch (ElainaData.get('pause-wallpaper')) {
-            case 0:
+        switch (ElainaData.get('pause-wallpaper') % 2) {
+            case 1:
                 elainaBg.play();
                 break;
             default:
@@ -205,12 +205,19 @@ class WallpaperController {
         const elainaStaticBg: any = document.getElementById("elaina-static-bg");
 
         elainaBg.pause()
-        elainaBg.src = ""
-        elainaBg.load()
-        elainaBg.src = `${bgFolder}wallpapers/${BG}`;
-        elainaBg.playbackRate = ElainaData.get("Playback-speed") / 100;
 
-        elainaStaticBg.src = `${bgFolder}wallpapers/${BG}`;
+        elainaBg.removeAttribute('src');
+        while (elainaBg.firstChild) {
+            elainaBg.removeChild(elainaBg.firstChild);
+        }
+
+        elainaBg.load()
+
+        requestAnimationFrame(() => {
+            elainaBg.src = `${bgFolder}wallpapers/${BG}`;
+            elainaBg.playbackRate = ElainaData.get("Playback-speed") / 100;
+            elainaStaticBg.src = `${bgFolder}wallpapers/${BG}`;
+        });
     };
 
     changeBG = async (BG: string) => {
@@ -273,11 +280,19 @@ class WallpaperController {
         }
     }
 
+    private slideshowTimeoutId: number | null = null;
+
     wallpaperSlider = (wallpaper: string) => {
+        if (this.slideshowTimeoutId !== null) {
+            window.clearTimeout(this.slideshowTimeoutId);
+            this.slideshowTimeoutId = null;
+        }
+
         if (ElainaData.get("wallpaper-slideshow") && this.checkBGType(wallpaper) == 0) {
-            window.setTimeout(()=> {
-                this.nextWallpaper()
-            }, ElainaData.get("wallpaper-change-slide-time"))
+            this.slideshowTimeoutId = window.setTimeout(() => {
+                this.slideshowTimeoutId = null;
+                this.nextWallpaper();
+            }, ElainaData.get("wallpaper-change-slide-time"));
         }
     }
 }
@@ -288,12 +303,12 @@ const wallpaperController = new WallpaperController()
 class AudioController {
     audioPlayPause = () => {
         const audio: any = document.getElementById("bg-audio");
-        switch (ElainaData.get('pause-audio')) {
-            case 0:
-                audio.pause();
+        switch (ElainaData.get('pause-audio') % 2) {
+            case 1:
+                audio.play();
                 break;
             default:
-                audio.play();
+                audio.pause();
                 break;
         }
         this.changeSongName()
@@ -394,6 +409,8 @@ const audioController = new AudioController()
 
 // Create controllers
 class MainController {
+    private backgroundControllerClickHandler: ((e: Event) => void) | null = null;
+
     createElementWithClass = (tag, className) => {
         const element = document.createElement(tag);
         if (className) element.classList.add(className);
@@ -414,6 +431,12 @@ class MainController {
 
     // Delete controllers
     deleteController = () => {
+        // Remove document-level listener to prevent accumulation
+        if (this.backgroundControllerClickHandler) {
+            document.removeEventListener('click', this.backgroundControllerClickHandler);
+            this.backgroundControllerClickHandler = null;
+        }
+
         document.querySelector(".webm-bottom-buttons-container-hovered")?.remove();
         document.querySelector(".webm-bottom-buttons-container")?.remove();
         document.querySelector(".wallpaper-controls")?.remove();
@@ -599,11 +622,12 @@ class MainController {
         });
     
         // Optionally hide the slider when clicking elsewhere
-        document.addEventListener('click', (event: any) => {
+        this.backgroundControllerClickHandler = (event: any) => {
             if (!muteAudio.contains(event.target) && !volumeSliderContainer.contains(event.target)) {
                 volumeSliderContainer.style.display = 'none';
             }
-        });
+        };
+        document.addEventListener('click', this.backgroundControllerClickHandler);
     
         // Update progress bar
         const audio: any = document.getElementById('bg-audio');
@@ -733,36 +757,37 @@ class HideNavbarButton {
     }
 
     hideShowNavBar = () => {
-        const nav: any = document.querySelector(".activity-center__tabs_scrollable")
-        const navFooter: any = document.querySelector(".activity-center__tabs_footer")
-        const navDivider: any = document.querySelector(".activity-center__tabs_section-divider")
-        const hideButton: any = document.querySelector(".hide-navbar-button")
-        const hideButtonIcon: any = document.querySelector(".hide-navbar-button-icon")
+        const navPersistent: HTMLElement | null = document.querySelector(".activity-center__persistent-tab")
+        const navScrollable: HTMLElement | null = document.querySelector(".activity-center__tabs_scrollable")
+        const navFooter: HTMLElement | null = document.querySelector(".activity-center__tabs_footer")
+        const navDivider: HTMLElement | null = document.querySelector(".activity-center__tabs_section-divider")
 
-        try {
-            if (ElainaData.get("hide-homepage-navbar")) {
-                nav.style.cssText = `transform: translateX(-212px); pointer-events: none;`
-                navFooter.style.cssText = `transform: translateX(-212px); pointer-events: none;`
-                navDivider.style.cssText = `transform: translateX(-212px); pointer-events: none;`
-                hideButton.style.cssText = `transform: translateX(0px);`
-                hideButtonIcon.setAttribute("src", `${iconFolder}plugins-icons/next_button.png`);
-            }
-            else {
-                nav.style.cssText = `transform: translateX(0px); pointer-events: auto;`
-                navFooter.style.cssText = `transform: translateX(0px); pointer-events: auto;`
-                navDivider.style.cssText = `transform: translateX(0px); pointer-events: auto;`
-                hideButton.style.cssText = `transform: translateX(212px);`
-                hideButtonIcon.setAttribute("src", `${iconFolder}plugins-icons/prev_button.png`);
-            }
+        const hideButton: HTMLElement | null = document.querySelector(".hide-navbar-button")
+        const hideButtonIcon: HTMLImageElement | null = document.querySelector(".hide-navbar-button-icon")
+
+        if (ElainaData.get("hide-homepage-navbar")) {
+            if (navPersistent) navPersistent.style.cssText = `transform: translateX(-212px); pointer-events: none;`
+            if (navScrollable) navScrollable.style.cssText = `transform: translateX(-212px); pointer-events: none;`
+            if (navFooter) navFooter.style.cssText = `transform: translateX(-212px); pointer-events: none;`
+            if (navDivider) navDivider.style.cssText = `transform: translateX(-212px); pointer-events: none;`
+            if (hideButton) hideButton.style.cssText = `transform: translateX(0px);`
+            if (hideButtonIcon) hideButtonIcon.setAttribute("src", `${iconFolder}plugins-icons/next_button.png`);
         }
-        catch (err: any) { error("Get error while changing style for navbar:", err)}
+        else {
+            if (navPersistent) navPersistent.style.cssText = `transform: translateX(0px); pointer-events: auto;`
+            if (navScrollable) navScrollable.style.cssText = `transform: translateX(0px); pointer-events: auto;`
+            if (navFooter) navFooter.style.cssText = `transform: translateX(0px); pointer-events: auto;`
+            if (navDivider) navDivider.style.cssText = `transform: translateX(0px); pointer-events: auto;`
+            if (hideButton) hideButton.style.cssText = `transform: translateX(212px);`
+            if (hideButtonIcon) hideButtonIcon.setAttribute("src", `${iconFolder}plugins-icons/prev_button.png`);
+        }
     }
 
     changeHomePageStyle = () => {
-        const wallpaperController: any = document.querySelector(".wallpaper-controls")
-        const audioController: any = document.querySelector(".webm-bottom-buttons-container")
-        const activityCenter: any = document.querySelector("#activity-center > main")
-        const activityCenterChinese: any = document.querySelector(".managed-iframe-wrapper > iframe")
+        const wallpaperController: HTMLElement | null = document.querySelector(".wallpaper-controls")
+        const audioController: HTMLElement | null = document.querySelector(".webm-bottom-buttons-container")
+        const activityCenter: HTMLElement | null = document.querySelector("#activity-center > main")
+        const activityCenterChinese: HTMLElement | null = document.querySelector(".managed-iframe-wrapper > iframe")
         
         if (ElainaData.get("hide-homepage-navbar")) {
             if (activityCenter) activityCenter.style.cssText = `opacity: 0 !important; pointer-events: none !important;`
@@ -784,7 +809,7 @@ class HideNavbarButton {
 
             // just make sure, don't ask me why
             try {
-                let button: any = document.getElementsByClassName("hide-navbar-button")
+                let button: HTMLCollectionOf<Element> = document.getElementsByClassName("hide-navbar-button")
                 if (button.length > 1) {
                     for (let i = 0; i < button.length; i++) {
                         button[i].remove()
@@ -848,18 +873,21 @@ class HideTopNavbarButton {
     }
 
     hideShowTopNavBar = () => {
-        const navItem: any = document.querySelectorAll(".right-nav-menu > .main-navigation-menu-item")
-        const verticalRule: any = document.querySelectorAll(".right-nav-vertical-rule")
-        const walletBadge: any = document.querySelector(".wallet-and-badges")
-        const hideButton: any = document.querySelector(".hide-top-navbar")
+        const navItem: NodeListOf<HTMLElement> = document.querySelectorAll(".right-nav-menu > .main-navigation-menu-item")
+        const verticalRule: NodeListOf<HTMLElement> = document.querySelectorAll(".right-nav-vertical-rule")
+        const walletBadge: HTMLElement | null = document.querySelector(".wallet-and-badges")
+        const hideButton: HTMLElement | null = document.querySelector(".hide-top-navbar")
 
         try {
             let isHidden = ElainaData.get("hide-top-navbar")
             if (isHidden) {
-                let nav: any = document.querySelector(".right-nav-menu")
-                let navWidth = nav.offsetWidth
+                let nav: HTMLElement | null = document.querySelector(".right-nav-menu")
+                let navWidth = nav ? nav.offsetWidth : 0
 
-                hideButton.style.cssText = `transform: translateX(${navWidth-40}px);`
+                if (hideButton) {
+                    hideButton.style.cssText = `transform: translateX(${navWidth-40}px);`
+                }
+
                 for (let i = 0; i < navItem.length; i++) {
                     navItem[i].style.cssText = `
                         transform: translateX(${navWidth-40}px);
@@ -868,6 +896,7 @@ class HideTopNavbarButton {
                     `
                     utils.freezeProperties(navItem[i].style, ["transform"])
                 }
+
                 for (let i = 0; i < verticalRule.length; i++) {
                     verticalRule[i].style.cssText = `
                         transform: translateX(${navWidth-40}px);
@@ -876,14 +905,20 @@ class HideTopNavbarButton {
                     `
                     utils.freezeProperties(verticalRule[i].style, ["transform"])
                 }
-                walletBadge.style.cssText = `
-                    transform: translateX(${navWidth-40}px);
-                    opacity: 0;
-                    pointer-events: none;
-                `
+
+                if (walletBadge) {
+                    walletBadge.style.cssText = `
+                        transform: translateX(${navWidth-40}px);
+                        opacity: 0;
+                        pointer-events: none;
+                    `
+                }
             }
             else {
-                hideButton.style.cssText = `transform: translateX(0px);`
+                if (hideButton) {
+                    hideButton.style.cssText = `transform: translateX(0px);`
+                }
+
                 for (let i = 0; i < navItem.length; i++) {
                     navItem[i].style.cssText = `
                         transform: translateX(0px);
@@ -891,6 +926,7 @@ class HideTopNavbarButton {
                         pointer-events: auto;
                     `
                 }
+
                 for (let i = 0; i < verticalRule.length; i++) {
                     verticalRule[i].style.cssText = `
                         transform: translateX(0px);
@@ -898,11 +934,14 @@ class HideTopNavbarButton {
                         pointer-events: auto;
                     `
                 }
-                walletBadge.style.cssText = `
-                    transform: translateX(0px);
-                    opacity: 1;
-                    pointer-events: auto;
-                `
+
+                if (walletBadge) {
+                    walletBadge.style.cssText = `
+                        transform: translateX(0px);
+                        opacity: 1;
+                        pointer-events: auto;
+                    `
+                }
             }
             this.changeButtonIcon(isHidden)
         }
@@ -915,7 +954,7 @@ class HideTopNavbarButton {
 
             // just make sure
             try {
-                let button: any = document.getElementsByClassName("hide-top-navbar")
+                let button: HTMLCollectionOf<HTMLElement> = document.getElementsByClassName("hide-top-navbar") as HTMLCollectionOf<HTMLElement>;
                 if (button.length > 1) {
                     for (let i = 0; i < button.length; i++) {
                         button[i].remove()
@@ -935,6 +974,9 @@ const hideTopNavbarButton = new HideTopNavbarButton()
 
 //Add and load wallpaper/audio
 class WallpaperAndAudio {
+    private videoAbortController: AbortController | null = null;
+    private audioAbortController: AbortController | null = null;
+
     // Add Wallpaper and Audio to client
     addWallpaperElement = () => {
         // create wallpaper
@@ -965,6 +1007,13 @@ class WallpaperAndAudio {
             ElainaData.set('wallpaper-index', 0);
         }
 
+        // Abort previous video listeners to prevent accumulation
+        if (this.videoAbortController) {
+            this.videoAbortController.abort();
+        }
+        this.videoAbortController = new AbortController();
+        const videoSignal = this.videoAbortController.signal;
+
         const video: any = document.getElementById("elaina-bg")
         video.autoplay = true;
         video.volume = ElainaData.get("wallpaper-volume");
@@ -982,13 +1031,13 @@ class WallpaperAndAudio {
                 ElainaData.set("Wallpaper-currentTime", parseInt(video.currentTime))
             }
             else savedTime = false
-        });
+        }, { signal: videoSignal });
         
         if (ElainaData.get("wallpaper-slideshow")) {
             video.loop = false
             video.addEventListener("ended", () => {
                 wallpaperController.nextWallpaper();
-            });
+            }, { signal: videoSignal });
         }
         else video.loop = true;
     }
@@ -1007,6 +1056,13 @@ class WallpaperAndAudio {
                 ElainaData.set('audio-index', 0);
             }
 
+            // Abort previous audio listeners to prevent accumulation
+            if (this.audioAbortController) {
+                this.audioAbortController.abort();
+            }
+            this.audioAbortController = new AbortController();
+            const audioSignal = this.audioAbortController.signal;
+
             const audio: any = document.getElementById("bg-audio")
             audio.autoplay = true;
             audio.src = `${bgFolder}audio/${ElainaData.get("Audio-list")[ElainaData.get('audio-index')]}`;
@@ -1022,11 +1078,11 @@ class WallpaperAndAudio {
                     ElainaData.set("Audio-currentTime", parseInt(audio.currentTime))
                 }
                 else savedTime = false
-            });
+            }, { signal: audioSignal });
 
             audioController.toggleAudioLoop();
             
-            audio.addEventListener("error", () => audio.load());
+            audio.addEventListener("error", () => audio.load(), { signal: audioSignal });
         }
     }
 
