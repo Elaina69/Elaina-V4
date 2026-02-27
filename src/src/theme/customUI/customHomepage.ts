@@ -429,6 +429,76 @@ class MainController {
         return icon;
     };
 
+    // Make an element draggable (resets to default CSS position on reload)
+    private makeDraggable = (element: HTMLElement) => {
+        let startX = 0, startY = 0;
+        let startLeft = 0, startTop = 0;
+        let isDragging = false;
+        let wasDragged = false;
+
+        // Block clicks right after drag to prevent accidental button activation
+        element.addEventListener('click', (e) => {
+            if (wasDragged) {
+                e.stopPropagation();
+                e.preventDefault();
+                wasDragged = false;
+            }
+        }, true);
+
+        element.addEventListener('mousedown', (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (target.closest('input')) return;
+
+            startX = e.clientX;
+            startY = e.clientY;
+            const computed = getComputedStyle(element);
+            startLeft = parseInt(computed.left) || 0;
+            startTop = parseInt(computed.top) || 0;
+            isDragging = false;
+
+            const onMouseMove = (e: MouseEvent) => {
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+
+                if (!isDragging && (Math.abs(dx) + Math.abs(dy)) > 5) {
+                    isDragging = true;
+                }
+
+                if (isDragging) {
+                    let newLeft = startLeft + dx;
+                    let newTop = startTop + dy;
+
+                    element.style.left = `${newLeft}px`;
+                    element.style.top = `${newTop}px`;
+                    element.style.bottom = 'auto';
+
+                    // Keep within viewport
+                    const elemRect = element.getBoundingClientRect();
+                    if (elemRect.left < 0) newLeft -= elemRect.left;
+                    if (elemRect.top < 0) newTop -= elemRect.top;
+                    if (elemRect.right > window.innerWidth) newLeft -= (elemRect.right - window.innerWidth);
+                    if (elemRect.bottom > window.innerHeight) newTop -= (elemRect.bottom - window.innerHeight);
+
+                    element.style.left = `${newLeft}px`;
+                    element.style.top = `${newTop}px`;
+
+                    e.preventDefault();
+                }
+            };
+
+            const onMouseUp = () => {
+                if (isDragging) {
+                    wasDragged = true;
+                }
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            };
+
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        });
+    };
+
     // Delete controllers
     deleteController = () => {
         // Remove document-level listener to prevent accumulation
@@ -681,14 +751,14 @@ class MainController {
             }
         });
 
-        // change wallpaper/audio controller if hide homepage navbar
-        if (ElainaData.get("hide-homepage-navbar")) {
-            container.style.left = "20px"
-            wallpaperControls.style.left = "20px"
-        }
-        else {
-            container.style.left = "230px"
-            wallpaperControls.style.left = "230px"
+        // Enable drag/drop for controllers
+        this.makeDraggable(container);
+        this.makeDraggable(wallpaperControls);
+
+        // Apply navbar shift via transform
+        if (!ElainaData.get("hide-homepage-navbar")) {
+            container.style.transform = `translateX(212px)`;
+            wallpaperControls.style.transform = `translateX(212px)`;
         }
     };
 }
@@ -792,14 +862,14 @@ class HideNavbarButton {
         if (ElainaData.get("hide-homepage-navbar")) {
             if (activityCenter) activityCenter.style.cssText = `opacity: 0 !important; pointer-events: none !important;`
             if (activityCenterChinese) activityCenterChinese.style.cssText = `opacity: 0; pointer-events: none;`
-            if (wallpaperController) wallpaperController.style.cssText = `transform: translateX(0px);`
-            if (audioController) audioController.style.cssText = `transform: translateX(0px);`
+            if (wallpaperController) wallpaperController.style.transform = `translateX(0px)`
+            if (audioController) audioController.style.transform = `translateX(0px)`
         }
         else {
             if (activityCenter) activityCenter.style.cssText = `opacity: 1 !important; pointer-events: auto !important;`
             if (activityCenterChinese) activityCenterChinese.style.cssText = `opacity: 1; pointer-events: auto;`
-            if (wallpaperController) wallpaperController.style.cssText = `transform: translateX(212px);`
-            if (audioController) audioController.style.cssText = `transform: translateX(212px);`
+            if (wallpaperController) wallpaperController.style.transform = `translateX(212px)`
+            if (audioController) audioController.style.transform = `translateX(212px)`
         }
     }
 
