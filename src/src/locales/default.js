@@ -114,7 +114,7 @@ export default {
     "change-slide-delay"            : "Change wallpaper slide delay",
     "speed-check-deny"              : "Only can set the speed >= 6.25 and <= 300",
     "music-volume"                  : "Music volume",
-    "turnoff-audio-ingame"          : "Turn off music/wallpaper audio when ingame",
+    "turnoff-audio-ingame"          : "Pause music/wallpaper when ingame",
     "Disable-Theme-Audio"           : "Disable theme's audio",
     
     "prevent-manual-update"         : "Don't receive notifications about future manual updates",

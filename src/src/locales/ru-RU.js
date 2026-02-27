@@ -114,7 +114,7 @@ export default {
     "change-slide-delay"            : "Изменить задержку переключения обоев",
     "speed-check-deny"              : "Можно установить скорость только >= 6.25 и <= 300",
     "music-volume"                  : "Громкость музыки",
-    "turnoff-audio-ingame"          : "Отключить музыку/аудио обоев во время игры",
+    "turnoff-audio-ingame"          : "Pause music/wallpaper when ingame",
     "Disable-Theme-Audio"           : "Отключить аудио темы",
     
     "prevent-manual-update"         : "Не получать уведомления о будущих ручных обновлениях",

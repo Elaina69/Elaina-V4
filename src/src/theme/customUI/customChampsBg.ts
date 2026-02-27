@@ -1,5 +1,6 @@
 import * as upl from 'pengu-upl'
 import { log } from "../../utils/themeLog.js"
+import utils from '../../utils/utils.js'
 import { getThemeName, cdnImport } from '../../otherThings.js'
 
 let datapath = `//plugins/${getThemeName()}/`
@@ -18,6 +19,13 @@ function updateDefaultSkinThumbnails(selector, img) {
 }
 
 if (ElainaData.get("custom-champs-image")) {
+    for (let i = 0; i < list.length; i++) {
+        utils.updateImageSrc(`/lol-game-data/assets/ASSETS/Characters/${list[i].default_name}/Skins/Base/${list[i].default_name}LoadScreen.jpg`, `${datapath}assets/champs/${list[i].image_preview}`);
+        utils.updateImageSrc(`/lol-game-data/assets/ASSETS/Characters/${list[i].default_name}/Skins/Base/${list[i].default_name}LoadScreen_0.${list[i].second_default_name}.jpg`, `${datapath}assets/champs/${list[i].image_preview}`);
+        utils.updateImageSrc(`/lol-game-data/assets/ASSETS/Characters/${list[i].default_name}/Skins/Base/Images/${(list[i].default_name).toLowerCase()}_splash_centered_0.jpg`, `${datapath}assets/champs/${list[i].image}`);
+        utils.updateImageSrc(`/lol-game-data/assets/ASSETS/Characters/${list[i].default_name}/Skins/Base/Images/${list[i].default_name}_splash_centered_0.${list[i].second_default_name}.jpg`, `${datapath}assets/champs/${list[i].image}`);
+    }
+
     window.setInterval(()=>{
         const thumbnails = document.getElementsByClassName("champion-thumbnail");
         const nameContainers = document.getElementsByClassName("champion-name-container");
@@ -26,8 +34,7 @@ if (ElainaData.get("custom-champs-image")) {
             const nameContainer = nameContainers[i];
             if (!nameContainer) continue;
             const championNameElement = nameContainer.querySelector(".champion-name") as HTMLElement;
-            const championImage = thumbnails[i].querySelector(".champion-image") as HTMLImageElement;
-            if (!championNameElement || !championImage) continue;
+            if (!championNameElement) continue;
 
             const cleanName = championNameElement.innerText.replace(/\s+/g, '').toLowerCase();
             const champData = list.find(
@@ -37,9 +44,6 @@ if (ElainaData.get("custom-champs-image")) {
             );
 
             if (champData) {
-                if (championImage.style.content !== `url(${datapath}assets/champs/${champData.image_preview})`) {
-                    championImage.style.content = `url(${datapath}assets/champs/${champData.image_preview})`;
-                }
                 if (!nameContainer.querySelector("#champion-name-replace")) {
                     let newName = document.createElement("p");
                     newName.classList.add("champion-name");
@@ -53,7 +57,6 @@ if (ElainaData.get("custom-champs-image")) {
             } else {
                 const replacedName = nameContainer.querySelector("#champion-name-replace");
                 if (replacedName) {
-                    championImage.style.removeProperty("content");
                     championNameElement.style.removeProperty("display");
                     replacedName.remove();
                     log(`Restored ${championNameElement.innerText}`);
@@ -100,30 +103,24 @@ if (ElainaData.get("custom-champs-image")) {
                         if (bio && list[j]["lore"] != "") {
                             bio.innerHTML = list[j]["lore"]
                         }
-
-                        overview?.setAttribute("src", `${datapath}assets/champs/${list[j]["image"]}`)
                         overview.style.cssText = `left: ${list[j]["css-left"]}`
                     }
 
                     // Mastery tab
                     let mastery: HTMLElement|null = document.querySelector("lol-uikit-section[section-id='cdp_mastery'] .cdp-backdrop-img")
                     if (mastery) {
-                        mastery?.setAttribute("src", `${datapath}assets/champs/${list[j]["image"]}`)
                         mastery.style.cssText = `left: ${list[j]["css-left"]}`
                     }
                     
                     // Progression tab
                     let progression: HTMLElement|null = document.querySelector("lol-uikit-section[section-id='cdp_progression'] .cdp-backdrop-img")
                     if (progression) {
-                        progression?.setAttribute("src", `${datapath}assets/champs/${list[j]["image"]}`)
                         progression.style.cssText = `left: ${list[j]["css-left"]}`
                     }
     
                     // Skins tab
-                    let defaultSkin = document.querySelector(".uikit-background-switcher.ember-view > img")
                     let skinName = document.querySelector(".champion-skin-name.skin-name")
                     if (document.querySelector(".cdp-skins-section.ember-view > lol-uikit-section-controller[selected-item='skin_0']")) {
-                        defaultSkin?.setAttribute("src", `${datapath}assets/champs/${list[j]["image"]}`)
                         if (skinName) skinName.textContent = list[j]["replace_name"]
                     }
     

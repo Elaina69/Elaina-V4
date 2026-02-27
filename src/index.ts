@@ -9,8 +9,8 @@
 import "./src/utils/themeDataStore.ts";
 
 // Importing theme contents
-import "./src/languages.ts"
-import "./src/utils/setTime.ts"
+import "./src/languages.ts";
+import "./src/utils/setTime.ts";
 import { log } from './src/utils/themeLog.ts';
 
 log('By %cElaina Da Catto', 'color: #e4c2b3');

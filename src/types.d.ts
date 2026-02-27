@@ -71,14 +71,14 @@ interface PluginFS {
 }
 
 interface elainathemeApi {
-    login: (userId: number, username: string) => Promise<{ token: string }>
-    writeBackup: (token: string, userId: number, data: Object) => Promise<void>
-    readBackup: (token: string, userId: number) => Promise<void>
-    deleteBackup: (token: string, userId: number) => Promise<void>
-    uploadImage: (token: string, userId: number, type: string, file: File) => Promise<void>
-    getImage: (userId: number, type: string) => Promise<string>
-    deleteImage: (token: string, userId: number, type: string) => Promise<void>
-    getFriendsImage: (friendList: { summonerId: number }[]) => Promise<{ summonerID: number, icon: { avatar: string, border: string, banner: string, emblem: string, hoverCardBackdrop: string } }[]>
+    login: (userId: number, username: string) => Promise<{ token: string }>;
+    writeBackup: (token: string, userId: number, data: Object) => Promise<void>;
+    readBackup: (token: string, userId: number) => Promise<void>;
+    deleteBackup: (token: string, userId: number) => Promise<void>;
+    uploadImage: (token: string, userId: number, type: string, file: File) => Promise<void>;
+    getImage: (userId: number, type: string) => Promise<string>;
+    deleteImage: (token: string, userId: number, type: string) => Promise<void>;
+    getFriendsImage: (friendList: { summonerId: number }[]) => Promise<{ summonerID: number, icon: { avatar: string, border: string, banner: string, emblem: string, hoverCardBackdrop: string } }[]>;
 }
 
 interface syncUserIcons {
@@ -93,18 +93,18 @@ declare interface Window {
     CommandBar  : CommandBar;
     Toast       : Toast;
     Effect      : Effect;
-    PluginFS    : PluginFS
+    PluginFS    : PluginFS;
     Pengu: {
-        version: string
-        superPotato : boolean
-        plugins     : string[]
-        isMac       : boolean
-        fs          : PluginFS
+        version: string;
+        superPotato : boolean;
+        plugins     : string[];
+        isMac       : boolean;
+        fs          : PluginFS;
     };
     os: {
-        name    : 'win' | 'mac'
-        version : string
-        build   : string
+        name    : 'win' | 'mac';
+        version : string;
+        build   : string;
     };
 
     upl                         : any;
@@ -116,7 +116,7 @@ declare interface Window {
     storeObserver               : any;
     __llver                     : string;
 
-    ElainaData                  : elainaData
+    ElainaData                  : elainaData;
     elainathemeApi              : elainathemeApi;
     syncUserIcons               : syncUserIcons;
     getThemeName                : () => void;
@@ -129,7 +129,7 @@ declare interface Window {
     exitClient                  : () => void;
     dodgeQueue                  : () => void;
     friendIconList              : any;
-    customRank                  : () => void
+    customRank                  : () => void;
 };
 
 declare function getString(param: string)   : Promise<string>;

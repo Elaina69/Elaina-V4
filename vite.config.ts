@@ -57,10 +57,6 @@ export default defineConfig((config) => ({
             formats: ['es'],
         },
     },
-    server: {
-        https: true,
-        // port: 3000
-    },
     publicDir: false,
     plugins: [
         mkcert(),
@@ -185,7 +181,7 @@ export default defineConfig((config) => ({
                 await prependCommentToFile(indexJs, Author, 1);
             
                 // Copy assets and config folders
-                const copyTask = async (src, dest, taskName) => {
+                const copyTask = async (src: string, dest: string | URL, taskName: string) => {
                     count = 0;
                     const interval = setInterval(() => count += 100, 100);
             
