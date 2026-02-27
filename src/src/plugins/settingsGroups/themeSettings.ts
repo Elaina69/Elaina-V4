@@ -10,6 +10,68 @@ const FILE_REGEX = {
     Font: /\.(ttf|otf|woff|woff2)$/,
     Banner: /\.(png|jpg|jpeg|gif|bmp|webp|ico)$/,
 };
+
+// Reusable helper for add/delete file list UI
+async function createFileListRow(
+    type: string,           // "wallpaper" | "audio" | "banner" | "font"
+    dataKey: string,        // "Wallpaper-list" | "Audio-list" | etc.
+    inputKey: string,       // "manual-wallpaper-name" | etc.
+    regex: RegExp,
+) {
+    const messageEl = () => document.querySelector("#add-background-manual-message") as HTMLElement | null;
+    const labelId = `theme-settings-${type}-list`;
+
+    const updateLabel = async () => {
+        const label = document.querySelector(`#${labelId}`) as HTMLElement | null;
+        if (label) {
+            label.innerText = `${await getString(type)}: \n[${ElainaData.get(dataKey).join(', ')}]`;
+        }
+    };
+
+    const showMessage = async (msgKey: string, color: string) => {
+        const text = messageEl();
+        if (text) {
+            text.textContent = await getString(msgKey);
+            text.style.color = color;
+        }
+    };
+
+    return [
+        UI.Label(await getString(type) + `: \n[${ElainaData.get(dataKey).join(', ')}]`, labelId),
+        UI.Row(`manual-${type}`, [
+            UI.Input(inputKey),
+            UI.Button(await getString("add"), `add-${type}`, async () => {
+                const currentList: string[] = ElainaData.get(dataKey);
+                const newItem: string = ElainaData.get(inputKey);
+
+                if (!regex.test(newItem)) {
+                    await showMessage(`invalid-${type}-format`, "red");
+                } else if (currentList.includes(newItem)) {
+                    await showMessage(`${type}-already-added`, "red");
+                } else {
+                    currentList.push(newItem);
+                    ElainaData.set(dataKey, currentList);
+                    await showMessage(`${type}-added`, "green");
+                }
+                await updateLabel();
+            }),
+            UI.Button(await getString("delete"), `delete-${type}`, async () => {
+                const currentList: string[] = ElainaData.get(dataKey);
+                const deleteItem: string = ElainaData.get(inputKey);
+                const index = currentList.indexOf(deleteItem);
+
+                if (index !== -1) {
+                    currentList.splice(index, 1);
+                    ElainaData.set(dataKey, currentList);
+                    await showMessage(`${type}-deleted`, "green");
+                } else {
+                    await showMessage(`${type}-not-exist`, "red");
+                }
+                await updateLabel();
+            }),
+        ]),
+    ];
+}
     
 async function themeSettings(panel) {
     const loading = UI.Row("loading", [
@@ -43,254 +105,10 @@ async function themeSettings(panel) {
                 UI.Label(await getString("update-list-manually"), ""),
                 UI.RowHideable("add-background-manually-row", [
                     UI.Label(" ", "add-background-manual-message"),
-                    UI.Label(await getString("wallpaper") + `: \n[${(ElainaData.get("Wallpaper-list")).join(', ')}]`, "theme-settings-wallpaper-list"),
-                    UI.Row("manual-wallpaper", [
-                        UI.Input("manual-wallpaper-name"),
-                        UI.Button(await getString("add"),"add-wallpaper",async ()=> {
-                            let text: any = document.querySelector("#add-background-manual-message")
-                            let currentWallpaper = ElainaData.get("Wallpaper-list")
-                            let newWallpaper = ElainaData.get("manual-wallpaper-name")
-                            let exist = false
-                            for (let i = 0; i < currentWallpaper.length; i++) {
-                                currentWallpaper[i] == newWallpaper? exist = true : exist = false
-                            }
-
-                            if (!FILE_REGEX.Wallpaper.test(newWallpaper)) {
-                                text.textContent = await getString("invalid-wallpaper-format");
-                                text.style.color = "red";
-                            }
-                            else {
-                                if (!exist) {
-                                    currentWallpaper.push(newWallpaper)
-                                    ElainaData.set("Wallpaper-list", currentWallpaper)
-                                    text.textContent = await getString("wallpaper-added")
-                                    text.style.color = "green"
-                                }
-                                else {
-                                    text.textContent = await getString("wallpaper-already-added")
-                                    text.style.color = "red"
-                                }
-                            }
-                            let wallpaperListLabel: any = document.querySelector("#theme-settings-wallpaper-list")
-                            if (wallpaperListLabel) {
-                                wallpaperListLabel.innerText = `${await getString("wallpaper")}: \n[${(ElainaData.get("Wallpaper-list")).join(', ')}]`;
-                            }
-                        }),
-                        UI.Button(await getString("delete"),"delete-wallpaper",async ()=> {
-                            let text: any = document.querySelector("#add-background-manual-message")
-                            let currentWallpaper = ElainaData.get("Wallpaper-list")
-                            let newWallpaper = ElainaData.get("manual-wallpaper-name")
-                            let temp: any = []
-                            let exist = false
-                            for (let i = 0; i < currentWallpaper.length; i++) {
-                                currentWallpaper[i] == newWallpaper? exist = true : exist = false
-                                if (currentWallpaper[i] == newWallpaper) exist = true
-                                else {
-                                    temp.push(currentWallpaper[i])
-                                    exist = false
-                                }
-                            }
-                            ElainaData.set("Wallpaper-list", temp)
-                            if (exist) {
-                                text.textContent = await getString("wallpaper-deleted")
-                                text.style.color = "green"
-                            }
-                            else {
-                                text.textContent = await getString("wallpaper-not-exist")
-                                text.style.color = "red"
-                            }
-                            let wallpaperListLabel: any = document.querySelector("#theme-settings-wallpaper-list")
-                            if (wallpaperListLabel) {
-                                wallpaperListLabel.innerText = `${await getString("wallpaper")}: \n[${(ElainaData.get("Wallpaper-list")).join(', ')}]`;
-                            }
-                        })
-                    ]),
-                    UI.Label(await getString("audio") + `: \n[${(ElainaData.get("Audio-list")).join(', ')}]`, "theme-settings-audio-list"),
-                    UI.Row("manual-audio", [
-                        UI.Input("manual-audio-name"),
-                        UI.Button(await getString("add"),"add-audio",async ()=> {
-                            let text: any = document.querySelector("#add-background-manual-message")
-                            let currentAudio = ElainaData.get("Audio-list")
-                            let newAudio = ElainaData.get("manual-audio-name")
-                            let exist = false
-                            for (let i = 0; i < currentAudio.length; i++) {
-                                currentAudio[i] == newAudio? exist = true : exist = false
-                            }
-
-                            if (!FILE_REGEX.Audio.test(newAudio)) {
-                                text.textContent = await getString("invalid-audio-format");
-                                text.style.color = "red";
-                            }
-                            else {
-                                if (!exist) {
-                                    currentAudio.push(newAudio)
-                                    ElainaData.set("Audio-list", currentAudio)
-                                    text.textContent = await getString("audio-added")
-                                    text.style.color = "green"
-                                }
-                                else {
-                                    text.textContent = await getString("audio-already-added")
-                                    text.style.color = "red"
-                                }
-                            }
-                            let audioListLabel: any = document.querySelector("#theme-settings-audio-list")
-                            if (audioListLabel) {
-                                audioListLabel.innerText = `${await getString("audio")}: \n[${ElainaData.get("Audio-list")}]`;
-                            }
-                        }),
-                        UI.Button(await getString("delete"),"delete-audio",async ()=> {
-                            let text: any = document.querySelector("#add-background-manual-message")
-                            let currentAudio = ElainaData.get("Audio-list")
-                            let newAudio = ElainaData.get("manual-audio-name")
-                            let temp: any = []
-                            let exist = false
-                            for (let i = 0; i < currentAudio.length; i++) {
-                                currentAudio[i] == newAudio? exist = true : exist = false
-                                if (currentAudio[i] == newAudio) exist = true
-                                else {
-                                    temp.push(currentAudio[i])
-                                    exist = false
-                                }
-                            }
-                            ElainaData.set("Audio-list", temp)
-                            if (exist) {
-                                text.textContent = await getString("audio-deleted")
-                                text.style.color = "green"
-                            }
-                            else {
-                                text.textContent = await getString("audio-not-exist")
-                                text.style.color = "red"
-                            }
-                            let audioListLabel: any = document.querySelector("#theme-settings-audio-list")
-                            if (audioListLabel) {
-                                audioListLabel.innerText = `${await getString("audio")}: \n[${ElainaData.get("Audio-list")}]`;
-                            }
-                        })
-                    ]),
-                    UI.Label(await getString("banner") + `: \n[${(ElainaData.get("Banner-list")).join(', ')}]`, "theme-settings-banner-list"),
-                    UI.Row("manual-banner", [
-                        UI.Input("manual-banner-name"),
-                        UI.Button(await getString("add"),"add-banner",async ()=> {
-                            let text: any = document.querySelector("#add-background-manual-message")
-                            let currentBanner = ElainaData.get("Banner-list")
-                            let newBanner = ElainaData.get("manual-banner-name")
-                            let exist = false
-                            for (let i = 0; i < currentBanner.length; i++) {
-                                currentBanner[i] == newBanner? exist = true : exist = false
-                            }
-
-                            if (!FILE_REGEX.Banner.test(newBanner)) {
-                                text.textContent = await getString("invalid-banner-format");
-                                text.style.color = "red";
-                            }
-                            else {
-                                if (!exist) {
-                                    currentBanner.push(newBanner)
-                                    ElainaData.set("Banner-list", currentBanner)
-                                    text.textContent = await getString("banner-added")
-                                    text.style.color = "green"
-                                }
-                                else {
-                                    text.textContent = await getString("banner-already-added")
-                                    text.style.color = "red"
-                                }
-                            }
-                            let bannerListLabel: any = document.querySelector("#theme-settings-banner-list")
-                            if (bannerListLabel) {
-                                bannerListLabel.innerText = `${await getString("banner")}: \n[${(ElainaData.get("Banner-list")).join(', ')}]`;
-                            }
-                        }),
-                        UI.Button(await getString("delete"),"delete-banner",async ()=> {
-                            let text: any = document.querySelector("#add-background-manual-message")
-                            let currentBanner = ElainaData.get("Banner-list")
-                            let newBanner = ElainaData.get("manual-banner-name")
-                            let temp: any = []
-                            let exist = false
-                            for (let i = 0; i < currentBanner.length; i++) {
-                                currentBanner[i] == newBanner? exist = true : exist = false
-                                if (currentBanner[i] == newBanner) exist = true
-                                else {
-                                    temp.push(currentBanner[i])
-                                    exist = false
-                                }
-                            }
-                            ElainaData.set("Banner-list", temp)
-                            if (exist) {
-                                text.textContent = await getString("banner-deleted")
-                                text.style.color = "green"
-                            }
-                            else {
-                                text.textContent = await getString("banner-not-exist")
-                                text.style.color = "red"
-                            }
-                            let bannerListLabel: any = document.querySelector("#theme-settings-banner-list")
-                            if (bannerListLabel) {
-                                bannerListLabel.innerText = `${await getString("banner")}: \n[${(ElainaData.get("Banner-list")).join(', ')}]`;
-                            }
-                        })
-                    ]),
-                    UI.Label(await getString("font") + `: \n[${(ElainaData.get("Font-list")).join(', ')}]`, "theme-settings-font-list"),
-                    UI.Row("manual-font", [
-                        UI.Input("manual-font-name"),
-                        UI.Button(await getString("add"),"add-font",async ()=> {
-                            let text: any = document.querySelector("#add-background-manual-message")
-                            let currentFont = ElainaData.get("Font-list")
-                            let newFont = ElainaData.get("manual-font-name")
-                            let exist = false
-                            for (let i = 0; i < currentFont.length; i++) {
-                                currentFont[i] == newFont? exist = true : exist = false
-                            }
-
-                            if (!FILE_REGEX.Font.test(newFont)) {
-                                text.textContent = await getString("invalid-font-format");
-                                text.style.color = "red";
-                            }
-                            else {
-                                if (!exist) {
-                                    currentFont.push(newFont)
-                                    ElainaData.set("Font-list", currentFont)
-                                    text.textContent = await getString("font-added")
-                                    text.style.color = "green"
-                                }
-                                else {
-                                    text.textContent = await getString("font-already-added")
-                                    text.style.color = "red"
-                                }
-                            }
-                            let fontListLabel: any = document.querySelector("#theme-settings-font-list")
-                            if (fontListLabel) {
-                                fontListLabel.innerText = `${await getString("font")}: \n[${(ElainaData.get("Font-list")).join(', ')}]`;
-                            }
-                        }),
-                        UI.Button(await getString("delete"),"delete-font",async ()=> {
-                            let text: any = document.querySelector("#add-background-manual-message")
-                            let currentFont = ElainaData.get("Font-list")
-                            let newFont = ElainaData.get("manual-font-name")
-                            let temp: any = []
-                            let exist = false
-                            for (let i = 0; i < currentFont.length; i++) {
-                                currentFont[i] == newFont? exist = true : exist = false
-                                if (currentFont[i] == newFont) exist = true
-                                else {
-                                    temp.push(currentFont[i])
-                                    exist = false
-                                }
-                            }
-                            ElainaData.set("Font-list", temp)
-                            if (exist) {
-                                text.textContent = await getString("font-deleted")
-                                text.style.color = "green"
-                            }
-                            else {
-                                text.textContent = await getString("font-not-exist")
-                                text.style.color = "red"
-                            }
-                            let fontListLabel: any = document.querySelector("#theme-settings-font-list")
-                            if (fontListLabel) {
-                                fontListLabel.innerText = `${await getString("font")}: \n[${(ElainaData.get("Font-list")).join(', ')}]`;
-                            }
-                        })
-                    ]),
+                    ...await createFileListRow("wallpaper", "Wallpaper-list", "manual-wallpaper-name", FILE_REGEX.Wallpaper),
+                    ...await createFileListRow("audio", "Audio-list", "manual-audio-name", FILE_REGEX.Audio),
+                    ...await createFileListRow("banner", "Banner-list", "manual-banner-name", FILE_REGEX.Banner),
+                    ...await createFileListRow("font", "Font-list", "manual-font-name", FILE_REGEX.Font),
                 ]),
                 UI.Label(await getString("wallpaper/audio-settings"), ""),
                 UI.RowHideable("background-settings",[
