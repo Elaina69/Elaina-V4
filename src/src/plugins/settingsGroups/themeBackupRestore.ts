@@ -107,8 +107,8 @@ async function CheckBackupFile() {
 
 export async function backuprestoretab(panel: Element) {
     // Hiện icon loading trong khi đang tải dữ liệu
-    const loading = UI.Row("loading", [
-        UI.Loading(await getString("settings-loading")),
+    const loading = UI.createRow("loading", [
+        UI.createLoading(await getString("settings-loading")),
     ])
     panel.appendChild(loading);
 
@@ -117,12 +117,12 @@ export async function backuprestoretab(panel: Element) {
     
     try {
         panel.prepend(
-            UI.Row("",[
-                UI.Label(await getString("Manual-Backup-Restore"), ""),
+            UI.createRow("",[
+                UI.createLabel(await getString("Manual-Backup-Restore"), ""),
                 document.createElement('br'),
-                UI.Row("manualRestoreBackupSystemInfo", [
-                    UI.Row("manualRestoreBackup", [
-                        UI.Button(await getString("Backup-Data"), "ManualBackup", async () => {
+                UI.createRow("manualRestoreBackupSystemInfo", [
+                    UI.createRow("manualRestoreBackup", [
+                        UI.createButton(await getString("Backup-Data"), "ManualBackup", async () => {
                             let datastore_list = (await import(`//plugins/${window.getThemeName()}/config/datastoreDefault.js`)).default
 
                             ElainaData.set("last-backup-time", new Date())
@@ -144,11 +144,11 @@ export async function backuprestoretab(panel: Element) {
                             a.href = ""
                         }),
                         document.createElement('br'),
-                        UI.Row("RestoreRow", [
-                            UI.Button(await getString("Restore-Data"),"ManualRestore", () => {
+                        UI.createRow("RestoreRow", [
+                            UI.createButton(await getString("Restore-Data"),"ManualRestore", () => {
                                 document.getElementById("manualRestoreInput")?.click()
                             }),
-                            UI.Label("", "restoreFileInfo")
+                            UI.createLabel("", "restoreFileInfo")
                         ]),
                         UI.fileInput("manualRestoreInput", ".json", async (event)=> {
                             const file = event.target.files[0]
@@ -196,30 +196,30 @@ export async function backuprestoretab(panel: Element) {
                                 text.style.color = "red"
                             }
                         }),
-                        UI.Link("", ``, ()=> {}, "downloadBackup")
+                        UI.createLink("", ``, ()=> {}, "downloadBackup")
                     ]),
-                    UI.Row("currentSystemInfo", [
-                        UI.Label(ElainaData.get("Dev-mode") 
+                    UI.createRow("currentSystemInfo", [
+                        UI.createLabel(ElainaData.get("Dev-mode") 
                             ?`${await getString("OS")}: ${ElainaData.get("System-Info")["OSVersion"]}`
                             : "", "systemInfo-Os"),
-                        UI.Label(ElainaData.get("Dev-mode")
+                        UI.createLabel(ElainaData.get("Dev-mode")
                             ? `${await getString("CPU")}: ${ElainaData.get("System-Info")["CPUName"]}`
                             : "", "systemInfo-Cpu"),
-                        UI.Label(ElainaData.get("Dev-mode")
+                        UI.createLabel(ElainaData.get("Dev-mode")
                             ? `${await getString("Core")}: ${ElainaData.get("System-Info")["CoreCount"]}`
                             : "", "systemInfo-Core"),
-                        UI.Label(ElainaData.get("Dev-mode")
+                        UI.createLabel(ElainaData.get("Dev-mode")
                             ? `${await getString("RAM")}: ${Math.round(ElainaData.get("System-Info")["PhysicalMemory"] / (1024 ** 3))} GB` 
                             : "", "systemInfo-Mem"),
-                        UI.Label(ElainaData.get("Dev-mode")
+                        UI.createLabel(ElainaData.get("Dev-mode")
                             ? `${await getString("GPU")}: ${ElainaData.get("System-Info")["GPUName"]}`
                             : "", "systemInfo-Gpu"),
-                        UI.Label(ElainaData.get("Dev-mode")
+                        UI.createLabel(ElainaData.get("Dev-mode")
                             ? `${await getString("Vram")}: ${Math.round(ElainaData.get("System-Info")["GPUMemory"] / (1024 ** 3))} GB`
                             : "", "systemInfo-Vram"),
                     ]),
                 ]),
-                UI.CheckBox(
+                UI.createCheckBox(
                     `${await getString("backup-datastore")}`,'bakdata', 'bakdatabox', async ()=>{
                         if (ElainaData.get("backup-datastore")) {
                             await CheckBackupFile()
@@ -227,10 +227,10 @@ export async function backuprestoretab(panel: Element) {
                         }
                     }, true, "backup-datastore"
                 ),
-                UI.Label(`${await getString("Loading")}...`, "datastore-cloud-checking"),
+                UI.createLabel(`${await getString("Loading")}...`, "datastore-cloud-checking"),
                 document.createElement('br'),
-                UI.Row("restoreAndDeleteData", [
-                    UI.Button(`${await getString("Restore-Data")}`, "restore-data-button", () => {
+                UI.createRow("restoreAndDeleteData", [
+                    UI.createButton(`${await getString("Restore-Data")}`, "restore-data-button", () => {
                         let restoreData = new Promise<void>(async (resolve, reject) => {
                             try { 
                                 let cloud: any = await window.elainathemeApi.readBackup(ElainaData.get("ElainaTheme-Token"), summonerID)
@@ -252,7 +252,7 @@ export async function backuprestoretab(panel: Element) {
                             error: 'Error while restoring data, check console for more info!'
                         })
                     }),
-                    UI.Button(`${await getString("Delete-Data")}`, "delete-data-button",async () => {
+                    UI.createButton(`${await getString("Delete-Data")}`, "delete-data-button",async () => {
                         try {
                             await window.elainathemeApi.deleteBackup(ElainaData.get("ElainaTheme-Token"), summonerID)
                             log("Datastore file deleted from cloud")
@@ -264,16 +264,16 @@ export async function backuprestoretab(panel: Element) {
                         finally { await CheckBackupFile() }
                     }),
                 ], true),
-                UI.Row("backupInfo", [
-                    UI.Label(await getString("backupInfo"), ""),
-                    UI.Row("backupSystemInfo", [
-                        UI.Label("", "systemInfo-LastBackup"),
-                        UI.Label("", "systemInfo-Os"),
-                        UI.Label("", "systemInfo-Cpu"),
-                        UI.Label("", "systemInfo-Core"),
-                        UI.Label("", "systemInfo-Mem"),
-                        UI.Label("", "systemInfo-Gpu"),
-                        UI.Label("", "systemInfo-Vram"),
+                UI.createRow("backupInfo", [
+                    UI.createLabel(await getString("backupInfo"), ""),
+                    UI.createRow("backupSystemInfo", [
+                        UI.createLabel("", "systemInfo-LastBackup"),
+                        UI.createLabel("", "systemInfo-Os"),
+                        UI.createLabel("", "systemInfo-Cpu"),
+                        UI.createLabel("", "systemInfo-Core"),
+                        UI.createLabel("", "systemInfo-Mem"),
+                        UI.createLabel("", "systemInfo-Gpu"),
+                        UI.createLabel("", "systemInfo-Vram"),
                     ])
                 ])
             ])

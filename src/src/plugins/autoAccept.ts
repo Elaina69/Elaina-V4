@@ -5,14 +5,15 @@
 
 import utils from '../utils/utils.ts';
 import * as upl from "pengu-upl"
+import { log, warn, error } from '../utils/themeLog.ts';
 
 let queue_accepted: boolean = false 
 let player_declined: boolean = false 
 
 export class AutoAccept {
 	autoAcceptQueueButtonSelect() {
-		const element = document.getElementById("autoAcceptQueueButton") as any
-		if (element?.attributes.selected != undefined) {
+		const element = document.getElementById("autoAcceptQueueButton") as HTMLInputElement
+		if (element?.hasAttribute("selected")) {
 			ElainaData.set("auto_accept", false)
 			element.removeAttribute("selected")
 		}
@@ -26,7 +27,9 @@ export class AutoAccept {
 		try {
 			document.querySelector(".cs-buttons-container")?.remove()
 		}
-		catch {}
+		catch {
+			error("Error while removing old auto accept button")
+		}
 
 		const div = document.createElement("div")
 		div.className = "cs-buttons-container"
@@ -61,7 +64,7 @@ export class AutoAccept {
 	}
 
 
-	createButton = async (element: any) => {
+	createButton = async (element: HTMLElement) => {
 		const newOption = document.createElement("lol-uikit-radio-input-option")
 		const container = this.fetch_or_create_champselect_buttons_container()
 		const Option2 = document.createElement("div")

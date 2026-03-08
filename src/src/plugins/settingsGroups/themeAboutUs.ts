@@ -3,61 +3,61 @@ import { error } from "../../utils/themeLog.ts"
 
 export async function aboutustab(panel: Element) {
     // Hiện icon loading trong khi đang tải dữ liệu
-    const loading = UI.Row("loading", [
-        UI.Loading(await getString("settings-loading")),
+    const loading = UI.createRow("loading", [
+        UI.createLoading(await getString("settings-loading")),
     ])
     panel.appendChild(loading);
 
     try {
         panel.prepend(
-            UI.Row("",[
-                UI.Row("Developer",[
-                    UI.Row("dev-avatar",[
-                        UI.Row("dev-div",[
-                            UI.ImageAndLink(
+            UI.createRow("",[
+                UI.createRow("Developer",[
+                    UI.createRow("dev-avatar",[
+                        UI.createRow("dev-div",[
+                            UI.createImageWithLink(
                                 false, 
                                 "https://avatars.githubusercontent.com/u/29869255", 
                                 "dev_ava", 
                                 "https://github.com/Ku-Tadao", 
                                 () => {}
                             ),
-                            UI.Label("Kubi", "first_line_kubi"),
-                            UI.Label(await getString("optimizing-theme"),"")
+                            UI.createLabel("Kubi", "first_line_kubi"),
+                            UI.createLabel(await getString("optimizing-theme"),"")
                         ]),
-                        UI.Row("dev-div",[
-                            UI.ImageAndLink(
+                        UI.createRow("dev-div",[
+                            UI.createImageWithLink(
                                 true, 
                                 "about-us/elainadacatto.png", 
                                 "dev_ava", 
                                 "https://github.com/Elaina69", 
                                 () => {}
                             ),
-                            UI.Label("Elaina Da Catto", "first_line_elaina"),
-                            UI.Label(await getString("main-developer"),"")
+                            UI.createLabel("Elaina Da Catto", "first_line_elaina"),
+                            UI.createLabel(await getString("main-developer"),"")
                         ]),
-                        UI.Row("dev-div",[
-                            UI.ImageAndLink(
+                        UI.createRow("dev-div",[
+                            UI.createImageWithLink(
                                 false, 
                                 "https://avatars.githubusercontent.com/u/43145883", 
                                 "dev_ava", 
                                 "https://github.com/Lyfhael", 
                                 () => {}
                             ),
-                            UI.Label("Lyfhael", "first_line_lyfhael"),
-                            UI.Label(await getString("co-founder"),"")
+                            UI.createLabel("Lyfhael", "first_line_lyfhael"),
+                            UI.createLabel(await getString("co-founder"),"")
                         ]),
                     ]),
                 ]),
-                UI.Label(await getString("contributors") + ":","contributors"),
-                UI.Row("Contributors-row",[
-                    UI.Contributor(
+                UI.createLabel(await getString("contributors") + ":","contributors"),
+                UI.createRow("Contributors-row",[
+                    UI.createContributor(
                         false, 
                         "https://avatars.githubusercontent.com/u/38210249",
                         "Nomi-san",
                         "Daubuoi",
                         "https://github.com/nomi-san"
                     ),
-                    UI.Contributor(
+                    UI.createContributor(
                         false, 
                         "https://avatars.githubusercontent.com/u/8694498",
                         "BakaFT", 
@@ -65,15 +65,15 @@ export async function aboutustab(panel: Element) {
                         "https://github.com/BakaFT"
                     ),
                 ]),
-                UI.Row("Contributors-row",[
-                    UI.Contributor(
+                UI.createRow("Contributors-row",[
+                    UI.createContributor(
                         false, 
                         "https://avatars.githubusercontent.com/u/45071533",
                         "Miella | Xayah", 
                         `${await getString("support")}, ${await getString("plugins-provider")}`,
                         "https://github.com/HerXayah"
                     ),
-                    UI.Contributor(
+                    UI.createContributor(
                         true, 
                         "about-us/soulmare.png",
                         "Soulmare", 
@@ -81,15 +81,15 @@ export async function aboutustab(panel: Element) {
                         "",
                     ),
                 ]),
-                UI.Row("Contributors-row",[
-                    UI.Contributor(
+                UI.createRow("Contributors-row",[
+                    UI.createContributor(
                         false, 
                         "https://avatars.githubusercontent.com/u/71716568",
                         "Balaclava", 
                         `${await getString("plugins-provider")}`,
                         "https://github.com/controlado"
                     ),
-                    UI.Contributor(
+                    UI.createContributor(
                         false, 
                         "https://avatars.githubusercontent.com/u/62219971",
                         "DmitryFisk", 
@@ -97,15 +97,15 @@ export async function aboutustab(panel: Element) {
                         "https://github.com/DmitryFisk"
                     ),
                 ]),
-                UI.Row("Contributors-row",[
-                    UI.Contributor(
+                UI.createRow("Contributors-row",[
+                    UI.createContributor(
                         false, 
                         "https://avatars.githubusercontent.com/u/50637445",
                         "Legnatbird", 
                         `${await getString("support")}, ${await getString("translator")}`,
                         "https://github.com/Legnatbird"
                     ),
-                    UI.Contributor(
+                    UI.createContributor(
                         false, 
                         "https://avatars.githubusercontent.com/u/130996009",
                         "Flirip", 
@@ -113,15 +113,15 @@ export async function aboutustab(panel: Element) {
                         "https://github.com/Flirip"
                     ),
                 ]),
-                UI.Row("Donation-row",[
-                    UI.Contributor(
+                UI.createRow("Donation-row",[
+                    UI.createContributor(
                         false, 
                         "https://avatars.githubusercontent.com/u/21153423",
                         "Unproductive", 
                         `${await getString("support")}, ${await getString("plugins-provider")}`,
                         "https://github.com/imunproductive"
                     ),
-                    UI.Contributor(
+                    UI.createContributor(
                         false, 
                         "https://avatars.githubusercontent.com/u/59478113",
                         "Rumi", 
@@ -130,15 +130,15 @@ export async function aboutustab(panel: Element) {
                     ),
                 ]),
                 /*
-                UI.Row("Contributors-row",[
-                    UI.Contributor(
+                UI.createRow("Contributors-row",[
+                    UI.createContributor(
                         true,
                         "about-us/",
                         "",
                         "",
                         ""
                     ),
-                    UI.Contributor(
+                    UI.createContributor(
                         true,
                         "about-us/",
                         "",
@@ -148,9 +148,9 @@ export async function aboutustab(panel: Element) {
                 ]),
                 */
                 document.createElement("br"),
-                UI.Row("User-counter",[
-                    UI.Label(await getString("user-counter"), "first_line"),
-                    UI.ImageAndLink(
+                UI.createRow("User-counter",[
+                    UI.createLabel(await getString("user-counter"), "first_line"),
+                    UI.createImageWithLink(
                         false,
                         `https://count.getloli.com/@Elainav4?name=Elainav4&theme=${ElainaData.get("NSFW-Content")? "gelbooru-h" : "booru-lewd"}&padding=7&offset=0&align=center&scale=1&pixelated=1&darkmode=auto&num=${ElainaData.has("User-Counter")? ElainaData.get("User-Counter") : " "}`, 
                         "moe-counter", 
@@ -159,14 +159,14 @@ export async function aboutustab(panel: Element) {
                     )
                 ]),
                 document.createElement("br"),
-                UI.Row("Donation",[
-                    UI.Label(await getString("donate-firstline"),"first_line"),
-                    UI.Label(await getString("donate-secondline"),""),
-                    UI.Label(await getString("donate-thirdline"), ""),
-                    UI.Row("Donation-row",[
-                        UI.ImageAndLink(true, "ko-fi.webp","donate", "https://ko-fi.com/elainadacatto", () => {}),
-                        UI.ImageAndLink(true, "paypal.png", "donate", "https://www.paypal.com/paypalme/ElainaDaCattoRiel", () => {}),
-                        UI.ImageAndLink(true, "momo.svg", "donate","https://me.momo.vn/elainadacatto", () => {}),
+                UI.createRow("Donation",[
+                    UI.createLabel(await getString("donate-firstline"),"first_line"),
+                    UI.createLabel(await getString("donate-secondline"),""),
+                    UI.createLabel(await getString("donate-thirdline"), ""),
+                    UI.createRow("Donation-row",[
+                        UI.createImageWithLink(true, "ko-fi.webp","donate", "https://ko-fi.com/elainadacatto", () => {}),
+                        UI.createImageWithLink(true, "paypal.png", "donate", "https://www.paypal.com/paypalme/ElainaDaCattoRiel", () => {}),
+                        UI.createImageWithLink(true, "momo.svg", "donate","https://me.momo.vn/elainadacatto", () => {}),
                     ])
                 ])
             ])

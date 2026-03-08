@@ -353,11 +353,18 @@ class CustomEmblemIcon {
 }
 
 class CustomLoadingIcon {
+	private storeInterval: number | null = null
+
 	storeLoadingIcon = () => {
-		let storeInterval: number
 		upl.observer.subscribeToElementCreation("#rcp-fe-lol-store-iframe", (element: any) => {
 			log("Store page.")
-			storeInterval = window.setInterval(() => {
+			
+			if (this.storeInterval !== null) {
+				window.clearInterval(this.storeInterval)
+				this.storeInterval = null
+			}
+
+			this.storeInterval = window.setInterval(() => {
 				let storeIframe: any = element.querySelector("iframe")
 				if (storeIframe) {
 					let storeDoc: any = storeIframe.contentDocument || storeIframe.contentWindow.document
@@ -384,7 +391,10 @@ class CustomLoadingIcon {
 
 		upl.observer.subscribeToElementDeletion("#rcp-fe-lol-store-iframe", () => {
 			log("Store page deleted.")
-			window.clearInterval(storeInterval)
+			if (this.storeInterval !== null) {
+				window.clearInterval(this.storeInterval)
+				this.storeInterval = null
+			}
 		})
 	}
 

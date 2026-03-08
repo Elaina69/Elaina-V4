@@ -6,20 +6,20 @@ class ui {
     /**
      * @param text Dòng text hiển thị bên dưới icon Loading
      */
-    Loading = (text: string) => {
-        const loading = document.createElement("div");
-        loading.id = "settings-loading";
+    createLoading = (text: string) => {
+        const loadingDiv = document.createElement("div");
+        loadingDiv.id = "settings-loading";
 
         const loadingImage = document.createElement('img')
         loadingImage.classList.add("settings-loading-image")
         loadingImage.style.content = "var(--Loading)"
 
-        const loadingText = this.Label(text, "settings-loading-text");
+        const loadingText = this.createLabel(text, "settings-loading-text");
 
-        loading.appendChild(loadingImage);
-        loading.appendChild(loadingText);
+        loadingDiv.appendChild(loadingImage);
+        loadingDiv.appendChild(loadingText);
 
-        return loading
+        return loadingDiv
     }
 
     /**
@@ -28,7 +28,7 @@ class ui {
      * @param childs Các phần tử con sẽ được thêm vào div này
      * @param show Điều kiện để hiển thị các phần tử con (False = không hiển thị)
      */
-    Row = (id: string, childs: any, show = true) => {
+    createRow = (id: string, childs: any, show = true) => {
         const row = document.createElement('div')
         row.classList.add('elaina-theme-settings-row')
         row.id = id
@@ -42,32 +42,32 @@ class ui {
      * @param childs Các phần tử con sẽ được thêm vào div này
      * @param show Điều kiện để hiển thị các phần tử con (False = không hiển thị)
      */
-    RowHideable = (id: string, childs: any, show = true) => {
+    createRowHideable = (id: string, childs: any, show = true) => {
         const row = document.createElement('div')
         const main = document.createElement('div')
-        const hideButton = document.createElement('div')
-        const hideIcon = this.Image(true, "plugins-icons/next_button.png", 'elaina-theme-settings-row-hide-icon')
+        const hideButtonElement = document.createElement('div')
+        const hideButtonIcon = this.createImage(true, "plugins-icons/next_button.png", 'elaina-theme-settings-row-hide-icon')
 
         row.classList.add('elaina-theme-settings-row-hideable')
         row.id = id
-        hideButton.id = "elaina-theme-settings-row-hide-button"
+        hideButtonElement.id = "elaina-theme-settings-row-hide-button"
         main.setAttribute('isHiding', 'false')
 
-        row.append(hideButton)
-        hideButton.append(hideIcon)
+        row.append(hideButtonElement)
+        hideButtonElement.append(hideButtonIcon)
         
         row.append(main)
 
         if (Array.isArray(childs) && show) childs.forEach((el) => main.appendChild(el))
 
-        hideButton.onclick = () => {
+        hideButtonElement.onclick = () => {
             if (main.getAttribute('isHiding') === 'false') {
                 main.setAttribute('isHiding', 'true')
-                hideIcon.setAttribute("class", 'elaina-theme-settings-row-hide-icon-hidden')
+                hideButtonIcon.setAttribute("class", 'elaina-theme-settings-row-hide-icon-hidden')
             }
             else {
                 main.setAttribute('isHiding', 'false')
-                hideIcon.setAttribute("class", 'elaina-theme-settings-row-hide-icon')
+                hideButtonIcon.setAttribute("class", 'elaina-theme-settings-row-hide-icon')
             }
         }
 
@@ -81,7 +81,7 @@ class ui {
      * @param cls Class của label, mặc định là "Elaina-theme-template-class"
      * @param style Style của label, mặc định là ""
      */
-    Label = (text: string, id = "", cls = "Elaina-theme-template-class", style = "") => {
+    createLabel = (text: string, id = "", cls = "Elaina-theme-template-class", style = "") => {
         const label = document.createElement('p')
 
         label.classList.add('lol-settings-window-size-text')
@@ -102,7 +102,7 @@ class ui {
      * @param style Style của thẻ img, mặc định là ""
      * @param localImage Sử dụng ảnh local hay online, mặc định là true 
      */
-    Image = (localImage: boolean = true, image: string, cls: string, id = "", style = "") => {
+    createImage = (localImage: boolean = true, image: string, cls: string, id = "", style = "") => {
         const img = document.createElement('img')
 
         img.setAttribute("src", localImage? `${datapath}assets/icon/${image}` : image)
@@ -120,7 +120,7 @@ class ui {
      * @param onClick Hàm sẽ gọi khi người dùng click vào đường dẫn
      * @param id Id của thẻ
      */
-    Link = (text: string, href: string, onClick: any, id = "") => {
+    createLink = (text: string, href: string, onClick: any, id = "") => {
         const link = document.createElement('p')
         link.classList.add('lol-settings-code-of-conduct-link')
         link.classList.add('lol-settings-window-size-text')
@@ -145,12 +145,12 @@ class ui {
      * @param href Đường dẫn đến trang đích
      * @param onClick Hàm sẽ gọi khi người dùng click vào ảnh
      */
-    ImageAndLink = (localImage: boolean, image: string, cls: string, href: string, onClick: any) => {
-        const link = this.Link("", href, onClick)
+    createImageWithLink = (localImage: boolean, image: string, cls: string, href: string, onClick: any) => {
+        const link = this.createLink("", href, onClick)
         link.setAttribute("class", "")
         link.style.margin = "0px"
 
-        const img = this.Image(localImage, image, cls, "", "")
+        const img = this.createImage(localImage, image, cls, "", "")
 
         link.querySelector("a")?.append(img)
 
@@ -165,7 +165,7 @@ class ui {
      * @param info Thông tin đóng góp của người đó
      * @param url Đường đẫn đến trang cá nhân của người đó
      */
-    Contributor = (localImage: boolean, image: string, C_name: string, info: string, url: string) => {
+    createContributor = (localImage: boolean, image: string, C_name: string, info: string, url: string) => {
         const origin = document.createElement("div")
         origin.id = "Contrib"
 
@@ -173,9 +173,9 @@ class ui {
         div.style.cssText = "margin-left: 10px;"
 
 
-        const img = this.ImageAndLink(localImage, image, "contributor-img", url, () => {})
-        const Name = this.Label(C_name, "contributor-name")
-        const Info = this.Label(info, "", "contributor-info", "margin: 0px")
+        const img = this.createImageWithLink(localImage, image, "contributor-img", url, () => {})
+        const Name = this.createLabel(C_name, "contributor-name")
+        const Info = this.createLabel(info, "", "contributor-info", "margin: 0px")
 
         origin.append(img)
         origin.append(div)
@@ -193,7 +193,7 @@ class ui {
      * @param id Id của nút, mặc định là ""
      * @param style Style của nút, mặc định là ""
      */
-    Button = (text: string, cls = "Elaina-theme-template-class", onClick: any, id = "", style = "") => {
+    createButton = (text: string, cls = "Elaina-theme-template-class", onClick: any, id = "", style = "") => {
         const btn = document.createElement('lol-uikit-flat-button-secondary')
 
         btn.innerText = text
@@ -231,7 +231,7 @@ class ui {
      * Sử dụng createInputElement để tạo một text box với style và onInput mặc định
      * @param Datastore Tên của Datastore, kiểu string
      */
-    Input = (Datastore: string) => {
+    createSearchBox = (Datastore: string) => {
         const { origin, searchbox } = this.createInputElement(
             Datastore, 
             "margin-bottom: 12px; width: 190px;", 
@@ -251,7 +251,7 @@ class ui {
      * Sử dụng createInputElement để tạo một text box có thể chỉnh được tốc độ của wallpaper
      * @param Datastore Tên của Datastore, kiểu string
      */
-    SpeedInput = (Datastore: string) => {
+    createSpeedInput = (Datastore: string) => {
         const { origin, searchbox } = this.createInputElement(
             Datastore, 
             "margin-bottom: 12px; width: 190px;", 
@@ -289,7 +289,7 @@ class ui {
      * @param show Có hiển thị checkbox hay không
      * @param Datastore Tên của Datastore, kiểu string
      */
-    CheckBox = (text: string, id: string, boxID: string, check: any, show: boolean, Datastore: string) => {
+    createCheckBox = (text: string, id: string, boxID: string, check: any, show: boolean, Datastore: string) => {
         const container = document.createElement("div")
         container.style.width = "fit-content"
 
@@ -400,7 +400,7 @@ class ui {
         origin.classList.add("Dropdown-div")
         origin.id = dropdownId || ""
 
-        const title = this.Label(text, "")
+        const title = this.createLabel(text, "")
 
         const dropdown = document.createElement("lol-uikit-framed-dropdown")
         dropdown.classList.add("lol-settings-general-dropdown")
