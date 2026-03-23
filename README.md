@@ -28,7 +28,8 @@
     <p align="center"> Visitors (Since 2023/02/01) </p>
     <br>
     <p align="center"> One of the best theme for Pengu Loader (League of Legends) </p>
-    <img src="https://github.com/user-attachments/assets/c4ba3c8c-c018-4d37-bb2e-cda820e106d5"/>
+    <img alt="image" src="https://github.com/user-attachments/assets/fa0a9cae-8498-487e-acd5-fb9dbb1279c7" />
+
 </p>
 
 ## Table of Contents
