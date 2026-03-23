@@ -24,8 +24,9 @@ export class BackupRestoreData {
 		}
 	};
 
-	setDefaultData(list: Object, restore: Boolean = false) {
-		for (const [key, value] of Object.entries(list)) {
+	setDefaultData(list: Object | string, restore: Boolean = false) {
+		const data = typeof list === 'string' ? JSON.parse(list) : list;
+		for (const [key, value] of Object.entries(data)) {
 			if (!ElainaData.has(key)) {
 				ElainaData.set(key, value);
 				log(`${key} data restored`)
