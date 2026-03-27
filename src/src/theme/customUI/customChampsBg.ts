@@ -317,6 +317,28 @@ export class CustomChampsBg {
                 }
             }
         });
+
+        const champIconsWhenHoverInMatchEvent = document.querySelectorAll(".match-details-event-tooltip .event-tooltip-icon-champion .event-tooltip-icon-img");
+        champIconsWhenHoverInMatchEvent.forEach(champIcon => {
+            const champData = list.find(champ =>
+                champIcon.getAttribute("src")?.includes(champ.default_icon_id.toString())
+            );
+
+            if (champData) {
+                champIcon.setAttribute("src", `${datapath}assets/champs/${champData.image_thumbnail}`);
+            }
+        });
+
+        const champIconsWhenHoverInMatchMapEvent = document.querySelectorAll(".match-details-map-event-tooltip .map-event-tooltip-icon .map-event-tooltip-icon-img");
+        champIconsWhenHoverInMatchMapEvent.forEach(champIcon => {
+            const champData = list.find(champ =>
+                champIcon.getAttribute("src")?.includes(champ.default_icon_id.toString())
+            );
+
+            if (champData) {
+                champIcon.setAttribute("src", `${datapath}assets/champs/${champData.image_thumbnail}`);
+            }
+        });
     }
 
     customOnCustomGameTeamLoop = () => {
