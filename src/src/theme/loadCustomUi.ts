@@ -8,7 +8,7 @@ import { CustomGameSearchCard } from './customUI/customGameSearchCard.ts';
 import { TransparentSettingsDialogs } from './customUI/transparentSettingsDialogs.ts';
 import { CustomIcon } from './customUI/customIcon.ts';
 import { HideFriendList } from './customUI/hideFriendList.ts';
-import "./customUI/customChampsBg.ts"
+import { CustomChampsBg } from "./customUI/customChampsBg.ts"
 
 //upl.observer.subscribeToElementCreation(".summoner-xp-radial", (element: any)=> {element.remove()})
 upl.observer.subscribeToElementCreation(".parallax-layer-container",(element: any) => element.style.backgroundImage = '' )
@@ -77,5 +77,11 @@ export class ApplyUI {
 		// Hide friendlist button// Add hide friendslist button
         const hideFriendslist = new HideFriendList()
         hideFriendslist.main()
+
+		// Custom champs background
+		if (ElainaData.get("custom-champs-image")) {
+			const customChampsBg = new CustomChampsBg()
+			customChampsBg.main()
+		}
 	}
 }
