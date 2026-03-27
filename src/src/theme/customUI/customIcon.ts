@@ -111,8 +111,18 @@ class CustomAvatar {
 		})
 
 		// Profile avatar
+		let profileAvatarInterval: number | null = null
 		upl.observer.subscribeToElementCreation('lol-regalia-profile-v2-element', async (element: any) => {
-			await this.applyCustomAvatar(element)
+			profileAvatarInterval = window.setInterval(async () => {
+				await this.applyCustomAvatar(element)
+			}, 100)
+		})
+
+		upl.observer.subscribeToElementDeletion('lol-regalia-profile-v2-element', (element: any) => {
+			if (profileAvatarInterval) {
+				window.clearInterval(profileAvatarInterval)
+				log("cleared profile avatar interval!")
+			}
 		})
 
 		// Conversation chat avatar
@@ -193,8 +203,18 @@ class CustomBorder {
 		})
 
 		// Profile border
+		let profileBorderInterval: number | null = null
 		upl.observer.subscribeToElementCreation('lol-regalia-profile-v2-element', async (element: any) => {
-			await this.applyCustomBorder(element)
+			profileBorderInterval = window.setInterval(async () => {
+				await this.applyCustomBorder(element)
+			}, 100)
+		})
+
+		upl.observer.subscribeToElementDeletion('lol-regalia-profile-v2-element', (element: any) => {
+			if (profileBorderInterval) {
+				window.clearInterval(profileBorderInterval)
+				log("cleared profile border interval!")
+			}
 		})
 
 		// Identity customizer border
@@ -242,8 +262,18 @@ class CustomBanner {
 		})
 
 		// Profile banner
+		let profileBannerInterval: number | null = null
 		upl.observer.subscribeToElementCreation("lol-regalia-profile-v2-element", async (element: any)=>{
-			await this.applyCustomBanner(element)
+			profileBannerInterval = window.setInterval(async () => {
+				await this.applyCustomBanner(element)
+			}, 100)
+		})
+
+		upl.observer.subscribeToElementDeletion("lol-regalia-profile-v2-element", (element: any)=>{
+			if (profileBannerInterval) {
+				window.clearInterval(profileBannerInterval)
+				log("cleared profile banner interval!")
+			}
 		})
 	}
 }
