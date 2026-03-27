@@ -3,7 +3,7 @@ import { restartAfterChange } from "../settings.ts"
 import { error } from "../../utils/themeLog.ts"
 import { rankList } from "../../utils/rankList.ts"
 
-async function pluginsSettings(panel) {
+async function pluginsSettings(panel: Element) {
     const loading = UI.createRow("loading", [
         UI.createLoading(await getString("settings-loading")),
     ])

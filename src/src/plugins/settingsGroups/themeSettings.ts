@@ -10,70 +10,8 @@ const FILE_REGEX = {
     Font: /\.(ttf|otf|woff|woff2)$/,
     Banner: /\.(png|jpg|jpeg|gif|bmp|webp|ico)$/,
 };
-
-// Reusable helper for add/delete file list UI
-async function createFileListRow(
-    type: string,           // "wallpaper" | "audio" | "banner" | "font"
-    dataKey: string,        // "Wallpaper-list" | "Audio-list" | etc.
-    inputKey: string,       // "manual-wallpaper-name" | etc.
-    regex: RegExp,
-) {
-    const messageEl = () => document.querySelector("#add-background-manual-message") as HTMLElement | null;
-    const labelId = `theme-settings-${type}-list`;
-
-    const updateLabel = async () => {
-        const label = document.querySelector(`#${labelId}`) as HTMLElement | null;
-        if (label) {
-            label.innerText = `${await getString(type)}: \n[${ElainaData.get(dataKey).join(', ')}]`;
-        }
-    };
-
-    const showMessage = async (msgKey: string, color: string) => {
-        const text = messageEl();
-        if (text) {
-            text.textContent = await getString(msgKey);
-            text.style.color = color;
-        }
-    };
-
-    return [
-        UI.createLabel(await getString(type) + `: \n[${ElainaData.get(dataKey).join(', ')}]`, labelId),
-        UI.createRow(`manual-${type}`, [
-            UI.createSearchBox(inputKey),
-            UI.createButton(await getString("add"), `add-${type}`, async () => {
-                const currentList: string[] = ElainaData.get(dataKey);
-                const newItem: string = ElainaData.get(inputKey);
-
-                if (!regex.test(newItem)) {
-                    await showMessage(`invalid-${type}-format`, "red");
-                } else if (currentList.includes(newItem)) {
-                    await showMessage(`${type}-already-added`, "red");
-                } else {
-                    currentList.push(newItem);
-                    ElainaData.set(dataKey, currentList);
-                    await showMessage(`${type}-added`, "green");
-                }
-                await updateLabel();
-            }),
-            UI.createButton(await getString("delete"), `delete-${type}`, async () => {
-                const currentList: string[] = ElainaData.get(dataKey);
-                const deleteItem: string = ElainaData.get(inputKey);
-                const index = currentList.indexOf(deleteItem);
-
-                if (index !== -1) {
-                    currentList.splice(index, 1);
-                    ElainaData.set(dataKey, currentList);
-                    await showMessage(`${type}-deleted`, "green");
-                } else {
-                    await showMessage(`${type}-not-exist`, "red");
-                }
-                await updateLabel();
-            }),
-        ]),
-    ];
-}
     
-async function themeSettings(panel) {
+async function themeSettings(panel: Element) {
     const loading = UI.createRow("loading", [
         UI.createLoading(await getString("settings-loading")),
     ])
@@ -105,10 +43,10 @@ async function themeSettings(panel) {
                 UI.createLabel(await getString("update-list-manually"), ""),
                 UI.createRowHideable("add-background-manually-row", [
                     UI.createLabel(" ", "add-background-manual-message"),
-                    ...await createFileListRow("wallpaper", "Wallpaper-list", "manual-wallpaper-name", FILE_REGEX.Wallpaper),
-                    ...await createFileListRow("audio", "Audio-list", "manual-audio-name", FILE_REGEX.Audio),
-                    ...await createFileListRow("banner", "Banner-list", "manual-banner-name", FILE_REGEX.Banner),
-                    ...await createFileListRow("font", "Font-list", "manual-font-name", FILE_REGEX.Font),
+                    ...await UI.createFileListRow("wallpaper", "Wallpaper-list", "manual-wallpaper-name", FILE_REGEX.Wallpaper),
+                    ...await UI.createFileListRow("audio", "Audio-list", "manual-audio-name", FILE_REGEX.Audio),
+                    ...await UI.createFileListRow("banner", "Banner-list", "manual-banner-name", FILE_REGEX.Banner),
+                    ...await UI.createFileListRow("font", "Font-list", "manual-font-name", FILE_REGEX.Font),
                 ]),
                 UI.createLabel(await getString("wallpaper/audio-settings"), ""),
                 UI.createRowHideable("background-settings",[

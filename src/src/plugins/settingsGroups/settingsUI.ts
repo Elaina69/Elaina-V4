@@ -75,6 +75,78 @@ class ui {
     }
 
     /**
+     * Tạo một hàng UI cho phép người dùng thêm hoặc xóa các file tùy chỉnh
+     * @param type Loại file, có thể là "wallpaper", "audio", "banner" hoặc "font"
+     * @param dataKey Datastore key chứa danh sách các file
+     * @param inputKey Datastore key chứa tên file nhập vào
+     * @param regex Biểu thức chính quy kiểm tra định dạng file
+     * @returns
+     */
+    createFileListRow = async (
+        type: string,
+        dataKey: string,
+        inputKey: string,
+        regex: RegExp,
+    ) => {
+        const messageEl = () => document.querySelector("#add-background-manual-message") as HTMLElement | null;
+        const labelId = `theme-settings-${type}-list`;
+        const forbiddenFileNameChars = /[\\/:*?"<>|]/
+
+        const updateLabel = async () => {
+            const label = document.querySelector(`#${labelId}`) as HTMLElement | null;
+            if (label) {
+                label.innerText = `${await getString(type)}: \n[${ElainaData.get(dataKey).join(', ')}]`;
+            }
+        };
+
+        const showMessage = async (msgKey: string, color: string) => {
+            const text = messageEl();
+            if (text) {
+                text.textContent = await getString(msgKey);
+                text.style.color = color;
+            }
+        };
+
+        return [
+            this.createLabel(await getString(type) + `: \n[${ElainaData.get(dataKey).join(', ')}]`, labelId),
+            this.createRow(`manual-${type}`, [
+                this.createSearchBox(inputKey),
+                this.createButton(await getString("add"), `add-${type}`, async () => {
+                    const currentList: string[] = ElainaData.get(dataKey);
+                    const newItem: string = ElainaData.get(inputKey);
+
+                    if (forbiddenFileNameChars.test(newItem)) {
+                        await showMessage(`invalid-${type}-format`, "red");
+                    } else if (!regex.test(newItem)) {
+                        await showMessage(`invalid-${type}-format`, "red");
+                    } else if (currentList.includes(newItem)) {
+                        await showMessage(`${type}-already-added`, "red");
+                    } else {
+                        currentList.push(newItem);
+                        ElainaData.set(dataKey, currentList);
+                        await showMessage(`${type}-added`, "green");
+                    }
+                    await updateLabel();
+                }),
+                this.createButton(await getString("delete"), `delete-${type}`, async () => {
+                    const currentList: string[] = ElainaData.get(dataKey);
+                    const deleteItem: string = ElainaData.get(inputKey);
+                    const index = currentList.indexOf(deleteItem);
+
+                    if (index !== -1) {
+                        currentList.splice(index, 1);
+                        ElainaData.set(dataKey, currentList);
+                        await showMessage(`${type}-deleted`, "green");
+                    } else {
+                        await showMessage(`${type}-not-exist`, "red");
+                    }
+                    await updateLabel();
+                }),
+            ]),
+        ];
+    }
+
+    /**
      * Tạo một label hoặc text 
      * @param text Nội dung của label
      * @param id Id của label
