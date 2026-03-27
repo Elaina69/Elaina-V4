@@ -21,7 +21,7 @@ let friendIconList: {
 let friendsList: { summonerId: number }[] = []
 
 class SyncUserIcons {
-    async getFrinedList() {
+    async getFriendList() {
         let friends = await fetch('/lol-chat/v1/friends').then(res => res.json());
         for (let i = 0; i < friends.length; i++) {
             friendsList.push({"summonerId": friends[i]["summonerId"]})
@@ -29,9 +29,11 @@ class SyncUserIcons {
     }
 
     async getFriendsIcons(): Promise<void> {
-        await this.getFrinedList()
+        await this.getFriendList()
 
         friendIconList = await window.elainathemeApi.getFriendsImage(friendsList);
+
+        if (ElainaData.get("Dev-mode")) log("Friend icons: ", friendIconList)
     };
 
     async uploadIcon(icon: string, iconType: string) {

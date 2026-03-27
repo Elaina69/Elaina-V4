@@ -57,19 +57,21 @@ async function pluginsSettings(panel: Element) {
                 document.createElement('br'),
                 UI.createCheckBox(
                     `${await getString("dodge-button")}`, "dodgebutton", "dodgebuttonbox",
-                    () => {
+                    ()=>{
                         restartAfterChange("dodgebutton", "dodge-button")
                     },true, "dodge-button"
                 ),
                 document.createElement('br'),
                 UI.createCheckBox(
                     `${await getString("Enable-Invite-Fr")}`,'invfr','invfrbox',
-                    ()=>{},true, "Enable-Invite-Fr"
+                    ()=>{
+                        restartAfterChange("invfr", "Enable-Invite-Fr")
+                    },true, "Enable-Invite-Fr"
                 ),
                 document.createElement('br'),
                 UI.createCheckBox(
                     `${await getString("aram-only")}`, "Aram only", "Aram only checkbox",
-                    () => {
+                    ()=>{
                         restartAfterChange("Aram only", "aram-only")
                     },true, "aram-only"
                 ),
@@ -115,14 +117,14 @@ async function pluginsSettings(panel: Element) {
                 document.createElement('br'),
                 document.createElement('br'),
                 UI.createCheckBox(await getString("invisible_banner"),'invbanner','invbannerbox',
-                    ()=>{
+                    () => {
                         restartAfterChange('invbanner', "invisible_banner")
                     },true, "invisible_banner"
                 ),
                 document.createElement('br'),
                 UI.createCheckBox(
                     `${await getString("Custom-profile-hover")}`,'cusprf','cusprfbox',
-                    ()=>{
+                    () => {
                         restartAfterChange('cusprf', "Custom-profile-hover")
                     },true, "Custom-profile-hover"
                 ),
