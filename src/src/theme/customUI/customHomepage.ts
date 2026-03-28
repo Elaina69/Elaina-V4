@@ -423,20 +423,19 @@ class MainController {
         return element;
     };
     
-    createElementWithId = (tag, id) => {
+    createElementWithId = (tag: string, id: string) => {
         const element = document.createElement(tag);
         if (id) element.id = id;
         return element;
     };
     
-    createIcon = (className, src) => {
+    createIcon = (className: string, src: string) => {
         const icon = this.createElementWithClass("img", className);
         if (src) icon.setAttribute("src", src);
         return icon;
     };
 
-    // Make an element draggable (resets to default CSS position on reload)
-    private makeDraggable = (element: HTMLElement) => {
+    makeDraggable = (element: HTMLElement) => {
         let startX = 0, startY = 0;
         let startLeft = 0, startTop = 0;
         let isDragging = false;
@@ -1254,7 +1253,7 @@ class AddHomePage {
                 document.querySelector(".webm-bottom-buttons-container")?.setAttribute("class", "webm-bottom-buttons-container-hovered")
                 window.setTimeout(()=> {
                     document.querySelector(".webm-bottom-buttons-container-hovered")?.setAttribute("class", "webm-bottom-buttons-container")
-                },2000)
+                },6000)
 
                 hideNavbarButton.hideShowNavBar();
                 hideNavbarButton.changeHomePageStyle()

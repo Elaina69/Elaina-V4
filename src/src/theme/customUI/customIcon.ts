@@ -55,26 +55,6 @@ class CustomAvatar {
 		}
 	}
 
-	// changeConversationChatHeaderAvatar = async () => {
-	// 	let chatHeader = document.querySelectorAll(".chat-header")
-
-	// 	for (const element of chatHeader) {
-	// 		console.log(element)
-	// 		let avatar = element.querySelector(".icon-image") as HTMLImageElement
-	// 		let chatGnt = element.querySelector(".chat-gnt > lol-uikit-player-name")
-	// 		let playerName = chatGnt?.getAttribute("game-name")
-	// 		let playerTag = chatGnt?.getAttribute("tag-line")
-
-	// 		let summonerID = (await (await fetch(`/lol-summoner/v1/summoners/?name=${playerName}%23${playerTag}`)).json()).accountId
-
-	// 		console.log(playerName, playerTag)
-	// 		if (friendIconList.find(x => x.summonerID == summonerID) && friendIconList.find(x => x.summonerID == summonerID)?.icon.avatar != null) {
-	// 			avatar.src = `${friendIconList.find(x => x.summonerID == summonerID)?.icon.avatar}`
-	// 			utils.freezeProperties(avatar, ['src'])
-	// 		}
-	// 	}
-	// }
-
 	applyCustomAvatar = async (element: any) => {
 		let iconElement = element.shadowRoot.querySelector("lol-regalia-crest-v2-element").shadowRoot.querySelector(".lol-regalia-summoner-icon")
 
