@@ -50,6 +50,7 @@ import { ThemePresetSettings } from "./src/plugins/themePresetSettingsTab.ts"
 import { CustomStatus } from "./src/plugins/customStatus.ts"
 import { AutoAccept } from "./src/plugins/autoAccept.ts"
 import { CustomBeRp } from "./src/plugins/customBeRp.ts"
+import { CustomSummonerLv } from "./src/plugins/customSummonerLv.ts"
 import { DodgeButton } from "./src/plugins/dodgeButton.ts"
 import { LootHelper } from "./src/plugins/lootHelper.ts"
 import { NameSpoofer } from "./src/plugins/nameSpoofer.ts"
@@ -89,6 +90,9 @@ class ElainaTheme {
         // Custom BE, RP
         const customBeRp = new CustomBeRp()
 
+        // Custom Summoner Level
+        const customSummonerLv = new CustomSummonerLv()
+
         // Auto Accept
         const autoAccept = new AutoAccept()
         autoAccept.main(ElainaData.get("auto_accept_button"))
@@ -127,8 +131,12 @@ class ElainaTheme {
 
         // This code will run for each 1s
         window.setInterval(() => {
+            // Custom BE/RP
             if (ElainaData.get("Custom_RP")) customBeRp.RP()
             if (ElainaData.get("Custom_BE")) customBeRp.BE()
+
+            // Custom Summoner Level
+            if (ElainaData.get("custom-summoner-lv")) customSummonerLv.main()
         }, 1000);
     }
 }

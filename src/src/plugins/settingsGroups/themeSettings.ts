@@ -211,6 +211,15 @@ async function themeSettings(panel: Element) {
                 ]),
                 document.createElement('br'),
                 UI.createCheckBox(
+                    `${await getString("custom-summoner-lv")}`,'cussumlv','cussumlvbox',
+                    ()=>{
+                        restartAfterChange('cussumlv', "custom-summoner-lv")
+                    },true, "custom-summoner-lv"
+                ),
+                document.createElement('br'),
+                UI.createSearchBox("custom-summoner-lv-number"),
+                document.createElement('br'),
+                UI.createCheckBox(
                     `${await getString("custom-rank-name")}`,'cusrankname','cusranknamebox',
                     ()=>{
                         restartAfterChange('cusrankname', "Custom-Rank-Name")

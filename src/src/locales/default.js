@@ -133,6 +133,7 @@ export default {
     "custom-font"                   : "Custom font",
     "custom-rp"                     : "Custom RP",
     "custom-be"                     : "Custom BE",
+    "custom-summoner-lv"            : "Custom summoner level",
     "custom-rank-name"              : "Custom rank name",
     "change-nickname-color"         : "Change nickname color",
     "opacity"                       : "Opacity",

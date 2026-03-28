@@ -133,6 +133,7 @@ export default {
     "custom-font"                   : "Phông chữ tùy chỉnh",
     "custom-rp"                     : "RP tùy chỉnh",
     "custom-be"                     : "Tinh hoa lam tùy chỉnh",
+    "custom-summoner-lv"            : "Cấp độ người chơi tùy chỉnh",
     "custom-rank-name"              : "Tên Rank tùy chỉnh",
     "change-nickname-color"         : "Đổi màu tên người chơi",
     "opacity"                       : "Độ mờ",

@@ -133,6 +133,7 @@ export default {
     "custom-font"                   : "Кастомный шрифт",
     "custom-rp"                     : "Кастомные RP",
     "custom-be"                     : "Кастомная BE",
+    "custom-summoner-lv"            : "Custom summoner level",
     "custom-rank-name"              : "Кастомное название ранга",
     "change-nickname-color"         : "Изменить цвет никнейма",
     "opacity"                       : "Прозрачность",

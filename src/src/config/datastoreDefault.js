@@ -52,6 +52,8 @@ export default {
   	"RP-data"						: "-69",
   	"Custom_BE"						: false,
   	"BE"							: "-69",
+	"custom-summoner-lv"			: true,
+	"custom-summoner-lv-number"		: "∞",
 	"Custom-Rank-Name"				: true,
   	"Rank-line1"					: "Apprentice",
   	"Rank-line2"					: "Witch",

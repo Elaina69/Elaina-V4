@@ -133,6 +133,7 @@ export default {
     "custom-font"                   : "自定义字体",
     "custom-rp"                     : "自定义点券",
     "custom-be"                     : "自定义蓝色精粹",
+    "custom-summoner-lv"            : "Custom summoner level",
     "custom-rank-name"              : "自定义段位名称",
     "change-nickname-color"         : "更改昵称颜色",
     "opacity"                       : "透明度",

@@ -1,6 +1,4 @@
 export class CustomBeRp {
-	private beInitialized: boolean = false
-
 	RP = () => {
 		const rpData = `${ElainaData.get("RP-data")}`
 
