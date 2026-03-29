@@ -1,5 +1,5 @@
 /**
- * @name ElainaV4
+ * @name Elaina-Theme
  * @author Elaina Da Catto
  * @description Elaina theme for Pengu Loader
  * @link https://github.com/Elaina69
@@ -102,8 +102,8 @@ class ElainaTheme {
         if (ElainaData.get("Custom-Status") && ElainaData.get("Custom-profile-hover")) customStatus.main()
 
         // Add dodge button
-        const dodgeButton = new DodgeButton()
-        dodgeButton.main()
+        // const dodgeButton = new DodgeButton()
+        // dodgeButton.main()
 
         // Force jungle or lane
         const forceJungleLane = new ForceJungLane()
