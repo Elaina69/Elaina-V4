@@ -122,7 +122,7 @@ export default defineConfig((config) => ({
                 await writeFile(indexJs, jsCode);
             
                 // Add author comment block
-                const Author = `/**\n* @name ElainaV4\n* @author Elaina Da Catto\n* @description Elaina theme for Pengu Loader\n* @link https://github.com/Elaina69\n* @Nyan Meow~~~\n*/`;
+                const Author = `/**\n* @name Elaina-Theme\n* @author Elaina Da Catto\n* @description Elaina theme for Pengu Loader\n* @link https://github.com/Elaina69\n* @Nyan Meow~~~\n*/`;
                 const importDir = ""
 
 // + `
