@@ -280,10 +280,14 @@ class CustomHoverCardBackdrop {
 
 	changeFriendProfileBackground = (element: any) => {
 		log(element.getAttribute("summoner-id"))
+
 		if (friendIconList.find(x => x.summonerID == element.getAttribute("summoner-id")) && friendIconList.find(x => x.summonerID == element.getAttribute("summoner-id"))?.icon.hoverCardBackdrop != null) {
-			let profileBackground = document.querySelector(".style-profile-masked-image img") as HTMLImageElement
-			profileBackground.src = `${friendIconList.find(x => x.summonerID == element.getAttribute("summoner-id"))?.icon.hoverCardBackdrop}`
-			profileBackground.style.height = "100%";
+			let profileBackground = document.querySelectorAll(".style-profile-masked-image .lol-uikit-background-switcher-image")
+			profileBackground.forEach((bg: any) => {
+				bg.src = `${friendIconList.find(x => x.summonerID == element.getAttribute("summoner-id"))?.icon.hoverCardBackdrop}`
+				bg.style.height = "100%";
+				utils.freezeProperties(bg, ["src", "style.height"])
+			})
 		}
 	}
 
