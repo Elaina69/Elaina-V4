@@ -11,7 +11,6 @@ import { getThemeName } from "../../otherThings.ts"
 import { log, warn, error } from "../../utils/themeLog.ts";
 import * as upl from 'pengu-upl';
 import utils from '../../utils/utils.ts';
-import LocalKey from "../../updates/updateKeyLocal.ts";
 import { setDefaultData } from "../../services/backupAndRestoreDatastore.ts";
 
 const datapath: string = `//plugins/${getThemeName()}/`
@@ -49,39 +48,6 @@ window.setTimeout(async () => {
     ElainaData.set("Summoner-ID", summonerID);
     log(`%cCurrent summonerID: %c${summonerID}`, 'color: #e4c2b3', 'color: #0070ff');
 }, 7000);
-
-// Check version
-let CdnKey: number;
-let cdnUrl = `${cdnServer["cdn-url"]}elaina-theme-data@${cdnServer["version"]}`
-let localUrl = `//plugins/${getThemeName()}/elaina-theme-data`
-
-try {
-    // Check if in dev mode
-    if (ElainaData.get("Dev-mode")) {
-        CdnKey = (await cdnImport(`${localUrl}/src/update/update.js`, "Can't load cdn key")).default.key;
-        log('%cRunning Elaina theme - %cDev version', 'color: #e4c2b3', 'color: red');
-    } 
-    else {
-        CdnKey = (await cdnImport(`${cdnUrl}/src/update/update.js`, "Can't load cdn key")).default.key;
-        log('%cRunning Elaina theme - %cStable version', 'color: #e4c2b3', 'color: #00ff44');
-    }
-}
-catch {
-    CdnKey = LocalKey
-    log('%cRunning Elaina theme - %cChecking version error', 'color: #e4c2b3', 'color:rgb(229, 255, 0)');
-}
-
-if (CdnKey === LocalKey) {
-    try {
-        if (!ElainaData.get(`Change-CDN-version`)) {
-            const response = await fetch(`${cdnUrl}/package.json`);
-            const { version: cdnVersion } = await response.json();
-            ElainaData.set("Cdn-version", cdnVersion);
-        }
-    }
-    catch (err: any) { error("Can't get theme version", err) }
-}
-log(`%cCDN build  : %c${ElainaData.get("Cdn-version")}`, 'color: #e4c2b3', 'color: #00ff44');
 
 // Create and set new page as Homepage
 export function createHomePageTab(context: any) {

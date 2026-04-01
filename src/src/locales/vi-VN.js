@@ -6,6 +6,11 @@ export default {
     "more-info"       : "Chi tiết",
     "settings-loading": "Chờ xíu nhen...",
     "refresh"         : "Làm mới",
+    "update-available-1" : "Có bản cập nhật chủ đề mới",
+    "update-available-2" : "Bạn phải cập nhật thủ công để tiếp tục sử dụng chủ đề Elaina mà không gặp sự cố.",
+    "Auto-Update"        : "Bản cập nhật tự động",
+    "New-Update"         : "Bản cập nhật mới",
+    "Manual-Update"      : "Bản cập nhật thủ công",
 
 
     // auto accept button

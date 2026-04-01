@@ -5,7 +5,8 @@
 export default {
 	// Theme
 	"Elaina-Plugins"				: true,
-	"Force-Update"					: false,
+	"Theme-version"					: "",
+	"changelog-shown-version"		: "",
 	"Cdn-version"					: "",
 	"backup-datastore"				: false,
 	"seconds1"						: 0,
@@ -154,7 +155,7 @@ export default {
 
 
 	// not use anymore
-	"Theme-version"					: "",
+	"Force-Update"					: false,
 	"Elaina-First run"				: false,
   	"buy-all-champs"				: true,
 	"ChampsPrice"					: 450,

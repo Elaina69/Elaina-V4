@@ -6,6 +6,11 @@ export default {
     "more-info"       : "More info",
     "settings-loading": "Loading...",
     "refresh"         : "Refresh",
+    "update-available-1" : "New theme updates are available",
+    "update-available-2" : "You have to update manually to continue using Elaina theme without problems.",
+    "Auto-Update"        : "Auto update",
+    "New-Update"         : "New update",
+    "Manual-Update"      : "Manual update",
 
 
     // auto accept button
