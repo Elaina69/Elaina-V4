@@ -454,6 +454,15 @@ function CreateSkinsInformation() {
     });
 }
 
+/**
+ * @wiki Enhances the Hextech Loot inventory with quick-action buttons for opening all chests, disenchanting champion shards into Blue Essence, and a refresh button. Also displays shard counts and total disenchant values next to loot categories.
+ * @author Elaina Da Catto
+ * @usage
+ * 1. Open the **Loot** tab in the League Client
+ * 2. Use the **Open All Chests** button to open all available chests at once
+ * 3. Use the **Disenchant** button to convert champion shards into Blue Essence
+ * 4. Use the **Refresh** button to update loot counts
+ */
 export class LootHelper {
     main = () => {
         utils.addStyle(/*css*/`

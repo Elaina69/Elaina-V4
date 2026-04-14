@@ -1,6 +1,16 @@
 import utils from '../utils/utils.ts'
 import * as upl from "pengu-upl"
 
+/**
+ * @wiki Adds a "Dodge" button to the champion select screen that lets you leave the lobby without closing the entire client. Uses the internal teambuilder-draft API to cleanly exit champion select.
+ * @author Elaina Da Catto
+ * @usage
+ * 1. Open League Client settings
+ * 2. Navigate to **Elaina Theme** → **Plugin Settings**
+ * 3. Enable **Dodge Button** to show the button during champion select
+ * 4. Click the button in champ select to dodge the queue
+ * @settings dodge-button
+ */
 export class DodgeButton {
     async exitClient(): Promise<void>{
         await fetch("/process-control/v1/process/quit",

@@ -120,6 +120,10 @@ window.addEventListener('load', async () => {
 })
 
 export { datapath, restartAfterChange }
+/**
+ * @wiki Manages the Elaina Theme settings panel inside the League Client. Adds custom tabs (Theme Settings, Plugin Settings, Backup & Restore, About Us) to the client settings page and handles configuration persistence through the DataStore.
+ * @author Elaina Da Catto
+ */
 export function Settings(context: any) {
     settingsUtils(context, structure)
 }

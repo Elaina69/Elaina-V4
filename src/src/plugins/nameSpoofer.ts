@@ -34,6 +34,15 @@ const SELECTORS = `
     .create-panel-game-name
 `;
 
+/**
+ * @wiki Replaces your displayed summoner name throughout the client with a custom name. Affects the sidebar, profile, chat, lobby, hover cards, scoreboards, and more. This is a local visual change only — other players still see your real name.
+ * @author Elaina Da Catto
+ * @usage
+ * 1. Open League Client settings
+ * 2. Navigate to **Elaina Theme** → **Plugin Settings**
+ * 3. Enable **Name Spoofer** and set your desired **Spoof Name**
+ * @settings Name-Spoofer, Spoof-name
+ */
 export class NameSpoofer {
     updateNames(root = document) {
         const Name = ElainaData.get("Spoof-name");

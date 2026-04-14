@@ -1,6 +1,15 @@
 import * as upl from "pengu-upl"
 import { log } from "../utils/themeLog";
 
+/**
+ * @wiki Adds an "Invite All" button to the lobby that sends invitations to all online friends in a selected friend group. Includes a dropdown to pick which friend group to invite from.
+ * @author Elaina Da Catto
+ * @usage
+ * 1. Create or join a lobby
+ * 2. Use the **friend group dropdown** to select which group to invite
+ * 3. Click **Invite All** to send lobby invitations to all online friends in that group
+ * @settings frGroupName, grouplist, friendslist
+ */
 export class InviteAllFriends {
     setDefaultFriendsListData = () => {
         if (!ElainaData.has("frGroupName")) {

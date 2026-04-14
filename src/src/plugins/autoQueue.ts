@@ -36,6 +36,17 @@ async function matchMaking() {
     })
 }
 
+/**
+ * @wiki Automatically re-queues for a new game after the end-of-game screen. Supports configurable delay, ARAM-only mode, and a selectable game mode. Shows a countdown toast notification before starting the queue.
+ * @author Elaina Da Catto
+ * @usage
+ * 1. Open League Client settings
+ * 2. Navigate to **Elaina Theme** → **Plugin Settings**
+ * 3. Enable **Auto Find Queue** to activate automatic re-queuing
+ * 4. Set the **Create Delay** (in ms) to control how long to wait before re-queuing
+ * 5. Optionally enable **ARAM Only** mode to always queue for ARAM
+ * @settings Auto-Find-Queue, Create-Delay, aram-only, Gamemode
+ */
 export function AutoQueue(context) {
     context.socket.observe('/lol-gameflow/v1/gameflow-phase', async (data) => {
         const gamePhase = data.data;
