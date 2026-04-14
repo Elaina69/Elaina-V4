@@ -1,0 +1,684 @@
+{
+    "$comment": "Settings documentation metadata for wiki generation. Add descriptions for each setting key from datastoreDefault.js here. The wiki generator uses these to produce the Settings Reference page.",
+    "categories": {
+        "theme-core": {
+            "name": "Core Theme",
+            "description": "Basic theme behavior and version management."
+        },
+        "wallpaper-audio": {
+            "name": "Wallpaper & Audio",
+            "description": "Background wallpapers, slideshows, and audio playback settings."
+        },
+        "theme-visual": {
+            "name": "Visual Customization",
+            "description": "Fonts, colors, UI transparency, and visual toggles."
+        },
+        "custom-assets": {
+            "name": "Custom Assets",
+            "description": "Toggle custom icons, banners, avatars, and other visual replacements."
+        },
+        "plugins": {
+            "name": "Plugin Settings",
+            "description": "Configuration for each Elaina Theme plugin."
+        },
+        "tft": {
+            "name": "TFT Settings",
+            "description": "Teamfight Tactics specific UI toggles."
+        },
+        "backup": {
+            "name": "Backup & Restore",
+            "description": "Cloud backup and restore configuration."
+        },
+        "deprecated": {
+            "name": "Deprecated",
+            "description": "Settings no longer in active use."
+        }
+    },
+    "settings": {
+        "Elaina-Plugins": {
+            "category": "theme-core",
+            "description": "Master toggle to enable or disable all Elaina Theme plugins.",
+            "type": "boolean"
+        },
+        "Theme-version": {
+            "category": "theme-core",
+            "description": "Current installed theme version (managed automatically).",
+            "type": "string"
+        },
+        "changelog-shown-version": {
+            "category": "theme-core",
+            "description": "Version of the last displayed changelog (prevents re-showing).",
+            "type": "string"
+        },
+        "Cdn-version": {
+            "category": "theme-core",
+            "description": "Current CDN data version (managed automatically).",
+            "type": "string"
+        },
+        "backup-datastore": {
+            "category": "backup",
+            "description": "Enable automatic cloud backup of your settings when closing the client.",
+            "type": "boolean"
+        },
+        "seconds1": {
+            "category": "theme-core",
+            "description": "Theme usage time tracker — seconds component.",
+            "type": "number"
+        },
+        "minutes1": {
+            "category": "theme-core",
+            "description": "Theme usage time tracker — minutes component.",
+            "type": "number"
+        },
+        "hours1": {
+            "category": "theme-core",
+            "description": "Theme usage time tracker — hours component.",
+            "type": "number"
+        },
+        "pause-audio": {
+            "category": "wallpaper-audio",
+            "description": "Pause state for background audio (1 = paused).",
+            "type": "number"
+        },
+        "pause-wallpaper": {
+            "category": "wallpaper-audio",
+            "description": "Pause state for wallpaper video playback (1 = paused).",
+            "type": "number"
+        },
+        "mute-audio": {
+            "category": "wallpaper-audio",
+            "description": "Mute the background audio.",
+            "type": "boolean"
+        },
+        "NextBg_Count": {
+            "category": "wallpaper-audio",
+            "description": "Counter for next wallpaper in slideshow rotation.",
+            "type": "number"
+        },
+        "wallpaper-volume": {
+            "category": "wallpaper-audio",
+            "description": "Volume level for wallpaper video audio (0.0 to 1.0).",
+            "type": "number"
+        },
+        "audio-volume": {
+            "category": "wallpaper-audio",
+            "description": "Volume level for background audio (0.0 to 1.0).",
+            "type": "number"
+        },
+        "audio-loop": {
+            "category": "wallpaper-audio",
+            "description": "Loop background audio when it finishes playing.",
+            "type": "boolean"
+        },
+        "Merry-Christmas": {
+            "category": "theme-core",
+            "description": "Enable Christmas holiday special effects.",
+            "type": "boolean"
+        },
+        "new-gamesearch-queue": {
+            "category": "theme-visual",
+            "description": "Use the new game search queue UI style.",
+            "type": "boolean"
+        },
+        "custom-navbar-css": {
+            "category": "theme-visual",
+            "description": "Apply custom CSS to the navigation bar.",
+            "type": "boolean"
+        },
+        "navbar-content": {
+            "category": "theme-visual",
+            "description": "Custom content items for the navigation bar.",
+            "type": "array"
+        },
+        "manual-wallpaper-name": {
+            "category": "wallpaper-audio",
+            "description": "Manually specify a wallpaper filename to add.",
+            "type": "string"
+        },
+        "manual-audio-name": {
+            "category": "wallpaper-audio",
+            "description": "Manually specify an audio filename to add.",
+            "type": "string"
+        },
+        "manual-banner-name": {
+            "category": "custom-assets",
+            "description": "Manually specify a banner filename to add.",
+            "type": "string"
+        },
+        "manual-font-name": {
+            "category": "theme-visual",
+            "description": "Manually specify a font filename to add.",
+            "type": "string"
+        },
+        "wallpaper-slideshow": {
+            "category": "wallpaper-audio",
+            "description": "Automatically cycle through wallpapers at a set interval.",
+            "type": "boolean"
+        },
+        "wallpaper-change-slide-time": {
+            "category": "wallpaper-audio",
+            "description": "Time between wallpaper changes in slideshow mode (milliseconds).",
+            "type": "number"
+        },
+        "turnoff-audio-ingame": {
+            "category": "wallpaper-audio",
+            "description": "Automatically mute theme audio when in a game.",
+            "type": "boolean"
+        },
+        "Disable-Theme-Audio": {
+            "category": "wallpaper-audio",
+            "description": "Completely disable background audio.",
+            "type": "boolean"
+        },
+        "prevent-manual-update": {
+            "category": "theme-core",
+            "description": "Prevent manual theme update prompts.",
+            "type": "boolean"
+        },
+        "holiday-message": {
+            "category": "theme-core",
+            "description": "Show special messages on holidays.",
+            "type": "boolean"
+        },
+        "sync-user-icons": {
+            "category": "custom-assets",
+            "description": "Sync custom user icons across sessions.",
+            "type": "boolean"
+        },
+        "hide-homepage-navbar": {
+            "category": "theme-visual",
+            "description": "Hide the navigation bar on the home page.",
+            "type": "boolean"
+        },
+        "old-prev/next-button": {
+            "category": "theme-visual",
+            "description": "Use the old-style previous/next wallpaper buttons.",
+            "type": "boolean"
+        },
+        "enable-hide-top-navbar-friendlist-button": {
+            "category": "theme-visual",
+            "description": "Show the button that hides/shows the top navbar friend list.",
+            "type": "boolean"
+        },
+        "sidebar-transparent": {
+            "category": "theme-visual",
+            "description": "Make the sidebar transparent.",
+            "type": "boolean"
+        },
+        "lobby-transparent-filter": {
+            "category": "theme-visual",
+            "description": "Apply a transparency filter to the lobby area.",
+            "type": "boolean"
+        },
+        "settings-dialogs-transparent": {
+            "category": "theme-visual",
+            "description": "Make settings dialog backgrounds transparent.",
+            "type": "boolean"
+        },
+        "hide-profile-background": {
+            "category": "theme-visual",
+            "description": "Hide the default profile background image.",
+            "type": "boolean"
+        },
+        "hide-champions-splash-art": {
+            "category": "theme-visual",
+            "description": "Hide champion splash art in the client.",
+            "type": "boolean"
+        },
+        "hide-vertical-lines": {
+            "category": "theme-visual",
+            "description": "Hide vertical decorative lines in the UI.",
+            "type": "boolean"
+        },
+        "Custom_RP": {
+            "category": "plugins",
+            "description": "Display a custom RP (Riot Points) amount.",
+            "type": "boolean"
+        },
+        "RP-data": {
+            "category": "plugins",
+            "description": "The custom RP number to display.",
+            "type": "string"
+        },
+        "Custom_BE": {
+            "category": "plugins",
+            "description": "Display a custom BE (Blue Essence) amount.",
+            "type": "boolean"
+        },
+        "BE": {
+            "category": "plugins",
+            "description": "The custom BE number to display.",
+            "type": "string"
+        },
+        "custom-summoner-lv": {
+            "category": "plugins",
+            "description": "Display a custom summoner level.",
+            "type": "boolean"
+        },
+        "custom-summoner-lv-number": {
+            "category": "plugins",
+            "description": "The custom summoner level to display.",
+            "type": "string"
+        },
+        "Custom-Rank-Name": {
+            "category": "plugins",
+            "description": "Display a custom rank name on your profile.",
+            "type": "boolean"
+        },
+        "Rank-line1": {
+            "category": "plugins",
+            "description": "First line of the custom rank name.",
+            "type": "string"
+        },
+        "Rank-line2": {
+            "category": "plugins",
+            "description": "Second line of the custom rank name.",
+            "type": "string"
+        },
+        "Custom-Font": {
+            "category": "theme-visual",
+            "description": "Enable custom font for the client UI.",
+            "type": "boolean"
+        },
+        "CurrentFont": {
+            "category": "theme-visual",
+            "description": "The currently selected font filename.",
+            "type": "string"
+        },
+        "Font-list": {
+            "category": "theme-visual",
+            "description": "List of available font filenames.",
+            "type": "array"
+        },
+        "change-nickname-color": {
+            "category": "theme-visual",
+            "description": "Enable custom nickname color in the client.",
+            "type": "boolean"
+        },
+        "nickname-color": {
+            "category": "theme-visual",
+            "description": "Hex color code for your nickname.",
+            "type": "string"
+        },
+        "nickname-opacity": {
+            "category": "theme-visual",
+            "description": "Opacity (alpha) hex for the nickname color (00-ff).",
+            "type": "string"
+        },
+        "nickname-color-with-opacity": {
+            "category": "theme-visual",
+            "description": "Full hex color with opacity for the nickname (auto-computed).",
+            "type": "string"
+        },
+        "animate-loading": {
+            "category": "theme-visual",
+            "description": "Enable animated loading screen.",
+            "type": "boolean"
+        },
+        "Custom-Icon": {
+            "category": "custom-assets",
+            "description": "Use custom summoner icon.",
+            "type": "boolean"
+        },
+        "Custom-Loading-Icon": {
+            "category": "custom-assets",
+            "description": "Use custom loading screen icon.",
+            "type": "boolean"
+        },
+        "Custom-Border": {
+            "category": "custom-assets",
+            "description": "Use custom profile border.",
+            "type": "boolean"
+        },
+        "Custom-Regalia-Banner": {
+            "category": "custom-assets",
+            "description": "Use custom regalia banner on your profile.",
+            "type": "boolean"
+        },
+        "CurrentBanner": {
+            "category": "custom-assets",
+            "description": "The currently selected banner filename.",
+            "type": "string"
+        },
+        "Banner-list": {
+            "category": "custom-assets",
+            "description": "List of available banner filenames.",
+            "type": "array"
+        },
+        "Custom-Hover-card-backdrop": {
+            "category": "custom-assets",
+            "description": "Use a custom backdrop for player hover cards.",
+            "type": "boolean"
+        },
+        "Custom-Avatar": {
+            "category": "custom-assets",
+            "description": "Use a custom avatar image.",
+            "type": "boolean"
+        },
+        "Custom-RP-Icon": {
+            "category": "custom-assets",
+            "description": "Use a custom RP currency icon.",
+            "type": "boolean"
+        },
+        "Custom-BE-Icon": {
+            "category": "custom-assets",
+            "description": "Use a custom BE currency icon.",
+            "type": "boolean"
+        },
+        "Custom-Rank-Icon": {
+            "category": "custom-assets",
+            "description": "Use a custom ranked icon.",
+            "type": "boolean"
+        },
+        "Custom-Emblem": {
+            "category": "custom-assets",
+            "description": "Use a custom rank emblem.",
+            "type": "boolean"
+        },
+        "Custom-Clash-banner": {
+            "category": "custom-assets",
+            "description": "Use a custom Clash banner.",
+            "type": "boolean"
+        },
+        "Custom-Gamemode-Icon": {
+            "category": "custom-assets",
+            "description": "Use custom game mode icons.",
+            "type": "boolean"
+        },
+        "Custom-Trophy": {
+            "category": "custom-assets",
+            "description": "Use a custom trophy icon.",
+            "type": "boolean"
+        },
+        "Custom-Ticker": {
+            "category": "custom-assets",
+            "description": "Use a custom ticker/notification icon.",
+            "type": "boolean"
+        },
+        "Custom-Cursor": {
+            "category": "custom-assets",
+            "description": "Use a custom mouse cursor in the client.",
+            "type": "boolean"
+        },
+        "Runes-BG": {
+            "category": "custom-assets",
+            "description": "Use custom rune page backgrounds.",
+            "type": "boolean"
+        },
+        "custom-champs-image": {
+            "category": "custom-assets",
+            "description": "Use custom champion images.",
+            "type": "boolean"
+        },
+        "hide-theme-usage-time": {
+            "category": "theme-visual",
+            "description": "Hide the theme usage time counter in settings.",
+            "type": "boolean"
+        },
+        "hide-tft-match-history": {
+            "category": "tft",
+            "description": "Hide TFT match history section.",
+            "type": "boolean"
+        },
+        "hide-tft-news": {
+            "category": "tft",
+            "description": "Hide TFT news section.",
+            "type": "boolean"
+        },
+        "hide-tft-rotational-shop": {
+            "category": "tft",
+            "description": "Hide TFT rotational shop.",
+            "type": "boolean"
+        },
+        "hide-tft-troves": {
+            "category": "tft",
+            "description": "Hide TFT Troves section.",
+            "type": "boolean"
+        },
+        "hide-tft-battle-pass": {
+            "category": "tft",
+            "description": "Hide TFT battle pass section.",
+            "type": "boolean"
+        },
+        "hide-tft-home": {
+            "category": "tft",
+            "description": "Hide TFT home tab entirely.",
+            "type": "boolean"
+        },
+        "NSFW-Content": {
+            "category": "theme-core",
+            "description": "Enable NSFW content in the theme (disabled by default).",
+            "type": "boolean"
+        },
+        "Old-League-Loader-Settings": {
+            "category": "plugins",
+            "description": "Show old-style League Loader settings layout.",
+            "type": "boolean"
+        },
+        "loot-helper": {
+            "category": "plugins",
+            "description": "Enable the loot disenchant helper buttons.",
+            "type": "boolean"
+        },
+        "auto_accept": {
+            "category": "plugins",
+            "description": "Automatically accept matchmaking queue when a game is found.",
+            "type": "boolean"
+        },
+        "auto_accept_button": {
+            "category": "plugins",
+            "description": "Show the auto-accept toggle button in the lobby.",
+            "type": "boolean"
+        },
+        "dodge-button": {
+            "category": "plugins",
+            "description": "Show a dodge button in champion select to leave the queue.",
+            "type": "boolean"
+        },
+        "Enable-Invite-Fr": {
+            "category": "plugins",
+            "description": "Show the 'Invite All Friends' button in lobby.",
+            "type": "boolean"
+        },
+        "aram-only": {
+            "category": "plugins",
+            "description": "Restrict auto-queue to ARAM mode only.",
+            "type": "boolean"
+        },
+        "Auto-Find-Queue": {
+            "category": "plugins",
+            "description": "Automatically search for a new game queue.",
+            "type": "boolean"
+        },
+        "Gamemode": {
+            "category": "plugins",
+            "description": "Game mode queue ID for auto-queue (e.g., 450 = ARAM).",
+            "type": "number"
+        },
+        "Create-Delay": {
+            "category": "plugins",
+            "description": "Delay before creating a new lobby in auto-queue (milliseconds).",
+            "type": "number"
+        },
+        "Find-Delay": {
+            "category": "plugins",
+            "description": "Delay before searching for a match in auto-queue (milliseconds).",
+            "type": "number"
+        },
+        "Custom-profile-hover": {
+            "category": "plugins",
+            "description": "Customize the profile hover card information.",
+            "type": "boolean"
+        },
+        "Custom-mastery-score": {
+            "category": "plugins",
+            "description": "Display a custom mastery score.",
+            "type": "boolean"
+        },
+        "Mastery-Score": {
+            "category": "plugins",
+            "description": "The custom mastery score number to display.",
+            "type": "number"
+        },
+        "Custom-rank": {
+            "category": "plugins",
+            "description": "Display a custom rank on your profile.",
+            "type": "boolean"
+        },
+        "Ranked Queue ID": {
+            "category": "plugins",
+            "description": "Queue ID for custom rank display.",
+            "type": "number"
+        },
+        "Ranked Tier ID": {
+            "category": "plugins",
+            "description": "Tier ID for custom rank (e.g., 9 = Challenger).",
+            "type": "number"
+        },
+        "Ranked Division ID": {
+            "category": "plugins",
+            "description": "Division ID for custom rank display.",
+            "type": "number"
+        },
+        "Custom-challenge-crystal": {
+            "category": "plugins",
+            "description": "Display a custom challenge crystal level.",
+            "type": "boolean"
+        },
+        "Challenge-Points": {
+            "category": "plugins",
+            "description": "Custom challenge point total to display.",
+            "type": "number"
+        },
+        "challengeCrystalLevel": {
+            "category": "plugins",
+            "description": "Custom challenge crystal level (0-9).",
+            "type": "number"
+        },
+        "Custom-Status": {
+            "category": "plugins",
+            "description": "Set a custom status message.",
+            "type": "boolean"
+        },
+        "Custom-Status-Local": {
+            "category": "plugins",
+            "description": "Display custom status locally only (others won't see it).",
+            "type": "boolean"
+        },
+        "status-delay": {
+            "category": "plugins",
+            "description": "Delay before applying custom status (milliseconds).",
+            "type": "number"
+        },
+        "Name-Spoofer": {
+            "category": "plugins",
+            "description": "Display a custom summoner name (local only).",
+            "type": "boolean"
+        },
+        "Spoof-name": {
+            "category": "plugins",
+            "description": "The custom summoner name to display.",
+            "type": "string"
+        },
+        "Debug-mode": {
+            "category": "plugins",
+            "description": "Enable debug logging in the console.",
+            "type": "boolean"
+        },
+        "Dev-mode": {
+            "category": "plugins",
+            "description": "Enable developer mode features.",
+            "type": "boolean"
+        },
+        "Active-dev-button": {
+            "category": "plugins",
+            "description": "Click counter for developer mode activation (internal).",
+            "type": "number"
+        },
+        "Dev-button": {
+            "category": "plugins",
+            "description": "Whether the developer mode button is visible.",
+            "type": "boolean"
+        },
+        "System-Info": {
+            "category": "backup",
+            "description": "System information string for backup metadata.",
+            "type": "string"
+        },
+        "last-backup-time": {
+            "category": "backup",
+            "description": "Timestamp of the last successful backup.",
+            "type": "string"
+        },
+        "Force-Update": {
+            "category": "deprecated",
+            "description": "(Deprecated) Force theme update.",
+            "type": "boolean"
+        },
+        "Elaina-First run": {
+            "category": "deprecated",
+            "description": "(Deprecated) First run flag.",
+            "type": "boolean"
+        },
+        "buy-all-champs": {
+            "category": "deprecated",
+            "description": "(Deprecated) Buy all champions toggle.",
+            "type": "boolean"
+        },
+        "ChampsPrice": {
+            "category": "deprecated",
+            "description": "(Deprecated) Champion price filter.",
+            "type": "number"
+        },
+        "Auto-Honor": {
+            "category": "deprecated",
+            "description": "(Deprecated) Auto-honor a player after game.",
+            "type": "boolean"
+        },
+        "Change-CDN-version": {
+            "category": "deprecated",
+            "description": "(Deprecated) Manual CDN version override.",
+            "type": "boolean"
+        },
+        "Hide-linking-settings": {
+            "category": "deprecated",
+            "description": "(Deprecated) Hide account linking settings.",
+            "type": "boolean"
+        },
+        "Hide-verify-acc": {
+            "category": "deprecated",
+            "description": "(Deprecated) Hide account verification.",
+            "type": "boolean"
+        },
+        "hide-overview": {
+            "category": "deprecated",
+            "description": "(Deprecated) Hide overview tab.",
+            "type": "boolean"
+        },
+        "hide-merch": {
+            "category": "deprecated",
+            "description": "(Deprecated) Hide merchandise section.",
+            "type": "boolean"
+        },
+        "hide-patch-note": {
+            "category": "deprecated",
+            "description": "(Deprecated) Hide patch notes.",
+            "type": "boolean"
+        },
+        "hide-esport": {
+            "category": "deprecated",
+            "description": "(Deprecated) Hide esports section.",
+            "type": "boolean"
+        },
+        "Receive-Update": {
+            "category": "deprecated",
+            "description": "(Deprecated) Receive update notifications.",
+            "type": "boolean"
+        },
+        "April fool` joke": {
+            "category": "deprecated",
+            "description": "(Deprecated) April Fools joke feature.",
+            "type": "boolean"
+        }
+    }
+}

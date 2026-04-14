@@ -10,6 +10,17 @@ import { log, warn, error } from '../utils/themeLog.ts';
 let queue_accepted: boolean = false 
 let player_declined: boolean = false 
 
+/**
+ * @wiki Automatically accepts the matchmaking ready check when a game is found, so you don't have to click Accept manually.
+ * @author Lyfhael
+ * @modifier Elaina Da Catto
+ * @usage
+ * 1. Open League Client settings
+ * 2. Navigate to **Elaina Theme** → **Plugin Settings**
+ * 3. Enable **Auto Accept** to auto-accept queues
+ * 4. Optionally, enable the **Auto Accept Button** to show a toggle in the lobby
+ * @settings auto_accept, auto_accept_button
+ */
 export class AutoAccept {
 	autoAcceptQueueButtonSelect() {
 		const element = document.getElementById("autoAcceptQueueButton") as HTMLInputElement
