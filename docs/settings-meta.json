@@ -679,6 +679,41 @@
             "category": "deprecated",
             "description": "(Deprecated) April Fools joke feature.",
             "type": "boolean"
+        },
+        "queueList": {
+            "category": "internal",
+            "description": "Cached list of available game modes for Auto Queue.",
+            "hidden": true
+        },
+        "frGroupName": {
+            "category": "internal",
+            "description": "Index of the currently selected friend group for Invite All.",
+            "hidden": true
+        },
+        "friendslist": {
+            "category": "internal",
+            "description": "Cached list of online friends for Invite All.",
+            "hidden": true
+        },
+        "grouplist": {
+            "category": "internal",
+            "description": "Cached list of friend groups for Invite All.",
+            "hidden": true
+        },
+        "ElainaTheme-Token": {
+            "category": "internal",
+            "description": "Authentication token for the Elaina Theme CDN service.",
+            "hidden": true
+        },
+        "Summoner-ID": {
+            "category": "internal",
+            "description": "Current summoner ID used for icon sync.",
+            "hidden": true
+        },
+        "settingsChangenumber": {
+            "category": "internal",
+            "description": "Tracks the number of pending settings changes requiring a restart.",
+            "hidden": true
         }
     }
 }

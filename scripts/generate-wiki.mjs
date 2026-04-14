@@ -233,7 +233,7 @@ ${plugins
 `;
 }
 
-function generatePluginsPage(plugins) {
+function generatePluginsPage(plugins, settingsMeta) {
     let md = `# Plugins
 
 Elaina Theme comes with several plugins that extend the League Client functionality.
@@ -266,7 +266,10 @@ Elaina Theme comes with several plugins that extend the League Client functional
         md += `${desc.split('\n')[0]}\n\n`;
         md += `- **Author**: ${author}\n`;
         if (plugin.dataStoreKeys.length > 0) {
-            md += `- **Settings**: ${plugin.dataStoreKeys.map(k => `\`${k}\``).join(', ')}\n`;
+            const visibleKeys = plugin.dataStoreKeys.filter(k => !settingsMeta.settings?.[k]?.hidden);
+            if (visibleKeys.length > 0) {
+                md += `- **Settings**: ${visibleKeys.map(k => `\`${k}\``).join(', ')}\n`;
+            }
         }
         md += '\n---\n\n';
     }
@@ -303,12 +306,13 @@ function generatePluginPage(plugin, defaults, settingsMeta, locale) {
     }
 
     // Settings table
-    if (plugin.dataStoreKeys.length > 0) {
+    const visibleDataStoreKeys = plugin.dataStoreKeys.filter(k => !settingsMeta.settings?.[k]?.hidden);
+    if (visibleDataStoreKeys.length > 0) {
         md += `## Settings\n\n`;
         md += `| Setting | Default | Description |\n`;
         md += `|---------|---------|-------------|\n`;
 
-        for (const key of plugin.dataStoreKeys) {
+        for (const key of visibleDataStoreKeys) {
             const defaultVal = defaults[key];
             const meta = settingsMeta.settings?.[key];
             const localeName = locale[key.replace(/-/g, '_')] || locale[key] || null;
@@ -354,6 +358,7 @@ Complete list of all Elaina Theme settings. Change these in the League Client un
 
     for (const [key, defaultVal] of Object.entries(defaults)) {
         const meta = settingsInfo[key];
+        if (meta?.hidden) continue;
         const category = meta?.category || 'uncategorized';
         if (category === 'uncategorized') {
             uncategorized.push({ key, defaultVal, meta });
@@ -641,7 +646,7 @@ async function main() {
 
     const pages = {
         'Home.md': generateHomePage(plugins, defaults),
-        'Plugins.md': generatePluginsPage(plugins),
+        'Plugins.md': generatePluginsPage(plugins, settingsMeta),
         'Settings-Reference.md': generateSettingsReference(defaults, settingsMeta, locale),
         'Theme-Customization.md': generateThemeCustomizationPage(defaults),
         'FAQ.md': generateFAQPage(),
