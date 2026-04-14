@@ -3,6 +3,7 @@ import { getThemeName } from "../otherThings"
 const text = await (await fetch(`//plugins/${getThemeName()}/config/customStatus.txt`)).text()
 
 /**
+ * Sets a custom rotating chat status message from a text file.
  * @wiki Sets a custom chat status message that rotates through multiple messages defined in a text file. Supports both server-side status updates (visible to friends) and local-only display. Messages are separated by `(end status)` in the config file.
  * @author Elaina Da Catto
  * @usage

@@ -5,6 +5,7 @@ import { log } from "../utils/themeLog.ts";
 
 let filtersData: string[] = (await cdnImport(`//plugins/${getThemeName()}/config/filters.js`, "Can't import filters data")).default;
 
+/** Applies CSS filter overlays to different client pages based on a configurable filter map. */
 export class Filters {
 	private filtersDataMap = {
 		"rcp-fe-lol-yourshop": "Yourshop",

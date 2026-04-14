@@ -1,6 +1,7 @@
 // this plugins should not work anymore (I thinhk)
 
 /**
+ * Forces summoner spell selection via keyboard shortcuts in champion select.
  * @wiki Forces summoner spell selection during champion select using keyboard shortcuts. Press Alt+J to set Smite+Flash (jungle) or Alt+L to set Heal+Flash (lane). Note: this plugin may no longer work with current client versions.
  * @author Elaina Da Catto
  * @usage

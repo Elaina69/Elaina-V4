@@ -4,6 +4,7 @@ import { log } from '../utils/themeLog.ts';
 let covert_status = "chat";
 
 /**
+ * Cycles through chat availability statuses by clicking the status icon.
  * @wiki Lets you cycle through all chat availability statuses (Online, Mobile, Do Not Disturb, Away, Offline) by clicking the status icon. Persists the selected status even during champion select to prevent the client from auto-changing it.
  * @author Elaina Da Catto
  * @usage

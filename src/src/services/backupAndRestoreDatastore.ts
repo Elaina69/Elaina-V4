@@ -3,6 +3,7 @@ import { log, error } from '../utils/themeLog';
 
 let datastore_list = (await import(`//plugins/${getThemeName()}/config/datastoreDefault.js`)).default
 
+/** Imports and restores DataStore backup data from a remote URL or exported object. */
 export class BackupRestoreData {
 	async importData(url: string): Promise<any> {
 		const controller = new AbortController();

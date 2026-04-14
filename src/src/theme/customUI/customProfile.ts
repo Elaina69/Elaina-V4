@@ -49,6 +49,7 @@ function requestMasteryScore() {
 
 
 
+/** Customizes the player profile with user-defined badges, banners, and mastery scores. */
 export class CustomProfile {
     async request(method: string, endpoint: string, { headers = {}, body = {} }: { headers?: Record<string, string>; body?: Record<string, any> } = {}): Promise<Response> {
         const requestOptions: RequestInit = {

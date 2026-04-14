@@ -2,6 +2,7 @@ import utils from '../utils/utils.ts'
 import * as upl from "pengu-upl"
 
 /**
+ * Adds a dodge button to champion select for leaving the lobby.
  * @wiki Adds a "Dodge" button to the champion select screen that lets you leave the lobby without closing the entire client. Uses the internal teambuilder-draft API to cleanly exit champion select.
  * @author Elaina Da Catto
  * @usage

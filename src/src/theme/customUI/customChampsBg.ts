@@ -8,6 +8,7 @@ let bgInterval: number
 
 const list = (await cdnImport(`${datapath}config/champsBgList.js`, "Can't import custom champion data")).default;
 
+/** Replaces default champion select thumbnails with custom background images from a config list. */
 export class CustomChampsBg {
     updateDefaultSkinThumbnails(selector, img) {
         const elements = document.querySelectorAll(selector);

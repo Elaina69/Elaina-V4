@@ -1,4 +1,5 @@
 /**
+ * Replaces the displayed summoner level with a custom number.
  * @wiki Replaces the displayed summoner level on the sidebar and profile page with a custom number. This is a visual-only change and does not affect actual account level.
  * @author Elaina Da Catto
  * @usage

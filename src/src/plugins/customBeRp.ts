@@ -1,4 +1,5 @@
 /**
+ * Displays custom Blue Essence and Riot Points values in the client.
  * @wiki Displays custom Blue Essence (BE) and Riot Points (RP) values in the client, replacing the real currency amounts with user-defined numbers.
  * @author Elaina Da Catto
  * @usage

@@ -1240,6 +1240,7 @@ class AddHomePage {
 
 const addHomePage = new AddHomePage()
 
+/** Manages the custom homepage including wallpapers, audio, navbar buttons, and page listeners. */
 export class HomePage {
     main = () => {
         log("Add wallpaper and audio")

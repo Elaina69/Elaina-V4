@@ -11,6 +11,7 @@ let queue_accepted: boolean = false
 let player_declined: boolean = false 
 
 /**
+ * Automatically accepts the matchmaking ready check when a game is found.
  * @wiki Automatically accepts the matchmaking ready check when a game is found, so you don't have to click Accept manually.
  * @author Lyfhael
  * @modifier Elaina Da Catto

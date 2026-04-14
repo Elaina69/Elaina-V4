@@ -455,6 +455,7 @@ function CreateSkinsInformation() {
 }
 
 /**
+ * Enhances the Hextech Loot inventory with quick-action buttons.
  * @wiki Enhances the Hextech Loot inventory with quick-action buttons for opening all chests, disenchanting champion shards into Blue Essence, and a refresh button. Also displays shard counts and total disenchant values next to loot categories.
  * @author Elaina Da Catto
  * @usage

@@ -3,6 +3,7 @@ import { getThemeName } from "../../otherThings"
 
 const filters = (await import(`//plugins/${getThemeName()}/config/filters.js`)).default;
 
+/** Replaces rune page backgrounds with custom images and applies CSS filter overlays. */
 export class CustomRunesBackground {
     removeOtherImage = () => {
         let remove = (element: any) => {element.remove()}

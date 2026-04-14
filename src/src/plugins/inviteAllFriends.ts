@@ -2,6 +2,7 @@ import * as upl from "pengu-upl"
 import { log } from "../utils/themeLog";
 
 /**
+ * Adds an Invite All button to the lobby for bulk friend invitations.
  * @wiki Adds an "Invite All" button to the lobby that sends invitations to all online friends in a selected friend group. Includes a dropdown to pick which friend group to invite from.
  * @author Elaina Da Catto
  * @usage

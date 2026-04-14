@@ -1,6 +1,7 @@
 import utils from '../../utils/utils.ts'
 import * as upl from 'pengu-upl';
 
+/** Makes settings and dialog frame backgrounds transparent using CSS variables. */
 export class TransparentSettingsDialogs {
 	applyStyle = () => {
 		const style = "var(--Settings-and-Dialog-frame-color)"

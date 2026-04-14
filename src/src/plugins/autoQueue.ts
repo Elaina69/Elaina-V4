@@ -37,6 +37,7 @@ async function matchMaking() {
 }
 
 /**
+ * Automatically re-queues for a new game after the end-of-game screen.
  * @wiki Automatically re-queues for a new game after the end-of-game screen. Supports configurable delay, ARAM-only mode, and a selectable game mode. Shows a countdown toast notification before starting the queue.
  * @author Elaina Da Catto
  * @usage

@@ -1,6 +1,7 @@
 import * as upl from 'pengu-upl'
 
 /**
+ * Adds a 5v5 Practice Tool button to the lobby screen.
  * @wiki Adds a "5v5 Practice" button to the lobby screen that instantly creates a 5v5 Practice Tool custom game on Summoner's Rift with spectators allowed.
  * @author Elaina Da Catto
  * @usage

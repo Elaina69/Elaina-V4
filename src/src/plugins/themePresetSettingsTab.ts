@@ -16,6 +16,7 @@ function openConfigs() {window.openPluginsFolder(`${getThemeName()}/config`)}
 function openAssets() {window.openPluginsFolder(`${getThemeName()}/assets`)}
 
 /**
+ * Quick-access theme menu in the League Client navigation bar.
  * @wiki Adds a quick-access theme menu to the League Client navigation bar (based on League Loader settings). Provides shortcuts to reload the client, open asset and config folders, access theme releases on GitHub, and open the full settings panel.
  * @author Nomi
  * @modifier Elaina Da Catto

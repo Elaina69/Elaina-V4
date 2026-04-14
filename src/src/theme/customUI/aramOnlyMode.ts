@@ -1,6 +1,7 @@
 import * as upl from 'pengu-upl'
 import { error } from '../../utils/themeLog';
 
+/** Removes non-ARAM game modes from the client UI to enforce ARAM-only play. */
 export class AramOnlyMode {
     /**
      * Removes a DOM node if it exists.

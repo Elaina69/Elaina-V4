@@ -3,6 +3,7 @@ import utils from "../../utils/utils"
 import { getThemeName } from "../../otherThings"
 import { error } from "../../utils/themeLog"
 
+/** Adds a toggle button to show or hide the friends sidebar panel. */
 export class HideFriendList {
     createSidebarBackground = () => {
         const sidebarBG = document.createElement("div")

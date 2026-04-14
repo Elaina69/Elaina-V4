@@ -12,6 +12,7 @@ const datapath = `//plugins/${getThemeName()}/`
 
 ElainaData.set("settingsChangenumber", 0)
 
+/** Shows a restart prompt when settings are changed that require a client restart. */
 async function restartAfterChange(el: string, data: string) {
     let lastdata: any = document.getElementById(el)?.getAttribute("lastdatastore")
     
