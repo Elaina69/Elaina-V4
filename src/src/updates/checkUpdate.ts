@@ -11,6 +11,7 @@ interface UpdateData {
 
 type UpdateAction = "changelog" | "changelog-new" | "force-update" | "none"
 
+/** Checks the CDN for theme updates and handles changelog display and forced updates. */
 export class CheckUpdate {
 	private cdnUpdate: UpdateData | null = null
 	private cdnServer: any = null

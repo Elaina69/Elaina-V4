@@ -248,6 +248,11 @@ function L(t) {
     D(t);
 }
 
+/**
+ * @wiki Automatically skips the post-game honor voting screen when Auto Queue is enabled. Instantly submits the honor ballot so you go straight back to the lobby without having to manually honor a player.
+ * @author Elaina Da Catto
+ * @settings Auto-Find-Queue
+ */
 export function skipHonor(context) {
     if (ElainaData.get("Auto-Find-Queue")) {
         L(context),

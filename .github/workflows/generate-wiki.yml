@@ -1,0 +1,77 @@
+name: Generate Wiki
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'docs/**'
+      - 'scripts/generate-wiki.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-wiki:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate wiki pages
+        run: node scripts/generate-wiki.mjs
+
+      - name: Push to wiki
+        env:
+          # Uses the built-in GITHUB_TOKEN.
+          # If this fails with a 403, create a Personal Access Token (PAT) with
+          # 'repo' scope, add it as a repository secret named WIKI_TOKEN, and
+          # replace ${{ github.token }} with ${{ secrets.WIKI_TOKEN }} below.
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Configure git
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Clone the wiki repo
+          WIKI_URL="https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.wiki.git"
+          WIKI_DIR_TMP=$(mktemp -d)
+          
+          # Try cloning existing wiki; if it fails, initialize a new one
+          if git clone "$WIKI_URL" "$WIKI_DIR_TMP" 2>/dev/null; then
+            echo "Cloned existing wiki"
+          else
+            echo "No existing wiki found, initializing new one"
+            cd "$WIKI_DIR_TMP"
+            git init
+            git remote add origin "$WIKI_URL"
+            cd -
+          fi
+
+          # Copy generated wiki pages (overwrite existing auto-generated ones)
+          cp wiki/*.md "$WIKI_DIR_TMP/"
+
+          # Commit and push
+          cd "$WIKI_DIR_TMP"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No wiki changes to commit"
+          else
+            git commit -m "docs: auto-update wiki from ${GITHUB_SHA::7}"
+            git push origin HEAD:master || git push origin HEAD:main
+            echo "Wiki updated successfully"
+          fi

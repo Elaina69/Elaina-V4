@@ -1,6 +1,8 @@
 .git/
 dist/
 node_modules/
+wiki/
 src/elaina-theme-data/
+package-lock.json
 ElainaV4-typescript.code-workspace
 TODO-List

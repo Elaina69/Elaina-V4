@@ -14,6 +14,7 @@ import { CustomChampsBg } from "./customUI/customChampsBg.ts"
 upl.observer.subscribeToElementCreation(".parallax-layer-container",(element: any) => element.style.backgroundImage = '' )
 //upl.observer.subscribeToElementCreation("",(element: any)=>{})
 
+/** Orchestrates initialization of all custom UI components for the theme. */
 export class ApplyUI {
 	main = async () => {
 		// Add homepage

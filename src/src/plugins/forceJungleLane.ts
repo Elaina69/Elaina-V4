@@ -1,5 +1,14 @@
 // this plugins should not work anymore (I thinhk)
 
+/**
+ * Forces summoner spell selection via keyboard shortcuts in champion select.
+ * @wiki Forces summoner spell selection during champion select using keyboard shortcuts. Press Alt+J to set Smite+Flash (jungle) or Alt+L to set Heal+Flash (lane). Note: this plugin may no longer work with current client versions.
+ * @author Elaina Da Catto
+ * @usage
+ * 1. Enter champion select
+ * 2. Press **Alt+J** to force Smite + Flash (jungle role)
+ * 3. Press **Alt+L** to force Heal + Flash (lane role)
+ */
 export class ForceJungLane {
     async forceJungle(): Promise<void> {
         await fetch("/lol-champ-select/v1/session/my-selection", {
