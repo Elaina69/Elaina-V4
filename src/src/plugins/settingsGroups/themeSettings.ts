@@ -1,3 +1,4 @@
+import { sanitizeColor } from "../../utils/sanitize.ts";
 import { UI } from "./settingsUI.ts"
 import { restartAfterChange } from "../settings.ts"
 import utils from "../../utils/utils.ts";
@@ -251,7 +252,7 @@ async function themeSettings(panel: Element) {
                         else {
                             utils.addStyleWithID("nickname-color-css", /*css*/`
                                 span.player-name__force-locale-text-direction, #nickname-color-preview {
-                                    color: ${ElainaData.get("nickname-color-with-opacity")};
+                                    color: ${sanitizeColor(ElainaData.get("nickname-color-with-opacity"))};
                                 }
                             `)
                         }
@@ -267,14 +268,14 @@ async function themeSettings(panel: Element) {
                             ElainaData.set("nickname-color-with-opacity", input.value + ElainaData.get("nickname-opacity"))
         
                             let color: any = document.getElementById("nickname-color-text")
-                            color.innerHTML = ElainaData.get("nickname-color-with-opacity")
+                            color.textContent = ElainaData.get("nickname-color-with-opacity")
             
                             if (ElainaData.get("change-nickname-color")) {
                                 document.getElementById("nickname-color-css")?.remove()
             
                                 utils.addStyleWithID("nickname-color-css", /*css*/`
                                     span.player-name__force-locale-text-direction, #nickname-color-preview {
-                                        color: ${ElainaData.get("nickname-color-with-opacity")};
+                                        color: ${sanitizeColor(ElainaData.get("nickname-color-with-opacity"))};
                                     }
                                 `)
                             }
@@ -294,17 +295,17 @@ async function themeSettings(panel: Element) {
                         ElainaData.set("nickname-opacity", Math.round(origin.value / 100 * 255).toString(16).padStart(2, '0'))
                         ElainaData.set("nickname-color-with-opacity", ElainaData.get("nickname-color")+ElainaData.get("nickname-opacity"))
         
-                        title.innerHTML = `${await getString("opacity")}: ${origin.value}%`
+                        title.textContent = `${await getString("opacity")}: ${origin.value}%`
         
                         let color: any = document.getElementById("nickname-color-text")
-                        color.innerHTML = ElainaData.get("nickname-color-with-opacity")
+                        color.textContent = ElainaData.get("nickname-color-with-opacity")
         
                         if (ElainaData.get("change-nickname-color")) {
                             document.getElementById("nickname-color-css")?.remove()
         
                             utils.addStyleWithID("nickname-color-css", /*css*/`
                                 span.player-name__force-locale-text-direction, #nickname-color-preview {
-                                    color: ${ElainaData.get("nickname-color-with-opacity")};
+                                    color: ${sanitizeColor(ElainaData.get("nickname-color-with-opacity"))};
                                 }
                             `)
                         }

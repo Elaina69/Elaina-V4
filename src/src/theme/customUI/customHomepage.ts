@@ -6,6 +6,7 @@
  * @Nyan Meow~~~
  */
 
+import { escapeHtml } from "../../utils/sanitize.ts";
 import { cdnImport } from "../../otherThings.ts"
 import { getThemeName } from "../../otherThings.ts"
 import { log, warn, error } from "../../utils/themeLog.ts";
@@ -370,9 +371,9 @@ class AudioController {
         let songNameText: Element | null = document.querySelector(".audio-name-bar > p")
         if (songNameText) {
             if (ElainaData.get('pause-audio') % 2 === 0) {
-                songNameText.innerHTML = `Paused: <br/>${currentSong}`
+                songNameText.innerHTML = `Paused: <br/>${escapeHtml(currentSong)}`
             }
-            else songNameText.innerHTML = `Now playing: <br/>${currentSong}`
+            else songNameText.innerHTML = `Now playing: <br/>${escapeHtml(currentSong)}`
         }
     }
 }
@@ -546,8 +547,8 @@ class MainController {
     
         // Set current audio name to progress bar
         ElainaData.get('pause-audio') % 2 === 0 
-            ? audioName.innerHTML = `Paused: <br/>${ElainaData.get("Audio-list")[ElainaData.get('audio-index')]}`
-            : audioName.innerHTML = `Now playing: <br/>${ElainaData.get("Audio-list")[ElainaData.get('audio-index')]}`
+            ? audioName.innerHTML = `Paused: <br/>${escapeHtml(ElainaData.get("Audio-list")[ElainaData.get('audio-index')])}`
+            : audioName.innerHTML = `Now playing: <br/>${escapeHtml(ElainaData.get("Audio-list")[ElainaData.get('audio-index')])}`
     
         // Append volume slider container
         muteUnmuteButton.appendChild(muteUnmuteIcon);

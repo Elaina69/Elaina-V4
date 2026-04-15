@@ -1,3 +1,5 @@
+import { escapeHtml } from '../utils/sanitize.ts'
+
 export class CustomBeRp {
 	RP = () => {
 		const rpData = `${ElainaData.get("RP-data")}`
@@ -6,10 +8,10 @@ export class CustomBeRp {
 		let RPMac: Element | null = document.querySelector(".currency-rp")
 		
 		if (RP) {
-			RP.innerHTML = rpData
+			RP.textContent = rpData
 		}
 		else if (RPMac) {
-			RPMac.innerHTML = rpData
+			RPMac.textContent = rpData
 		}
 	}
 
@@ -23,7 +25,7 @@ export class CustomBeRp {
 				<lol-uikit-video type="intro" src="/fe/lol-navigation/add-blue-essence.webm" class="animation-add-blue-essence"></lol-uikit-video>
 				<lol-uikit-video type="intro" src="/fe/lol-navigation/remove-blue-essence.webm" class="animation-remove-blue-essence"></lol-uikit-video>
 			</div>
-			${ElainaData.get("BE")}
+			${escapeHtml(ElainaData.get("BE"))}
 		`
 	}
 }

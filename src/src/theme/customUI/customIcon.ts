@@ -46,7 +46,7 @@ class CustomAvatar {
 	changeConversationChatAvatar = async (element: any) => {
 		let chatDataID = element.getAttribute("data-id")
 		let chatInfo = await (await fetch(`/lol-chat/v1/conversations/${chatDataID}`)).json()
-		let summonerID = (await (await fetch(`/lol-summoner/v1/summoners/?name=${chatInfo.gameName}%23${chatInfo.gameTag}`)).json()).accountId
+		let summonerID = (await (await fetch(`/lol-summoner/v1/summoners/?name=${chatInfo.gameName}%23${chatInfo.gameTag}`)).json()).summonerId
 
 		if (friendIconList.find(x => x.summonerID == summonerID) && friendIconList.find(x => x.summonerID == summonerID)?.icon.avatar != null) {
 			let icon = element.querySelector(".icon-image")

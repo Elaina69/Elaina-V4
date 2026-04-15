@@ -217,10 +217,10 @@ export class CustomProfile {
 
     CustomProfileRankName = () => {
         upl.observer.subscribeToElementCreation(".style-profile-ranked-component.ember-view .style-profile-emblem-header-title", (element: any) => 
-            element.innerHTML = ElainaData.get("Rank-line1") 
+            element.textContent = ElainaData.get("Rank-line1") 
         )
         upl.observer.subscribeToElementCreation(".style-profile-emblem-subheader-ranked > div", (element: any) => 
-            element.innerHTML = ElainaData.get("Rank-line2") 
+            element.textContent = ElainaData.get("Rank-line2") 
         )
     }
 

@@ -21,15 +21,31 @@ let friendIconList: {
 let friendsList: { summonerId: number }[] = []
 
 class SyncUserIcons {
+    getIconFolder() {
+        return iconFolder;
+    }
+
+    getIconData() {
+        return icdata;
+    }
+
     async getFriendList() {
         let friends = await fetch('/lol-chat/v1/friends').then(res => res.json());
+        friendsList = []
         for (let i = 0; i < friends.length; i++) {
-            friendsList.push({"summonerId": friends[i]["summonerId"]})
+            if (friends[i]["summonerId"]) {
+                friendsList.push({"summonerId": friends[i]["summonerId"]})
+            }
         }
     }
 
     async getFriendsIcons(): Promise<void> {
         await this.getFriendList()
+
+        if (friendsList.length === 0) {
+            log("No friends found, skipping icon sync")
+            return
+        }
 
         friendIconList = await window.elainathemeApi.getFriendsImage(friendsList);
 

@@ -77,6 +77,7 @@ interface elainathemeApi {
     deleteBackup: (token: string, userId: number) => Promise<void>;
     uploadImage: (token: string, userId: number, type: string, file: File) => Promise<void>;
     getImage: (userId: number, type: string) => Promise<string>;
+    getImageHash: (userId: number, type: string) => Promise<string | null>;
     deleteImage: (token: string, userId: number, type: string) => Promise<void>;
     getFriendsImage: (friendList: { summonerId: number }[]) => Promise<{ summonerID: number, icon: { avatar: string, border: string, banner: string, emblem: string, hoverCardBackdrop: string } }[]>;
 }
@@ -84,6 +85,9 @@ interface elainathemeApi {
 interface syncUserIcons {
     uploadIcon: (icon: string, iconType: string) => Promise<void>
     getIcon: (summonerID: number ,iconType: string) => Promise<string | null>
+    getIconFolder: () => string
+    getIconData: () => Record<string, string>
+    getFriendsIcons: () => Promise<void>
     main: () => Promise<void>
 }
   

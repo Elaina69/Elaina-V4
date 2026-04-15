@@ -370,7 +370,7 @@ class ui {
         origin.setAttribute("lastDatastore", ElainaData.get(Datastore))
 
         const label = document.createElement("label")
-        label.innerHTML = text
+        label.textContent = text
         label.setAttribute("slot", "label")
 
         const checkbox = document.createElement("input")
@@ -440,10 +440,10 @@ class ui {
         origin.addEventListener("change", ()=>{
             audio.volume = origin.value / 100;
             ElainaData.set(`${setValue}`, origin.value / 100)
-            title.innerHTML = `${text}: ${origin.value}`
+            title.textContent = `${text}: ${origin.value}`
         })
     
-        title.innerHTML = `${text}: ${value * 100}`
+        title.textContent = `${text}: ${value * 100}`
     
         slider.setAttribute("class", "lol-uikit-slider-wrapper horizontal")
         sliderbase.setAttribute("class", "lol-uikit-slider-base")
@@ -617,7 +617,7 @@ class ui {
         origin.setAttribute("value", `${parseInt(ElainaData.get(opacityHexData).slice(0, 2), 16) / 255 * 100}`)
         origin.addEventListener("change", onChange)
     
-        title.innerHTML = `${text}: ${parseInt(ElainaData.get(opacityHexData).slice(0, 2), 16) / 255 * 100}%`
+        title.textContent = `${text}: ${parseInt(ElainaData.get(opacityHexData).slice(0, 2), 16) / 255 * 100}%`
     
         slider.setAttribute("class", "lol-uikit-slider-wrapper horizontal")
         sliderbase.setAttribute("class", "lol-uikit-slider-base")

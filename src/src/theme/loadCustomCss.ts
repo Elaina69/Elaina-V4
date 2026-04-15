@@ -1,5 +1,6 @@
 import utils from "../utils/utils.ts"
 import { getThemeName } from "../otherThings.ts"
+import { sanitizeColor } from "../utils/sanitize.ts"
 
 let icdata: Object = (await import(`//plugins/${getThemeName()}/config/icons.js`)).default;
 let datapath: string = `//plugins/${getThemeName()}/`
@@ -179,7 +180,7 @@ class AddCss {
 	customNicknameColor = () => {
 		utils.addStyleWithID("nickname-color-css", /*css*/`
 			span.player-name__force-locale-text-direction, #nickname-color-preview {
-				color: ${ElainaData.get("nickname-color-with-opacity")};
+				color: ${sanitizeColor(ElainaData.get("nickname-color-with-opacity"))};
 			}
 		`)
 	}
