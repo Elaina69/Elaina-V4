@@ -12,6 +12,7 @@ const datapath = `//plugins/${getThemeName()}/`
 
 ElainaData.set("settingsChangenumber", 0)
 
+/** Shows a restart prompt when settings are changed that require a client restart. */
 async function restartAfterChange(el: string, data: string) {
     let lastdata: any = document.getElementById(el)?.getAttribute("lastdatastore")
     
@@ -120,6 +121,10 @@ window.addEventListener('load', async () => {
 })
 
 export { datapath, restartAfterChange }
+/**
+ * @wiki Manages the Elaina Theme settings panel inside the League Client. Adds custom tabs (Theme Settings, Plugin Settings, Backup & Restore, About Us) to the client settings page and handles configuration persistence through the DataStore.
+ * @author Elaina Da Catto
+ */
 export function Settings(context: any) {
     settingsUtils(context, structure)
 }

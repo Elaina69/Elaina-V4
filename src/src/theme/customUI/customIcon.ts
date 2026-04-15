@@ -417,6 +417,7 @@ class CustomLoadingIcon {
 	}
 }
 
+/** Orchestrates custom avatar, border, banner, and ticker icon replacements. */
 export class CustomIcon {
 	main() {
 		const customTickerIcon = new CustomTickerIcon()

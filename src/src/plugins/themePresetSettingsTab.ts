@@ -1,5 +1,6 @@
 /**
  * @author Nomi
+ * @modifier Elaina Da Catto
  * @description This's just a LL-settings from League Loader, but i change it a little bit for my theme
  */
 
@@ -14,6 +15,12 @@ const datapath: string = `//plugins/${window.getThemeName()}/`
 function openConfigs() {window.openPluginsFolder(`${getThemeName()}/config`)}
 function openAssets() {window.openPluginsFolder(`${getThemeName()}/assets`)}
 
+/**
+ * Quick-access theme menu in the League Client navigation bar.
+ * @wiki Adds a quick-access theme menu to the League Client navigation bar (based on League Loader settings). Provides shortcuts to reload the client, open asset and config folders, access theme releases on GitHub, and open the full settings panel.
+ * @author Nomi
+ * @modifier Elaina Da Catto
+ */
 export class ThemePresetSettings {
 	createThemeMenu = async (root: HTMLElement) =>  {
 		const l_reload_client = await getString('reload-client')

@@ -1,5 +1,15 @@
-import { escapeHtml } from '../utils/sanitize.ts'
+import { escapeHtml } from "../utils/sanitize"
 
+/**
+ * Displays custom Blue Essence and Riot Points values in the client.
+ * @wiki Displays custom Blue Essence (BE) and Riot Points (RP) values in the client, replacing the real currency amounts with user-defined numbers.
+ * @author Elaina Da Catto
+ * @usage
+ * 1. Open League Client settings
+ * 2. Navigate to **Elaina Theme** → **Plugin Settings**
+ * 3. Set **RP Data** and **BE** values to display your desired currency amounts
+ * @settings RP-data, BE
+ */
 export class CustomBeRp {
 	RP = () => {
 		const rpData = `${ElainaData.get("RP-data")}`

@@ -186,6 +186,7 @@ class AddCss {
 	}
 }
 
+/** Loads theme CSS stylesheets, custom fonts, cursor, and nickname color overrides. */
 export class LoadCss {
 	main = () => {
 		const addCss = new AddCss()

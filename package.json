@@ -1,27 +1,37 @@
 {
-    "name": "elaina-theme",
-    "description": "TBD",
-    "private": true,
-    "version": "1.0.0",
-    "license": "WTFPL",
-    "type": "module",
-    "config": {
-        "penguPath": "G:\\Riot Games\\pengu-loader"
-    },
-    "scripts": {
-        "build": "tsc && vite build"
-    },
-    "devDependencies": {
-        "@types/node": "^20.4.7",
-        "esbuild": "^0.20.2",
-        "typescript": "^5.6.3",
-        "vite": "^4.5.5",
-        "vite-plugin-mkcert": "^1.16.0"
-    },
-    "dependencies": {
-        "archiver": "^7.0.1",
-        "chalk": "^5.3.0",
-        "nano-jsx": "^0.1.0",
-        "pengu-upl": "^1.0.0"
-    }
+  "name": "elaina-theme",
+  "description": "TBD",
+  "private": true,
+  "version": "1.0.0",
+  "license": "WTFPL",
+  "type": "module",
+  "config": {
+    "penguPath": "G:\\Riot Games\\pengu-loader"
+  },
+  "scripts": {
+    "build": "tsc && vite build",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "wiki:generate": "node scripts/generate-wiki.mjs",
+    "wiki:check": "node scripts/generate-wiki.mjs --check",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.7",
+    "esbuild": "^0.20.2",
+    "eslint": "^10.2.0",
+    "eslint-plugin-jsdoc": "^62.9.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.58.2",
+    "vite": "^4.5.5",
+    "vite-plugin-mkcert": "^1.16.0"
+  },
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "chalk": "^5.3.0",
+    "nano-jsx": "^0.1.0",
+    "pengu-upl": "^1.0.0"
+  }
 }
